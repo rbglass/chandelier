@@ -10,7 +10,7 @@ You will need a credentials file of the format outlined in credentials.example.j
 git clone https://github.com/foundersandcoders/chandelier.git
 cd chandelier
 npm install
-npm build
+npm run build
 npm start
 ```
 
