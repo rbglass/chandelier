@@ -1,47 +1,98 @@
-.Table {
+:root {
+	--even-row-color: #f2f2f2;
+	--odd-row-color: #ffffff;
+}
+
+input {
+	box-sizing: border-box;
+}
+
+label {
+	font-size: 0.8rem;
+	line-height: 25px;
+}
+
+.page-header {
+	text-align: center;
+}
+
+/* Table Manipulator Panel */
+.table-manip {
+	display: flex;
+	flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content:  flex-end;
+  align-items: flex-start;
+
+	width: 40%;
+	height: 50px;
+}
+
+.job-text-input {
+	display: flex;
+	height: auto;
+}
+
+.filter {
+  width: 75%;
+}
+
+.date {
+	margin-left: 0;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: 45%;
+}
+
+/* Table */
+
+.table {
 	display: box;
+
 	display: flex;
 	flex-flow: column nowrap;
 	box-pack: justify;
 	-o-justify-content: space-between;
 	justify-content: space-between;
+
 	border: 1px solid #f2f2f2;
-	font-size: 1rem;
+
+	font-size: 0.8rem;
 	margin: 0.5rem;
 	line-height: 1.5;
 }
-.Table-header {
+.table-header {
 	display: none;
 }
 @media (min-width: 500px) {
-	.Table-header {
-		font-weight: 700;
+	.table-header {
 		background-color: #f2f2f2;
 	}
 }
-.Table-row {
+.table-row {
 	width: 100%;
 }
-.Table-row:nth-of-type(even) {
-	background-color: #f2f2f2;
+.table-row:nth-of-type(even) {
+	background-color: --even-row-color;
 }
-.Table-row:nth-of-type(odd) {
-	background-color: #ffffff;
+.table-row:nth-of-type(odd) {
+	background-color: --odd-row-color;
 }
 @media (min-width: 500px) {
-	.Table-row {
+	.table-row {
 		display: box;
 		display: flex;
 		flex-flow: row nowrap;
 	}
-	.Table-row:nth-of-type(even) {
-		background-color: #ffffff;
+	.table-row:nth-of-type(even) {
+		background-color: --even-row-color;
 	}
-	.Table-row:nth-of-type(odd) {
-		background-color: #f2f2f2;
+	.table-row:nth-of-type(odd) {
+		background-color: --odd-row-color;
 	}
 }
-.Table-row-item {
+.table-row-item {
 	display: box;
 	display: flex;
 	flex-flow: row nowrap;
@@ -53,57 +104,105 @@
 	padding: 0.5em;
 	word-break: break-word;
 }
-.Table-row-item:before {
+.table-row-item:before {
 	content: attr(data-header);
 	width: 30%;
 	font-weight: 700;
 }
 @media (min-width: 500px) {
-	.Table-row-item {
+	.table-row-item {
 		border: 1px solid #fff;
 		padding: 0.5em;
 	}
-	.Table-row-item:before {
+	.table-row-item:before {
 		content: none;
 	}
 }
 
-.u-Flex-grow1 {
+/* Specific job details */
+
+.job-details {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: stretch;
+
+  min-height: 200px;
+}
+
+.job-details-column {
+	display: flex;
+	flex-direction: column;
+
+	min-height: 200px;
+	width: 400px;
+}
+
+.job-details-field {
+	display: flex;
+}
+
+.job-details-field .job-text-input {
+	float: right;
+	width: 60%;
+}
+
+.job-details-field label {
+	width: 30%;
+}
+
+.job-details-field.notes {
+	flex-direction: column;
+}
+
+.job-details-field.notes label {
+	width: auto;
+}
+
+.job-text-area {
+	width: 89%;
+	min-height: 72px;
+}
+
+/* Flex Utility classes */
+.u-flex-grow1 {
 	flex-grow: 1;
 }
 
-.u-Flex-grow2 {
+.u-flex-grow2 {
 	flex-grow: 2;
 }
 
-.u-Flex-grow3 {
+.u-flex-grow3 {
 	flex-grow: 3;
 }
 
-.u-Flex-grow4 {
+.u-flex-grow4 {
 	flex-grow: 4;
 }
 
-.u-Flex-grow5 {
+.u-flex-grow5 {
 	flex-grow: 5;
 }
 
-.u-Flex-grow6 {
+.u-flex-grow6 {
 	flex-grow: 6;
 }
 
-.u-Flex-grow7 {
+.u-flex-grow7 {
 	flex-grow: 7;
 }
 
-.u-Flex-grow8 {
+.u-flex-grow8 {
 	flex-grow: 8;
 }
 
-.u-Flex-grow9 {
+.u-flex-grow9 {
 	flex-grow: 9;
 }
 
-.u-Flex-grow10 {
+.u-flex-grow10 {
 	flex-grow: 10;
 }

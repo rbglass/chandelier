@@ -13,7 +13,7 @@
     "lint": "jsxhint src/**/*.js",
     "live-reload": "live-reload public/ --port 9081",
     "serve": "node index.js",
-    "devserve": "http-server ./public -s",
+    "devserve": "http-server ./public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
     "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js"

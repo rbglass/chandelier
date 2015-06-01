@@ -11,7 +11,7 @@ Components
 ```
 Jobs
 --Notifier
---Sorter
+--Manipulator
 ----SearchBar
 ----DateSelector
 --Table
