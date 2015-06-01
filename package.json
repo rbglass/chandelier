@@ -1,0 +1,19 @@
+{
+  "name": "chandelier",
+  "version": "1.0.0",
+  "description": "production management for people who produce",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foundersandcoders/chandelier.git"
+  },
+  "author": "Roz, Mij, Neats",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foundersandcoders/chandelier/issues"
+  },
+  "homepage": "https://github.com/foundersandcoders/chandelier"
+}
