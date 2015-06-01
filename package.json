@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/foundersandcoders/chandelier/issues"
   },
-  "homepage": "https://github.com/foundersandcoders/chandelier"
+  "homepage": "https://github.com/foundersandcoders/chandelier",
+  "dependencies": {
+    "bell": "^3.0.0",
+    "hapi": "^8.6.0",
+    "hapi-auth-cookie": "^2.2.0",
+    "react": "^0.13.3"
+  }
 }
