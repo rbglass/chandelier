@@ -18,5 +18,12 @@
   "homepage": "https://github.com/foundersandcoders/chandelier",
   "devDependencies": {
     "tape": "^4.0.0"
+    },
+
+  "dependencies": {
+    "bell": "^3.0.0",
+    "hapi": "^8.6.0",
+    "hapi-auth-cookie": "^2.2.0",
+    "react": "^0.13.3"
   }
 }
