@@ -1,0 +1,9 @@
+{
+	"node" 					: true,
+	"forin"         : true,
+	"globalstrict" 	: true,
+	"strict" 			  : true,
+	"sub"           : true,
+	"esnext"				: true,
+	"browserify"		: true
+}
