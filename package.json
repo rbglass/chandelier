@@ -4,7 +4,7 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/foundersandcoders/chandelier/issues"
   },
-  "homepage": "https://github.com/foundersandcoders/chandelier"
+  "homepage": "https://github.com/foundersandcoders/chandelier",
+  "devDependencies": {
+    "tape": "^4.0.0"
+  }
 }
