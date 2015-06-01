@@ -30,3 +30,6 @@ node_modules
 
 credentials.json
 creds.json
+
+# built js
+public/**/*.js
