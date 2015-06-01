@@ -4,7 +4,17 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
-    "test": "tape"
+    "test": "tape",
+    "dev": "npm run serve & npm run live-reload & npm run build:watch",
+    "prebuild": "npm run lint",
+    "build": "browserify -t babelify src/js/main.js -o build/js/main.js",
+    "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js",
+    "lint": "jsxhint src/**/*.js",
+    "live-reload": "live-reload public/ --port 9081",
+    "serve": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:front": "mocha --compilers js:babel/register",
+    "test:watch": "mocha --compilers js:babel/register -w"
   },
   "repository": {
     "type": "git",
@@ -24,6 +34,20 @@
     "bell": "^3.0.0",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
+    "flummox": "^3.5.2",
+    "superagent": "^1.2.0"
+  },
+  "devDependencies": {
+    "babel": "^5.4.7",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.3",
+    "jsxhint": "^0.15.0",
+    "karma": "^0.12.35",
+    "karma-browserify": "^4.2.1",
+    "live-reload": "^1.1.0",
+    "mocha": "^2.2.5",
+    "watchify": "^3.2.1"
   }
 }
