@@ -2,7 +2,6 @@ module.exports = {
 
   home : function(request, reply) {
     console.log("home handler");
-    // console.log(request);
 
     if (!request.auth.isAuthenticated) {
       reply.redirect("/login");
@@ -18,13 +17,14 @@ module.exports = {
 
     var profile = {
       auth_method : "google",
-      username    : creds.profile,
+      username    : creds.profile.raw.name,
       auth_id     : creds.profile.raw.id,
-      email       : creds.profile.email
+      email       : creds.profile.raw.email
     };
 
+    request.auth.session.clear();
     request.auth.session.set(profile);
-    reply.redirect("/login");
+    reply.redirect("/");
 
   },
 
@@ -36,7 +36,7 @@ module.exports = {
     console.log("logout handler");
 
     request.auth.session.clear();
-    reply.redirect("/");
+    reply("Succesfully logged out");
   }
 
 };

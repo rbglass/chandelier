@@ -22,14 +22,14 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
     clientSecret   : config.bell.clientSecret,
     isSecure       : false,
     providerParams : {
-      redirect_uri : server.info.uri + "/"
+      redirect_uri : server.info.uri + "/login"
     }
   });
 
   server.auth.strategy("session", "cookie", {
     password   : config.cookie.password,
     cookie     : "sid",
-    redirectTo : "/jobs",
+    redirectTo : "/",
     isSecure   : "false"
   });
 });
@@ -41,13 +41,34 @@ server.route([
     path    : "/",
     method  : "GET",
     config  : {
+      auth : {
+        strategy : "session",
+        mode     : "try"
+      },
       handler : handler.home,
+      plugins : {
+        "hapi-auth-cookie" :{
+          redirectTo : false
+        }
+      }
     }
   },
 
   {
     path    : "/jobs",
-    method  : "GET",
+    method  : ["GET", "POST"],
+    handler : handler.jobs
+  },
+
+  {
+    path    : "/jobs/{id}",
+    method  : ["GET", "POST", "PUT", "DELETE"],
+    handler : handler.jobs
+  },
+
+  {
+    path    : "/jobs/{id}/{item}",
+    method  : ["GET", "PUT", "DELETE"],
     handler : handler.jobs
   },
 
