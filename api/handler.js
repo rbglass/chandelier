@@ -33,10 +33,9 @@ var handler = {
 
   jobs : function(request, reply) {
     if (request.auth.isAuthenticated) {
-      console.log("authenticated");
+      console.log("authenticated")
     } else if (!request.auth.isAuthenticated) {
-      console.log("Not authenticated");
-      reply.redirect("/");
+      reply().code(403);
     }
   },
 

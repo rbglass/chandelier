@@ -67,19 +67,19 @@ server.route([
   },
 
   {
-    path    : "/jobs",
+    path    : "/api/jobs",
     method  : ["GET", "POST"],
     handler : handler.jobs
   },
 
   {
-    path    : "/jobs/{id}",
+    path    : "/api/jobs/{id}",
     method  : ["GET", "POST", "PUT", "DELETE"],
     handler : handler.jobs
   },
 
   {
-    path    : "/jobs/{id}/{item}",
+    path    : "/api/jobs/{id}/{item}",
     method  : ["GET", "PUT", "DELETE"],
     handler : handler.jobs
   },
