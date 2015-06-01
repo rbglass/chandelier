@@ -1,5 +1,7 @@
 # chandelier
-production management for people who produce
+production management for people who produce  
+
+[![Code Climate](https://codeclimate.com/github/foundersandcoders/chandelier/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/chandelier)
 
 ## Run
 You will need a credentials file of the format outlined in credentials.example.json.
