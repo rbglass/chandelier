@@ -28,11 +28,12 @@
   "homepage": "https://github.com/foundersandcoders/chandelier",
   "dependencies": {
     "bell": "^3.0.0",
+    "flummox": "^3.5.2",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
+    "pg": "^4.3.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
-    "flummox": "^3.5.2",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
