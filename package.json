@@ -4,7 +4,6 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
-    "test": "tape",
     "dev": "npm run serve & npm run live-reload & npm run build:watch",
     "prebuild": "npm run lint",
     "build": "browserify -t babelify src/js/main.js -o build/js/main.js",
@@ -26,10 +25,6 @@
     "url": "https://github.com/foundersandcoders/chandelier/issues"
   },
   "homepage": "https://github.com/foundersandcoders/chandelier",
-  "devDependencies": {
-    "tape": "^4.0.0"
-    },
-
   "dependencies": {
     "bell": "^3.0.0",
     "hapi": "^8.6.0",
