@@ -1,0 +1,224 @@
+/* Generals */
+
+:root {
+	--even-row-color: #f2f2f2;
+	--odd-row-color: #ffffff;
+}
+
+input {
+	box-sizing: border-box;
+}
+
+label {
+	font-size: 0.8rem;
+	line-height: 25px;
+}
+
+.page-header {
+	text-align: center;
+}
+
+/* Alert */
+.alert-box {
+	position: fixed;
+	top: 0;
+	right: 0;
+
+	font-size: 0.8rem;
+	text-align: center;
+
+	padding: 4px;
+	border-radius: 2px;
+
+	background-color: rgba(59, 239, 31, 0.57);
+}
+
+/* Table Manipulator Panel */
+.table-manip {
+	display: flex;
+	flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content:  flex-end;
+  align-items: flex-start;
+
+	width: 40%;
+	height: 50px;
+}
+
+.job-text-input {
+	display: flex;
+	height: auto;
+}
+
+.filter {
+  width: 75%;
+}
+
+.date {
+	margin-left: 0;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: 45%;
+}
+
+/* Table */
+
+.table {
+	display: box;
+
+	display: flex;
+	flex-flow: column nowrap;
+	box-pack: justify;
+	-o-justify-content: space-between;
+	justify-content: space-between;
+
+	border: 1px solid #f2f2f2;
+
+	font-size: 0.8rem;
+	margin: 0.5rem;
+	line-height: 1.5;
+}
+.table-header {
+	display: none;
+}
+@media (min-width: 500px) {
+	.table-header {
+		background-color: #f2f2f2;
+	}
+}
+.table-row {
+	width: 100%;
+}
+.table-row:nth-of-type(even) {
+	background-color: --even-row-color;
+}
+.table-row:nth-of-type(odd) {
+	background-color: --odd-row-color;
+}
+@media (min-width: 500px) {
+	.table-row {
+		display: box;
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	.table-row:nth-of-type(even) {
+		background-color: --even-row-color;
+	}
+	.table-row:nth-of-type(odd) {
+		background-color: --odd-row-color;
+	}
+}
+.table-row-item {
+	display: box;
+	display: flex;
+	flex-flow: row nowrap;
+	flex-grow: 1;
+	flex-basis: 0;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	word-break: break-all;
+	padding: 0.5em;
+	word-break: break-word;
+}
+.table-row-item:before {
+	content: attr(data-header);
+	width: 30%;
+	font-weight: 700;
+}
+@media (min-width: 500px) {
+	.table-row-item {
+		border: 1px solid #fff;
+		padding: 0.5em;
+	}
+	.table-row-item:before {
+		content: none;
+	}
+}
+
+/* Specific job details */
+
+.job-details {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: stretch;
+
+  min-height: 200px;
+}
+
+.job-details-column {
+	display: flex;
+	flex-direction: column;
+
+	min-height: 200px;
+}
+
+.job-details-field {
+	display: flex;
+}
+
+.job-details-field .job-text-input {
+	float: right;
+	width: 60%;
+}
+
+.job-details-field label {
+	width: 30%;
+}
+
+.job-details-field.notes {
+	flex-direction: column;
+}
+
+.job-details-field.notes label {
+	width: auto;
+}
+
+.job-text-area {
+	width: 89%;
+	min-height: 72px;
+}
+
+/* Flex Utility classes */
+.u-flex-grow1 {
+	flex-grow: 1;
+}
+
+.u-flex-grow2 {
+	flex-grow: 2;
+}
+
+.u-flex-grow3 {
+	flex-grow: 3;
+}
+
+.u-flex-grow4 {
+	flex-grow: 4;
+}
+
+.u-flex-grow5 {
+	flex-grow: 5;
+}
+
+.u-flex-grow6 {
+	flex-grow: 6;
+}
+
+.u-flex-grow7 {
+	flex-grow: 7;
+}
+
+.u-flex-grow8 {
+	flex-grow: 8;
+}
+
+.u-flex-grow9 {
+	flex-grow: 9;
+}
+
+.u-flex-grow10 {
+	flex-grow: 10;
+}

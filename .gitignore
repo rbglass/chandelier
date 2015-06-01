@@ -33,3 +33,6 @@ creds.json
 
 # built js
 public/**/*.js
+
+# built css
+public/**/*.css

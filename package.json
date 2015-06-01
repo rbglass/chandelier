@@ -4,14 +4,16 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run devserve & npm run live-reload & npm run test:fwatch & npm run build:watch",
+    "dev": "npm run live-reload & npm run test:fwatch & npm run build:watch",
     "prebuild": "npm run lint",
-    "build": "browserify -t babelify src/js/main.js -o build/js/main.js",
-    "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js",
+    "build": "npm run build:js & npm run build:css",
+    "build:js": "browserify -t babelify src/js/main.js -o build/js/main.js",
+    "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js & myth -w src/css/*.css public/css/main.css",
+    "build:css": "myth src/css/*.css public/css/main.css",
     "lint": "jsxhint src/**/*.js",
     "live-reload": "live-reload public/ --port 9081",
     "serve": "node index.js",
-    "devserve": "http-server /public -s",
+    "devserve": "http-server ./public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
@@ -46,6 +48,7 @@
     "karma-browserify": "^4.2.1",
     "live-reload": "^1.1.0",
     "mocha": "^2.2.5",
+    "myth": "^1.4.0",
     "watchify": "^3.2.1"
   }
 }
