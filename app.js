@@ -1,5 +1,5 @@
-var server = require("./api/server.js");
+var server = require('./api/server');
 
-server.start(
-  console.log("Serving running at port: ", server.info.port);
-  );
+server.start(function(){
+    console.log("Server running at port:", server.info.port);
+});
