@@ -1,17 +1,19 @@
-module.exports = {
+var path  = require("path");
+var index = path.resolve(__dirname + "/../public/index.html");
+
+var handler = {
 
   home : function(request, reply) {
-    console.log("home handler");
 
-    if (!request.auth.isAuthenticated) {
+    if (request.auth.isAuthenticated) {
+      reply.file(index);
+    } else if (!request.auth.isAuthenticated) {
       reply.redirect("/login");
-    } else if (request.auth.isAuthenticated) {
-      reply("Hello");
     }
   },
 
+
   login : function(request, reply) {
-    console.log("login handler");
 
     var creds = request.auth.credentials;
 
@@ -28,15 +30,24 @@ module.exports = {
 
   },
 
+
   jobs : function(request, reply) {
-      reply("Succesfully logged in");
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+    } else if (!request.auth.isAuthenticated) {
+      console.log("Not authenticated");
+      reply.redirect("/");
+    }
   },
 
+
   logout : function(request, reply) {
-    console.log("logout handler");
 
     request.auth.session.clear();
     reply("Succesfully logged out");
   }
 
+
 };
+
+module.exports = handler;

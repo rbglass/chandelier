@@ -1,5 +1,6 @@
 var Hapi    = require("hapi");
 var bell    = require("bell");
+var path    = require("path");
 var server  = new Hapi.Server();
 var handler = require("./handler");
 var config  = require("./config");
@@ -50,6 +51,17 @@ server.route([
         "hapi-auth-cookie" :{
           redirectTo : false
         }
+      }
+    }
+  },
+
+  {
+    path    : "/{param*}",
+    method  : "GET",
+    handler : {
+      directory : {
+        path  : path.resolve(__dirname + "/../public"),
+        index : false
       }
     }
   },
