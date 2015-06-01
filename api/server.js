@@ -16,18 +16,20 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
   }
 
   server.auth.strategy("google", "bell", {
-    provider     : "google",
-    password     : config.bell.password,
-    isSecure     : false,
-    clientId     : config.bell.clientID,
-    clientSecret : config.bell.clientSecret
-
+    provider       : "google",
+    password       : config.bell.password,
+    clientId       : config.bell.clientID,
+    clientSecret   : config.bell.clientSecret,
+    isSecure       : false,
+    providerParams : {
+      redirect_uri : server.info.uri + "/"
+    }
   });
 
   server.auth.strategy("session", "cookie", {
     password   : config.cookie.password,
     cookie     : "sid",
-    // redirectTo : "/",
+    redirectTo : "/jobs",
     isSecure   : "false"
   });
 });
@@ -40,21 +42,21 @@ server.route([
     method  : "GET",
     config  : {
       handler : handler.home,
-      auth    : "session"
     }
   },
 
   {
+    path    : "/jobs",
+    method  : "GET",
+    handler : handler.jobs
+  },
+
+  {
     path   : "/login",
-    method : "POST",
+    method : ["GET", "POST"],
     config : {
       auth    : "google",
       handler : handler.login,
-      plugins : {
-        "hapi-auth-cookie" : {
-          redirectTo : false
-        }
-      }
     }
   },
 
