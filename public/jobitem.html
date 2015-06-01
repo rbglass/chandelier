@@ -5,11 +5,15 @@
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
 	</head>
 	<body>
+		<div class="alert-box">
+			<span class="">Saved</span>
+			<span class=""></span>
+		</div>
 
 		<h1 class="page-header">Single Job</h1>
 		<div class="job-details">
 
-			<div class="job-details-column">
+			<div class="job-details-column u-flex-grow3">
 				<div class="job-details-field">
 					<label for="job#">Job #:</label>
 					<input type="text" class="job-text-input" id="job#">
@@ -32,22 +36,26 @@
 				</div>
 			</div> <!-- End column -->
 
-			<div class="job-details-column">
+			<div class="job-details-column u-flex-grow3">
 				<div class="job-details-field">
 					<label for="jobstatus">Job Status:</label>
 					<input type="text" class="job-text-input" id="jobstatus">
 				</div>
 				<div class="job-details-field">
 					<label for="ordertype">Order Type:</label>
-					<input type="text" class="job-text-input" id="ordertype">
+					<select class="job-text-input" id="ordertype">
+						<option>Standard</option>
+					</select>
 				</div>
 				<div class="job-details-field">
-					<label for="lastupdate">Last Upd:</label>
-					<input type="text" class="job-text-input" id="lastupdate">
+					<label for="lastupdate">Last Update:</label>
+					<input type="date" class="job-text-input" id="lastupdate" value="2015-05-05">
 				</div>
 				<div class="job-details-field">
 					<label for="partsstatus">Parts Status:</label>
-					<input type="text" class="job-text-input" id="partsstatus">
+					<select class="job-text-input" id="partsstatus">
+						<option>Started</option>
+					</select>
 				</div>
 				<div class="job-details-field notes">
 					<label for="partsnotes">Parts Notes:</label>
@@ -55,14 +63,20 @@
 				</div>
 			</div> <!-- End column -->
 
-			<div class="job-details-column">
+			<div class="job-details-column u-flex-grow3">
 				<div class="job-details-field">
 					<label for="shippingdate">Shipping Date:</label>
-					<input type="text" class="job-text-input" id="shippingdate">
+					<input type="date" class="job-text-input" id="shippingdate" value="2015-07-01">
 				</div>
 				<div class="job-details-field notes u-flex-grow2">
 					<label for="notes">Delivery Details:</label>
 					<textarea type="text" class="job-text-area u-flex-grow2" id="notes"></textarea>
+				</div>
+			</div> <!-- End column -->
+
+			<div class="job-details-column">
+				<div class="job-details-field">
+					<input type="button" value="pdf">
 				</div>
 			</div> <!-- End column -->
 

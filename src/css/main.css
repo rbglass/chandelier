@@ -1,3 +1,5 @@
+/* Generals */
+
 :root {
 	--even-row-color: #f2f2f2;
 	--odd-row-color: #ffffff;
@@ -14,6 +16,21 @@ label {
 
 .page-header {
 	text-align: center;
+}
+
+/* Alert */
+.alert-box {
+	position: fixed;
+	top: 0;
+	right: 0;
+
+	font-size: 0.8rem;
+	text-align: center;
+
+	padding: 4px;
+	border-radius: 2px;
+
+	background-color: rgba(59, 239, 31, 0.57);
 }
 
 /* Table Manipulator Panel */
@@ -137,7 +154,6 @@ label {
 	flex-direction: column;
 
 	min-height: 200px;
-	width: 400px;
 }
 
 .job-details-field {
