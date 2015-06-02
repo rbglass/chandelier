@@ -26,7 +26,6 @@ var handler = {
 		database.Jobs.create(request).success(function(){ //RORY: Whats the diff between addjob and createSingleJob?
   		reply("addJob");
 		});
-
   },
 
 // -------------------------------------------------- \\
