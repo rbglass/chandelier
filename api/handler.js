@@ -14,6 +14,98 @@ var handler = {
     }
   },
 
+// -------------------------------------------------- \\
+
+
+  findJobs : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+    // DB query to jobs table, return details for all jobs
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  addJob : function(request, reply) {
+  	if (request.auth.isAuthenticated) {
+  		console.log("authenticated");
+  	// Add whole row to jobs DB table
+  	} else if (!request.auth.isAuthenticated) {
+  		reply().code(403);
+  	}
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleJob : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  createSingleJob : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  updateSingleJob : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  removeSingleJob : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleItem : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  updateSingleItem : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+  removeSingleItem : function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      console.log("authenticated");
+
+    } else if (!request.auth.isAuthenticated) {
+      reply().code(403);
+    }
+  },
+
+// -------------------------------------------------- \\
+
 
   login : function(request, reply) {
 
@@ -30,15 +122,6 @@ var handler = {
     request.auth.session.set(profile);
     reply.redirect("/");
 
-  },
-
-
-  jobs : function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      console.log("authenticated");
-    } else if (!request.auth.isAuthenticated) {
-      reply().code(403);
-    }
   },
 
 
