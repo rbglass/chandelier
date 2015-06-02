@@ -1,18 +1,15 @@
 "use strict";
 var config = require("../config.js");
 var Sequelize = require("sequelize");
+
+//var sequelize = new Sequelize(config.database.dburl, {
+//	protocol: "ssl"
+//});
+
 var sequelize = new Sequelize(config.database.dbname, config.database.dbuser, config.database.dbpassword, {
 	host: "localhost",
-	dialect: 'mysql'|'mariadb'|'sqlite'|'postgres'|'mssql',
-
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-
-	native: true,
-	ssl: true
+	port: 5432,
+	dialect: 'postgres'
 });
 
 var Users = sequelize.define('users', {});
