@@ -8,6 +8,8 @@
 	"browserify"		: true,
 	"predef": [
 		"suite",
-		"test"
+		"test",
+		"describe",
+		"it"
 	]
 }
