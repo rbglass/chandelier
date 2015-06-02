@@ -1,3 +1,5 @@
+"use strict";
+
 var Hapi    = require("hapi");
 var bell    = require("bell");
 var path    = require("path");
@@ -6,7 +8,7 @@ var handler = require("./handler");
 var config  = require("./config");
 
 server.connection({
-  port : process.env.PORT || 8000
+  port : Number(process.env.PORT) || 8000
 });
 
 server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
