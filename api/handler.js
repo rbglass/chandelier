@@ -23,18 +23,25 @@ var handler = {
   },
 
   addJob : function(request, reply) {
-  	reply("addJob");
+		database.Jobs.create(request).success(function(){ //RORY: Whats the diff between addjob and createSingleJob?
+  		reply("addJob");
+		});
+
   },
 
 // -------------------------------------------------- \\
 
 
   findSingleJob : function(request, reply) {
-  	reply("findSingleJob");
+		database.Job_items.find(request.payload.id).success(function(){
+  		reply("findSingleJob");
+		});
   },
 
   createSingleJob : function(request, reply) {
-  	reply("createSingleJob");
+		database.Jobs.create(request).success(function(){
+  		reply("createSingleJob");
+		});
   },
 
   updateSingleJob : function(request, reply) {
@@ -49,7 +56,7 @@ var handler = {
 
 
   findSingleItem : function(request, reply) {
-  	reply("findSingleItem");
+  		reply("findSingleItem");
   },
 
   updateSingleItem : function(request, reply) {
