@@ -1,3 +1,4 @@
+"use strict";
 var pg = require("pg");
 var	conString = require("../creds.json").database;
 
