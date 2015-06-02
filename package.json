@@ -15,7 +15,7 @@
     "live-reload": "live-reload public/ --port 9081",
     "serve": "node index.js",
     "devserve": "http-server ./public",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run test:back & npm run test:front",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
     "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js"

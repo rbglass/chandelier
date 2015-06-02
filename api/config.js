@@ -8,4 +8,4 @@ module.exports = {
     clientID     : process.env.CLIENTID     || require("./creds.json").bell.clientID,
     clientSecret : process.env.CLIENTSECRET || require("./creds.json").bell.clientSecret
   }
-}
+};
