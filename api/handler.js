@@ -2,6 +2,7 @@
 
 var path  = require("path");
 var index = path.resolve(__dirname + "/../public/index.html");
+var database = require("./models/database");
 
 var handler = {
 
@@ -13,6 +14,53 @@ var handler = {
       reply.redirect("/login");
     }
   },
+
+// -------------------------------------------------- \\
+
+
+  findJobs : function(request, reply) {
+		reply("findJobs");
+  },
+
+  addJob : function(request, reply) {
+  	reply("addJob");
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleJob : function(request, reply) {
+  	reply("findSingleJob");
+  },
+
+  createSingleJob : function(request, reply) {
+  	reply("createSingleJob");
+  },
+
+  updateSingleJob : function(request, reply) {
+  	reply("updateSingleJob");
+  },
+
+  removeSingleJob : function(request, reply) {
+  	reply("removeSingleJob");
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleItem : function(request, reply) {
+  	reply("findSingleItem");
+  },
+
+  updateSingleItem : function(request, reply) {
+		reply("updateSingleItem");
+  },
+
+  removeSingleItem : function(request, reply) {
+  	reply("removeSingleItem");
+  },
+
+// -------------------------------------------------- \\
 
 
   login : function(request, reply) {
@@ -26,19 +74,13 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-    request.auth.session.clear();
-    request.auth.session.set(profile);
-    reply.redirect("/");
-
-  },
-
-
-  jobs : function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      console.log("authenticated");
-    } else if (!request.auth.isAuthenticated) {
-      reply().code(403);
-    }
+		database.Users.create({
+			email: profile.email
+		}).then(function(){
+			request.auth.session.clear();
+			request.auth.session.set(profile);
+			reply.redirect("/");
+		});
   },
 
 

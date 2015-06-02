@@ -2,7 +2,7 @@
 production management for people who produce  
 
 [![Code Climate](https://codeclimate.com/github/foundersandcoders/chandelier/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/chandelier)
-![](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)
+[![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
 
 ## Run
 You will need a credentials file of the format outlined in credentials.example.json.
