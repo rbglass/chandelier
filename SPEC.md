@@ -10,7 +10,7 @@ App
 Components
 ```
 Jobs
---Notifier
+--Alert
 --Manipulator
 ----SearchBar
 ----DateSelector
@@ -54,5 +54,5 @@ SORT_MULTIPLE
 
 FILTER_BY
 
-NOTIFY
+ALERT
 ```

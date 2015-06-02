@@ -4,6 +4,7 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
+    "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run test:fwatch & npm run build:watch",
     "prebuild": "npm run lint",
     "build": "npm run build:js & npm run build:css",
@@ -30,11 +31,11 @@
   "homepage": "https://github.com/foundersandcoders/chandelier",
   "dependencies": {
     "bell": "^3.0.0",
+    "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
-    "flummox": "^3.5.2",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
@@ -48,6 +49,10 @@
     "live-reload": "^1.1.0",
     "mocha": "^2.2.5",
     "myth": "^1.4.0",
+    "sinon": "^1.14.1",
     "watchify": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=0.12.0"
   }
 }
