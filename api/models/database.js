@@ -1,13 +1,14 @@
 "use strict";
-var config = require("../models/config.js");
-var sequalize = new Sequalize(config.database.dburl);
+var config = require("../config.js");
+var Sequelize = require("sequelize");
+var sequelize = new Sequelize(config.database.dburl);
 
-var Users = sequalize.define('users', {});
-var Jobs = sequalize.define('jobs', {});
-var Job_items = sequalize.define('job_items', {});
+var Users = sequelize.define('users', {});
+var Jobs = sequelize.define('jobs', {});
+var Job_items = sequelize.define('job_items', {});
 
 
-modules.exports = {
+module.exports = {
 	Users: Users,
 	Jobs: Jobs,
 	Job_items: Job_items
