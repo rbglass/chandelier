@@ -1,3 +1,5 @@
+"use strict";
+
 var path  = require("path");
 var index = path.resolve(__dirname + "/../public/index.html");
 
@@ -33,7 +35,7 @@ var handler = {
 
   jobs : function(request, reply) {
     if (request.auth.isAuthenticated) {
-      console.log("authenticated")
+      console.log("authenticated");
     } else if (!request.auth.isAuthenticated) {
       reply().code(403);
     }

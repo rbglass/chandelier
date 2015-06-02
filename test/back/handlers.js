@@ -1,3 +1,5 @@
+"use strict";
+
 var assert  = require("assert");
 var server  = require("../../api/server");
 var handler = require("../../api/handler");
@@ -10,7 +12,7 @@ describe("/", function() {
         method  : "GET",
         url     : "/",
         handler : handler.home
-      }
+      };
 
       server.inject(options, function(res) {
         assert.equal(302, res.statusCode);
@@ -33,7 +35,7 @@ describe("/", function() {
         credentials : {
           isAuthenticated : true
         }
-      }
+      };
 
       server.inject(options, function(res) {
         assert.equal(true, res.request.auth.isAuthenticated);
@@ -54,7 +56,7 @@ describe("/api/jobs", function() {
         method  : "GET",
         url     : "/api/jobs",
         handler : handler.jobs
-      }
+      };
 
       server.inject(options, function(res) {
         assert.equal(403, res.statusCode);
@@ -74,7 +76,7 @@ describe("/api/jobs/{id}", function() {
         method  : "GET",
         url     : "/api/jobs/rb12",
         handler : handler.jobs
-      }
+      };
 
       server.inject(options, function(res) {
         assert.equal(403, res.statusCode);
@@ -93,7 +95,7 @@ describe("/api/jobs/{id}/{item}", function() {
         method  : "GET",
         url     : "/api/jobs/rb12/itemA",
         handler : handler.jobs
-      }
+      };
 
       server.inject(options, function(res) {
         assert.equal(403, res.statusCode);
