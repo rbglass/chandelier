@@ -1,28 +1,27 @@
 "use strict";
-
 import request from "superagent";
 
 export default {
 
-	getAllJobs(onErrOrSuccess) {
+	getAllJobs(onReply) {
 		request.get("/api/jobs")
-						.end(onErrOrSuccess);
+						.end(onReply);
 	},
 
-	createOneJob(onErrOrSuccess) {
+	createOneJob(onReply) {
 		request.post("/api/jobs")
-						.end(onErrOrSuccess);
+						.end(onReply);
 	},
 
-	getOneJob(jobId, onErrOrSuccess) {
+	getOneJob(jobId, onReply) {
 		request.get(`/api/jobs/${jobId}`)
-						.end(onErrOrSuccess);
+						.end(onReply);
 	},
 
-	updateOneJob(jobId, itemOrDetails, updateObj, onErrOrSuccess) {
+	updateOneJob(jobId, itemOrDetails, updateObj, onReply) {
 		request.put(`/api/jobs/${jobId}/${itemOrDetails}`)
 						.send(updateObj)
-						.end(onErrOrSuccess);
+						.end(onReply);
 	}
 
 };

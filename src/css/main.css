@@ -75,12 +75,13 @@ label {
 
 	border: 1px solid #f2f2f2;
 
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 	margin: 0.5rem;
 	line-height: 1.5;
 }
 .table-header {
 	display: none;
+	align-items: flex-end;
 }
 @media (min-width: 500px) {
 	.table-header {
@@ -91,10 +92,10 @@ label {
 	width: 100%;
 }
 .table-row:nth-of-type(even) {
-	background-color: --even-row-color;
+	background-color: var(--even-row-color);
 }
 .table-row:nth-of-type(odd) {
-	background-color: --odd-row-color;
+	background-color: var(--odd-row-color);
 }
 @media (min-width: 500px) {
 	.table-row {
@@ -103,10 +104,10 @@ label {
 		flex-flow: row nowrap;
 	}
 	.table-row:nth-of-type(even) {
-		background-color: --even-row-color;
+		background-color: var(--even-row-color);
 	}
 	.table-row:nth-of-type(odd) {
-		background-color: --odd-row-color;
+		background-color: var(--odd-row-color);
 	}
 }
 .table-row-item {
@@ -121,11 +122,22 @@ label {
 	padding: 0.5em;
 	word-break: break-word;
 }
+
 .table-row-item:before {
 	content: attr(data-header);
 	width: 30%;
 	font-weight: 700;
 }
+
+
+.table-row-item.fixed-col {
+	flex-direction: column;
+	flex-grow: 0;
+	flex-basis: 20px;
+	padding: 0;
+}
+
+
 @media (min-width: 500px) {
 	.table-row-item {
 		border: 1px solid #fff;
@@ -136,8 +148,47 @@ label {
 	}
 }
 
-/* Specific job details */
+table :focus {
+outline-color: dimgrey;
+}
 
+
+/* table inputs */
+.table-row-item input {
+	margin: 0;
+	border: 0;
+	width: 100%;
+	background-color: transparent;
+}
+.table-row-item select {
+	background: transparent;
+	border-radius: 2px;
+	width: 100%;
+	border: rgba(169, 169, 169, 0.2);
+	height: 23px;
+	font-size: 1.1em;
+}
+.table-row-item .btn {
+	border: none;
+	margin: 0;
+	font-size: 18px;
+	line-height: 10px;
+	padding: 0;
+	width: 100%;
+	height: 18px;
+}
+.table-row-item .btn.btn-left {
+	border-radius: 0px 0px 0px 4px;
+	color: rgba(5, 5, 5, 0.63);
+	background-color: rgb(216, 212, 212);
+}
+.table-row-item .btn.btn-right {
+	border-radius: 4px 0px 0px 0px;
+	background-color: rgba(5, 5, 5, 0.4);
+	color: rgb(247, 247, 247);
+}
+
+/* Specific job details */
 .job-details {
 	display: flex;
 	flex-direction: row;

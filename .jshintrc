@@ -10,6 +10,12 @@
 		"suite",
 		"test",
 		"describe",
-		"it"
+		"it",
+		"before",
+		"after",
+		"setup",
+		"teardown",
+		"suiteSetup",
+		"suiteTeardown"
 	]
 }
