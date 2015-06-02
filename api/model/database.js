@@ -1,6 +1,7 @@
 "use strict";
 var pg = require("pg");
-var	conString = require("../creds.json").database;
+var config = require("../model/config.js");
+var	conString = config.database.dburl;
 
 
 function connect(query, table) {
