@@ -2,6 +2,7 @@
 
 var path  = require("path");
 var index = path.resolve(__dirname + "/../public/index.html");
+var database = require("./models/database");
 
 var handler = {
 
@@ -73,10 +74,13 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-    request.auth.session.clear();
-    request.auth.session.set(profile);
-    reply.redirect("/");
-
+		database.Users.create({
+			email: profile.email
+		}).then(function(){
+			request.auth.session.clear();
+			request.auth.session.set(profile);
+			reply.redirect("/");
+		});
   },
 
 
