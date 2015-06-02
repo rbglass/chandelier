@@ -35,6 +35,9 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
     redirectTo : "/",
     isSecure   : "false"
   });
+
+  server.auth.default("session");
+
 });
 
 

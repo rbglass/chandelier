@@ -4,25 +4,6 @@ var assert  = require("assert");
 var server  = require("../../api/server");
 var handler = require("../../api/handler");
 
-describe("/", function() {
-  describe("not authenticated GET", function() {
-    it("should reply with a redirect to /login", function(done) {
-
-      var options = {
-        method  : "GET",
-        url     : "/",
-        handler : handler.home
-      };
-
-      server.inject(options, function(res) {
-        assert.equal(302, res.statusCode);
-        assert.equal(false, res.request.auth.isAuthenticated);
-        assert.equal("/login", res.headers.location);
-        done();
-      });
-    });
-  });
-});
 
 describe("/", function() {
   describe("authenticated GET", function() {
@@ -47,3 +28,25 @@ describe("/", function() {
     });
   });
 });
+
+
+describe("/", function() {
+  describe("not authenticated GET", function() {
+    it("should reply with a redirect to /login", function(done) {
+
+      var options = {
+        method  : "GET",
+        url     : "/",
+        handler : handler.home
+      };
+
+      server.inject(options, function(res) {
+        assert.equal(302, res.statusCode);
+        assert.equal(false, res.request.auth.isAuthenticated);
+        assert.equal("/login", res.headers.location);
+        done();
+      });
+    });
+  });
+});
+

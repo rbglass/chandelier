@@ -6,18 +6,41 @@ var handler = require("../../api/handler");
 
 
 describe("/api/jobs/{id}/{item}", function() {
-	describe("not authenticated GET", function() {
-		it("should reply with a 403 forbidden status code", function(done) {
+	describe("authenticated GET", function() {
+		it("should reply with a 200 status code", function(done) {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/rb12/itemA",
+				url     : "/api/jobs/rb135/lamp",
+				handler : handler.jobs,
+				credentials : {
+					isAuthenticated : true
+				}
+			};
+
+			server.inject(options, function(res) {
+				assert.equal(200, res.statusCode);
+				assert.equal(true, res.request.auth.isAuthenticated);
+				done();
+			});
+		});
+	});
+});
+
+describe("/api/jobs/{id}/{item}", function() {
+	describe("not authenticated GET", function() {
+		it("should reply with a 302 status code and redirect to '/'", function(done) {
+
+			var options = {
+				method  : "GET",
+				url     : "/api/jobs/rb135/lamp",
 				handler : handler.jobs
 			};
 
 			server.inject(options, function(res) {
-				assert.equal(403, res.statusCode);
+				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
+        assert.equal("/", res.headers.location);
 				done();
 			});
 		});
@@ -26,17 +49,18 @@ describe("/api/jobs/{id}/{item}", function() {
 
 describe("/api/jobs/{id}/{item}", function() {
 	describe("not authenticated PUT", function() {
-		it("should reply with a 403 forbidden status code", function(done) {
+		it("should reply with a 302 redirect status code", function(done) {
 
 			var options = {
 				method  : "PUT",
-				url     : "/api/jobs/rb12/itemA",
+				url     : "/api/jobs/rb135/lamp",
 				handler : handler.jobs
 			};
 
 			server.inject(options, function(res) {
-				assert.equal(403, res.statusCode);
+				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
+        assert.equal("/", res.headers.location);
 				done();
 			});
 		});
@@ -45,17 +69,18 @@ describe("/api/jobs/{id}/{item}", function() {
 
 describe("/api/jobs/{id}/{item}", function() {
 	describe("not authenticated DELETE", function() {
-		it("should reply with a 403 forbidden status code", function(done) {
+		it("should reply with a 302 redirect status code", function(done) {
 
 			var options = {
 				method  : "DELETE",
-				url     : "/api/jobs/rb12/itemA",
+				url     : "/api/jobs/rb135/lamp",
 				handler : handler.jobs
 			};
 
 			server.inject(options, function(res) {
-				assert.equal(403, res.statusCode);
+				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
+        assert.equal("/", res.headers.location);
 				done();
 			});
 		});
