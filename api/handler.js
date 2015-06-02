@@ -15,6 +15,53 @@ var handler = {
     }
   },
 
+// -------------------------------------------------- \\
+
+
+  findJobs : function(request, reply) {
+		reply("findJobs");
+  },
+
+  addJob : function(request, reply) {
+  	reply("addJob");
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleJob : function(request, reply) {
+  	reply("findSingleJob");
+  },
+
+  createSingleJob : function(request, reply) {
+  	reply("createSingleJob");
+  },
+
+  updateSingleJob : function(request, reply) {
+  	reply("updateSingleJob");
+  },
+
+  removeSingleJob : function(request, reply) {
+  	reply("removeSingleJob");
+  },
+
+// -------------------------------------------------- \\
+
+
+  findSingleItem : function(request, reply) {
+  	reply("findSingleItem");
+  },
+
+  updateSingleItem : function(request, reply) {
+		reply("updateSingleItem");
+  },
+
+  removeSingleItem : function(request, reply) {
+  	reply("removeSingleItem");
+  },
+
+// -------------------------------------------------- \\
+
 
   login : function(request, reply) {
 
@@ -34,15 +81,6 @@ var handler = {
 			request.auth.session.set(profile);
 			reply.redirect("/");
 		});
-  },
-
-
-  jobs : function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      console.log("authenticated");
-    } else if (!request.auth.isAuthenticated) {
-      reply().code(403);
-    }
   },
 
 
