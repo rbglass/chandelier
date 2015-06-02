@@ -1,13 +1,14 @@
 "use strict";
-var pg = require("pg");
-var	conString = require("../creds.json").database;
+var config = require("../models/config.js");
+var sequalize = new Sequalize(config.database.dburl);
+
+var Users = sequalize.define('users', {});
+var Jobs = sequalize.define('jobs', {});
+var Job_items = sequalize.define('job_items', {});
 
 
-function connect(query, table) {
-	pg.connect(conString, function(err, client, done){
-		if(err) {
-			return console.error('error fetching client from pool', err);
-		}
-		query(table, client, done);
-	});
-}
+modules.exports = {
+	Users: Users,
+	Jobs: Jobs,
+	Job_items: Job_items
+};
