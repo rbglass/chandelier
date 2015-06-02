@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "npm run test & npm run build",
-    "dev": "npm run live-reload & npm run test:fwatch & npm run build:watch",
+    "dev": "npm run live-reload & npm run build:watch",
     "prebuild": "npm run lint",
     "build": "npm run build:js & npm run build:css",
     "build:js": "browserify -t babelify src/js/main.js -o build/js/main.js",
@@ -43,11 +43,13 @@
     "babelify": "^6.1.2",
     "browserify": "^10.2.3",
     "http-server": "^0.8.0",
+    "jsdom": "^3.1.1",
     "jsxhint": "^0.15.0",
     "karma": "^0.12.35",
     "karma-browserify": "^4.2.1",
     "live-reload": "^1.1.0",
     "mocha": "^2.2.5",
+    "mocha-jsdom": "^0.2.1",
     "myth": "^1.4.0",
     "sinon": "^1.14.1",
     "watchify": "^3.2.1"
