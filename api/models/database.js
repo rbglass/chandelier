@@ -1,13 +1,15 @@
 "use strict";
-var pg = require("pg");
-var	conString = require("../creds.json").database;
+var config = require("../config.js");
+var Sequelize = require("sequelize");
+var sequelize = new Sequelize(config.database.dburl);
+
+var Users = sequelize.define('users', {});
+var Jobs = sequelize.define('jobs', {});
+var Job_items = sequelize.define('job_items', {});
 
 
-function connect(query, table) {
-	pg.connect(conString, function(err, client, done){
-		if(err) {
-			return console.error('error fetching client from pool', err);
-		}
-		query(table, client, done);
-	});
-}
+module.exports = {
+	Users: Users,
+	Jobs: Jobs,
+	Job_items: Job_items
+};
