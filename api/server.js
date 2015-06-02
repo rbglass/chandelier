@@ -8,7 +8,7 @@ var handler = require("./handler");
 var config  = require("./config");
 
 server.connection({
-  port: process.env.PORT || 8000
+  port : Number(process.env.PORT) || 8000
 });
 
 server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
@@ -62,7 +62,7 @@ server.route([
     method  : "GET",
     handler : {
       directory : {
-        path  : path.resolve(__dirname + "/../public"),
+        path  : path.resolve(__dirname + "/../src"),
         index : false
       }
     }
