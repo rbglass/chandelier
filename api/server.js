@@ -60,7 +60,7 @@ server.route([
     method  : "GET",
     handler : {
       directory : {
-        path  : path.resolve(__dirname + "/../public"),
+        path  : path.resolve(__dirname + "/../src"),
         index : false
       }
     }

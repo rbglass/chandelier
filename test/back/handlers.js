@@ -1,5 +1,4 @@
 var assert  = require("assert");
-var request = require("superagent");
 var server  = require("../../api/server");
 var handler = require("../../api/handler");
 

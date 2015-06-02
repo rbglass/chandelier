@@ -36,7 +36,6 @@
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "flummox": "^3.5.2",
-    "superagent": "^1.2.0"
   },
   "devDependencies": {
     "babel": "^5.4.7",
