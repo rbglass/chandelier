@@ -15,7 +15,6 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
 
   if (err) {
     throw new Error("Error registering authorization: ", err);
-    return;
   }
 
   server.auth.strategy("google", "bell", {
