@@ -4,7 +4,8 @@
   "description": "production management for people who produce",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run live-reload & npm run test:fwatch & npm run build:watch",
+    "deploy": "npm run test & npm run build",
+    "dev": "npm run live-reload & npm run build:watch",
     "prebuild": "npm run lint",
     "build": "npm run build:js & npm run build:css",
     "build:js": "browserify -t babelify src/js/main.js -o build/js/main.js",
@@ -14,7 +15,7 @@
     "live-reload": "live-reload public/ --port 9081",
     "serve": "node index.js",
     "devserve": "http-server ./public",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run test:back & npm run test:front",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
     "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js"
@@ -31,7 +32,7 @@
   "homepage": "https://github.com/foundersandcoders/chandelier",
   "dependencies": {
     "bell": "^3.0.0",
-    "flummox": "^3.5.2",
+    "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
     "pg": "^4.3.0",
@@ -44,12 +45,18 @@
     "babelify": "^6.1.2",
     "browserify": "^10.2.3",
     "http-server": "^0.8.0",
+    "jsdom": "^3.1.1",
     "jsxhint": "^0.15.0",
     "karma": "^0.12.35",
     "karma-browserify": "^4.2.1",
     "live-reload": "^1.1.0",
     "mocha": "^2.2.5",
+    "mocha-jsdom": "^0.2.1",
     "myth": "^1.4.0",
+    "sinon": "^1.14.1",
     "watchify": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=0.12.0"
   }
 }

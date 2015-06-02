@@ -5,5 +5,9 @@
 	"strict" 			  : true,
 	"sub"           : true,
 	"esnext"				: true,
-	"browserify"		: true
+	"browserify"		: true,
+	"predef": [
+		"suite",
+		"test"
+	]
 }
