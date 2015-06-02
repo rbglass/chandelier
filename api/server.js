@@ -14,7 +14,7 @@ server.connection({
 server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
 
   if (err) {
-    throw New Error("Error registering authorization: ", err);
+    throw new Error("Error registering authorization: ", err);
     return;
   }
 
