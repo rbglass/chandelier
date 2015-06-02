@@ -16,6 +16,7 @@
     "serve": "node index.js",
     "devserve": "http-server ./public",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
     "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js"
   },
