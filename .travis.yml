@@ -1,8 +1,8 @@
-branches:
+ branches:
   only:
     - dev
  language: node_js
  node_js:
    - "0.12"
  script:
-	 - npm run deploy
+   - npm run deploy
