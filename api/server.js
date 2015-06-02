@@ -1,5 +1,6 @@
 var Hapi    = require("hapi");
 var bell    = require("bell");
+var path    = require("path");
 var server  = new Hapi.Server();
 var handler = require("./handler");
 var config  = require("./config");
@@ -55,19 +56,30 @@ server.route([
   },
 
   {
-    path    : "/jobs",
+    path    : "/{param*}",
+    method  : "GET",
+    handler : {
+      directory : {
+        path  : path.resolve(__dirname + "/../public"),
+        index : false
+      }
+    }
+  },
+
+  {
+    path    : "/api/jobs",
     method  : ["GET", "POST"],
     handler : handler.jobs
   },
 
   {
-    path    : "/jobs/{id}",
+    path    : "/api/jobs/{id}",
     method  : ["GET", "POST", "PUT", "DELETE"],
     handler : handler.jobs
   },
 
   {
-    path    : "/jobs/{id}/{item}",
+    path    : "/api/jobs/{id}/{item}",
     method  : ["GET", "PUT", "DELETE"],
     handler : handler.jobs
   },
