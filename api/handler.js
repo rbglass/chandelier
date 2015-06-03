@@ -18,46 +18,48 @@ var handler = {
 // -------------------------------------------------- \\
 
 
-  findJobs : function(request, reply) {
-		reply("findJobs");
-  },
-
-  addJob : function(request, reply) {
-  	reply("addJob");
+  getJobsTable : function(request, reply) {
+		reply("getJobsTable");
   },
 
 // -------------------------------------------------- \\
 
-
-  findSingleJob : function(request, reply) {
-  	reply("findSingleJob");
+  createJob : function(request, reply) {
+  	reply("createJob");
   },
 
-  createSingleJob : function(request, reply) {
-  	reply("createSingleJob");
+  updateJob : function(request, reply) {
+  	reply("updateJob");
   },
 
-  updateSingleJob : function(request, reply) {
-  	reply("updateSingleJob");
+  deleteJob : function(request, reply) {
+  	reply("removeJob");
   },
 
-  removeSingleJob : function(request, reply) {
-  	reply("removeSingleJob");
+  getSingleJob : function(request, reply) {
+  	reply("getSingleJob");
   },
 
 // -------------------------------------------------- \\
 
+	getJobItemsTable : function(request, reply) {
+		reply("getJobItemsTable");
+	},
 
-  findSingleItem : function(request, reply) {
-  	reply("findSingleItem");
+  getJobItems : function(request, reply) {
+  	reply("getJobItems");
   },
 
-  updateSingleItem : function(request, reply) {
-		reply("updateSingleItem");
+  createJobItems : function(request, reply) {
+  	reply("createJobItems");
   },
 
-  removeSingleItem : function(request, reply) {
-  	reply("removeSingleItem");
+  updateJobItems : function(request, reply) {
+		reply("updateJobItems");
+  },
+
+  deleteJobItems : function(request, reply) {
+  	reply("deleteJobItems");
   },
 
 // -------------------------------------------------- \\
