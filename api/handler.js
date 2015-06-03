@@ -25,7 +25,10 @@ var handler = {
 // -------------------------------------------------- \\
 
   createJob : function(request, reply) {
-  	reply("createJob");
+  	database.Jobs.create(request).success(function() {
+  		console.log("Job succesfully saved");
+	  	reply("createJob");
+  	});
   },
 
   updateJob : function(request, reply) {
@@ -37,7 +40,10 @@ var handler = {
   },
 
   getSingleJob : function(request, reply) {
+  	database.Job.find(request.payload.id).success(function() {
+  	console.log("Job succesfully created");
   	reply("getSingleJob");
+  	});
   },
 
 // -------------------------------------------------- \\
