@@ -80,9 +80,11 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		database.Users.create({
-			email: profile.email
-		}).then(function(){
+		database.Users.findOrCreate({
+			where:
+				{email: profile.email}
+		}).spread(function(user, created){
+			console.log(user);
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");
