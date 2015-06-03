@@ -9,6 +9,7 @@ var handler = {
   home : function(request, reply) {
 
     if (request.auth.isAuthenticated) {
+    	console.log("home handler");
       reply.file(index);
     } else if (!request.auth.isAuthenticated) {
       reply.redirect("/login");
@@ -19,6 +20,7 @@ var handler = {
 
   getJobsTable : function(request, reply) {
 		reply("getJobsTable");
+	},
 
 // -------------------------------------------------- \\
 
@@ -35,7 +37,7 @@ var handler = {
   },
 
   deleteJob : function(request, reply) {
-  	reply("removeJob");
+  	reply("deleteJob");
   },
 
   getSingleJob : function(request, reply) {
@@ -83,14 +85,15 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		database.Users.create({
-			email: profile.email
-		}).then(function(){
+		// database.Users.create({
+			// email: profile.email
+		// }).then(function(){
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");
-		});
+		// });
   },
+
 
 
   logout : function(request, reply) {
