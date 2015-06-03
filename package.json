@@ -2,7 +2,7 @@
   "name": "chandelier",
   "version": "1.0.0",
   "description": "production management for people who produce",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
