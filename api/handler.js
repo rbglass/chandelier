@@ -85,16 +85,15 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		// database.Users.create({
-			// email: profile.email
-		// }).then(function(){
+		// database.Users.findOrCreate({
+			// where:
+				// {email: profile.email}
+		// }).spread(function(){
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");
 		// });
   },
-
-
 
   logout : function(request, reply) {
 
