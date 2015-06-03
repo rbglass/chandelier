@@ -14,5 +14,8 @@ module.exports = {
 		dbuser			: process.env.DB_USER 		|| require("./creds.json").database.dbuser,
 		dbpassword	: process.env.DB_PASSWORD	|| require("./creds.json").database.dbpassword,
 		sslmode			: process.env.SSLMODE 		|| require("./creds.json").database.sslmode
+	},
+	localdb: {
+		localdburl: process.env.LOCAL_DB_URL || require("./creds.json").localdb.localdburl
 	}
 };
