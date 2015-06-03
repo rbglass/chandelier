@@ -92,25 +92,25 @@
 		    <div class="table-row-item">Metal</div>
 		    <div class="table-row-item">Flex</div>
 		    <div class="table-row-item">Bulb</div>
-		    <div class="table-row-item">Qty Req</div>
-		    <div class="table-row-item">Qty Hot</div>
-		    <div class="table-row-item">Qty Cold</div>
-		    <div class="table-row-item">Qty Assem</div>
-		    <div class="table-row-item">Qty Packed</div>
+		    <div class="table-row-item qty-sm">Qty Req</div>
+		    <div class="table-row-item qty-sm">Qty Hot</div>
+		    <div class="table-row-item qty-sm">Qty Cold</div>
+		    <div class="table-row-item qty-md">Qty Assem</div>
+		    <div class="table-row-item qty-md">Qty Packed</div>
 		    <div class="table-row-item u-flex-grow3">Notes</div>
+		    <div class="table-row-item fixed-col"></div>
 		  </div>
 
 		  <div class="table-row">
 			  <div class="table-row-item fixed-col">
 			  	<button class="btn btn-right">-</button>
-			  	<button class="btn btn-left">+</button>
 			  </div>
 		    <div class="table-row-item">1111</div>
 		    <div class="table-row-item">
 		    	<input type="text" value="toy">
 		    </div>
 		    <div class="table-row-item u-flex-grow3">
-		    	<input type="text" value="toy 4 kid">
+		    	<textarea value="toy 4 kid"></textarea>
 		    </div>
 		    <div class="table-row-item">
 		    	<select>
@@ -132,37 +132,39 @@
 		    		<option>light</option>
 	    		</select>
 		    </div>
-		    <div class="table-row-item">
-			    <input type="number">
+		    <div class="table-row-item qty-sm">
+			    <input type="number" min=0>
 		    </div>
-		    <div class="table-row-item">
-			    <input type="number">
+		    <div class="table-row-item qty-sm">
+			    <input type="number" min=0>
 			   </div>
-		    <div class="table-row-item">
-		   		<input type="number">
+		    <div class="table-row-item qty-sm">
+		   		<input type="number" min=0>
 		   	</div>
-		    <div class="table-row-item">
-		    	<input type="number">
+		    <div class="table-row-item qty-md">
+		    	<input type="number" min=0>
 		    </div>
-		    <div class="table-row-item">
-		    	<input type="number">
+		    <div class="table-row-item qty-md">
+		    	<input type="number" min=0>
 		    </div>
 		    <div class="table-row-item u-flex-grow3">
-		    	<input type="text" value="Notes">
+		    	<textarea value="Notes"></textarea>
+		    </div>
+		    <div class="table-row-item fixed-col">
+		    	<button class="btn btn-left">+</button>
 		    </div>
 		  </div>
 
 		  <div class="table-row">
 			  <div class="table-row-item fixed-col">
 			  	<button class="btn btn-right">-</button>
-			  	<button class="btn btn-left">+</button>
 			  </div>
 		    <div class="table-row-item">1111</div>
 		    <div class="table-row-item">
 		    	<input type="text" value="toy">
 		    </div>
 		    <div class="table-row-item u-flex-grow3">
-		    	<input type="text" value="toy 4 kid">
+		    	<textarea value="toy 4 kid"></textarea>
 		    </div>
 		    <div class="table-row-item">
 		    	<select>
@@ -184,24 +186,28 @@
 		    		<option>light</option>
 	    		</select>
 		    </div>
-		    <div class="table-row-item">
-			    <input type="number" value=0>
+		    <div class="table-row-item qty-sm">
+			    <input type="number" min=0 value=0>
 		    </div>
-		    <div class="table-row-item">
-			    <input type="number" value=0>
+		    <div class="table-row-item qty-sm">
+			    <input type="number" min=0 value=0>
 			   </div>
-		    <div class="table-row-item">
-		   		<input type="number" value=2>
+		    <div class="table-row-item qty-sm">
+		   		<input type="number" min=0 value=2>
 		   	</div>
-		    <div class="table-row-item">
-		    	<input type="number" value=0>
+		    <div class="table-row-item qty-md">
+		    	<input type="number" min=0 value=0>
 		    </div>
-		    <div class="table-row-item">
-		    	<input type="number" value=4>
+		    <div class="table-row-item qty-md">
+		    	<input type="number" min=0 value=4>
 		    </div>
 		    <div class="table-row-item u-flex-grow3">
-		    	<input type="text" value="Notes">
+		    	<textarea value="Notes"></textarea>
 		    </div>
+		    <div class="table-row-item fixed-col">
+		    	<button class="btn btn-left">+</button>
+		    </div>
+
 		  </div>
 
 		<script type="text/javascript" src="/js/main.js"></script>

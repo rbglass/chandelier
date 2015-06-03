@@ -1,5 +1,4 @@
 "use strict";
-import { EventEmitter } from "events";
 import { createStore } from "../utils/StoreUtils";
 import { contains, genericSort } from "../utils/ConvenienceUtils";
 import JobConstants from "../constants/JobConstants";
@@ -14,7 +13,7 @@ var _state = {
 
 var JobStore = createStore({
 	getJobs() {
-		let filtered = _state.jobs.filter(row => {
+		const filtered = _state.jobs.filter(row => {
 			contains(row, _state.filterBy);
 		});
 
@@ -31,6 +30,11 @@ JobDispatcher.register(payload => {
 
 		case JobConstants.RECEIVE_ALL_JOBS:
 				_state.jobs = action.data;
+				JobStore.emitChange();
+				break;
+
+		case JobConstants.FILTER_BY:
+				_state.filterBy = action.data;
 				JobStore.emitChange();
 				break;
 

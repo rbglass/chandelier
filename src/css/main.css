@@ -75,7 +75,7 @@ label {
 
 	border: 1px solid #f2f2f2;
 
-	font-size: 0.6rem;
+	font-size: 0.7rem;
 	margin: 0.5rem;
 	line-height: 1.5;
 }
@@ -111,6 +111,7 @@ label {
 	}
 }
 .table-row-item {
+	align-items: center;
 	display: box;
 	display: flex;
 	flex-flow: row nowrap;
@@ -148,12 +149,12 @@ label {
 	}
 }
 
-table :focus {
-outline-color: dimgrey;
-}
 
 
 /* table inputs */
+.table-row-item textarea {
+	border: ;
+}
 .table-row-item input {
 	margin: 0;
 	border: 0;
@@ -175,15 +176,15 @@ outline-color: dimgrey;
 	line-height: 10px;
 	padding: 0;
 	width: 100%;
-	height: 18px;
+	height: 51px;
 }
 .table-row-item .btn.btn-left {
-	border-radius: 0px 0px 0px 4px;
+	border-radius: 0px 4px 4px 0px;
 	color: rgba(5, 5, 5, 0.63);
 	background-color: rgb(216, 212, 212);
 }
 .table-row-item .btn.btn-right {
-	border-radius: 4px 0px 0px 0px;
+	border-radius: 4px 0px 0px 4px;
 	background-color: rgba(5, 5, 5, 0.4);
 	color: rgb(247, 247, 247);
 }
@@ -234,6 +235,14 @@ outline-color: dimgrey;
 }
 
 /* Flex Utility classes */
+
+.qty-sm {
+	flex-grow: 0.5;
+}
+
+.qty-md {
+	flex-grow: 0.6;
+}
 .u-flex-grow1 {
 	flex-grow: 1;
 }

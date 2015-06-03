@@ -1,18 +1,18 @@
 "use strict";
-import { EventEmitter } from "events";
 import { createStore } from "../utils/StoreUtils";
+import { genericSort } from "../utils/ConvenienceUtils";
 import JobConstants from "../constants/JobConstants";
 import JobDispatcher from "../dispatchers/JobDispatcher";
 
 var _state = {
 	job: [],
-	sortBy: [],
-	filterBy: ""
+	sortBy: "",
+	asc: false
 };
 
 var SingleJobStore = createStore({
-	getState() {
-		return _state;
+	getSortedJobs() {
+		const sorted = genericSort(_state.job, _state.sortBy, _state.asc);
 	}
 });
 
