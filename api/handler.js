@@ -1,8 +1,9 @@
 "use strict";
 
-var path  = require("path");
-var index = path.resolve(__dirname + "/../public/index.html");
+var path = require("path");
+
 var database = require("./models/database");
+var index    = path.resolve(__dirname + "/../public/index.html");
 
 var handler = {
 
@@ -19,60 +20,142 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobsTable : function(request, reply) {
-		reply("getJobsTable");
+  	database.Jobs.findAll().then(function(jobs) {
+			reply(jobs);
+  	});
 	},
 
 // -------------------------------------------------- \\
 
-
   createJob : function(request, reply) {
-  	database.Jobs.create(request).success(function() {
+
+  	// SHOULD WE CREATE A NEW EMPTY JOB THEN INPUT FIELDS WITH PUT REQUESTS?
+  	database.Jobs.create().then(function(job) {
   		console.log("Job succesfully saved");
-	  	reply("createJob");
+	  	reply(job);
+  	});
+  // },
+
+  	// OR POST ALL DETAILS IN ONE GO WHEN JOB IS FIRST CREATED?
+  	database.Jobs.create({
+  		where : {
+  			key1 : "val1",
+  			key2 : "val2",
+  			key3 : "val3"
+  		}
+  	}).then(function(job) {
+  		reply(job);
   	});
   },
 
   updateJob : function(request, reply) {
-  	reply("updateJob");
+
+  	// UPDATE jobs SET [field = input] WHERE jobID = RB125
+
+  	var input = request.payload["value"];
+  	var field = request.payload["field"];
+  	var jobID = request.payload["jobID"];
+
+  	database.Jobs.update({
+  		field : input,
+  	}, {
+  		where : {
+  			jobID : jobID
+  		}
+  	}).then(function(job) {
+  		console.log("job updated");
+	  	reply(job);
+  	});
   },
 
   deleteJob : function(request, reply) {
-  	reply("deleteJob");
+
+  	var jobID = request.payload["jobID"];
+
+  	database.Jobs.destroy({
+  		where : {
+  			jobID : "jobID"
+  		}
+  	}).then(function(job) {
+  		console.log("job deleted");
+	  	reply(job);
+  	});
   },
 
   getSingleJob : function(request, reply) {
-  	database.Job.find(request.payload.id).success(function() {
-  	console.log("Job succesfully created");
-  	reply("getSingleJob");
+
+  	var jobID = request.payload["jobID"];
+
+  	database.Job.find({
+  		where : {
+  			jobID : jobID
+  		}
+  	}).then(function(job) {
+  		console.log("job found");
+	  	reply(job);
   	});
   },
 
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		reply("getJobItemsTable");
+		database.Job_items.find().then(function(jobItems) {
+			reply(jobItems);
+		});
 	},
 
 // -------------------------------------------------- \\
 
   getJobItems : function(request, reply) {
-  	reply("getJobItems");
+
+  	var jobID = request.payload["jobID"];
+
+  	database.Job_items.findAll({
+  		where : {
+  			jobID : jobID
+  		}
+  	}).then(function(jobItems) {
+  		reply(jobItems);
+  	});
   },
 
-  createJobItems : function(request, reply) {
-  	reply("createJobItems");
+  createJobItem : function(request, reply) {
+  	database.Job_items.create().then(function(jobItem) {
+  		reply(jobItem);
+  	});
 	},
 
   updateJobItems : function(request, reply) {
-		reply("updateJobItems");
+
+  	var jobID = request.payload["jobID"];
+  	var input = request.payload["value"];
+  	var field = request.payload["field"];
+
+  	database.Job_items.update({
+  		field : input
+  	}, {
+  		where : {
+  			jobID : jobID
+  		}
+  	}).then(function(jobItem) {
+			reply(jobItem);
+  	});
   },
 
   deleteJobItems : function(request, reply) {
-  	reply("deleteJobItems");
+
+		var jobID = request.payload["jobID"];
+
+		database.Job_items.destroy({
+			where : {
+				jobID : jobID
+			}
+		}).then(function(jobItem) {
+			reply(jobItem);
+		});
   },
 
 // -------------------------------------------------- \\
-
 
   login : function(request, reply) {
 
@@ -85,14 +168,20 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		// database.Users.findOrCreate({
-			// where:
-				// {email: profile.email}
-		// }).spread(function(){
-			request.auth.session.clear();
-			request.auth.session.set(profile);
-			reply.redirect("/");
-		// });
+		database.Users.find({
+			where: {
+				email: profile.email
+			}
+		}).spread(function(user) {
+			if (user) {
+				request.auth.session.clear();
+				request.auth.session.set(profile);
+				reply.redirect("/");
+			} else if (!user) {
+			// WILL THIS BE A VALID WAY TO CHECK IF A USER EXISTS IN OUR DATABASE?? \\
+				reply("Not a valid account");
+			}
+		});
   },
 
   logout : function(request, reply) {

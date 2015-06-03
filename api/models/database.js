@@ -1,5 +1,5 @@
 "use strict";
-var config = require("../config.js");
+var config    = require("../config.js");
 var Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(config.localdb.localdburl, {
