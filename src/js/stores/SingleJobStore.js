@@ -3,16 +3,21 @@ import { createStore } from "../utils/StoreUtils";
 import { genericSort } from "../utils/ConvenienceUtils";
 import JobConstants from "../constants/JobConstants";
 import JobDispatcher from "../dispatchers/JobDispatcher";
+import { details, items} from "../sampledata/data.js";
 
-var _state = {
-	job: [],
+var state = {
+	details: details,
+	items: items,
 	sortBy: "",
 	asc: false
 };
 
 var SingleJobStore = createStore({
-	getSortedJobs() {
-		const sorted = genericSort(_state.job, _state.sortBy, _state.asc);
+	getSortedItems() {
+		return genericSort(state.items, state.sortBy, state.asc);
+	},
+	getJobDetails() {
+		return state.details;
 	}
 });
 
@@ -24,19 +29,19 @@ JobDispatcher.register((payload) => {
 	switch(action.type) {
 
 		case JobConstants.RECEIVE_SINGLE_JOB:
-				_state.job = action.data;
+				state.job = action.data;
 				SingleJobStore.emitChange();
 				break;
 
 		case JobConstants.SORT_ONE:
-				if(action.data === _state.sortBy) {
-					_state.asc = !_state.asc;
+				if(action.data === state.sortBy) {
+					state.asc = !state.asc;
 				}
-				_state.sortBy = action.data;
+				state.sortBy = action.data;
 				SingleJobStore.emitChange();
 				break;
 
 		default:
-			  break;
+				break;
 	}
 });

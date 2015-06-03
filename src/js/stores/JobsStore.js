@@ -3,21 +3,30 @@ import { createStore } from "../utils/StoreUtils";
 import { contains, genericSort } from "../utils/ConvenienceUtils";
 import JobConstants from "../constants/JobConstants";
 import JobDispatcher from "../dispatchers/JobDispatcher";
+import { jobs } from "../sampledata/data.js";
 
-var _state = {
-	jobs: [],
+var state = {
+	jobs: jobs,
 	sortBy: "",
 	asc: false,
 	filterBy: ""
 };
 
 var JobStore = createStore({
-	getJobs() {
-		const filtered = _state.jobs.filter(row => {
-			contains(row, _state.filterBy);
+
+	getFilteredAndSortedJobs() {
+		const filtered = state.jobs.filter(row => {
+			return contains(row, state.filterBy);
 		});
 
-		return genericSort(filtered, _state.sortBy, _state.asc);
+		return genericSort(filtered, state.sortBy, state.asc);
+	},
+	getFilters() {
+		return {
+			sortBy: state.sortBy,
+			asc: state.asc,
+			filterBy: state.filterBy
+		};
 	}
 });
 
@@ -29,24 +38,24 @@ JobDispatcher.register(payload => {
 	switch(action.type) {
 
 		case JobConstants.RECEIVE_ALL_JOBS:
-				_state.jobs = action.data;
+				state.jobs = action.data;
 				JobStore.emitChange();
 				break;
 
 		case JobConstants.FILTER_BY:
-				_state.filterBy = action.data;
+				state.filterBy = action.data;
 				JobStore.emitChange();
 				break;
 
 		case JobConstants.SORT_ONE:
-				if(action.data === _state.sortBy) {
-					_state.asc = !_state.asc;
+				if(action.data === state.sortBy) {
+					state.asc = !state.asc;
 				}
-				_state.sortBy = action.data;
+				state.sortBy = action.data;
 				JobStore.emitChange();
 				break;
 
 		default:
-			  break;
+				break;
 	}
 });

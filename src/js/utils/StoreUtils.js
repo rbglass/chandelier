@@ -1,13 +1,14 @@
 "use strict";
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
+import objectAssign from "object-assign";
 
-const CHANGE_EVENT = 'change';
+const CHANGE_EVENT = "change";
 
 export function createStore(spec) {
 	const emitter = new EventEmitter();
 	emitter.setMaxListeners(0);
 
-	const store = Object.assign({
+	const store = objectAssign({
 		emitChange() {
 			emitter.emit(CHANGE_EVENT);
 		},

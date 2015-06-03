@@ -18,11 +18,11 @@ export default class TableRow extends Component {
 
 		return (
 			<div className="table-row">
-				<div class="table-row-item fixed-col">
+				<div className="table-row-item fixed-col">
 					<button class="btn btn-left">-</button>
 				</div>
 				{cells}
-				<div class="table-row-item fixed-col">
+				<div className="table-row-item fixed-col">
 					<button class="btn btn-right">+</button>
 				</div>
 			</div>
@@ -39,6 +39,7 @@ TableRow.propTypes = {
 		metal: PropTypes.string,
 		flex: PropTypes.string,
 		bulb: PropTypes.string,
+		qty_req: PropTypes.number,
 		qty_hot: PropTypes.number,
 		qty_cold: PropTypes.number,
 		qty_assem: PropTypes.number,

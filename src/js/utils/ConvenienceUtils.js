@@ -4,7 +4,7 @@ export function contains(obj, term) {
 	const k = Object.keys(obj);
 
 	const hasTerm = k.some((prop) => {
-		switch (typeof prop) {
+		switch (typeof obj[prop]) {
 			case "string":
 					return obj[prop].includes(term);
 			case "number":
