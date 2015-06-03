@@ -38,6 +38,14 @@ JobDispatcher.register(payload => {
 				JobStore.emitChange();
 				break;
 
+		case JobConstants.SORT_ONE:
+				if(action.data === _state.sortBy) {
+					_state.asc = !_state.asc;
+				}
+				_state.sortBy = action.data;
+				JobStore.emitChange();
+				break;
+
 		default:
 			  break;
 	}

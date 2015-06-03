@@ -1,7 +1,7 @@
 "use strict";
-import km from "react/keymirror";
+import keymirror from "react/keymirror";
 
-export default km({
+export default keymirror({
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,
 	"RECEIVE_ALERT": null,
