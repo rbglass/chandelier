@@ -83,8 +83,7 @@ var handler = {
 		database.Users.findOrCreate({
 			where:
 				{email: profile.email}
-		}).spread(function(user, created){
-			console.log(user);
+		}).spread(function(){
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");

@@ -3,12 +3,12 @@ var config = require("../config.js");
 var Sequelize = require("sequelize");
 
 var sequelize = new Sequelize(config.localdb.localdburl, {
-            dialect:'postgres',
-            define: {
-                timestamps: true,
-                updatedAt: 'updatedat',
-                createdAt: 'createdat'
-            }
+	dialect:'postgres',
+	define: {
+			timestamps: true,
+			updatedAt: 'updatedat',
+			createdAt: 'createdat'
+	}
 });
 
 //var sequelize = new Sequelize(config.database.dbname, config.database.dbuser, config.database.dbpassword, {
