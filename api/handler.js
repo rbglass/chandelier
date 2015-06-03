@@ -2,7 +2,9 @@
 
 var path  = require("path");
 var index = path.resolve(__dirname + "/../public/index.html");
-var database = require("./models/database");
+var Users = require("./models/Users");
+var Jobs = require("./models/Jobs");
+var Job_items = require("./models/Job_items");
 
 var handler = {
 
@@ -26,7 +28,7 @@ var handler = {
 
 
   createJob : function(request, reply) {
-  	database.Jobs.create(request).success(function() {
+  	Jobs.create(request).success(function() {
   		console.log("Job succesfully saved");
 	  	reply("createJob");
   	});
@@ -41,7 +43,7 @@ var handler = {
   },
 
   getSingleJob : function(request, reply) {
-  	database.Job.find(request.payload.id).success(function() {
+  	Jobs.find(request.payload.id).success(function() {
   	console.log("Job succesfully created");
   	reply("getSingleJob");
   	});
@@ -85,14 +87,14 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		// database.Users.findOrCreate({
-			// where:
-				// {email: profile.email}
-		// }).spread(function(){
+		 Users.findOrCreate({
+			 where:
+				 {email: profile.email}
+		 }).spread(function(){
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");
-		// });
+		 });
   },
 
   logout : function(request, reply) {
