@@ -43,59 +43,62 @@ module.exports =([
   {
     path    : "/api/jobs",
     method  : "GET",
-    handler : handler.findJobs
-  },
-
-  {
-    path    : "/api/jobs",
-    method  : "POST",
-    handler : handler.addJob
+    handler : handler.getJobsTable
   },
 
 // --------------------------------- \\
 
   {
     path    : "/api/jobs/{id}",
-    method  : "GET",
-    handler : handler.findSingleJob
-  },
-
-  {
-    path    : "/api/jobs/{id}",
     method  : "POST",
-    handler : handler.createSingleJob
+    handler : handler.createJob
   },
 
   {
     path    : "/api/jobs/{id}",
     method  : "PUT",
-    handler : handler.updateSingleJob
+    handler : handler.updateJob
   },
 
   {
     path    : "/api/jobs/{id}",
     method  : "DELETE",
-    handler : handler.removeSingleJob
+    handler : handler.deleteJob
+  },
+
+  {
+    path    : "/api/jobs/{id}",
+    method  : "GET",
+    handler : handler.getSingleJob
   },
 
  // --------------------------------- \\
 
+	 {
+	 	path    : "/api/items",
+	 	method  : "GET",
+	 	handler : handler.getJobItemsTable
+	 },
+
+ // --------------------------------- \\
+
+
   {
     path    : "/api/jobs/{id}/{item}",
     method  : "GET",
-    handler : handler.findSingleItem
+    handler : handler.getJobItems
   },
 
   {
     path    : "/api/jobs/{id}/{item}",
     method  : "PUT",
-    handler : handler.updateSingleItem
+    handler : handler.updateJobItems
   },
 
   {
     path    : "/api/jobs/{id}/{item}",
     method  : "DELETE",
-    handler : handler.removeSingleItem
+    handler : handler.deleteJobItems
   },
 
 // ---------------------------------- \\

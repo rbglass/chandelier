@@ -39,7 +39,6 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
 
 });
 
-
 server.route(require("./routes.js"));
 
 module.exports = server;
