@@ -44,8 +44,10 @@
   },
   "devDependencies": {
     "babel": "^5.4.7",
+    "babel-eslint": "^3.1.10",
     "babelify": "^6.1.2",
     "browserify": "^10.2.3",
+    "eslint": "^0.22.1",
     "http-server": "^0.8.0",
     "jsdom": "^3.1.1",
     "jsxhint": "^0.15.0",

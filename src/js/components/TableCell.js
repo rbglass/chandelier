@@ -1,19 +1,25 @@
 "use strict";
-var React = require("react");
+import { Component, PropTypes } from "react";
+import { getNode } from "../utils/TableUtils";
 
-var TableCell = React.createClass({
+export default class TableCell extends Component {
 
 	render() {
-		let cellClass = "table-row-item ";
-		if(this.props.cellClass) cellClass += this.props.cellClass;
+		let cellClass = `table-row-item ${this.props.column}`;
 
 		return (
-			<div className="table-row-item" >
-				{this.props.children}
+			<div className={cellClass} >
+				{getNode(this.props.column, this.props.content)}
 			</div>
 		);
 	}
-});
+}
 
-module.exports = TableCell;
-
+TableCell.propTypes = {
+	column: PropTypes.string.required,
+	content: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+		PropTypes.instanceOf(Date)
+	])
+};
