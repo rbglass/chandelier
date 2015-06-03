@@ -7,7 +7,7 @@ var Sequelize = require("sequelize");
 //});
 
 var sequelize = new Sequelize(config.database.dbname, config.database.dbuser, config.database.dbpassword, {
-	"host": "127.0.0.1",
+//	"host": "127.0.0.1",
 	"dialect": "postgres",
 	"port": 5432
 });
