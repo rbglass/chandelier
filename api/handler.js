@@ -17,12 +17,11 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-
   getJobsTable : function(request, reply) {
 		reply("getJobsTable");
-  },
 
 // -------------------------------------------------- \\
+
 
   createJob : function(request, reply) {
   	database.Jobs.create(request).success(function() {
@@ -52,13 +51,15 @@ var handler = {
 		reply("getJobItemsTable");
 	},
 
+// -------------------------------------------------- \\
+
   getJobItems : function(request, reply) {
   	reply("getJobItems");
   },
 
   createJobItems : function(request, reply) {
   	reply("createJobItems");
-  },
+	},
 
   updateJobItems : function(request, reply) {
 		reply("updateJobItems");
