@@ -6,10 +6,10 @@ export const details = {
 	notes: "happy go lucky",
 	job_status: "accepted",
 	order_type: "special",
-	last_update: "10-01-2015",
+	last_update: "2015-01-12",
 	parts_status: "waiting",
 	parts_notes: "when they coming???",
-	shipping_date: "12-12-2015",
+	shipping_date: "2015-12-30",
 	delivery_details: "53 sussex rd"
 };
 
@@ -55,10 +55,10 @@ export const jobs = [
 		notes: "happy go lucky",
 		job_status: "accepted",
 		order_type: "special",
-		last_update: "10-01-2015",
+		last_update: "2015-10-01",
 		parts_status: "waiting",
 		parts_notes: "when they coming???",
-		shipping_date: "12-12-2015",
+		shipping_date: "2015-12-12",
 		delivery_details: "53 sussex rd"
 	},
 	{
@@ -69,10 +69,10 @@ export const jobs = [
 		notes: "happy go lucky",
 		job_status: "accepted",
 		order_type: "special",
-		last_update: "10-01-2015",
+		last_update: "2015-10-01",
 		parts_status: "waiting",
 		parts_notes: "when they coming???",
-		shipping_date: "12-12-2015",
+		shipping_date: "2015-12-12",
 		delivery_details: "53 sussex rd"
 	}
 ];

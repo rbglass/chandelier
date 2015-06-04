@@ -1,13 +1,17 @@
 "use strict";
 import React, { Component } from "react";
+import bindToInstance from "./bindToInstance";
 
 export default function connectToStores(arrayOfStores, getStateFromStores) {
 	return function(ComponentToConnect) {
 		return class StoreConnector extends Component {
 
-			constructor(props) {
-				super(props);
+			constructor() {
+				super();
 				this.state = getStateFromStores();
+
+				const methods = ["onStoreChange"];
+				bindToInstance(this, methods);
 			};
 
 			componentWillMount() {
@@ -27,7 +31,6 @@ export default function connectToStores(arrayOfStores, getStateFromStores) {
 			}
 
 			render() {
-
 				return <ComponentToConnect {...this.state} {...this.props} />;
 			}
 		};

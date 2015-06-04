@@ -1,59 +1,66 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
 import { contains, genericSort } from "../utils/ConvenienceUtils";
-import JobConstants from "../constants/JobConstants";
-import JobDispatcher from "../dispatchers/JobDispatcher";
-import { jobs } from "../sampledata/data.js";
+import ActionTypes from "../constants/ActionTypes";
+import AppDispatcher from "../dispatchers/AppDispatcher";
+import { jobs as sampledata } from "../sampledata/data.js";
 
-var state = {
-	jobs: jobs,
-	sortBy: "",
-	asc: false,
-	filterBy: ""
-};
+var jobs = sampledata,
+		filters = {
+			sortBy: "",
+			asc: false,
+			filterBy: "",
+			startDate: "",
+			endDate: ""
+		};
 
 var JobStore = createStore({
 
 	getFilteredAndSortedJobs() {
-		const filtered = state.jobs.filter(row => {
-			return contains(row, state.filterBy);
+		const filtered = jobs.filter(row => {
+			return contains(row, filters.filterBy);
 		});
 
-		return genericSort(filtered, state.sortBy, state.asc);
+		return genericSort(filtered, filters.sortBy, filters.asc);
 	},
 	getFilters() {
-		return {
-			sortBy: state.sortBy,
-			asc: state.asc,
-			filterBy: state.filterBy
-		};
+		return filters;
 	}
 });
 
 export default JobStore;
 
-JobDispatcher.register(payload => {
-	let action = payload.action;
+AppDispatcher.register(action => {
 
 	switch(action.type) {
 
-		case JobConstants.RECEIVE_ALL_JOBS:
-				state.jobs = action.data;
+		case ActionTypes.RECEIVE_ALL_JOBS:
+				jobs = action.data;
 				JobStore.emitChange();
 				break;
 
-		case JobConstants.FILTER_BY:
-				state.filterBy = action.data;
+		case ActionTypes.FILTER_BY:
+				filters.filterBy = action.data;
 				JobStore.emitChange();
 				break;
 
-		case JobConstants.SORT_ONE:
-				if(action.data === state.sortBy) {
-					state.asc = !state.asc;
+		case ActionTypes.SORT_ONE:
+				if(action.data === filters.sortBy) {
+					filters.asc = !filters.asc;
 				}
-				state.sortBy = action.data;
+				filters.sortBy = action.data;
 				JobStore.emitChange();
 				break;
+
+		case ActionTypes.SET_START_DATE:
+			filters.startDate = action.data;
+			JobStore.emitChange();
+			break;
+
+		case ActionTypes.SET_END_DATE:
+			filters.endDate = action.data;
+			JobStore.emitChange();
+			break;
 
 		default:
 				break;

@@ -11,7 +11,7 @@ export default class JobsTableRow extends Component {
 		let cells = this.props.cells;
 		return (
 			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
-				<div className="table-row-item u-flex-grow2" data-header="Header1">
+				<div className="table-row-item" data-header="Header1">
 					<Link to="singlejob" params={{id: cells.jobid}}>{cells.jobid}</Link>
 				</div>
 				<div className="table-row-item" data-header="Header2">
