@@ -22,7 +22,7 @@ var handler = {
 
   getJobsTable : function(request, reply) {
 		console.log("jobs table handler");
-		Jobs.findAll().on('success', function(){
+		Jobs.findAll().then(function(){
 				reply("getJobsTable");
 		}).catch(function(err){
 			if (err) return console.log(err);
@@ -101,7 +101,7 @@ var handler = {
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		Job_items.findAll().on('success', function(){
+		Job_items.findAll().then(function(){
 			reply("getJobItemsTable");
 		}).catch(function(err){
 			if (err) return console.log(err);
@@ -198,7 +198,7 @@ var handler = {
 
 		 Users.findOrCreate({
 			 where: {email: profile.email}
-		 }).spread(function(){
+		 }).then(function(){
 				request.auth.session.clear();
 				request.auth.session.set(profile);
 				reply.redirect("/");
