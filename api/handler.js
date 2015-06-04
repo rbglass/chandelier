@@ -31,17 +31,17 @@ var handler = {
 // -------------------------------------------------- \\
 
   createJob : function(request, reply) {
-		var entry = request.payload;
+		//create an empty row (the updateJob handler should then be triggered)
   	Jobs.create({
-			job_id: 						entry.job_id,
-			client: 						entry.client,
-			project: 						entry.project,
-			job_status: 				entry.job_status,
-			order_type: 				entry.order_type,
-			shipping_date: 			entry.shipping_date,
-			num_of_job_items: 	entry.num_of_job_items,
-			parts_status: 			entry.parts_status,
-			last_update: 				entry.last_update
+			job_id: 						" ",
+			client: 						" ",
+			project: 						" ",
+			job_status: 				" ",
+			order_type: 				" ",
+			shipping_date: 			" ",
+			num_of_job_items: 	" ",
+			parts_status: 			" ",
+			last_update: 				" "
 		}).then(function(){
 			//TODO need an oclick on the frontend to create an empty row.
 				reply("createJob");
@@ -52,22 +52,23 @@ var handler = {
 
   updateJob : function(request, reply) {
 
-  	// UPDATE jobs SET [field = input] WHERE jobID = RB125
-
-  	var input = request.payload["value"];
-  	var field = request.payload["field"];
-  	var jobID = request.payload["jobID"];
-
-  	Jobs.update({
-  		field : input,
+  	var target = request.payload[target];
+			var value = request.payload.value;
+			Jobs.update({
+  		target : value
   	}, {
   		where : {
-  			jobID : jobID
+  			target : {
+					$ne: value
+					//update where original value is NOT the updated value
+				}
   		}
   	}).then(function(job) {
-  		console.log("job updated");
-	  	reply(job);
-  	});
+			reply(job);
+  	}).catch(function(err) {
+				if (err) return console.log(err);
+			});
+
   },
 
   deleteJob : function(request, reply) {
@@ -78,14 +79,16 @@ var handler = {
 
   	}).then(function() {
 	  	reply("job deleted");
-  	});
+  	}).catch(function(err){
+			if (err) return console.log(err);
+		});
   },
 
   getSingleJob : function(request, reply) {
 
   	var entry = request.payload;
   	Jobs.find({
-  		where : { job_id : entry.job_id }
+  		where : { job_id: entry.job_id }
   	}).then(function(job) {
   		reply(job);
 		}).catch(function(err) {
@@ -120,21 +123,21 @@ var handler = {
   },
 
   createJobItem : function(request, reply) {
-		var entry = request.payload;
+
 		Job_items.create({
-			item_id: 			entry.item,
-			product: 			entry.product,
-			description: 	entry.description,
-			glass: 				entry.glass,
-			metal: 				entry.metal,
-			flex: 				entry.flex,
-			bulb: 				entry.bulb,
-			qty_req: 			entry.qty_req,
-			qty_hot: 			entry.qty_hot,
-			qty_cold: 		entry.qty_cold,
-			qty_assem: 		entry.qty_assem,
-			qty_packed: 	entry.qty_packed,
-			notes: 				entry.notes
+			item_id: 			" ",
+			product: 			" ",
+			description: 	" ",
+			glass: 				" ",
+			metal: 				" ",
+			flex: 				" ",
+			bulb: 				" ",
+			qty_req: 			" ",
+			qty_hot: 			" ",
+			qty_cold: 		" ",
+			qty_assem: 		" ",
+			qty_packed: 	" ",
+			notes: 				" "
 		}).then(function(){
   		reply("createJobItem");
 		}).catch(function(err){
@@ -142,30 +145,38 @@ var handler = {
 		});
 	},
 
-  updateJobItems : function(request, reply, field) {
-			var entry = request.payload;
+  updateJobItems : function(request, reply) {
+			var target = request.payload[target];
+			var value = request.payload.value;
 			Job_items.update({
-  		field : entry.field
+  		target : value
   	}, {
   		where : {
-  			job_id : entry.job_id
+  			target : {
+					$ne: value
+					//update where original value is NOT the updated value
+				}
   		}
   	}).then(function(jobItem) {
 			reply(jobItem);
-  	});
+  	}).catch(function(err) {
+				if (err) return console.log(err);
+			});
 
   },
 
   deleteJobItems : function(request, reply) {
 
 		var entry = request.payload;
-
+		//delete rows with this job id
 		Job_items.destroy({
 			where : {
 				job_id : entry.job_id
 			}
 		}).then(function(jobItem) {
 			reply(jobItem);
+		}).catch(function(err){
+			if (err) return console.log(err);
 		});
   },
 
