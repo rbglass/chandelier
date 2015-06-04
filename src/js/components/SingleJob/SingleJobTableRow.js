@@ -42,7 +42,7 @@ export default class SingleJobTableRow extends Component {
 				case "select":
 						input = (
 							<select value={cellValue}>
-								{ cell.options.map(e => { return <option>{e}</option>; }, this) }
+								{ this.props.selections[cell.key].map(e => { return <option>{e}</option>; }, this) }
 							</select>
 						);
 						break;

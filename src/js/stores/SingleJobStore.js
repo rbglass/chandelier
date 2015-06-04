@@ -15,7 +15,7 @@ var job = {
 			isAsc: false
 		};
 
-var SingleJobStore = createStore({
+const SingleJobStore = createStore({
 	getSortedItems() {
 		return genericSort(job.items, filters.sortTerm, filters.isAsc);
 	},
@@ -43,6 +43,13 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
+		case ActionTypes.CREATE_ITEM:
+				job.items.push({
+					item: +("" + Date.now()).substring(6)
+				});
+				SingleJobStore.emitChange();
+				break;
+
 		// Will be destroyed when api ready
 		case ActionTypes.UPDATE_ITEM:
 				let d = action.data;
@@ -63,7 +70,7 @@ AppDispatcher.register(action => {
 					newItems.push(item);
 					if(item.item === action.data) {
 						let dupe = objectAssign({}, item);
-						dupe.item = Date.now();
+						dupe.item = +("" + Date.now()).substring(6);
 						newItems.push(dupe);
 					}
 				});

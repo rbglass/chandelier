@@ -9,10 +9,12 @@ export default keyMirror({
 // may be redundant with server
 	"CREATE_JOB": null,
 	"UPDATE_JOB": null,
-	"UPDATE_ITEM": null,
-	"UPDATE_DETAILS": null,
+
+	"CREATE_ITEM": null,
 	"DUPLICATE_ITEM": null,
+	"UPDATE_ITEM": null,
 	"DELETE_ITEM": null,
+	"UPDATE_DETAILS": null,
 
 	"SORT_ONE": null,
 	"SORT_MULTI": null,

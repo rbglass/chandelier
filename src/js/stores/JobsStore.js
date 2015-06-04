@@ -14,7 +14,7 @@ var jobs = sampledata,
 			endDate: null
 		};
 
-var JobsStore = createStore({
+const JobsStore = createStore({
 
 	getFilteredAndSortedJobs() {
 		let f = filters;

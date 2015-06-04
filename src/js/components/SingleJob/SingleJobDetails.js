@@ -41,14 +41,20 @@ export default class SingleJobDetails extends Component {
 			<div className="job-details-column u-flex-grow3">
 				<div className="job-details-field">
 					<label htmlFor="jobstatus">Job Status:</label>
-					<input type="text" value={details.job_status} className="job-text-input" id="jobstatus"
-							onChange={keySealer(null, "job_status", updateDetails)} />
+					<select className="job-text-input" id="job_status" value={details.job_status}
+							onChange={keySealer(null, "job_status", updateDetails)} >
+							{this.props.selections.job_status.map(opt => {
+								return <option>{opt}</option>;
+							})}
+					</select>
 				</div>
 				<div className="job-details-field">
 					<label htmlFor="ordertype">Order Type:</label>
 					<select className="job-text-input" id="ordertype" value={details.order_type}
 							onChange={keySealer(null, "order_type", updateDetails)} >
-						<option>Standard</option>
+						{this.props.selections.order_type.map(opt => {
+							return <option>{opt}</option>;
+						})}
 					</select>
 				</div>
 				<div className="job-details-field">
@@ -60,7 +66,9 @@ export default class SingleJobDetails extends Component {
 					<label htmlFor="partsstatus">Parts Status:</label>
 					<select className="job-text-input" id="partsstatus" value={details.parts_status}
 							onChange={keySealer(null, "parts_status", updateDetails)} >
-						<option>Started</option>
+							{this.props.selections.parts_status.map(opt => {
+								return <option>{opt}</option>;
+							})}
 					</select>
 				</div>
 				<div className="job-details-field notes">

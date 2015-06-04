@@ -50,10 +50,9 @@ export function updateDetails(updateObj) {
 	});
 }
 
-export function updateItem(updateObj) {
+export function createItem() {
 	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_ITEM,
-		data: updateObj
+		type: ActionTypes.CREATE_ITEM
 	});
 }
 
@@ -63,6 +62,14 @@ export function duplicateItem(id) {
 		data: id
 	});
 }
+
+export function updateItem(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.UPDATE_ITEM,
+		data: updateObj
+	});
+}
+
 
 export function deleteItem(id) {
 	AppDispatcher.dispatch({

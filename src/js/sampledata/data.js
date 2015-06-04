@@ -68,3 +68,10 @@ export const jobs = [
 		shipping_date: "2015-12-12"
 	}
 ];
+
+export const selections = {
+	job_status: ["TBC", "Non-Starter", "Confirmed", "Packaged", "Dispatched", "Done"],
+	order_type: ["Standard", "Bespoke", "RB Parts", "Outsourced", "Loan or Press"],
+	parts_status: ["", "Started", "Done"],
+	payment: ["", "Awaiting Payment", "Deposit", "Paid Card", "Paid BACS", "Paid Other", "Non-Starter"]
+};
