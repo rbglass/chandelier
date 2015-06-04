@@ -1,8 +1,8 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
 import { genericSort } from "../utils/ConvenienceUtils";
-import JobConstants from "../constants/JobConstants";
-import JobDispatcher from "../dispatchers/JobDispatcher";
+import ActionTypes from "../constants/ActionTypes";
+import AppDispatcher from "../dispatchers/AppDispatcher";
 import { details, items} from "../sampledata/data.js";
 
 var state = {
@@ -23,17 +23,16 @@ var SingleJobStore = createStore({
 
 export default SingleJobStore;
 
-JobDispatcher.register((payload) => {
-	let action = payload.action;
+AppDispatcher.register(action => {
 
 	switch(action.type) {
 
-		case JobConstants.RECEIVE_SINGLE_JOB:
+		case ActionTypes.RECEIVE_SINGLE_JOB:
 				state.job = action.data;
 				SingleJobStore.emitChange();
 				break;
 
-		case JobConstants.SORT_ONE:
+		case ActionTypes.SORT_ONE:
 				if(action.data === state.sortBy) {
 					state.asc = !state.asc;
 				}

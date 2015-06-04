@@ -11,7 +11,7 @@
     "build:js": "browserify -t babelify src/js/main.js -o public/js/main.js",
     "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js & myth -w src/css/*.css public/css/main.css",
     "build:css": "myth src/css/*.css public/css/main.css",
-    "lint": "jsxhint src/**/*.js",
+    "lint": "eslint **/*.js",
     "live-reload": "live-reload public/ --port 9082",
     "serve": "node index.js",
     "devserve": "http-server ./public",
