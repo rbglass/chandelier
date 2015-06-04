@@ -37,6 +37,18 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
+		case ActionTypes.UPDATE_ITEM:
+				let d = action.data;
+				// eww mutable
+				job.items = job.items.map(jobitem => {
+					if(jobitem.item === d.item) {
+						jobitem[d.key] = d.value;
+					}
+					return jobitem;
+				});
+				SingleJobStore.emitChange();
+				break;
+
 		case ActionTypes.SORT_ONE:
 				if(action.data === filters.sortTerm) {
 					filters.isAsc = !filters.isAsc;

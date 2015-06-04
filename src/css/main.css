@@ -100,6 +100,9 @@ label {
 	position: absolute;
 	right: 5px;
 }
+.table-header .table-row-item.fixed-col:after {
+	content: none;
+}
 @media (min-width: 500px) {
 	.table-header {
 		background-color: #f2f2f2;

@@ -30,7 +30,7 @@ export const items = [
 		notes: "hello"
 	},
 	{
-		item: "hello",
+		item: "hi",
 		product: "hello",
 		description: "hello",
 		glass: "hello",

@@ -21,7 +21,7 @@ class SingleJobPage extends Component {
 
 SingleJobPage.defaultProps = {
 	headers: [
-		{ key: "", 	      		display: "",        		className: "fixed-col" },
+		{ key: "none", 	      display: "",        		className: "fixed-col" },
 		{ key: "item", 	      display: "Item",        className: "" },
 		{ key: "product",     display: "Product",     className: "" },
 		{ key: "description", display: "Description", className: "u-flex-grow3" },
@@ -35,7 +35,24 @@ SingleJobPage.defaultProps = {
 		{ key: "qty_assem",   display: "Qty Assem",   className: "qty-md" },
 		{ key: "qty_packed",  display: "Qty Packed",  className: "qty-md" },
 		{ key: "notes",       display: "Notes",       className: "u-flex-grow3" },
-		{ key: "", 	      		display: "",        		className: "fixed-col" }
+		{ key: "none", 	      display: "",        		className: "fixed-col" }
+	],
+	cellConfig: [
+		{ key: null,        display: "-",   className: "fixed-col",    type: "button", innerClassName: "btn btn-left"  },
+		{ key: "item", 	                    className: "",             type: ""                                        },
+		{ key: "product",                   className: "",             type: "text"                                    },
+		{ key: "description",               className: "u-flex-grow3", type: "textarea"                                },
+		{ key: "glass",                     className: "",             type: "select", options: ["emerald", "rose"]    },
+		{ key: "metal",                     className: "",             type: "select", options: ["iron", "titanium"]   },
+		{ key: "flex",                      className: "",             type: "select", options: ["loose", "strong"]    },
+		{ key: "bulb",                      className: "",             type: "select", options: ["bright", "dim"]      },
+		{ key: "qty_req",                   className: "qty-sm",       type: "number"                                  },
+		{ key: "qty_hot",                   className: "qty-sm",       type: "number"                                  },
+		{ key: "qty_cold",                  className: "qty-sm",       type: "number"                                  },
+		{ key: "qty_assem",                 className: "qty-md",       type: "number"                                  },
+		{ key: "qty_packed",                className: "qty-md",       type: "number"                                  },
+		{ key: "notes",                     className: "u-flex-grow3", type: "textarea"                                },
+		{ key: null, 	      display: "+",   className: "fixed-col",    type: "button", innerClassName: "btn btn-right" }
 	],
 	RowComponent: SingleJobTableRow
 };
