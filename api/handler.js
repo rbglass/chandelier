@@ -30,11 +30,10 @@ var handler = {
 
   createJob : function(request, reply) {
 
-  	Jobs.create(request).success(function() {
+  	Jobs.create().success(function(job) {
   		console.log("Job succesfully saved");
 	  	reply(job);
   	});
-  },
 
   	// OR POST ALL DETAILS IN ONE GO WHEN JOB IS FIRST CREATED?
   	Jobs.create({
@@ -182,6 +181,7 @@ var handler = {
 				reply("Not a valid account");
 			}
 		});
+	},
 
   logout : function(request, reply) {
 
