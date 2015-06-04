@@ -1,6 +1,6 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
-import { contains, genericSort } from "../utils/ConvenienceUtils";
+import { contains, genericSort, isWithinBounds } from "../utils/ConvenienceUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import { jobs as sampledata } from "../sampledata/data.js";
@@ -10,18 +10,20 @@ var jobs = sampledata,
 			sortBy: "",
 			asc: false,
 			filterBy: "",
-			startDate: "",
-			endDate: ""
+			startDate: null,
+			endDate: null
 		};
 
 var JobStore = createStore({
 
 	getFilteredAndSortedJobs() {
+		let f = filters;
+
 		const filtered = jobs.filter(row => {
-			return contains(row, filters.filterBy);
+			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
 		});
 
-		return genericSort(filtered, filters.sortBy, filters.asc);
+		return genericSort(filtered, f.sortBy, f.asc);
 	},
 	getFilters() {
 		return filters;
