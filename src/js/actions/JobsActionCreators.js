@@ -30,6 +30,13 @@ export function sortBy(field) {
 	});
 }
 
+export function updateJob(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.UPDATE_JOB,
+		data: updateObj
+	});
+}
+
 export function updateDetails(updateObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.UPDATE_DETAILS,

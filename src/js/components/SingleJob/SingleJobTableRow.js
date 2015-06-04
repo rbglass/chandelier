@@ -1,22 +1,12 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { updateItem } from "../../actions/JobsActionCreators";
+import keySealer from "../../utils/keySealer";
 
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
 		console.log("blurred!", e.target.value);
-	}
-
-	// surely there is a better way, components?
-	keySealer(key, id) {
-		return (e) => {
-			updateItem({
-				item: id,
-				key: key,
-				value: e.target.value
-			});
-		};
 	}
 
 	// Break this into components
@@ -57,8 +47,8 @@ export default class SingleJobTableRow extends Component {
 			}
 
 			return (
-				<div className={`table-row-item ${cell.className}`}
-							onChange={cell.key ? this.keySealer(cell.key, this.props.cells.item).bind(this) : null}>
+				<div className={`table-row-item ${cell.className}`} key={i}
+							onChange={cell.key ? keySealer(this.props.cells.item, cell.key, updateItem) : null}>
 					{input}
 				</div>
 			);
