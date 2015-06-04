@@ -2,7 +2,7 @@
   "name": "chandelier",
   "version": "1.0.0",
   "description": "production management for people who produce",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
@@ -12,13 +12,13 @@
     "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js & myth -w src/css/*.css public/css/main.css",
     "build:css": "myth src/css/*.css public/css/main.css",
     "lint": "jsxhint src/**/*.js",
-    "live-reload": "live-reload public/ --port 9081",
+    "live-reload": "live-reload public/ --port 9082",
     "serve": "node index.js",
     "devserve": "http-server ./public",
     "test": "npm run test:back & npm run test:front",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
-    "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js",
+    "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js --loglevel silent",
     "mk": "mkdir public/js & mkdir public/css"
   },
   "repository": {
@@ -36,6 +36,7 @@
     "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
+    "object-assign": "^2.0.0",
     "pg": "^4.3.0",
 	  "pg-hstore": "^2.3.2",
     "react": "^0.13.3",
@@ -45,8 +46,10 @@
   },
   "devDependencies": {
     "babel": "^5.4.7",
+    "babel-eslint": "^3.1.10",
     "babelify": "^6.1.2",
     "browserify": "^10.2.3",
+    "eslint": "^0.22.1",
     "http-server": "^0.8.0",
     "jsdom": "^3.1.1",
     "jsxhint": "^0.15.0",

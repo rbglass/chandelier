@@ -30,7 +30,6 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-
   createJob : function(request, reply) {
 		var entry = request.payload;
   	Jobs.create({
@@ -44,25 +43,54 @@ var handler = {
 			parts_status: 			entry.parts_status,
 			last_update: 				entry.last_update
 		}).then(function(){
-	  	reply("createJob");
+			//TODO need an oclick on the frontend to create an empty row.
+				reply("createJob");
 		}).catch(function(err){
 			if (err) return console.log(err);
   	});
   },
 
   updateJob : function(request, reply) {
-  	reply("updateJob");
+
+  	// UPDATE jobs SET [field = input] WHERE jobID = RB125
+
+  	var input = request.payload["value"];
+  	var field = request.payload["field"];
+  	var jobID = request.payload["jobID"];
+
+  	Jobs.update({
+  		field : input,
+  	}, {
+  		where : {
+  			jobID : jobID
+  		}
+  	}).then(function(job) {
+  		console.log("job updated");
+	  	reply(job);
+  	});
   },
 
   deleteJob : function(request, reply) {
-  	reply("deleteJob");
+
+  	var entry = request.payload;
+  	Jobs.destroy({
+  		where : { job_id : entry.job_id }
+
+  	}).then(function() {
+	  	reply("job deleted");
+  	});
   },
 
   getSingleJob : function(request, reply) {
-  	Jobs.find(request.payload.id).success(function() {
-  	console.log("Job succesfully created");
-  	reply("getSingleJob");
-  	});
+
+  	var entry = request.payload;
+  	Jobs.find({
+  		where : { job_id : entry.job_id }
+  	}).then(function(job) {
+  		reply(job);
+		}).catch(function(err) {
+			if (err) return console.log(err);
+		});
   },
 
 // -------------------------------------------------- \\
@@ -78,10 +106,20 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobItems : function(request, reply) {
-  	reply("getJobItems");
+
+  	var entry = request.payload;
+  	Job_items.findAll({
+  		where : {
+  			job_id : entry.job_id
+  		}
+  	}).then(function(jobItems) {
+  		reply(jobItems);
+  	}).catch(function(err){
+			if (err) return console.log(err);
+		});
   },
 
-  createJobItems : function(request, reply) {
+  createJobItem : function(request, reply) {
 		var entry = request.payload;
 		Job_items.create({
 			item_id: 			entry.item,
@@ -98,22 +136,40 @@ var handler = {
 			qty_packed: 	entry.qty_packed,
 			notes: 				entry.notes
 		}).then(function(){
-  		reply("createJobItems");
+  		reply("createJobItem");
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
 	},
 
-  updateJobItems : function(request, reply) {
-		reply("updateJobItems");
+  updateJobItems : function(request, reply, field) {
+			var entry = request.payload;
+			Job_items.update({
+  		field : entry.field
+  	}, {
+  		where : {
+  			job_id : entry.job_id
+  		}
+  	}).then(function(jobItem) {
+			reply(jobItem);
+  	});
+
   },
 
   deleteJobItems : function(request, reply) {
-  	reply("deleteJobItems");
+
+		var entry = request.payload;
+
+		Job_items.destroy({
+			where : {
+				job_id : entry.job_id
+			}
+		}).then(function(jobItem) {
+			reply(jobItem);
+		});
   },
 
 // -------------------------------------------------- \\
-
 
   login : function(request, reply) {
 
@@ -127,8 +183,7 @@ var handler = {
     };
 
 		 Users.findOrCreate({
-			 where:
-				 {email: profile.email}
+			 where: {email: profile.email}
 		 }).spread(function(){
 				request.auth.session.clear();
 				request.auth.session.set(profile);

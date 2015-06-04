@@ -9,7 +9,13 @@
 	"predef": [
 		"suite",
 		"test",
+		"describe",
 		"it",
-		"describe"
+		"before",
+		"after",
+		"setup",
+		"teardown",
+		"suiteSetup",
+		"suiteTeardown"
 	]
 }
