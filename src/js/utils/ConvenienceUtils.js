@@ -27,22 +27,25 @@ export function contains(obj, term) {
 }
 
 // Change to Array.prototype method?
+// localeCompare w/ datestring correctly?
 export function genericSort(arr, sortBy, asc) {
 
 	arr = arr.slice(0);
 
 	return arr.sort((a, b) => {
 		let t1 = a[sortBy],
-				t2 = b[sortBy];
+				t2 = b[sortBy],
+				sortVal;
 
 		if (isDateStr(t1)) {
-			t1 = Date.parse(t1);
-			t2 = Date.parse(t2);
+			sortVal = Date.parse(t1) - Date.parse(t2);
 		} else if (typeof t1 === "string") {
-			t1 = t1.toLowerCase;
-			t2 = t2.toLowerCase;
+			sortVal = t1.localeCompare(t2, "en", {
+				sensitivity: "base"
+			});
 		}
-		return asc ? t1 - t2 : t2 - t1;
+
+		return asc ? sortVal : -sortVal;
 	});
 }
 

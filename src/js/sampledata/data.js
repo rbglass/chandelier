@@ -49,7 +49,7 @@ export const items = [
 export const jobs = [
 	{
 		job_id: "RB2234",
-		client: "TIM",
+		client: "JIM",
 		project: "peng",
 		job_status: "accepted",
 		order_type: "special",

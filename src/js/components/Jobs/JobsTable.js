@@ -11,7 +11,7 @@ export default class Table extends Component {
 		});
 		return (
 			<div className="table">
-				<JobsTableHeader headers={this.props.headers} />
+				<JobsTableHeader filters={this.props.filters} />
 				{rows}
 			</div>
 		);

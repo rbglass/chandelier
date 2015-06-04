@@ -7,8 +7,8 @@ import { jobs as sampledata } from "../sampledata/data.js";
 
 var jobs = sampledata,
 		filters = {
-			sortBy: "",
-			asc: false,
+			sortTerm: "",
+			isAsc: false,
 			filterBy: "",
 			startDate: null,
 			endDate: null
@@ -23,7 +23,7 @@ var JobStore = createStore({
 			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
 		});
 
-		const sorted = genericSort(filtered, f.sortBy, f.asc);
+		const sorted = genericSort(filtered, f.sortTerm, f.isAsc);
 		return sorted;
 	},
 
@@ -49,10 +49,10 @@ AppDispatcher.register(action => {
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if(action.data === filters.sortBy) {
-					filters.asc = !filters.asc;
+				if(action.data === filters.sortTerm) {
+					filters.isAsc = !filters.isAsc;
 				}
-				filters.sortBy = action.data;
+				filters.sortTerm = action.data;
 				JobStore.emitChange();
 				break;
 
