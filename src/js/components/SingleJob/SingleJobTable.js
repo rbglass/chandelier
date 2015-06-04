@@ -10,7 +10,7 @@ export default class SingleJobTable extends Component {
 		});
 		return (
 			<div className="table">
-				<SingleJobTableHeader headers={this.props.headers} />
+				<SingleJobTableHeader filters={this.props.filters} />
 				{rows}
 			</div>
 		);
@@ -18,5 +18,5 @@ export default class SingleJobTable extends Component {
 }
 
 SingleJobTable.propTypes = {
-	items: PropTypes.object
+	items: PropTypes.array
 };

@@ -4,7 +4,7 @@ import Router from "react-router";
 import routes from "./routing/routes";
 
 const rootEl = document.getElementById("content");
-Router.run(routes, Router.HistoryLocation, (Handler) =>
+Router.run(routes, Router.HashLocation, (Handler) =>
   React.render(<Handler />, rootEl)
 );
 

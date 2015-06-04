@@ -14,7 +14,7 @@ class SingleJobPage extends Component {
 			<div>
 				<h1 className="page-header">Single Job</h1>
 				<SingleJobDetails details={this.props.details} />
-				<SingleJobTable items={this.props.items} />
+				<SingleJobTable items={this.props.items} filters={this.props.filters} />
 			</div>
 		);
 	}
@@ -27,10 +27,12 @@ SingleJobPage.propTypes = {
 function getState() {
 	const details = SingleJobStore.getJobDetails();
 	const items = SingleJobStore.getSortedItems();
+	const filters = SingleJobStore.getFilters();
 
 	return {
 		details,
-		items
+		items,
+		filters
 	};
 }
 

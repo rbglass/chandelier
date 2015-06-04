@@ -51,6 +51,8 @@ AppDispatcher.register(action => {
 		case ActionTypes.SORT_ONE:
 				if(action.data === filters.sortTerm) {
 					filters.isAsc = !filters.isAsc;
+				} else {
+					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
 				JobStore.emitChange();
