@@ -1,6 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import request from "superagent";
+
 import { updateItem } from "../../actions/JobsActionCreators";
 
 export default class SingleJobTableRow extends Component {
@@ -8,15 +8,6 @@ export default class SingleJobTableRow extends Component {
 		console.log("blurred!", e.target.value);
 	}
 
-	newJobItemHandler(e) {
-		request.get("/api/jobs")
-					.end(function(err, response){
-			if (err) {
-				console.log(err);
-			} else {
-				console.log(response);
-			}
-		});
 
 
 	// surely there is a better way, components?
