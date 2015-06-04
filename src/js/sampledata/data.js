@@ -1,15 +1,15 @@
 export const details = {
-	jobid: "RB1234",
-	client: "tim",
+	job_id: "RB1234",
+	client: "TIM",
 	project: "peng",
 	client_ref: "n81432",
 	notes: "happy go lucky",
 	job_status: "accepted",
 	order_type: "special",
-	last_update: "10-01-2015",
+	last_update: "2015-01-12",
 	parts_status: "waiting",
 	parts_notes: "when they coming???",
-	shipping_date: "12-12-2015",
+	shipping_date: "2015-12-30",
 	delivery_details: "53 sussex rd"
 };
 
@@ -48,31 +48,23 @@ export const items = [
 
 export const jobs = [
 	{
-		jobid: "RB1234",
-		client: "tim",
+		job_id: "RB2234",
+		client: "JIM",
 		project: "peng",
-		client_ref: "n81432",
-		notes: "happy go lucky",
 		job_status: "accepted",
 		order_type: "special",
-		last_update: "10-01-2015",
+		last_update: "2015-10-01",
 		parts_status: "waiting",
-		parts_notes: "when they coming???",
-		shipping_date: "12-12-2015",
-		delivery_details: "53 sussex rd"
+		shipping_date: "2015-11-12"
 	},
 	{
-		jobid: "RB1234",
-		client: "tim",
+		job_id: "RB1234",
+		client: "TIM",
 		project: "peng",
-		client_ref: "n81432",
-		notes: "happy go lucky",
 		job_status: "accepted",
 		order_type: "special",
-		last_update: "10-01-2015",
+		last_update: "2015-10-01",
 		parts_status: "waiting",
-		parts_notes: "when they coming???",
-		shipping_date: "12-12-2015",
-		delivery_details: "53 sussex rd"
+		shipping_date: "2015-12-12"
 	}
 ];

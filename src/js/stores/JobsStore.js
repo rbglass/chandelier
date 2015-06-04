@@ -1,59 +1,70 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
-import { contains, genericSort } from "../utils/ConvenienceUtils";
-import JobConstants from "../constants/JobConstants";
-import JobDispatcher from "../dispatchers/JobDispatcher";
-import { jobs } from "../sampledata/data.js";
+import { contains, genericSort, isWithinBounds } from "../utils/ConvenienceUtils";
+import ActionTypes from "../constants/ActionTypes";
+import AppDispatcher from "../dispatchers/AppDispatcher";
+import { jobs as sampledata } from "../sampledata/data.js";
 
-var state = {
-	jobs: jobs,
-	sortBy: "",
-	asc: false,
-	filterBy: ""
-};
+var jobs = sampledata,
+		filters = {
+			sortTerm: "",
+			isAsc: false,
+			filterBy: "",
+			startDate: null,
+			endDate: null
+		};
 
 var JobStore = createStore({
 
 	getFilteredAndSortedJobs() {
-		const filtered = state.jobs.filter(row => {
-			return contains(row, state.filterBy);
+		let f = filters;
+
+		const filtered = jobs.filter(row => {
+			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
 		});
 
-		return genericSort(filtered, state.sortBy, state.asc);
+		const sorted = genericSort(filtered, f.sortTerm, f.isAsc);
+		return sorted;
 	},
+
 	getFilters() {
-		return {
-			sortBy: state.sortBy,
-			asc: state.asc,
-			filterBy: state.filterBy
-		};
+		return filters;
 	}
 });
 
 export default JobStore;
 
-JobDispatcher.register(payload => {
-	let action = payload.action;
+AppDispatcher.register(action => {
 
 	switch(action.type) {
 
-		case JobConstants.RECEIVE_ALL_JOBS:
-				state.jobs = action.data;
+		case ActionTypes.RECEIVE_ALL_JOBS:
+				jobs = action.data;
 				JobStore.emitChange();
 				break;
 
-		case JobConstants.FILTER_BY:
-				state.filterBy = action.data;
+		case ActionTypes.FILTER_BY:
+				filters.filterBy = action.data;
 				JobStore.emitChange();
 				break;
 
-		case JobConstants.SORT_ONE:
-				if(action.data === state.sortBy) {
-					state.asc = !state.asc;
+		case ActionTypes.SORT_ONE:
+				if(action.data === filters.sortTerm) {
+					filters.isAsc = !filters.isAsc;
 				}
-				state.sortBy = action.data;
+				filters.sortTerm = action.data;
 				JobStore.emitChange();
 				break;
+
+		case ActionTypes.SET_START_DATE:
+			filters.startDate = action.data;
+			JobStore.emitChange();
+			break;
+
+		case ActionTypes.SET_END_DATE:
+			filters.endDate = action.data;
+			JobStore.emitChange();
+			break;
 
 		default:
 				break;

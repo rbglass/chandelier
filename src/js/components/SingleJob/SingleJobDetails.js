@@ -10,7 +10,7 @@ export default class SingleJobDetails extends Component {
 				<div className="job-details-column u-flex-grow3">
 				<div className="job-details-field">
 					<label htmlFor="job#">Job #:</label>
-					<input type="text" value={details.jobid} className="job-text-input" id="job#" />
+					<input type="text" value={details.job_id} className="job-text-input" id="job#" />
 				</div>
 				<div className="job-details-field">
 					<label htmlFor="client">Client:</label>

@@ -14,7 +14,7 @@ class JobsPage extends Component {
 			<div>
 				<h1 className="page-header">All Jobs</h1>
 				<JobsFilter filters={this.props.filters} />
-				<JobsTable items={this.props.items} />
+				<JobsTable {...this.props} />
 			</div>
 		);
 	}

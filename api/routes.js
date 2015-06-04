@@ -30,7 +30,7 @@ module.exports =([
     method  : "GET",
     handler : {
       directory : {
-        path  : path.resolve(__dirname + "/../src"),
+        path  : path.resolve(__dirname, "/../src"),
         index : false
       }
     }
