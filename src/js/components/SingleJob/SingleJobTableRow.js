@@ -1,13 +1,20 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import request from "superagent";
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
 		console.log("blurred!", e.target.value);
 	}
 	newJobItemHandler(e) {
-		console.log("hi, it works");
-		return
+		request.get("/api/jobs")
+					.end(function(err, response){
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(response);
+			}
+		});
 	}
 
 	render() {

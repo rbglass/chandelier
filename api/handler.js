@@ -21,6 +21,7 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobsTable : function(request, reply) {
+		console.log("jobs table handler");
 		Jobs.findAll().on('success', function(){
 				reply("getJobsTable");
 		}).catch(function(err){
@@ -85,6 +86,7 @@ var handler = {
   },
 
   getSingleJob : function(request, reply) {
+		//for the details on top of the job_items table
 
   	var entry = request.payload;
   	Jobs.find({
@@ -123,9 +125,10 @@ var handler = {
   },
 
   createJobItem : function(request, reply) {
+		console.log("i hit the create handler");
 
 		Job_items.create({
-			item_id: 			" ",
+			item_id: 			"new",
 			product: 			" ",
 			description: 	" ",
 			glass: 				" ",
@@ -209,7 +212,6 @@ var handler = {
     request.auth.session.clear();
     reply("Succesfully logged out");
   }
-
 
 };
 
