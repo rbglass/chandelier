@@ -43,6 +43,8 @@ export function genericSort(arr, sortBy, asc) {
 			sortVal = t1.localeCompare(t2, "en", {
 				sensitivity: "base"
 			});
+		} else {
+			sortVal = t1 - t2;
 		}
 
 		return asc ? sortVal : -sortVal;

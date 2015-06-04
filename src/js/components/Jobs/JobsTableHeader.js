@@ -12,7 +12,7 @@ const headers = [
 	{ key: "job_items",     display: "# Job Items",   "className": ""},
 	{ key: "parts_status",  display: "Parts Status",  "className": ""},
 	{ key: "last_update",   display: "Last Update",   "className": "u-flex-grow2"}
-]
+];
 
 export default class JobsTableHeader extends Component {
 
@@ -28,7 +28,7 @@ export default class JobsTableHeader extends Component {
 			return (
 				<div key={e.key} className={divClass} onClick={sortBy.bind(null, e.key)}>{e.display}</div>
 			);
-		})
+		});
 
 		return (
 			<div className="table-row table-header">

@@ -5,19 +5,24 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import { details, items} from "../sampledata/data.js";
 
-var state = {
-	details: details,
-	items: items,
-	sortBy: "",
-	asc: false
-};
+var job = {
+			details: details,
+			items: items
+		},
+		filters = {
+			sortTerm: "",
+			isAsc: false
+		};
 
 var SingleJobStore = createStore({
 	getSortedItems() {
-		return genericSort(state.items, state.sortBy, state.asc);
+		return genericSort(job.items, filters.sortTerm, filters.isAsc);
 	},
 	getJobDetails() {
-		return state.details;
+		return job.details;
+	},
+	getFilters() {
+		return filters;
 	}
 });
 
@@ -28,15 +33,15 @@ AppDispatcher.register(action => {
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				state.job = action.data;
+				job = action.data;
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if(action.data === state.sortBy) {
-					state.asc = !state.asc;
+				if(action.data === filters.sortTerm) {
+					filters.isAsc = !filters.isAsc;
 				}
-				state.sortBy = action.data;
+				filters.sortTerm = action.data;
 				SingleJobStore.emitChange();
 				break;
 
