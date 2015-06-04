@@ -1,8 +1,8 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import request from "superagent";
 import { updateItem } from "../../actions/JobsActionCreators";
 import keySealer from "../../utils/keySealer";
-
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {

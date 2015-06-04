@@ -30,7 +30,7 @@ module.exports =([
     method  : "GET",
     handler : {
       directory : {
-        path  : path.resolve(__dirname, "/../src"),
+        path  : path.resolve(__dirname + "/../public"),
         index : false
       }
     }
@@ -89,7 +89,7 @@ module.exports =([
   },
 
   {
-  	path    : "/api/jobs{id}/{item}",
+  	path    : "/api/jobs/{id}/{item}",
   	method  : "POST",
   	handler : handler.createJobItem
   },
