@@ -38,7 +38,6 @@ SingleJobPage.defaultProps = {
 		{ key: "none", 	      display: "",        		className: "fixed-col" }
 	],
 	cellConfig: [
-		{ key: null,        display: "-",   className: "fixed-col",    type: "button", innerClassName: "btn btn-left"  },
 		{ key: "item", 	                    className: "",             type: ""                                        },
 		{ key: "product",                   className: "",             type: "text"                                    },
 		{ key: "description",               className: "u-flex-grow3", type: "textarea"                                },
@@ -51,8 +50,7 @@ SingleJobPage.defaultProps = {
 		{ key: "qty_cold",                  className: "qty-sm",       type: "number"                                  },
 		{ key: "qty_assem",                 className: "qty-md",       type: "number"                                  },
 		{ key: "qty_packed",                className: "qty-md",       type: "number"                                  },
-		{ key: "notes",                     className: "u-flex-grow3", type: "textarea"                                },
-		{ key: null, 	      display: "+",   className: "fixed-col",    type: "button", innerClassName: "btn btn-right" }
+		{ key: "notes",                     className: "u-flex-grow3", type: "textarea"                                }
 	],
 	RowComponent: SingleJobTableRow
 };

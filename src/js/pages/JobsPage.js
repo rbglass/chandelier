@@ -5,6 +5,7 @@ import JobsFilter from "../components/Jobs/JobsFilter";
 import JobsTableRow from "../components/Jobs/JobsTableRow";
 import JobsStore from "../stores/JobsStore";
 import connectToStores from "../utils/connectToStores";
+import { createJob } from "../actions/JobsActionCreators";
 
 class JobsPage extends Component {
 
@@ -14,6 +15,7 @@ class JobsPage extends Component {
 				<h1 className="page-header">All Jobs</h1>
 				<JobsFilter filters={this.props.filters} />
 				<Table {...this.props} />
+				<button className="add-button" onClick={createJob}>+</button>
 			</div>
 		);
 	}

@@ -4,7 +4,7 @@
 export default (id, key, action) => {
 	return (e) => {
 		action({
-			item: id,
+			id: id,
 			key: key,
 			value: e.target.value
 		});

@@ -18,7 +18,6 @@ var JobsStore = createStore({
 
 	getFilteredAndSortedJobs() {
 		let f = filters;
-
 		const filtered = jobs.filter(row => {
 			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
 		});
@@ -43,12 +42,21 @@ AppDispatcher.register(action => {
 				JobsStore.emitChange();
 				break;
 
+		case ActionTypes.CREATE_JOB:
+				jobs.push({
+					job_id: +("" + Date.now()).substring(0, 5),
+					last_update: new Date().toISOString().substring(0, 10)
+				});
+				JobsStore.emitChange();
+				break;
+
 		case ActionTypes.UPDATE_JOB:
-				let id = action.data.job_id;
+				let id = action.data.id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {
 						job[action.data.key] = action.data.value;
 					}
+					return job;
 				});
 				JobsStore.emitChange();
 				break;
