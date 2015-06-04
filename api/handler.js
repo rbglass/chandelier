@@ -21,16 +21,32 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobsTable : function(request, reply) {
-		reply("getJobsTable");
+		Jobs.findAll().on('success', function(){
+				reply("getJobsTable");
+		}).catch(function(err){
+			if (err) return console.log(err);
+		});
 	},
 
 // -------------------------------------------------- \\
 
 
   createJob : function(request, reply) {
-  	Jobs.create(request).success(function() {
-  		console.log("Job succesfully saved");
+		var entry = request.payload;
+  	Jobs.create({
+			job_id: 						entry.job_id,
+			client: 						entry.client,
+			project: 						entry.project,
+			job_status: 				entry.job_status,
+			order_type: 				entry.order_type,
+			shipping_date: 			entry.shipping_date,
+			num_of_job_items: 	entry.num_of_job_items,
+			parts_status: 			entry.parts_status,
+			last_update: 				entry.last_update
+		}).then(function(){
 	  	reply("createJob");
+		}).catch(function(err){
+			if (err) return console.log(err);
   	});
   },
 
@@ -52,7 +68,11 @@ var handler = {
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		reply("getJobItemsTable");
+		Job_items.findAll().on('success', function(){
+			reply("getJobItemsTable");
+		}).catch(function(err){
+			if (err) return console.log(err);
+		});
 	},
 
 // -------------------------------------------------- \\
@@ -62,7 +82,26 @@ var handler = {
   },
 
   createJobItems : function(request, reply) {
-  	reply("createJobItems");
+		var entry = request.payload;
+		Job_items.create({
+			item_id: 			entry.item,
+			product: 			entry.product,
+			description: 	entry.description,
+			glass: 				entry.glass,
+			metal: 				entry.metal,
+			flex: 				entry.flex,
+			bulb: 				entry.bulb,
+			qty_req: 			entry.qty_req,
+			qty_hot: 			entry.qty_hot,
+			qty_cold: 		entry.qty_cold,
+			qty_assem: 		entry.qty_assem,
+			qty_packed: 	entry.qty_packed,
+			notes: 				entry.notes
+		}).then(function(){
+  		reply("createJobItems");
+		}).catch(function(err){
+			if (err) return console.log(err);
+		});
 	},
 
   updateJobItems : function(request, reply) {
@@ -91,9 +130,11 @@ var handler = {
 			 where:
 				 {email: profile.email}
 		 }).spread(function(){
-			request.auth.session.clear();
-			request.auth.session.set(profile);
-			reply.redirect("/");
+				request.auth.session.clear();
+				request.auth.session.set(profile);
+				reply.redirect("/");
+		 }).catch(function(err){
+			 if (err) return console.log(err);
 		 });
   },
 
