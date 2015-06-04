@@ -30,6 +30,12 @@ export function sortBy(field) {
 	});
 }
 
+export function createJob() {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CREATE_JOB
+	});
+}
+
 export function updateJob(updateObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.UPDATE_JOB,
@@ -48,5 +54,19 @@ export function updateItem(updateObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.UPDATE_ITEM,
 		data: updateObj
+	});
+}
+
+export function duplicateItem(id) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.DUPLICATE_ITEM,
+		data: id
+	});
+}
+
+export function deleteItem(id) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.DELETE_ITEM,
+		data: id
 	});
 }

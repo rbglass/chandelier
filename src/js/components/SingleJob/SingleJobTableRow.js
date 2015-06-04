@@ -1,7 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import request from "superagent";
-import { updateItem } from "../../actions/JobsActionCreators";
+import { updateItem, duplicateItem, deleteItem } from "../../actions/JobsActionCreators";
 import keySealer from "../../utils/keySealer";
 
 export default class SingleJobTableRow extends Component {
@@ -16,10 +16,6 @@ export default class SingleJobTableRow extends Component {
 			let input;
 
 			switch (cell.type) {
-
-				case "button":
-						input = <button className={cell.innerClassName}>{cell.display}</button>;
-						break;
 
 				case "textarea":
 						input = <textarea value={cellValue} />;
@@ -56,7 +52,13 @@ export default class SingleJobTableRow extends Component {
 
 		return (
 			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
+				<div className="table-row-item fixed-col">
+					<button className="btn btn-left" onClick={deleteItem.bind(this, this.props.cells.item)}>-</button>
+				</div>
 				{cells}
+				<div className="table-row-item fixed-col" onClick={duplicateItem.bind(this, this.props.cells.item)}>
+					<button className="btn btn-right">+</button>
+				</div>
 			</div>
 		);
 	}
