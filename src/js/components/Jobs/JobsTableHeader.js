@@ -21,7 +21,3 @@ export default class JobsTableHeader extends Component {
 		);
 	}
 }
-
-JobsTableHeader.propTypes = {
-
-};
