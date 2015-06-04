@@ -10,12 +10,12 @@ var handler = {
 
   home : function(request, reply) {
 
-    if (request.auth.isAuthenticated) {
-    	console.log("home handler");
+//    if (request.auth.isAuthenticated) {
+//    	console.log("home handler");
+//      reply.file(index);
+//    } else if (!request.auth.isAuthenticated) {
       reply.file(index);
-    } else if (!request.auth.isAuthenticated) {
-      reply.redirect("/login");
-    }
+//    }
   },
 
 // -------------------------------------------------- \\
@@ -39,13 +39,13 @@ var handler = {
 			project: 						" ",
 			job_status: 				" ",
 			order_type: 				" ",
-			shipping_date: 			" ",
-			num_of_job_items: 	" ",
+			shipping_date: 			new Date(),
+			num_of_job_items: 	0,
 			parts_status: 			" ",
-			last_update: 				" "
-		}).then(function(){
+			last_update: 				new Date()
+		}).then(function(job){
 			//TODO need an oclick on the frontend to create an empty row.
-				reply("createJob");
+				reply(job);
 		}).catch(function(err){
 			if (err) return console.log(err);
   	});
@@ -59,11 +59,7 @@ var handler = {
   		target : value
   	}, {
   		where : {
-  			target : {
-					$ne: value
-					//update where original value is NOT the updated value
-				}
-  		}
+  			job_id : request.payload.job_id }
   	}).then(function(job) {
 			reply(job);
   	}).catch(function(err) {
@@ -78,8 +74,8 @@ var handler = {
   	Jobs.destroy({
   		where : { job_id : entry.job_id }
 
-  	}).then(function() {
-	  	reply("job deleted");
+  	}).then(function(job) {
+	  	reply(job);
   	}).catch(function(err){
 			if (err) return console.log(err);
 		});
@@ -128,21 +124,21 @@ var handler = {
 		console.log("i hit the create handler");
 
 		Job_items.create({
-			item_id: 			"new",
+			item_id: 			" ",
 			product: 			" ",
 			description: 	" ",
 			glass: 				" ",
 			metal: 				" ",
 			flex: 				" ",
 			bulb: 				" ",
-			qty_req: 			" ",
-			qty_hot: 			" ",
-			qty_cold: 		" ",
-			qty_assem: 		" ",
-			qty_packed: 	" ",
+			qty_req: 			0,
+			qty_hot: 			0,
+			qty_cold: 		0,
+			qty_assem: 		0,
+			qty_packed: 	0,
 			notes: 				" "
-		}).then(function(){
-  		reply("createJobItem");
+		}).then(function(job_item){
+  		reply(job_item);
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
@@ -187,24 +183,24 @@ var handler = {
 
   login : function(request, reply) {
 
-    var creds = request.auth.credentials;
-
-    var profile = {
-      auth_method : "google",
-      username    : creds.profile.raw.name,
-      auth_id     : creds.profile.raw.id,
-      email       : creds.profile.raw.email
-    };
-
-		 Users.findOrCreate({
-			 where: {email: profile.email}
-		 }).then(function(){
-				request.auth.session.clear();
-				request.auth.session.set(profile);
+//    var creds = request.auth.credentials;
+//
+//    var profile = {
+//      auth_method : "google",
+//      username    : creds.profile.raw.name,
+//      auth_id     : creds.profile.raw.id,
+//      email       : creds.profile.raw.email
+//    };
+//
+//		 Users.findOrCreate({
+//			 where: {email: profile.email}
+//		 }).then(function(){
+//				request.auth.session.clear();
+//				request.auth.session.set(profile);
 				reply.redirect("/");
-		 }).catch(function(err){
-			 if (err) return console.log(err);
-		 });
+//		 }).catch(function(err){
+//			 if (err) return console.log(err);
+//		 });
   },
 
   logout : function(request, reply) {

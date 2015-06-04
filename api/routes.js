@@ -12,10 +12,10 @@ module.exports =([
     path    : "/",
     method  : "GET",
     config  : {
-      auth : {
-        strategy : "session",
-        mode     : "try"
-      },
+//      auth : {
+//        strategy : "session",
+//        mode     : "try"
+//      },
       handler : handler.home,
       plugins : {
         "hapi-auth-cookie" :{
@@ -113,7 +113,7 @@ module.exports =([
     path   : "/login",
     method : ["GET", "POST"],
     config : {
-      auth    : "google",
+//      auth    : "google",
       handler : handler.login,
     }
   },
@@ -123,7 +123,7 @@ module.exports =([
     method  : "GET",
     config  : {
       handler : handler.logout,
-      auth    : "session"
+//      auth    : "session"
     }
   }
 

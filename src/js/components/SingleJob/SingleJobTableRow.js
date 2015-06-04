@@ -1,6 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import request from "superagent";
+
 import { updateItem } from "../../actions/JobsActionCreators";
 import keySealer from "../../utils/keySealer";
 
@@ -9,6 +9,17 @@ export default class SingleJobTableRow extends Component {
 		console.log("blurred!", e.target.value);
 	}
 
+
+	// surely there is a better way, components?
+	keySealer(key, id) {
+		return (e) => {
+			updateItem({
+				item: id,
+				key: key,
+				value: e.target.value
+			});
+		};
+	}
 	// Break this into components
 	render() {
 		const cells = this.props.cellConfig.map((cell, i) => {
