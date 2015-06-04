@@ -6,7 +6,6 @@
   "scripts": {
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
-    "prebuild": "npm run lint",
     "build": "npm run build:js & npm run build:css",
     "build:js": "browserify -t babelify src/js/main.js -o public/js/main.js",
     "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js & myth -w src/css/*.css public/css/main.css",

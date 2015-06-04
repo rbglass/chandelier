@@ -5,6 +5,10 @@ export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
 		console.log("blurred!", e.target.value);
 	}
+	newJobItemHandler(e) {
+		console.log("hi, it works");
+		return
+	}
 
 	render() {
 		let cells = this.props.cells;
@@ -60,7 +64,7 @@ export default class SingleJobTableRow extends Component {
 					<textarea value={cells.notes}></textarea>
 				</div>
 				<div className="table-row-item fixed-col">
-					<button className="btn btn-right">+</button>
+					<button onClick={this.newJobItemHandler.bind(this)} className="btn btn-right">+</button>
 				</div>
 			</div>
 		);

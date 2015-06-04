@@ -21,85 +21,88 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobsTable : function(request, reply) {
-  	Jobs.findAll().then(function(jobs) {
-			reply(jobs);
-  	});
+		Jobs.findAll().on('success', function(){
+				reply("getJobsTable");
+		}).catch(function(err){
+			if (err) return console.log(err);
+		});
 	},
 
 // -------------------------------------------------- \\
 
   createJob : function(request, reply) {
-
-  	Jobs.create().success(function(job) {
-  		console.log("Job succesfully saved");
-	  	reply(job);
-  	});
-
-  	// OR POST ALL DETAILS IN ONE GO WHEN JOB IS FIRST CREATED?
+		//create an empty row (the updateJob handler should then be triggered)
   	Jobs.create({
-  		where : {
-  			key1 : "val1",
-  			key2 : "val2",
-  			key3 : "val3"
-  		}
-  	}).then(function(job) {
-  		reply(job);
+			job_id: 						" ",
+			client: 						" ",
+			project: 						" ",
+			job_status: 				" ",
+			order_type: 				" ",
+			shipping_date: 			" ",
+			num_of_job_items: 	" ",
+			parts_status: 			" ",
+			last_update: 				" "
+		}).then(function(){
+			//TODO need an oclick on the frontend to create an empty row.
+				reply("createJob");
+		}).catch(function(err){
+			if (err) return console.log(err);
   	});
   },
 
   updateJob : function(request, reply) {
 
-  	// UPDATE jobs SET [field = input] WHERE jobID = RB125
-
-  	var input = request.payload["value"];
-  	var field = request.payload["field"];
-  	var jobID = request.payload["jobID"];
-
-  	Jobs.update({
-  		field : input,
+  	var target = request.payload[target];
+			var value = request.payload.value;
+			Jobs.update({
+  		target : value
   	}, {
   		where : {
-  			jobID : jobID
+  			target : {
+					$ne: value
+					//update where original value is NOT the updated value
+				}
   		}
   	}).then(function(job) {
-  		console.log("job updated");
-	  	reply(job);
-  	});
+			reply(job);
+  	}).catch(function(err) {
+				if (err) return console.log(err);
+			});
+
   },
 
   deleteJob : function(request, reply) {
 
-  	var jobID = request.payload["jobID"];
-
+  	var entry = request.payload;
   	Jobs.destroy({
-  		where : {
-  			jobID : "jobID"
-  		}
-  	}).then(function(job) {
-  		console.log("job deleted");
-	  	reply(job);
-  	});
+  		where : { job_id : entry.job_id }
+
+  	}).then(function() {
+	  	reply("job deleted");
+  	}).catch(function(err){
+			if (err) return console.log(err);
+		});
   },
 
   getSingleJob : function(request, reply) {
 
-  	var jobID = request.payload["jobID"];
-
+  	var entry = request.payload;
   	Jobs.find({
-  		where : {
-  			jobID : jobID
-  		}
+  		where : { job_id: entry.job_id }
   	}).then(function(job) {
-  		console.log("job found");
-	  	reply(job);
+  		reply(job);
+		}).catch(function(err) {
+			if (err) return console.log(err);
 		});
   },
 
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		Job_items.find().then(function(jobItems) {
-			reply(jobItems);
+		Job_items.findAll().on('success', function(){
+			reply("getJobItemsTable");
+		}).catch(function(err){
+			if (err) return console.log(err);
 		});
 	},
 
@@ -107,50 +110,73 @@ var handler = {
 
   getJobItems : function(request, reply) {
 
-  	var jobID = request.payload["jobID"];
-
+  	var entry = request.payload;
   	Job_items.findAll({
   		where : {
-  			jobID : jobID
+  			job_id : entry.job_id
   		}
   	}).then(function(jobItems) {
   		reply(jobItems);
-  	});
+  	}).catch(function(err){
+			if (err) return console.log(err);
+		});
   },
 
   createJobItem : function(request, reply) {
-  	Job_items.create().then(function(jobItem) {
-  		reply(jobItem);
-  	});
+
+		Job_items.create({
+			item_id: 			" ",
+			product: 			" ",
+			description: 	" ",
+			glass: 				" ",
+			metal: 				" ",
+			flex: 				" ",
+			bulb: 				" ",
+			qty_req: 			" ",
+			qty_hot: 			" ",
+			qty_cold: 		" ",
+			qty_assem: 		" ",
+			qty_packed: 	" ",
+			notes: 				" "
+		}).then(function(){
+  		reply("createJobItem");
+		}).catch(function(err){
+			if (err) return console.log(err);
+		});
 	},
 
   updateJobItems : function(request, reply) {
-
-  	var jobID = request.payload["jobID"];
-  	var input = request.payload["value"];
-  	var field = request.payload["field"];
-
-  	Job_items.update({
-  		field : input
+			var target = request.payload[target];
+			var value = request.payload.value;
+			Job_items.update({
+  		target : value
   	}, {
   		where : {
-  			jobID : jobID
+  			target : {
+					$ne: value
+					//update where original value is NOT the updated value
+				}
   		}
   	}).then(function(jobItem) {
 			reply(jobItem);
-  	});
+  	}).catch(function(err) {
+				if (err) return console.log(err);
+			});
+
   },
 
   deleteJobItems : function(request, reply) {
 
-		var jobID = request.payload["jobID"];
-
+		var entry = request.payload;
+		//delete rows with this job id
 		Job_items.destroy({
 			where : {
-				jobID : jobID
+				job_id : entry.job_id
 			}
 		}).then(function(jobItem) {
 			reply(jobItem);
+		}).catch(function(err){
+			if (err) return console.log(err);
 		});
   },
 
@@ -167,21 +193,16 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		Users.find({
-			where: {
-				email: profile.email
-			}
-		}).spread(function(user) {
-			if (user) {
+		 Users.findOrCreate({
+			 where: {email: profile.email}
+		 }).spread(function(){
 				request.auth.session.clear();
 				request.auth.session.set(profile);
 				reply.redirect("/");
-			} else if (!user) {
-			// WILL THIS BE A VALID WAY TO CHECK IF A USER EXISTS IN OUR DATABASE?? \\
-				reply("Not a valid account");
-			}
-		});
-	},
+		 }).catch(function(err){
+			 if (err) return console.log(err);
+		 });
+  },
 
   logout : function(request, reply) {
 
