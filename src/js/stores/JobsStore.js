@@ -3,9 +3,8 @@ import { createStore } from "../utils/StoreUtils";
 import { contains, genericSort, isWithinBounds } from "../utils/ConvenienceUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
-import { jobs as sampledata } from "../sampledata/data.js";
 
-var jobs = sampledata,
+var jobs = [],
 		filters = {
 			sortTerm: "",
 			isAsc: false,
@@ -42,15 +41,22 @@ AppDispatcher.register(action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.CREATE_JOB:
-				jobs.push({
-					job_id: +("" + Date.now()).substring(0, 5),
-					last_update: new Date().toISOString().substring(0, 10)
+		case ActionTypes.RECEIVE_SINGLE_JOB:
+				let newJobs = [];
+
+				jobs.forEach(job => {
+					if(job.job_id === action.data.job_id) {
+						newJobs.push(action.data);
+					} else {
+						newJobs.push(job);
+					}
 				});
+				jobs = newJobs;
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.UPDATE_JOB:
+		// State change but not server interaction
+		case ActionTypes.UPDATE_DETAILS:
 				let id = action.data.id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {
@@ -61,6 +67,7 @@ AppDispatcher.register(action => {
 				JobsStore.emitChange();
 				break;
 
+		// Table manipulation
 		case ActionTypes.FILTER_BY:
 				filters.filterBy = action.data;
 				JobsStore.emitChange();

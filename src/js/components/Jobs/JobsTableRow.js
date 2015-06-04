@@ -1,7 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
-import { updateJob } from "../../actions/JobsActionCreators";
+import { updateSingleJobDetails } from "../../actions/SharedActionCreators";
 import keySealer from "../../utils/keySealer";
 
 export default class JobsTableRow extends Component {
@@ -18,15 +18,15 @@ export default class JobsTableRow extends Component {
 				</div>
 				<div className="table-row-item" >
 					<input type="text" value={cells.client}
-							onChange={keySealer(cells.job_id, "client", updateJob)}/>
+							onChange={keySealer(cells.job_id, "client", updateSingleJobDetails)}/>
 				</div>
 				<div className="table-row-item" >
 					<input type="text" value={cells.project}
-							onChange={keySealer(cells.job_id, "project", updateJob)}/>
+							onChange={keySealer(cells.job_id, "project", updateSingleJobDetails)}/>
 				</div>
 				<div className="table-row-item" >
 					<select type="text" value={cells.job_status}
-							onChange={keySealer(cells.job_id, "job_status", updateJob)}>
+							onChange={keySealer(cells.job_id, "job_status", updateSingleJobDetails)}>
 						{this.props.selections.job_status.map(opt => {
 							return <option>{opt}</option>;
 						})}
@@ -34,7 +34,7 @@ export default class JobsTableRow extends Component {
 				</div>
 				<div className="table-row-item" >
 					<select value={cells.order_type}
-							onChange={keySealer(cells.job_id, "order_type", updateJob)}>
+							onChange={keySealer(cells.job_id, "order_type", updateSingleJobDetails)}>
 						{this.props.selections.order_type.map(opt => {
 							return <option>{opt}</option>;
 						})}
@@ -42,14 +42,14 @@ export default class JobsTableRow extends Component {
 				</div>
 				<div className="table-row-item u-flex-grow2" >
 					<input type="date" value={cells.shipping_date}
-							onChange={keySealer(cells.job_id, "shipping_date", updateJob)}/>
+							onChange={keySealer(cells.job_id, "shipping_date", updateSingleJobDetails)}/>
 				</div>
 				<div className="table-row-item" >
 					<input type="text" value={cells.job_items} />
 				</div>
 				<div className="table-row-item" >
 					<select value={cells.parts_status}
-							onChange={keySealer(cells.job_id, "parts_status", updateJob)} >
+							onChange={keySealer(cells.job_id, "parts_status", updateSingleJobDetails)} >
 						{this.props.selections.parts_status.map(opt => {
 							return <option>{opt}</option>;
 						})}
@@ -57,7 +57,7 @@ export default class JobsTableRow extends Component {
 				</div>
 				<div className="table-row-item u-flex-grow2" >
 					<input type="date" value={cells.last_update}
-							onChange={keySealer(cells.job_id, "last_update", updateJob)} />
+							onChange={keySealer(cells.job_id, "last_update", updateSingleJobDetails)} />
 				</div>
 			</div>
 		);

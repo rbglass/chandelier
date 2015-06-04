@@ -4,11 +4,11 @@ import { genericSort } from "../utils/ConvenienceUtils";
 import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
-import { details, items} from "../sampledata/data.js";
 
 var job = {
-			details: details,
-			items: items
+			id: "",
+			details: {},
+			items: []
 		},
 		filters = {
 			sortTerm: "",
@@ -43,13 +43,6 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.CREATE_ITEM:
-				job.items.push({
-					item: +("" + Date.now()).substring(6)
-				});
-				SingleJobStore.emitChange();
-				break;
-
 		// Will be destroyed when api ready
 		case ActionTypes.UPDATE_ITEM:
 				let d = action.data;
@@ -64,16 +57,21 @@ AppDispatcher.register(action => {
 				break;
 
 		// as will this
-		case ActionTypes.DUPLICATE_ITEM:
+		case ActionTypes.CREATE_ITEM:
 				let newItems = [];
 				job.items.forEach(item => {
 					newItems.push(item);
-					if(item.item === action.data) {
-						let dupe = objectAssign({}, item);
-						dupe.item = +("" + Date.now()).substring(6);
+					if(item.item_id === action.data.item_id) {
+						let dupe = objectAssign({}, action.data);
+						dupe.item_id = +("" + Date.now()).substring(6);
 						newItems.push(dupe);
 					}
 				});
+				if(job.items.length === newItems.length) {
+					newItems.push({
+						item: +("" + Date.now()).substring(6)
+					});
+				}
 				job.items = newItems;
 				SingleJobStore.emitChange();
 				break;
@@ -81,7 +79,7 @@ AppDispatcher.register(action => {
 		case ActionTypes.DELETE_ITEM:
 				let newItems = [];
 				job.items.forEach(item => {
-					if(item.item === action.data) {
+					if(item.item_id === action.data) {
 						return;
 					}
 					newItems.push(item);

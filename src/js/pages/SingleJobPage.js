@@ -6,9 +6,19 @@ import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
-import { createItem } from "../actions/JobsActionCreators";
+import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
+import * as SharedActionCreators from "../actions/SharedActionCreators";
+
+function requestDataFromServer(id) {
+	SharedActionCreators.getSelections();
+	SingleJobActionCreators.getSingleJob(id);
+}
 
 class SingleJobPage extends Component {
+
+	componentWillMount() {
+		requestDataFromServer(this.props.params.id);
+	}
 
 	render() {
 		return (
@@ -16,7 +26,7 @@ class SingleJobPage extends Component {
 				<h1 className="page-header">Single Job</h1>
 				<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 				<Table {...this.props} />
-				<button className="add-button" onClick={createItem}>+</button>
+				<button className="add-button" onClick={SingleJobActionCreators.createItem}>+</button>
 			</div>
 		);
 	}
@@ -25,7 +35,7 @@ class SingleJobPage extends Component {
 SingleJobPage.defaultProps = {
 	headers: [
 		{ key: "none", 	      display: "",        		className: "fixed-col" },
-		{ key: "item", 	      display: "Item",        className: "" },
+		{ key: "item_id", 	  display: "Item",        className: "" },
 		{ key: "product",     display: "Product",     className: "" },
 		{ key: "description", display: "Description", className: "u-flex-grow3" },
 		{ key: "glass",       display: "Glass",       className: "" },
@@ -41,7 +51,7 @@ SingleJobPage.defaultProps = {
 		{ key: "none", 	      display: "",        		className: "fixed-col" }
 	],
 	cellConfig: [
-		{ key: "item", 	                    className: "",             type: ""         },
+		{ key: "item_id", 	                className: "",             type: ""         },
 		{ key: "product",                   className: "",             type: "text"     },
 		{ key: "description",               className: "u-flex-grow3", type: "textarea" },
 		{ key: "glass",                     className: "",             type: "text"   },

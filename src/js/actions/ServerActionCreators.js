@@ -2,6 +2,13 @@
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
+export function receiveSelections(selections) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_SELECTIONS,
+		data: selections
+	});
+}
+
 export function receiveAllJobs(jobsArray) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALL_JOBS,
@@ -16,9 +23,9 @@ export function receiveSingleJob(jobObject) {
 	});
 }
 
-export function receiveAlert(alert) {
+export function receiveSingleItem(itemObject) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_ALERT,
-		data: alert
+		type: ActionTypes.RECEIVE_SINGLE_ITEM,
+		data: itemObject
 	});
 }
