@@ -1,71 +1,72 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import { updateItem } from "../../actions/JobsActionCreators";
+
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
 		console.log("blurred!", e.target.value);
 	}
-	newJobItemHandler(e) {
-		console.log("hi, it works");
-		return
+
+	// surely there is a better way, components?
+	keySealer(key, id) {
+		return (e) => {
+			updateItem({
+				item: id,
+				key: key,
+				value: e.target.value
+			});
+		};
 	}
 
+	// Break this into components
 	render() {
-		let cells = this.props.cells;
+		const cells = this.props.cellConfig.map((cell, i) => {
+			let cellValue = this.props.cells[cell.key];
+			let input;
+
+			switch (cell.type) {
+
+				case "button":
+						input = <button className={cell.innerClassName}>{cell.display}</button>;
+						break;
+
+				case "textarea":
+						input = <textarea value={cellValue} />;
+						break;
+
+				case "number":
+						input = <input type="number" min={0} value={cellValue} />;
+						break;
+
+				case "text":
+						input = <input type="text" value={cellValue} />;
+						break;
+
+				case "select":
+						input = (
+							<select value={cellValue}>
+								{ cell.options.map(e => { return <option>{e}</option>; }, this) }
+							</select>
+						);
+						break;
+
+				default:
+						input = cellValue;
+						break;
+			}
+
+			return (
+				<div className={`table-row-item ${cell.className}`}
+							onChange={cell.key ? this.keySealer(cell.key, this.props.cells.item).bind(this) : null}>
+					{input}
+				</div>
+			);
+		}, this);
 
 		return (
 			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
-				<div className="table-row-item fixed-col">
-					<button className="btn btn-left">-</button>
-				</div>
-				<div className="table-row-item">{cells.item}</div>
-				<div className="table-row-item">
-					<input type="text" value={cells.product} />
-				</div>
-				<div className="table-row-item u-flex-grow3">
-					<textarea value={cells.description}></textarea>
-				</div>
-				<div className="table-row-item">
-					<select value={cells.glass}>
-						<option>blue</option>
-					</select>
-				</div>
-				<div className="table-row-item">
-					<select value={cells.metal}>
-						<option>heavy</option>
-					</select>
-				</div>
-				<div className="table-row-item">
-					<select value={cells.flex}>
-						<option>flexbox</option>
-					</select>
-				</div>
-				<div className="table-row-item">
-					<select value={cells.bulb}>
-						<option>light</option>
-					</select>
-				</div>
-				<div className="table-row-item qty-sm">
-					<input type="number" min={0} value={cells.qty_req} />
-				</div>
-				<div className="table-row-item qty-sm">
-					<input type="number" min={0} value={cells.qty_hot} />
-				</div>
-				<div className="table-row-item qty-sm">
-					<input type="number" min={0} value={cells.qty_cold} />
-				</div>
-				<div className="table-row-item qty-md">
-					<input type="number" min={0} value={cells.qty_assem} />
-				</div>
-				<div className="table-row-item qty-md">
-					<input type="number" min={0} value={cells.qty_packed} />
-				</div>
-				<div className="table-row-item u-flex-grow3">
-					<textarea value={cells.notes}></textarea>
-				</div>
-				<div className="table-row-item fixed-col">
-					<button onClick={this.newJobItemHandler.bind(this)} className="btn btn-right">+</button>
-				</div>
+				{cells}
 			</div>
 		);
 	}

@@ -14,7 +14,7 @@ var jobs = sampledata,
 			endDate: null
 		};
 
-var JobStore = createStore({
+var JobsStore = createStore({
 
 	getFilteredAndSortedJobs() {
 		let f = filters;
@@ -32,7 +32,7 @@ var JobStore = createStore({
 	}
 });
 
-export default JobStore;
+export default JobsStore;
 
 AppDispatcher.register(action => {
 
@@ -40,12 +40,22 @@ AppDispatcher.register(action => {
 
 		case ActionTypes.RECEIVE_ALL_JOBS:
 				jobs = action.data;
-				JobStore.emitChange();
+				JobsStore.emitChange();
+				break;
+
+		case ActionTypes.UPDATE_DETAILS:
+				let id = action.data.job_id;
+				jobs = jobs.map(job => {
+					if (job.job_id === id) {
+						job[action.data.key] = action.data.value;
+					}
+				});
+				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.FILTER_BY:
 				filters.filterBy = action.data;
-				JobStore.emitChange();
+				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
@@ -55,18 +65,18 @@ AppDispatcher.register(action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
-				JobStore.emitChange();
+				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_START_DATE:
-			filters.startDate = action.data;
-			JobStore.emitChange();
-			break;
+				filters.startDate = action.data;
+				JobsStore.emitChange();
+				break;
 
 		case ActionTypes.SET_END_DATE:
-			filters.endDate = action.data;
-			JobStore.emitChange();
-			break;
+				filters.endDate = action.data;
+				JobsStore.emitChange();
+				break;
 
 		default:
 				break;

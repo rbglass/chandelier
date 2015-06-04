@@ -29,3 +29,17 @@ export function sortBy(field) {
 		data: field
 	});
 }
+
+export function updateDetails(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.UPDATE_DETAILS,
+		data: updateObj
+	});
+}
+
+export function updateItem(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.UPDATE_ITEM,
+		data: updateObj
+	});
+}
