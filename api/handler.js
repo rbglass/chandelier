@@ -9,6 +9,7 @@ var handler = {
   home : function(request, reply) {
 
     if (request.auth.isAuthenticated) {
+    	console.log("home handler");
       reply.file(index);
     } else if (!request.auth.isAuthenticated) {
       reply.redirect("/login");
@@ -17,47 +18,57 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-
-  findJobs : function(request, reply) {
-		reply("findJobs");
-  },
-
-  addJob : function(request, reply) {
-  	reply("addJob");
-  },
+  getJobsTable : function(request, reply) {
+		reply("getJobsTable");
+	},
 
 // -------------------------------------------------- \\
 
 
-  findSingleJob : function(request, reply) {
-  	reply("findSingleJob");
+  createJob : function(request, reply) {
+  	database.Jobs.create(request).success(function() {
+  		console.log("Job succesfully saved");
+	  	reply("createJob");
+  	});
   },
 
-  createSingleJob : function(request, reply) {
-  	reply("createSingleJob");
+  updateJob : function(request, reply) {
+  	reply("updateJob");
   },
 
-  updateSingleJob : function(request, reply) {
-  	reply("updateSingleJob");
+  deleteJob : function(request, reply) {
+  	reply("deleteJob");
   },
 
-  removeSingleJob : function(request, reply) {
-  	reply("removeSingleJob");
+  getSingleJob : function(request, reply) {
+  	database.Job.find(request.payload.id).success(function() {
+  	console.log("Job succesfully created");
+  	reply("getSingleJob");
+  	});
   },
 
 // -------------------------------------------------- \\
 
+	getJobItemsTable : function(request, reply) {
+		reply("getJobItemsTable");
+	},
 
-  findSingleItem : function(request, reply) {
-  	reply("findSingleItem");
+// -------------------------------------------------- \\
+
+  getJobItems : function(request, reply) {
+  	reply("getJobItems");
   },
 
-  updateSingleItem : function(request, reply) {
-		reply("updateSingleItem");
+  createJobItems : function(request, reply) {
+  	reply("createJobItems");
+	},
+
+  updateJobItems : function(request, reply) {
+		reply("updateJobItems");
   },
 
-  removeSingleItem : function(request, reply) {
-  	reply("removeSingleItem");
+  deleteJobItems : function(request, reply) {
+  	reply("deleteJobItems");
   },
 
 // -------------------------------------------------- \\
@@ -74,15 +85,15 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		database.Users.create({
-			email: profile.email
-		}).then(function(){
+		// database.Users.findOrCreate({
+			// where:
+				// {email: profile.email}
+		// }).spread(function(){
 			request.auth.session.clear();
 			request.auth.session.set(profile);
 			reply.redirect("/");
-		});
+		// });
   },
-
 
   logout : function(request, reply) {
 
