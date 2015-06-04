@@ -22,3 +22,10 @@ export function setEndDate(date) {
 		data: date
 	});
 }
+
+export function sortBy(field) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SORT_ONE,
+		data: field
+	});
+}

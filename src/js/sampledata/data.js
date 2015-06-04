@@ -1,5 +1,5 @@
 export const details = {
-	jobid: "RB1234",
+	job_id: "RB1234",
 	client: "TIM",
 	project: "peng",
 	client_ref: "n81432",
@@ -48,17 +48,17 @@ export const items = [
 
 export const jobs = [
 	{
-		jobid: "RB1234",
+		job_id: "RB2234",
 		client: "TIM",
 		project: "peng",
 		job_status: "accepted",
 		order_type: "special",
 		last_update: "2015-10-01",
 		parts_status: "waiting",
-		shipping_date: "2015-12-12"
+		shipping_date: "2015-11-12"
 	},
 	{
-		jobid: "RB1234",
+		job_id: "RB1234",
 		client: "TIM",
 		project: "peng",
 		job_status: "accepted",

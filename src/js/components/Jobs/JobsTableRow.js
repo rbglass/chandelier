@@ -12,7 +12,7 @@ export default class JobsTableRow extends Component {
 		return (
 			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
 				<div className="table-row-item" data-header="Header1">
-					<Link to="singlejob" params={{id: cells.jobid}}>{cells.jobid}</Link>
+					<Link to="singlejob" params={{id: cells.job_id}}>{cells.job_id}</Link>
 				</div>
 				<div className="table-row-item" data-header="Header2">
 					<input type="text" value={cells.client} />

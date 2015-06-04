@@ -23,8 +23,10 @@ var JobStore = createStore({
 			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
 		});
 
-		return genericSort(filtered, f.sortBy, f.asc);
+		const sorted = genericSort(filtered, f.sortBy, f.asc);
+		return sorted;
 	},
+
 	getFilters() {
 		return filters;
 	}

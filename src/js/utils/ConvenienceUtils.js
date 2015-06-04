@@ -26,6 +26,7 @@ export function contains(obj, term) {
 	});
 }
 
+// Change to Array.prototype method?
 export function genericSort(arr, sortBy, asc) {
 
 	arr = arr.slice(0);
@@ -41,7 +42,7 @@ export function genericSort(arr, sortBy, asc) {
 			t1 = t1.toLowerCase;
 			t2 = t2.toLowerCase;
 		}
-		return asc ? t1 - t2 : t1 - t2;
+		return asc ? t1 - t2 : t2 - t1;
 	});
 }
 
