@@ -2,7 +2,7 @@
 var config    = require("../config.js");
 var Sequelize = require("sequelize");
 
-var sequelize = new Sequelize(config.localdb.localdburl, {
+var seqlz = new Sequelize(config.localdb.localdburl, {
 	dialect:'postgres',
 	define: {
 			timestamps: true,
@@ -17,17 +17,5 @@ var sequelize = new Sequelize(config.localdb.localdburl, {
 //	"port": 5432
 //});
 
-var Users = sequelize.define("users", {
-		email: Sequelize.STRING
-});
 
-
-var Jobs = sequelize.define('jobs', {});
-var Job_items = sequelize.define('job_items', {});
-
-
-module.exports = {
-	Users: Users,
-	Jobs: Jobs,
-	Job_items: Job_items
-};
+module.exports = seqlz;

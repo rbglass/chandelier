@@ -1,9 +1,10 @@
 "use strict";
 
-var path = require("path");
-
-var database = require("./models/database");
-var index    = path.resolve(__dirname + "/../public/index.html");
+var path  = require("path");
+var index = path.resolve(__dirname + "/../public/index.html");
+var Users = require("./models/Users");
+var Jobs = require("./models/Jobs");
+var Job_items = require("./models/Job_items");
 
 var handler = {
 
@@ -20,7 +21,7 @@ var handler = {
 // -------------------------------------------------- \\
 
   getJobsTable : function(request, reply) {
-  	database.Jobs.findAll().then(function(jobs) {
+  	Jobs.findAll().then(function(jobs) {
 			reply(jobs);
   	});
 	},
@@ -29,15 +30,14 @@ var handler = {
 
   createJob : function(request, reply) {
 
-  	// SHOULD WE CREATE A NEW EMPTY JOB THEN INPUT FIELDS WITH PUT REQUESTS?
-  	database.Jobs.create().then(function(job) {
+  	Jobs.create(request).success(function() {
   		console.log("Job succesfully saved");
 	  	reply(job);
   	});
-  // },
+  },
 
   	// OR POST ALL DETAILS IN ONE GO WHEN JOB IS FIRST CREATED?
-  	database.Jobs.create({
+  	Jobs.create({
   		where : {
   			key1 : "val1",
   			key2 : "val2",
@@ -56,7 +56,7 @@ var handler = {
   	var field = request.payload["field"];
   	var jobID = request.payload["jobID"];
 
-  	database.Jobs.update({
+  	Jobs.update({
   		field : input,
   	}, {
   		where : {
@@ -72,7 +72,7 @@ var handler = {
 
   	var jobID = request.payload["jobID"];
 
-  	database.Jobs.destroy({
+  	Jobs.destroy({
   		where : {
   			jobID : "jobID"
   		}
@@ -86,20 +86,20 @@ var handler = {
 
   	var jobID = request.payload["jobID"];
 
-  	database.Job.find({
+  	Jobs.find({
   		where : {
   			jobID : jobID
   		}
   	}).then(function(job) {
   		console.log("job found");
 	  	reply(job);
-  	});
+		});
   },
 
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		database.Job_items.find().then(function(jobItems) {
+		Job_items.find().then(function(jobItems) {
 			reply(jobItems);
 		});
 	},
@@ -110,7 +110,7 @@ var handler = {
 
   	var jobID = request.payload["jobID"];
 
-  	database.Job_items.findAll({
+  	Job_items.findAll({
   		where : {
   			jobID : jobID
   		}
@@ -120,7 +120,7 @@ var handler = {
   },
 
   createJobItem : function(request, reply) {
-  	database.Job_items.create().then(function(jobItem) {
+  	Job_items.create().then(function(jobItem) {
   		reply(jobItem);
   	});
 	},
@@ -131,7 +131,7 @@ var handler = {
   	var input = request.payload["value"];
   	var field = request.payload["field"];
 
-  	database.Job_items.update({
+  	Job_items.update({
   		field : input
   	}, {
   		where : {
@@ -146,7 +146,7 @@ var handler = {
 
 		var jobID = request.payload["jobID"];
 
-		database.Job_items.destroy({
+		Job_items.destroy({
 			where : {
 				jobID : jobID
 			}
@@ -168,7 +168,7 @@ var handler = {
       email       : creds.profile.raw.email
     };
 
-		database.Users.find({
+		Users.find({
 			where: {
 				email: profile.email
 			}
@@ -182,7 +182,6 @@ var handler = {
 				reply("Not a valid account");
 			}
 		});
-  },
 
   logout : function(request, reply) {
 
