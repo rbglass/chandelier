@@ -1,17 +1,15 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import JobsTableHeader from "./JobsTableHeader";
-import JobsTableRow from "./JobsTableRow";
-import JobsFilter from "./JobsFilter";
+import TableHeader from "./TableHeader";
 
 export default class Table extends Component {
 	render() {
 		const rows = this.props.items.map((row, i) => {
-			return <JobsTableRow key={i} cells={row} />;
+			return <this.props.RowComponent key={i} cells={row} />;
 		});
 		return (
 			<div className="table">
-				<JobsTableHeader filters={this.props.filters} />
+				<TableHeader filters={this.props.filters} headers={this.props.headers} />
 				{rows}
 			</div>
 		);
