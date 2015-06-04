@@ -37,6 +37,7 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
+		// Will be destroyed when api ready
 		case ActionTypes.UPDATE_ITEM:
 				let d = action.data;
 				// eww mutable
@@ -46,6 +47,11 @@ AppDispatcher.register(action => {
 					}
 					return jobitem;
 				});
+				SingleJobStore.emitChange();
+				break;
+
+		case ActionTypes.UPDATE_DETAILS:
+				job.details[action.data.key] = action.data.value;
 				SingleJobStore.emitChange();
 				break;
 

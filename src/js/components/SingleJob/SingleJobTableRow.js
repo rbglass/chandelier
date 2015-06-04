@@ -2,32 +2,11 @@
 import React, { Component, PropTypes } from "react";
 import request from "superagent";
 import { updateItem } from "../../actions/JobsActionCreators";
+import keySealer from "../../utils/keySealer";
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
 		console.log("blurred!", e.target.value);
-	}
-
-	newJobItemHandler(e) {
-		request.get("/api/jobs")
-					.end(function(err, response){
-			if (err) {
-				console.log(err);
-			} else {
-				console.log(response);
-			}
-		});
-
-
-	// surely there is a better way, components?
-	keySealer(key, id) {
-		return (e) => {
-			updateItem({
-				item: id,
-				key: key,
-				value: e.target.value
-			});
-		};
 	}
 
 	// Break this into components
@@ -68,8 +47,8 @@ export default class SingleJobTableRow extends Component {
 			}
 
 			return (
-				<div className={`table-row-item ${cell.className}`}
-							onChange={cell.key ? this.keySealer(cell.key, this.props.cells.item).bind(this) : null}>
+				<div className={`table-row-item ${cell.className}`} key={i}
+							onChange={cell.key ? keySealer(this.props.cells.item, cell.key, updateItem) : null}>
 					{input}
 				</div>
 			);

@@ -43,7 +43,7 @@ AppDispatcher.register(action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.UPDATE_DETAILS:
+		case ActionTypes.UPDATE_JOB:
 				let id = action.data.job_id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {
