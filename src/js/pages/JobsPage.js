@@ -24,7 +24,8 @@ class JobsPage extends Component {
 		return (
 			<div>
 				<h1 className="page-header">All Jobs</h1>
-				<JobsFilter filters={this.props.filters} />
+				<JobsFilter filters={this.props.filters} setFilter={JobsActionCreators.setFilter}
+					setStartDate={JobsActionCreators.setStartDate} setEndDate={JobsActionCreators.setEndDate} />
 				<Table {...this.props} />
 				<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
 			</div>

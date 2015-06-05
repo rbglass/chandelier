@@ -1,16 +1,15 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import { setFilter, setStartDate, setEndDate } from "../../actions/JobsActionCreators";
 
 export default class JobsFilter extends Component {
 	filterChange(e) {
-		setFilter(e.target.value);
+		this.props.setFilter(e.target.value);
 	}
 	startDateChange(e) {
-		setStartDate(e.target.value);
+		this.props.setStartDate(e.target.value);
 	}
 	endDateChange(e) {
-		setEndDate(e.target.value);
+		this.props.setEndDate(e.target.value);
 	}
 
 	render() {
