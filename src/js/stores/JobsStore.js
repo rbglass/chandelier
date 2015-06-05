@@ -42,23 +42,25 @@ AppDispatcher.register(action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				let newJobs = [];
-				jobs.forEach(job => {
+				jobs.push(action.data);
+				JobsStore.emitChange();
+				break;
+
+		case ActionTypes.RECEIVE_UPDATED_JOB:
+				let newJobs = jobs.map(job => {
 					if(job.job_id === action.data.job_id) {
-						newJobs.push(action.data);
+						return action.data;
 					} else {
-						newJobs.push(job);
+						return job;
 					}
 				});
-				if(newJobs.length === jobs.length) {
-					newJobs.push(action.data);
-				}
+
 				jobs = newJobs;
 				JobsStore.emitChange();
 				break;
 
 		// State change but not server interaction
-		case ActionTypes.UPDATE_DETAILS:
+		case ActionTypes.CHANGE_DETAILS:
 				let id = action.data.id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {

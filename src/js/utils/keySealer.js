@@ -1,6 +1,6 @@
 "use strict";
 
-// probably not necessary after refactoring...
+// AM I MISSING SOMETHING???
 export default (id, key, action) => {
 	return (e) => {
 		action({

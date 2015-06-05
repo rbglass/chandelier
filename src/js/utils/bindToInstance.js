@@ -2,6 +2,8 @@
 
 export default function(instance, ...methods) {
 	methods.forEach(method => {
-		instance[method] = instance[method].bind(instance);
+		if (typeof instance[method] === "function") {
+			instance[method] = instance[method].bind(instance);
+		}
 	});
 }

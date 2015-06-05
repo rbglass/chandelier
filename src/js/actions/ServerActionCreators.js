@@ -23,10 +23,23 @@ export function receiveSingleJob(jobObject) {
 	});
 }
 
-export function receiveSingleItem(itemObject, dupeId) {
+export function receiveUpdatedJob(jobObject) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_UPDATED_JOB,
+		data: itemObject
+	});
+}
+
+export function receiveSingleItem(itemObject) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SINGLE_ITEM,
-		data: itemObject,
-		dupeId: dupeId
+		data: itemObject
+	});
+}
+
+export function receiveUpdatedItem(itemObject) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_UPDATED_ITEM,
+		data: itemObject
 	});
 }

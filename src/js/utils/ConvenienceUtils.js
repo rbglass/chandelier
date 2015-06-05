@@ -69,6 +69,7 @@ export function isWithinBounds(obj, lower, upper) {
 }
 
 // Turns an object into an array of objects
+// Currently not being used
 // todo: immut
 export function tilt(obj) {
 	return Object.keys(obj).map((e) => {

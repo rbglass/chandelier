@@ -38,32 +38,34 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.UPDATE_DETAILS:
-				job.details[action.data.key] = action.data.value;
+		case ActionTypes.RECEIVE_SINGLE_ITEM:
+				job.items.push(action.data);
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				let newItems = [];
-				job.items.forEach(item => {
-					newItems.push(item);
-					if(item.item_id === action.dupeId) {
-						newItems.push(action.data);
+		case ActionTypes.RECEIVE_UPDATED_ITEM:
+				let newItems = job.items.map(item => {
+					if(item.item_id === action.data.item_id) {
+						return action.data;
+					} else {
+						return item;
 					}
 				});
-				if(job.items.length === newItems.length) {
-					newItems.push(action.data);
-				}
+
 				job.items = newItems;
 				SingleJobStore.emitChange();
 				break;
 
-		// Will be destroyed when api ready
-		case ActionTypes.UPDATE_ITEM:
+
+		case ActionTypes.CHANGE_DETAILS:
+				job.details[action.data.key] = action.data.value;
+				SingleJobStore.emitChange();
+				break;
+
+		case ActionTypes.CHANGE_ITEM:
 				let d = action.data;
-				// eww mutable
 				job.items = job.items.map(jobitem => {
-					if(jobitem.item === d.id) {
+					if(jobitem.item_id === d.id) {
 						jobitem[d.key] = d.value;
 					}
 					return jobitem;

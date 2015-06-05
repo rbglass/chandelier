@@ -1,6 +1,7 @@
 "use strict";
 import { EventEmitter } from "events";
 import objectAssign from "object-assign";
+import bindToInstance from "./bindToInstance";
 
 const CHANGE_EVENT = "change";
 
@@ -23,11 +24,7 @@ export function createStore(spec) {
 	}, spec);
 
 	// Auto-bind store methods for convenience
-	Object.keys(store).forEach((e, i) => {
-		if (typeof store[e] === "function") {
-			store[e] = store[e].bind(store);
-		}
-	});
+	bindToInstance(store, Object.keys(store));
 
 	return store;
 }
