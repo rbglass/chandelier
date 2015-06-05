@@ -4,13 +4,14 @@
 var PDFDocument = require("pdfkit");
 var stroke = {stroke: true};
 
-function pdfMaker(job, writablestream) {
+function pdfMaker(job, cb) {
 
 	var doc = new PDFDocument();
-	var stream = doc.pipe(writablestream);
+	// var stream = doc.pipe(writablestream);
 	var date = new Date();
 	var dateStr = date.getDate() + " " + date.getMonth() + " " + date.getFullYear();
-	var body = "";
+
+	writeDoc();
 
 	function writeFooter() {
 		doc.fontSize(8)
@@ -95,14 +96,15 @@ function pdfMaker(job, writablestream) {
 				}
 		});
 		doc.end();
+		cb(doc);
 	}
 
-	stream.on("data", function(chunk) {
-		body += chunk;
-	});
-	stream.on("finish", function() {
-		return body;
-	});
+	// stream.on("data", function(chunk) {
+	// 	body += chunk;
+	// });
+	// stream.on("finish", function() {
+	// 	return body;
+	// });
 }
 
 module.exports = pdfMaker;

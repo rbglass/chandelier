@@ -7,8 +7,8 @@ export function getAllJobs() {
 	JobsAPI.getAllJobs();
 }
 
-export function createJob() {
-	JobsAPI.createJob();
+export function createSingleJob() {
+	JobsAPI.createSingleJob();
 }
 
 export function setFilter(text) {
