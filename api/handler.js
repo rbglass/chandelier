@@ -100,8 +100,7 @@ var handler = {
 					items: items
 				};
 				if(pdf) {
-					reply(pdfMaker(job, request.raw.res));
-					reply.close();
+					pdfMaker(job, reply);
 				} else{
 					reply(job);
 				}
