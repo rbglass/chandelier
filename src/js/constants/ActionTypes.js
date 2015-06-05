@@ -5,20 +5,28 @@ export default keyMirror({
 	// Receiving from API
 	"RECEIVE_SELECTIONS": null,
 	"RECEIVE_ALL_JOBS": null,
+
 	"RECEIVE_SINGLE_JOB": null,
+	"RECEIVE_UPDATED_JOB": null,
+
 	"RECEIVE_SINGLE_ITEM": null,
+	"RECEIVE_UPDATED_ITEM": null,
+
 	"RECEIVE_ALERT": null,
 
 	// Sending to API
 	// On blur/click
 	"CREATE_SINGLE_JOB": null,
-	"UPDATE_SINGLE_JOB_DETAILS": null,
+	"SAVE_DETAILS": null,
+	"SAVE_ITEM": null,
 
 	// Local pre-server actions
 	// On change
-	"UPDATE_DETAILS": null,
+	"CHANGE_DETAILS": null,
+	"CHANGE_ITEM": null,
+
+	// unnecessary?
 	"CREATE_ITEM": null,
-	"UPDATE_ITEM": null,
 	"DELETE_ITEM": null,
 
 	// Data Sorting

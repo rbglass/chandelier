@@ -30,6 +30,7 @@ export function contains(obj, term) {
 
 // Change to Array.prototype method?
 // localeCompare w/ datestring correctly?
+// use sort table
 export function genericSort(arr, sortBy, asc) {
 
 	arr = arr.slice(0);
@@ -69,6 +70,7 @@ export function isWithinBounds(obj, lower, upper) {
 }
 
 // Turns an object into an array of objects
+// Currently not being used
 // todo: immut
 export function tilt(obj) {
 	return Object.keys(obj).map((e) => {

@@ -11,16 +11,20 @@ export function createItem(blueprint) {
 	JobsAPI.createSingleJobItem(blueprint);
 }
 
-export function updateItem(updateObj) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_ITEM,
-		data: updateObj
-	});
+export function saveItem(jobId, item) {
+	JobsAPI.saveItem(jobId, item);
 }
 
 export function deleteItem(id) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.DELETE_ITEM,
 		data: id
+	});
+}
+
+export function changeItem(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CHANGE_ITEM,
+		data: updateObj
 	});
 }

@@ -3,6 +3,14 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as JobsAPI from "../api/JobsAPI";
 
+export function getSelections() {
+	JobsAPI.getSelections();
+}
+
+export function saveDetails(jobId, details) {
+	JobsAPI.saveDetails(jobId, details);
+}
+
 export function recieveAlert(alert) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALERT,
@@ -17,14 +25,9 @@ export function sortBy(field) {
 	});
 }
 
-export function updateSingleJobDetails(id, updateObj) {
-	JobsAPI.updateSingleJobDetails(id, updateObj);
-	// AppDispatcher.dispatch({
-	// 	type: ActionTypes.UPDATE_SINGLE_JOB_DETAILS,
-	// 	data: updateObj
-	// });
-}
-
-export function getSelections() {
-	JobsAPI.getSelections();
+export function changeDetails(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CHANGE_DETAILS,
+		data: updateObj
+	});
 }
