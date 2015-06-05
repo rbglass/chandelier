@@ -84,15 +84,15 @@ var handler = {
   getSingleJob : function(request, reply) {
 		//for the details on top of the job_items table
 
-//  	var entry = request.payload;
+  	var entry = request.payload;
   	Jobs.find({
-  		where : { job_id: "123" }
+  		where : { job_id: entry.job_id }
   	}).then(function(details) {
 			Job_items.findAll({
-				where : { job_id: "123" }
+				where : { job_id: entry.job_id }
 			}).then(function(items){
 				reply({
-					job_id: "123",
+					job_id: entry.job_id,
 					details: details,
 					items: items
 				});
@@ -134,8 +134,8 @@ var handler = {
 
 		Job_items.create({
 			item_id: 			"",
-			job_id: 			"123",
-			product: 			"lamp",
+			job_id: 			"",
+			product: 			"",
 			description: 	"",
 			glass: 				"",
 			metal: 				"",
