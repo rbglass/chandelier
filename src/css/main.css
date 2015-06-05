@@ -20,6 +20,10 @@ label {
 	text-align: center;
 }
 
+button:focus {
+	outline: none;
+}
+
 /* Alert */
 .alert-box {
 	position: fixed;
@@ -74,11 +78,13 @@ label {
 	-o-justify-content: space-between;
 	justify-content: space-between;
 
-	border: 1px solid #f2f2f2;
+	border: 0;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
 
 	font-size: 0.7rem;
-	margin: 0.5rem;
 	line-height: 1.5;
+	margin: 0.5rem;
+	margin-bottom: 0;
 }
 
 /* Header */
@@ -259,6 +265,28 @@ label {
 	width: 89%;
 	min-height: 72px;
 }
+
+/* Other */
+.add-button {
+	float: right;
+	width: 40px;
+	height: 18px;
+
+	font-size: 18px;
+	line-height: 10px;
+
+	background-color: rgba(128, 128, 128, 0.3);
+	color: white;
+
+	border: none;
+	border-radius: 0px 0px 4px 4px;
+	margin-right: 0.5em;
+}
+
+.add-button:hover {
+	background-color: rgba(5, 5, 5, 0.6);
+}
+
 
 /* Flex Utility classes */
 

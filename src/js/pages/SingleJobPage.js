@@ -4,16 +4,29 @@ import Table from "../components/common/Table";
 import SingleJobTableRow from "../components/SingleJob/SingleJobTableRow";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
+import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
+import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
+import * as SharedActionCreators from "../actions/SharedActionCreators";
+
+function requestDataFromServer(id) {
+	SharedActionCreators.getSelections();
+	SingleJobActionCreators.getSingleJob(id);
+}
 
 class SingleJobPage extends Component {
+
+	componentWillMount() {
+		requestDataFromServer(this.props.params.id);
+	}
 
 	render() {
 		return (
 			<div>
 				<h1 className="page-header">Single Job</h1>
-				<SingleJobDetails details={this.props.details} />
+				<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 				<Table {...this.props} />
+				<button className="add-button" onClick={SingleJobActionCreators.createItem}>+</button>
 			</div>
 		);
 	}
@@ -22,7 +35,7 @@ class SingleJobPage extends Component {
 SingleJobPage.defaultProps = {
 	headers: [
 		{ key: "none", 	      display: "",        		className: "fixed-col" },
-		{ key: "item", 	      display: "Item",        className: "" },
+		{ key: "item_id", 	  display: "Item",        className: "" },
 		{ key: "product",     display: "Product",     className: "" },
 		{ key: "description", display: "Description", className: "u-flex-grow3" },
 		{ key: "glass",       display: "Glass",       className: "" },
@@ -38,21 +51,19 @@ SingleJobPage.defaultProps = {
 		{ key: "none", 	      display: "",        		className: "fixed-col" }
 	],
 	cellConfig: [
-		{ key: null,        display: "-",   className: "fixed-col",    type: "button", innerClassName: "btn btn-left"  },
-		{ key: "item", 	                    className: "",             type: ""                                        },
-		{ key: "product",                   className: "",             type: "text"                                    },
-		{ key: "description",               className: "u-flex-grow3", type: "textarea"                                },
-		{ key: "glass",                     className: "",             type: "select", options: ["emerald", "rose"]    },
-		{ key: "metal",                     className: "",             type: "select", options: ["iron", "titanium"]   },
-		{ key: "flex",                      className: "",             type: "select", options: ["loose", "strong"]    },
-		{ key: "bulb",                      className: "",             type: "select", options: ["bright", "dim"]      },
-		{ key: "qty_req",                   className: "qty-sm",       type: "number"                                  },
-		{ key: "qty_hot",                   className: "qty-sm",       type: "number"                                  },
-		{ key: "qty_cold",                  className: "qty-sm",       type: "number"                                  },
-		{ key: "qty_assem",                 className: "qty-md",       type: "number"                                  },
-		{ key: "qty_packed",                className: "qty-md",       type: "number"                                  },
-		{ key: "notes",                     className: "u-flex-grow3", type: "textarea"                                },
-		{ key: null, 	      display: "+",   className: "fixed-col",    type: "button", innerClassName: "btn btn-right" }
+		{ key: "item_id", 	                className: "",             type: ""         },
+		{ key: "product",                   className: "",             type: "text"     },
+		{ key: "description",               className: "u-flex-grow3", type: "textarea" },
+		{ key: "glass",                     className: "",             type: "text"   },
+		{ key: "metal",                     className: "",             type: "text"   },
+		{ key: "flex",                      className: "",             type: "text"   },
+		{ key: "bulb",                      className: "",             type: "text"   },
+		{ key: "qty_req",                   className: "qty-sm",       type: "number"   },
+		{ key: "qty_hot",                   className: "qty-sm",       type: "number"   },
+		{ key: "qty_cold",                  className: "qty-sm",       type: "number"   },
+		{ key: "qty_assem",                 className: "qty-md",       type: "number"   },
+		{ key: "qty_packed",                className: "qty-md",       type: "number"   },
+		{ key: "notes",                     className: "u-flex-grow3", type: "textarea" }
 	],
 	RowComponent: SingleJobTableRow
 };
@@ -62,12 +73,14 @@ function getState() {
 	const details = SingleJobStore.getJobDetails();
 	const items = SingleJobStore.getSortedItems();
 	const filters = SingleJobStore.getFilters();
+	const selections = SelectionStore.getSelections();
 
 	return {
+		selections,
 		details,
 		items,
 		filters
 	};
 }
 
-export default connectToStores([SingleJobStore], getState)(SingleJobPage);
+export default connectToStores([SingleJobStore, SelectionStore], getState)(SingleJobPage);

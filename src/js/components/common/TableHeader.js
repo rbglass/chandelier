@@ -1,6 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import { sortBy } from "../../actions/JobsActionCreators";
+import { sortBy } from "../../actions/SharedActionCreators";
 
 export default class JobsTableHeader extends Component {
 

@@ -1,6 +1,15 @@
 "use strict";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
+import * as JobsAPI from "../api/JobsAPI";
+
+export function getAllJobs() {
+	JobsAPI.getAllJobs();
+}
+
+export function createJob() {
+	JobsAPI.createJob();
+}
 
 export function setFilter(text) {
 	AppDispatcher.dispatch({
@@ -23,30 +32,3 @@ export function setEndDate(date) {
 	});
 }
 
-export function sortBy(field) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.SORT_ONE,
-		data: field
-	});
-}
-
-export function updateJob(updateObj) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_JOB,
-		data: updateObj
-	});
-}
-
-export function updateDetails(updateObj) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_DETAILS,
-		data: updateObj
-	});
-}
-
-export function updateItem(updateObj) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_ITEM,
-		data: updateObj
-	});
-}
