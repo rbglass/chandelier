@@ -4,6 +4,7 @@ var Sequelize = require("sequelize");
 
 var Job_items = seqlz.define('job_items', {
 	item_id: 			Sequelize.STRING,
+	job_id: 			Sequelize.STRING,
 	product: 			Sequelize.STRING,
 	description: 	Sequelize.STRING,
 	glass: 				Sequelize.STRING,
