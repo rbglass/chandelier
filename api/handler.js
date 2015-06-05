@@ -33,16 +33,17 @@ var handler = {
 
   createJob : function(request, reply) {
 		//create an empty row (the updateJob handler should then be triggered)
+		var entry = request.payload;
   	Jobs.create({
-			job_id: 						"",
-			client: 						"",
-			project: 						"",
-			job_status: 				"",
-			order_type: 				"",
-			shipping_date: 			new Date(),
-			num_of_job_items: 	0,
-			parts_status: 			"",
-			last_update: 				new Date()
+			job_id: 						entry.job_id || "",
+			client: 						entry.client || "",
+			project: 						entry.project || "",
+			job_status: 				entry.job_status || "",
+			order_type: 				entry.order_type || "",
+			shipping_date: 			entry.shipping_date || new Date(),
+			num_of_job_items: 	entry.num_of_job_items || 0,
+			parts_status: 			entry.parts_status || "",
+			last_update: 				entry.last_update || new Date()
 		}).then(function(job){
 			//TODO need an oclick on the frontend to create an empty row.
 				reply(job);
@@ -130,23 +131,23 @@ var handler = {
   },
 
   createJobItem : function(request, reply) {
-		console.log("i hit the create handler");
+		var entry = request.payload;
 
 		Job_items.create({
-			item_id: 			"",
-			job_id: 			"",
-			product: 			"",
-			description: 	"",
-			glass: 				"",
-			metal: 				"",
-			flex: 				"",
-			bulb: 				"",
-			qty_req: 			0,
-			qty_hot: 			0,
-			qty_cold: 		0,
-			qty_assem: 		0,
-			qty_packed: 	0,
-			notes: 				""
+			item_id: 			entry.item_id 		|| "",
+			job_id: 			entry.job_id 			|| "",
+			product: 			entry.product 		|| "",
+			description: 	entry.description || "",
+			glass: 				entry.glass 			|| "",
+			metal: 				entry.metal 			|| "",
+			flex: 				entry.flex 				|| "",
+			bulb: 				entry.bulb 				|| "",
+			qty_req: 			entry.qty_req 		|| 0,
+			qty_hot: 			entry.qty_hot 		|| 0,
+			qty_cold: 		entry.qty_cold 		|| 0,
+			qty_assem: 		entry.qty_assem 	|| 0,
+			qty_packed: 	entry.qty_assem 	|| 0,
+			notes: 				entry.notes 			|| ""
 		}).then(function(job_item){
   		reply(job_item);
 		}).catch(function(err){
