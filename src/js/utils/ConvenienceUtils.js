@@ -12,6 +12,8 @@ function isDateStr(entity) {
 
 // use tilt
 export function contains(obj, term) {
+	if(!term) return true;
+
 	const k = Object.keys(obj);
 
 	return k.some(cell => {

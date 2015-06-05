@@ -5,7 +5,7 @@ import TableHeader from "./TableHeader";
 export default class Table extends Component {
 	render() {
 		const rows = this.props.items.map((row, i) => {
-			return <this.props.RowComponent key={i} cells={row} cellConfig={this.props.cellConfig}/>;
+			return <this.props.RowComponent key={i} cells={row} cellConfig={this.props.cellConfig} selections={this.props.selections}/>;
 		}, this);
 		return (
 			<div className="table">
@@ -15,7 +15,3 @@ export default class Table extends Component {
 		);
 	}
 }
-
-Table.propTypes = {
-
-};

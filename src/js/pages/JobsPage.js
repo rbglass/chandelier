@@ -4,9 +4,21 @@ import Table from "../components/common/Table";
 import JobsFilter from "../components/Jobs/JobsFilter";
 import JobsTableRow from "../components/Jobs/JobsTableRow";
 import JobsStore from "../stores/JobsStore";
+import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
+import * as JobsActionCreators from "../actions/JobsActionCreators";
+import * as SharedActionCreators from "../actions/SharedActionCreators";
+
+function requestDataFromServer() {
+	SharedActionCreators.getSelections();
+	JobsActionCreators.getAllJobs();
+}
 
 class JobsPage extends Component {
+
+	componentWillMount() {
+		requestDataFromServer();
+	}
 
 	render() {
 		return (
@@ -14,6 +26,7 @@ class JobsPage extends Component {
 				<h1 className="page-header">All Jobs</h1>
 				<JobsFilter filters={this.props.filters} />
 				<Table {...this.props} />
+				<button className="add-button" onClick={JobsActionCreators.createJob}>+</button>
 			</div>
 		);
 	}
@@ -37,11 +50,13 @@ JobsPage.defaultProps = {
 function getState() {
 	const filters = JobsStore.getFilters();
 	const items = JobsStore.getFilteredAndSortedJobs();
+	const selections = SelectionStore.getSelections();
 
 	return {
+		selections,
 		filters,
 		items
 	};
 }
 
-export default connectToStores([JobsStore], getState)(JobsPage);
+export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);

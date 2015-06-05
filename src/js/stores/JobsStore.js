@@ -3,9 +3,8 @@ import { createStore } from "../utils/StoreUtils";
 import { contains, genericSort, isWithinBounds } from "../utils/ConvenienceUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
-import { jobs as sampledata } from "../sampledata/data.js";
 
-var jobs = sampledata,
+var jobs = [],
 		filters = {
 			sortTerm: "",
 			isAsc: false,
@@ -14,13 +13,12 @@ var jobs = sampledata,
 			endDate: null
 		};
 
-var JobsStore = createStore({
+const JobsStore = createStore({
 
 	getFilteredAndSortedJobs() {
 		let f = filters;
-
 		const filtered = jobs.filter(row => {
-			return contains(row, f.filterBy) && isWithinBounds(row, f.startDate, f.endDate);
+			return contains(row.details, f.filterBy) && isWithinBounds(row.details, f.startDate, f.endDate);
 		});
 
 		const sorted = genericSort(filtered, f.sortTerm, f.isAsc);
@@ -43,16 +41,35 @@ AppDispatcher.register(action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.UPDATE_JOB:
-				let id = action.data.job_id;
+		case ActionTypes.RECEIVE_SINGLE_JOB:
+				let newJobs = [];
+				jobs.forEach(job => {
+					if(job.job_id === action.data.job_id) {
+						newJobs.push(action.data);
+					} else {
+						newJobs.push(job);
+					}
+				});
+				if(newJobs.length === jobs.length) {
+					newJobs.push(action.data);
+				}
+				jobs = newJobs;
+				JobsStore.emitChange();
+				break;
+
+		// State change but not server interaction
+		case ActionTypes.UPDATE_DETAILS:
+				let id = action.data.id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {
-						job[action.data.key] = action.data.value;
+						job.details[action.data.key] = action.data.value;
 					}
+					return job;
 				});
 				JobsStore.emitChange();
 				break;
 
+		// Table manipulation
 		case ActionTypes.FILTER_BY:
 				filters.filterBy = action.data;
 				JobsStore.emitChange();

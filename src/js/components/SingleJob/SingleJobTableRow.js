@@ -1,7 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-
-import { updateItem } from "../../actions/JobsActionCreators";
+import { updateItem, createItem, deleteItem } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 
 export default class SingleJobTableRow extends Component {
@@ -9,17 +8,6 @@ export default class SingleJobTableRow extends Component {
 		console.log("blurred!", e.target.value);
 	}
 
-
-	// surely there is a better way, components?
-	keySealer(key, id) {
-		return (e) => {
-			updateItem({
-				item: id,
-				key: key,
-				value: e.target.value
-			});
-		};
-	}
 	// Break this into components
 	render() {
 		const cells = this.props.cellConfig.map((cell, i) => {
@@ -27,10 +15,6 @@ export default class SingleJobTableRow extends Component {
 			let input;
 
 			switch (cell.type) {
-
-				case "button":
-						input = <button className={cell.innerClassName}>{cell.display}</button>;
-						break;
 
 				case "textarea":
 						input = <textarea value={cellValue} />;
@@ -47,7 +31,7 @@ export default class SingleJobTableRow extends Component {
 				case "select":
 						input = (
 							<select value={cellValue}>
-								{ cell.options.map(e => { return <option>{e}</option>; }, this) }
+								{ this.props.selections[cell.key].map(e => { return <option>{e}</option>; }, this) }
 							</select>
 						);
 						break;
@@ -59,7 +43,7 @@ export default class SingleJobTableRow extends Component {
 
 			return (
 				<div className={`table-row-item ${cell.className}`} key={i}
-							onChange={cell.key ? keySealer(this.props.cells.item, cell.key, updateItem) : null}>
+							onChange={cell.key ? keySealer(this.props.cells.item_id, cell.key, updateItem) : null}>
 					{input}
 				</div>
 			);
@@ -67,7 +51,13 @@ export default class SingleJobTableRow extends Component {
 
 		return (
 			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
+				<div className="table-row-item fixed-col">
+					<button className="btn btn-left" onClick={deleteItem.bind(this, this.props.cells.item_id)}>-</button>
+				</div>
 				{cells}
+				<div className="table-row-item fixed-col" onClick={createItem.bind(this, this.props.cells)}>
+					<button className="btn btn-right">+</button>
+				</div>
 			</div>
 		);
 	}
