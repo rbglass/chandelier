@@ -43,6 +43,21 @@ AppDispatcher.register(action => {
 				SingleJobStore.emitChange();
 				break;
 
+		case ActionTypes.RECEIVE_SINGLE_ITEM:
+				let newItems = [];
+				job.items.forEach(item => {
+					newItems.push(item);
+					if(item.item_id === action.dupeId) {
+						newItems.push(action.data);
+					}
+				});
+				if(job.items.length === newItems.length) {
+					newItems.push(action.data);
+				}
+				job.items = newItems;
+				SingleJobStore.emitChange();
+				break;
+
 		// Will be destroyed when api ready
 		case ActionTypes.UPDATE_ITEM:
 				let d = action.data;
@@ -53,26 +68,6 @@ AppDispatcher.register(action => {
 					}
 					return jobitem;
 				});
-				SingleJobStore.emitChange();
-				break;
-
-		// as will this
-		case ActionTypes.CREATE_ITEM:
-				let newItems = [];
-				job.items.forEach(item => {
-					newItems.push(item);
-					if(item.item_id === action.data.item_id) {
-						let dupe = objectAssign({}, action.data);
-						dupe.item_id = +("" + Date.now()).substring(6);
-						newItems.push(dupe);
-					}
-				});
-				if(job.items.length === newItems.length) {
-					newItems.push({
-						item: +("" + Date.now()).substring(6)
-					});
-				}
-				job.items = newItems;
 				SingleJobStore.emitChange();
 				break;
 

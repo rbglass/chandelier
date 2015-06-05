@@ -23,9 +23,10 @@ export function receiveSingleJob(jobObject) {
 	});
 }
 
-export function receiveSingleItem(itemObject) {
+export function receiveSingleItem(itemObject, dupeId) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SINGLE_ITEM,
-		data: itemObject
+		data: itemObject,
+		dupeId: dupeId
 	});
 }

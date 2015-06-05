@@ -8,10 +8,7 @@ export function getSingleJob(jobId) {
 }
 
 export function createItem(blueprint) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.CREATE_ITEM,
-		data: blueprint
-	});
+	JobsAPI.createSingleJobItem(blueprint);
 }
 
 export function updateItem(updateObj) {

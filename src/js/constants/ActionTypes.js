@@ -3,10 +3,11 @@ import keyMirror from "react/lib/keyMirror";
 
 export default keyMirror({
 	// Receiving from API
+	"RECEIVE_SELECTIONS": null,
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,
+	"RECEIVE_SINGLE_ITEM": null,
 	"RECEIVE_ALERT": null,
-	"RECEIVE_SELECTIONS": null,
 
 	// Sending to API
 	// On blur/click

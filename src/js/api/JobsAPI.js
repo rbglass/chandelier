@@ -14,10 +14,10 @@ const selections = `${root}/selections`;
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
 															SharedActionCreators.receiveAlert);
 
-function onReply(successAction) {
+function onReply(successAction, ...etc) {
 	return function(err, res) {
 		if(err) errToAction(err);
-		else    successAction(res.body);
+		else    successAction(res.body, ...etc);
 	};
 }
 
@@ -70,8 +70,12 @@ export function updateSingleJobDetails(jobId, updateObj) {
 }
 
 export function createSingleJobItem(blueprint) {
-	let i = objectAssign({item_id: +("" + Date.now()).substring(6)}, blueprint);
+	let i = objectAssign({}, blueprint);
+	i.item_id = +("" + Date.now()).substring(6);
+
 	setTimeout(() => {
-		onReply(receiveSingleItem)(null, {body: i});
+		let id;
+		id = blueprint && blueprint.item_id;
+		onReply(receiveSingleItem, id)(null, {body: i});
 	}, 200);
 }
