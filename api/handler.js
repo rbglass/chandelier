@@ -10,12 +10,12 @@ var handler = {
 
   home : function(request, reply) {
 
-//    if (request.auth.isAuthenticated) {
-//    	console.log("home handler");
-//      reply.file(index);
-//    } else if (!request.auth.isAuthenticated) {
+    if (request.auth.isAuthenticated) {
+    	console.log("home handler");
       reply.file(index);
-//    }
+    } else if (!request.auth.isAuthenticated) {
+      reply.redirect("/login");
+    }
   },
 
 // -------------------------------------------------- \\
@@ -35,7 +35,7 @@ var handler = {
 		//create an empty row (the updateJob handler should then be triggered)
 		var entry = request.payload;
   	Jobs.create({
-			job_id: 						entry.job_id || "",
+			job_id: 						entry.job_id,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
 			job_status: 				entry.job_status || "",
@@ -119,6 +119,8 @@ var handler = {
   getJobItems : function(request, reply) {
 
   	var entry = request.payload;
+//		var JobID = "RB" + entry.job_id.toString();
+
   	Job_items.findAll({
   		where : {
   			job_id : entry.job_id
@@ -135,7 +137,7 @@ var handler = {
 
 		Job_items.create({
 			item_id: 			entry.item_id 		|| "",
-			job_id: 			entry.job_id 			|| "",
+			job_id: 			entry.job_id,
 			product: 			entry.product 		|| "",
 			description: 	entry.description || "",
 			glass: 				entry.glass 			|| "",
@@ -194,24 +196,29 @@ var handler = {
 
   login : function(request, reply) {
 
-//    var creds = request.auth.credentials;
-//
-//    var profile = {
-//      auth_method : "google",
-//      username    : creds.profile.raw.name,
-//      auth_id     : creds.profile.raw.id,
-//      email       : creds.profile.raw.email
-//    };
-//
-//		 Users.findOrCreate({
-//			 where: {email: profile.email}
-//		 }).then(function(){
-//				request.auth.session.clear();
-//				request.auth.session.set(profile);
+    var creds = request.auth.credentials;
+
+    var profile = {
+      auth_method : "google",
+      username    : creds.profile.raw.name,
+      auth_id     : creds.profile.raw.id,
+      email       : creds.profile.raw.email
+    };
+
+		 Users.findOne({
+			 where: {email: profile.email}
+		 }).then(function(email) {
+			 console.log("email: ", email);
+			if (email) {
+				request.auth.session.clear();
+				request.auth.session.set(profile);
 				reply.redirect("/");
-//		 }).catch(function(err){
-//			 if (err) return console.log(err);
-//		 });
+			} else {
+				reply("not a valid user");
+			}
+		 }).catch(function(err){
+			 if (err) return console.log(err);
+		 });
   },
 
   logout : function(request, reply) {
