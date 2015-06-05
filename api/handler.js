@@ -22,8 +22,8 @@ var handler = {
 
   getJobsTable : function(request, reply) {
 		console.log("jobs table handler");
-		Jobs.findAll().then(function(){
-				reply("getJobsTable");
+		Jobs.findAll().then(function(jobs){
+				reply(jobs);
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
@@ -34,14 +34,14 @@ var handler = {
   createJob : function(request, reply) {
 		//create an empty row (the updateJob handler should then be triggered)
   	Jobs.create({
-			job_id: 						" ",
-			client: 						" ",
-			project: 						" ",
-			job_status: 				" ",
-			order_type: 				" ",
+			job_id: 						"",
+			client: 						"",
+			project: 						"",
+			job_status: 				"",
+			order_type: 				"",
 			shipping_date: 			new Date(),
 			num_of_job_items: 	0,
-			parts_status: 			" ",
+			parts_status: 			"",
 			last_update: 				new Date()
 		}).then(function(job){
 			//TODO need an oclick on the frontend to create an empty row.
@@ -87,18 +87,27 @@ var handler = {
   	var entry = request.payload;
   	Jobs.find({
   		where : { job_id: entry.job_id }
-  	}).then(function(job) {
-  		reply(job);
+  	}).then(function(details) {
+			Job_items.findAll({
+				where : { job_id: entry.job_id }
+			}).then(function(items){
+				reply({
+					job_id: entry.job_id,
+					details: details,
+					items: items
+				});
+			});
+
 		}).catch(function(err) {
 			if (err) return console.log(err);
 		});
-  },
+	},
 
 // -------------------------------------------------- \\
-
+//************************ (might need to remove this for now)
 	getJobItemsTable : function(request, reply) {
-		Job_items.findAll().then(function(){
-			reply("getJobItemsTable");
+		Job_items.findAll().then(function(singleItems){
+			reply(singleItems);
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
@@ -124,19 +133,20 @@ var handler = {
 		console.log("i hit the create handler");
 
 		Job_items.create({
-			item_id: 			" ",
-			product: 			" ",
-			description: 	" ",
-			glass: 				" ",
-			metal: 				" ",
-			flex: 				" ",
-			bulb: 				" ",
+			item_id: 			"",
+			job_id: 			"",
+			product: 			"",
+			description: 	"",
+			glass: 				"",
+			metal: 				"",
+			flex: 				"",
+			bulb: 				"",
 			qty_req: 			0,
 			qty_hot: 			0,
 			qty_cold: 		0,
 			qty_assem: 		0,
 			qty_packed: 	0,
-			notes: 				" "
+			notes: 				""
 		}).then(function(job_item){
   		reply(job_item);
 		}).catch(function(err){
