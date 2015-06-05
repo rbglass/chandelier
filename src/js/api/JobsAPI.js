@@ -40,9 +40,14 @@ export function getAllJobs() {
 
 export function createJob() {
 	setTimeout(() => {
+		const id = +("" + Date.now()).substring(0, 5);
+
 		let dummyJobItem = {
-			job_id: +("" + Date.now()).substring(0, 5),
-			last_update: new Date().toISOString().substring(0, 10)
+			job_id: id,
+			details: {
+				job_id: id,
+				last_update: new Date().toISOString().substring(0, 10)
+			}
 		};
 
 		onReply(receiveSingleJob)(null, {body: dummyJobItem });

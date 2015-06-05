@@ -50,25 +50,30 @@ export const job = {
 
 
 export const jobs = [
-	{
-		job_id: "RB2234",
-		client: "JIM",
-		project: "peng",
-		job_status: "accepted",
-		order_type: "special",
-		last_update: "2015-10-01",
-		parts_status: "waiting",
-		shipping_date: "2015-11-12"
+	{	job_id: "RB2234",
+		"details": {
+			job_id: "RB2234",
+			client: "JIM",
+			project: "peng",
+			job_status: "accepted",
+			order_type: "special",
+			last_update: "2015-10-01",
+			parts_status: "waiting",
+			shipping_date: "2015-11-12"
+		}
 	},
 	{
 		job_id: "RB1234",
-		client: "TIM",
-		project: "peng",
-		job_status: "accepted",
-		order_type: "special",
-		last_update: "2015-10-01",
-		parts_status: "waiting",
-		shipping_date: "2015-12-12"
+		details: {
+			job_id: "RB1234",
+			client: "TIM",
+			project: "peng",
+			job_status: "accepted",
+			order_type: "special",
+			last_update: "2015-10-01",
+			parts_status: "waiting",
+			shipping_date: "2015-12-12"
+		}
 	}
 ];
 

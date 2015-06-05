@@ -6,13 +6,18 @@ import keySealer from "../../utils/keySealer";
 
 export default class JobsTableRow extends Component {
 	handleBlur(e) {
-		console.log("blurred!", e.target.value);
+		const currentRowNode = React.findDOMNode(this.refs.row);
+		const destinationNode = e.relatedTarget.parentElement.parentElement;
+		if(currentRowNode !== destinationNode) {
+			console.log("Row to be sent: ", this.props.cells);
+		}
 	}
 
 	render() {
-		let cells = this.props.cells;
+		let cells = this.props.cells.details;
+		console.log(cells);
 		return (
-			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
+			<div ref="row" className="table-row" onBlur={this.handleBlur.bind(this)}>
 				<div className="table-row-item" >
 					<Link to="singlejob" params={{id: cells.job_id}}>{cells.job_id}</Link>
 				</div>
