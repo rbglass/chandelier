@@ -87,7 +87,7 @@ var handler = {
 
   	var entry = request.payload;
   	Jobs.find({
-  		where : { job_id: entry.job_id }
+  		where : { job_id: 3001 }
   	}).then(function(details) {
 			Job_items.findAll({
 				where : { job_id: entry.job_id }
