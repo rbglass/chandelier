@@ -6,7 +6,8 @@ export default (id, key, action) => {
 		action({
 			id: id,
 			key: key,
-			value: e.target.value
+			// TERRIBLE HACK TO GET AROUND BLOODY STRNUMS
+			value: +e.target.value || e.target.value
 		});
 	};
 };

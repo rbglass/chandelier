@@ -6,7 +6,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 
 var jobs = [],
 		filters = {
-			sortTerm: "",
+			sortTerm: "job_id",
 			isAsc: false,
 			filterBy: "",
 			startDate: null,

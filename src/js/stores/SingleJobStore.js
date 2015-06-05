@@ -11,7 +11,7 @@ var job = {
 			items: []
 		},
 		filters = {
-			sortTerm: "",
+			sortTerm: "item_id",
 			isAsc: false
 		};
 
