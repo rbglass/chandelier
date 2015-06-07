@@ -32,16 +32,14 @@ export function contains(obj, term) {
 	});
 }
 
-// Change to Array.prototype method?
-// localeCompare w/ datestring correctly?
-// use sort table
-export function genericSort(arr, sortBy, asc) {
+export function genericSort(arr, sortBy, asc, sortPath) {
 
 	arr = arr.slice(0);
 
 	return arr.sort((a, b) => {
-		let t1 = a[sortBy],
-				t2 = b[sortBy],
+		// ugly hack
+		let t1 = sortPath ? a[sortPath][sortBy] : a[sortBy],
+				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
 				sortVal;
 
 		if (isDateStr(t1)) {
@@ -68,6 +66,14 @@ export function isWithinBounds(obj, lower, upper, key) {
 	} else {
 		return false;
 	}
+}
+
+export function restrictTo(obj, restrictionObj) {
+	const restrictBy = Object.keys(restrictionObj);
+
+	return restrictBy.every(field => {
+		return restrictionObj[field].options.indexOf(obj[field]) !== -1;
+	});
 }
 
 // Turns an object into an array of objects

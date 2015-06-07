@@ -18,7 +18,7 @@ const SelectionStore = createStore({
 
 export default SelectionStore;
 
-AppDispatcher.register(action => {
+SelectionStore.dispatchToken = AppDispatcher.register(action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_SELECTIONS:

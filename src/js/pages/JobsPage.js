@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
+import NavBar from "../components/common/NavBar";
 import JobsFilter from "../components/Jobs/JobsFilter";
 import JobsTableRow from "../components/Jobs/JobsTableRow";
 import JobsStore from "../stores/JobsStore";
@@ -23,11 +24,16 @@ class JobsPage extends Component {
 	render() {
 		return (
 			<div>
-				<h1 className="page-header">All Jobs</h1>
-				<JobsFilter filters={this.props.filters} setFilter={JobsActionCreators.setFilter}
-					setStartDate={JobsActionCreators.setStartDate} setEndDate={JobsActionCreators.setEndDate} />
-				<Table {...this.props} />
-				<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
+				<NavBar title={"All Jobs"}/>
+				<div className="container">
+					<JobsFilter filters={this.props.filters} selections={this.props.selections}
+						setFilter={JobsActionCreators.setFilter} setStartDate={JobsActionCreators.setStartDate}
+						setEndDate={JobsActionCreators.setEndDate}
+						restrictTo={JobsActionCreators.restrictTo}
+					/>
+					<Table {...this.props} />
+					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
+				</div>
 			</div>
 		);
 	}

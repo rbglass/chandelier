@@ -78,7 +78,7 @@ export function createSingleJobItem(blueprint) {
 }
 
 export function saveDetails(jobId, updateObj) {
-	console.log(jobId, updateObj);
+
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedJob)(null, {body: objectAssign(updateObj, sampledata.job)});
 	}, 200);
@@ -89,7 +89,7 @@ export function saveDetails(jobId, updateObj) {
 
 export function saveItem(itemId, updateObj) {
 	let item = objectAssign(updateObj, sampledata.job.items.filter(e => e.item_id === itemId)[0]);
-		console.log(item);
+
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedItem)(null, {
 			body: item

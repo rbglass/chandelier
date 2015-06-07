@@ -32,3 +32,12 @@ export function setEndDate(date) {
 	});
 }
 
+export function restrictTo(key, options) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RESTRICT_TO,
+		data: {
+			key: key,
+			options: options
+		}
+	});
+}
