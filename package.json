@@ -17,7 +17,7 @@
     "test": "npm run test:back & npm run test:front",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register",
-    "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register --reporter min -w src/js/**/*.js --loglevel silent",
+    "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register -w src/js/**/*.js --loglevel silent",
     "mk": "mkdir public/js & mkdir public/css"
   },
   "repository": {
@@ -59,6 +59,7 @@
     "mocha": "^2.2.5",
     "mocha-jsdom": "^0.2.1",
     "myth": "^1.4.0",
+    "rewire": "^2.3.3",
     "sinon": "^1.14.1",
     "watchify": "^3.2.1"
   },

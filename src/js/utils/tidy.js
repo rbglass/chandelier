@@ -5,5 +5,5 @@ function capitaliseFirstOf(word) {
 }
 
 export default function tidy(str) {
-	return str.replace("_", " ").split(" ").map(word => capitaliseFirstOf(word)).join(" ");
+	return str.replace(/_/g, " ").split(" ").map(word => capitaliseFirstOf(word)).join(" ");
 }
