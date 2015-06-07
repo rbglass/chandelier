@@ -1,6 +1,6 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
-import { contains, genericSort, isWithinBounds } from "../utils/ConvenienceUtils";
+import { contains, genericSort, isWithinBounds } from "../utils/FilterUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
@@ -9,6 +9,7 @@ var jobs = [],
 			sortTerm: "job_id",
 			isAsc: false,
 			filterBy: "",
+			dateField: "shipping_date",
 			startDate: null,
 			endDate: null
 		};
@@ -18,7 +19,7 @@ const JobsStore = createStore({
 	getFilteredAndSortedJobs() {
 		let f = filters;
 		const filtered = jobs.filter(row => {
-			return contains(row.details, f.filterBy) && isWithinBounds(row.details, f.startDate, f.endDate);
+			return contains(row.details, f.filterBy) && isWithinBounds(row.details, f.startDate, f.endDate, f.dateField);
 		});
 
 		const sorted = genericSort(filtered, f.sortTerm, f.isAsc);
@@ -60,7 +61,7 @@ AppDispatcher.register(action => {
 				break;
 
 		// State change but not server interaction
-		case ActionTypes.CHANGE_DETAILS:
+		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
 				let id = action.data.id;
 				jobs = jobs.map(job => {
 					if (job.job_id === id) {

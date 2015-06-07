@@ -28,7 +28,7 @@ export function deleteItem(id) {
 
 export function changeItem(updateObj) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.CHANGE_ITEM,
+		type: ActionTypes.CHANGE_SINGLE_JOB_ITEM,
 		data: updateObj
 	});
 }

@@ -2,8 +2,8 @@
 import React from "react";
 import { Route, DefaultRoute } from "react-router";
 import App from "../components/App";
-import SingleJobPage from "../pages/SingleJobPage";
 import JobsPage from "../pages/JobsPage";
+import SingleJobPage from "../pages/SingleJobPage";
 import JobItemsPage from "../pages/JobItemsPage";
 
 export default (

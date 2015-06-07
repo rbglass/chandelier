@@ -1,24 +1,29 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import FilterInput from "../common/FilterInput";
 
 export default class JobsFilter extends Component {
-	filterChange(e) {
-		this.props.setFilter(e.target.value);
-	}
-	startDateChange(e) {
-		this.props.setStartDate(e.target.value);
-	}
-	endDateChange(e) {
-		this.props.setEndDate(e.target.value);
-	}
 
 	render() {
+		// use cx
+		const baseClassName = "job-text-input ";
+		const textFilterClassName = baseClassName + "filter";
+		const dateFilterClassName = baseClassName + "date";
 
 		return (
 			<div className="table-manip">
-				<input type="text" value={this.props.filterBy} onChange={this.filterChange.bind(this)} className="job-text-input filter" placeholder="Filter Term" />
-				<input type="date" value={this.props.startDate} onChange={this.startDateChange.bind(this)} className="job-text-input date" placeholder="Start Date" />
-				<input type="date" value={this.props.endDate} onChange={this.endDateChange.bind(this)} className="job-text-input date" placeholder="End Date" />
+				<FilterInput type="text" value={this.props.filterBy}
+					setFilter={this.props.setFilter} className={textFilterClassName}
+					placeholder="Filter by..."
+				/>
+				<FilterInput type="date" value={this.props.startDate}
+					setFilter={this.props.setStartDate} className={dateFilterClassName}
+					placeholder="Start Date"
+				/>
+				<FilterInput type="date" value={this.props.endDate}
+					setFilter={this.props.setEndDate} className={dateFilterClassName}
+					placeholder="End Date"
+				/>
 		</div>
 		);
 	}
@@ -27,5 +32,8 @@ export default class JobsFilter extends Component {
 JobsFilter.propTypes = {
 	filterBy: PropTypes.string,
 	startDate: PropTypes.string,
-	endDate: PropTypes.string
+	endDate: PropTypes.string,
+	setFilter: PropTypes.func,
+	setStartDate: PropTypes.func,
+	setEndDate: PropTypes.func
 };

@@ -18,8 +18,8 @@ class JobItemsPage extends Component {
 	render() {
 		return (
 			<div>
-				<h1 className="page-header">Single Job</h1>
-				<Filter {...this.props} />
+				<h1 className="page-header">Job Items</h1>
+				{/* <Filter {...this.props} /> */}
 				<Table {...this.props} />
 			</div>
 		);
@@ -27,10 +27,10 @@ class JobItemsPage extends Component {
 }
 
 function getState() {
-	const items = JobItemsStore.getJobItems();
+	const jobItems = JobItemsStore.getJobItems();
 
 	return {
-		items
+		jobItems
 	};
 }
 

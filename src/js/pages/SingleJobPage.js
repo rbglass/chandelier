@@ -31,7 +31,7 @@ class SingleJobPage extends Component {
 		);
 	}
 }
-
+// merge these two
 SingleJobPage.defaultProps = {
 	headers: [
 		{ key: "none", 	      display: "",        		className: "fixed-col" },
