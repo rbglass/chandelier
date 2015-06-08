@@ -219,14 +219,12 @@ describe("restrictTo", function() {
 		assert.equal(restrictTo(o, ro), false);
 	});
 
-	it("#expects the restriction object to have an 'options' array/string prop on each field", function() {
+	it("#returns true if the restriction object has no 'options' array/string prop on a field", function() {
 		var willThrow = {
 			name: "hi"
 		};
 
 		var willNotThrow = ro;
-
-		assert.throws(function() { restrictTo(o, willThrow); });
 
 		willThrow.name = { options: true };
 		assert.throws(function() { restrictTo(o, willThrow); });

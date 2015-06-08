@@ -77,6 +77,9 @@ export function restrictTo(obj, restrictionObj) {
 	const restrictBy = Object.keys(restrictionObj);
 
 	return restrictBy.every(field => {
-		return restrictionObj[field].options.indexOf(obj[field]) !== -1;
+		return (
+			(restrictionObj[field].options === undefined) ||
+			restrictionObj[field].options.indexOf(obj[field]) !== -1
+		);
 	});
 }

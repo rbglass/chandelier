@@ -14,6 +14,10 @@ const selections = `${root}/selections`;
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
 															SharedActionCreators.receiveAlert);
 
+var sampleSelections = sampledata.selections;
+var sampleJobs = sampledata.jobs;
+var sampleJob = sampledata.job;
+
 function onReply(successAction, ...etc) {
 	return function(err, res) {
 		if(res.ok) successAction(res.body, ...etc);
@@ -23,7 +27,7 @@ function onReply(successAction, ...etc) {
 
 export function getSelections() {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSelections)(null, {body: sampledata.selections});
+		onReply(ServerActionCreators.receiveSelections)(null, {ok: true, body: sampleSelections});
 	}, 1000);
 
 	// request.get(`${selections}`)
@@ -32,7 +36,7 @@ export function getSelections() {
 
 export function getAllJobs() {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveAllJobs)(null, {body: sampledata.jobs});
+		onReply(ServerActionCreators.receiveAllJobs)(null, {ok: true, body: sampleJobs});
 	}, 1000);
 	// request.get(jobs)
 					// .end(onReply(ServerActionCreators.receiveAllJobs));
@@ -40,7 +44,7 @@ export function getAllJobs() {
 
 export function getSingleJob(jobId) {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSingleJob)(null, {body: sampledata.job});
+		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: sampleJob});
 	}, 1000);
 
 	// request.get(`${jobs}/${jobId}`)
@@ -62,7 +66,9 @@ export function createSingleJob() {
 			items: []
 		};
 
-		onReply(ServerActionCreators.receiveSingleJob)(null, {body: dummyJobItem });
+		sampleJobs.push(dummyJobItem);
+
+		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: dummyJobItem });
 	}, 1000);
 	// request.post(jobs)
 	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
@@ -72,17 +78,18 @@ export function createSingleJobItem(blueprint) {
 	let i = objectAssign({}, blueprint);
 	i.item_id = +("" + Date.now()).slice(-5);
 
+	sampleJob.items.push(i);
+
 	setTimeout(() => {
-		let id;
-		id = blueprint && blueprint.item_id;
-		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
+		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: i});
 	}, 200);
 }
 
 export function saveDetails(jobId, updateObj) {
+	sampleJob = objectAssign(updateObj, sampleJob);
 
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveUpdatedJob)(null, {body: objectAssign(updateObj, sampledata.job)});
+		onReply(ServerActionCreators.receiveUpdatedJob)(null, {ok: true, body: sampleJob});
 	}, 200);
 	// request.put(`${jobs}/${jobId}`)
 	// 				.send(updateObj)
@@ -90,10 +97,19 @@ export function saveDetails(jobId, updateObj) {
 }
 
 export function saveItem(itemId, updateObj) {
-	let item = objectAssign(updateObj, sampledata.job.items.filter(e => e.item_id === itemId)[0]);
+	let item;
+	sampleJob.items = sampleJob.items.map(e => {
+		if(e.item_id === itemId) {
+			item = objectAssign(updateObj, e);
+			return item;
+		} else {
+			return e;
+		}
+	});
 
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedItem)(null, {
+			ok: true,
 			body: item
 		});
 	}, 200);

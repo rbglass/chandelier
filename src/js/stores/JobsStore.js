@@ -53,7 +53,7 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				jobs.push(action.data);
+				// jobs.push(action.data);
 				JobsStore.emitChange();
 				break;
 
