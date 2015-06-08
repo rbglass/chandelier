@@ -31,7 +31,7 @@ const onReceivingAction = action => {
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				job = action.data;
+				job = objectAssign({}, action.data);
 				SingleJobStore.emitChange();
 				break;
 
@@ -55,8 +55,10 @@ const onReceivingAction = action => {
 
 
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
-				job.details[action.data.key] = action.data.value;
-				SingleJobStore.emitChange();
+				if (action.data.id === job.id) {
+					job.details[action.data.key] = action.data.value;
+					SingleJobStore.emitChange();
+				}
 				break;
 
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:

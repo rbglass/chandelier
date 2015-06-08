@@ -19,11 +19,9 @@ export function getPDF(jobId) {
 	JobsAPI.getPDF(jobId);
 }
 
-export function deleteItem(id) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.DELETE_ITEM,
-		data: id
-	});
+export function deleteItem(jobId, cells) {
+	const itemId = cells.item_id;
+	JobsAPI.deleteSingleItem(jobId, itemId);
 }
 
 export function changeItem(updateObj) {

@@ -1,3 +1,5 @@
+// All mocks until API is sorted
+
 "use strict";
 import request from "superagent";
 import compose from "../utils/compose";
@@ -9,6 +11,7 @@ import * as sampledata from "../sampledata/data.js";
 
 const root = "/api";
 const jobs = `${root}/jobs`;
+const items = `${root}/items`;
 const selections = `${root}/selections`;
 
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
@@ -43,8 +46,7 @@ export function getAllJobs() {
 
 export function getSingleJob(jobId) {
 	setTimeout(() => {
-		var job = sampleJobs.filter(e => e.job_id === jobId)[0];
-
+		var job = sampleJobs.filter(e => e.job_id === jobId).slice(0)[0];
 		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: objectAssign({}, job)});
 	}, 1000);
 
@@ -92,10 +94,35 @@ export function createSingleJobItem(jobId, blueprint) {
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: objectAssign({}, newItem)});
 	}, 200);
+	// request.post(`${items}/${jobId}`)
+	// 				.send(blueprint)
+	// 				.end(onReply(ServerActionCreators.receiveSingleItem));
+}
+
+export function deleteSingleItem(jobId, itemId) {
+
+	sampleJobs.some(job => {
+		if(job.job_id === jobId) {
+			return job.items.some((item, i) => {
+				if(item.item_id === itemId) {
+					job.items.splice(i, 1);
+					return true;
+				}
+			});
+		}
+	});
+
+	setTimeout(() => {
+		onReply(ServerActionCreators.deleteItem)(null, {ok: true, body: itemId});
+	}, 200);
+
+	// request.delete(`${items}/${jobId}/${itemId}`)
+	// 				.end(onReply(ServerActionCreators.deleteItem));
 }
 
 export function saveDetails(jobId, updateObj) {
 	setTimeout(() => {
+		console.log(jobId, updateObj);
 		sampleJobs = sampleJobs.map(e => {
 			if(e.job_id === jobId) {
 				e = objectAssign(updateObj, e);
@@ -114,8 +141,6 @@ export function saveDetails(jobId, updateObj) {
 
 export function saveItem(jobId, itemId, updateObj) {
 	let item;
-	// console.log(updateObj);
-	// console.log(jobId, itemId, updateObj);
 	sampleJobs = sampleJobs.slice(0);
 
 	sampleJobs.some(job => {
@@ -136,6 +161,9 @@ export function saveItem(jobId, itemId, updateObj) {
 			body: objectAssign({}, item)
 		});
 	}, 200);
+	// request.put(`${items}/${jobId}`)
+	// 				.send(updateObj)
+	// 				.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
 export function getPDF(jobId) {

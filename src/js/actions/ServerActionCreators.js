@@ -48,3 +48,10 @@ export function receiveUpdatedItem(itemObject) {
 		data: itemObject
 	});
 }
+
+export function deleteSingleItem(itemId) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.DELETE_ITEM,
+		data: itemId
+	});
+}
