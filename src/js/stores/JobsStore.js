@@ -7,12 +7,12 @@ import SelectionStore from "./SelectionStore";
 
 var jobs = [],
 		filters = {
-			sortTerm: "job_id",
+			sortTerm: "shipping_date",
 			isAsc: false,
 			filterBy: "",
 			dateField: "shipping_date",
-			startDate: null,
-			endDate: null,
+			startDate: "",
+			endDate: "",
 			restrictions: {
 				"job_status": {
 					key: "job_status"
@@ -30,7 +30,7 @@ const JobsStore = createStore({
 		const filtered = jobs.filter(row => {
 			return (
 				FilterUtils.contains(row.details, f.filterBy) &&
-				FilterUtils.isWithinBounds(row.details, f.startDate, f.endDate, f.dateField) &&
+				FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
 				FilterUtils.restrictTo(row.details, filters.restrictions)
 			);
 		});

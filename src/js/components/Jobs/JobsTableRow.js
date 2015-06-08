@@ -20,10 +20,10 @@ export default class JobsTableRow extends Component {
 
 		return (
 			<div ref="row" className="table-row" onBlur={this.handleBlur.bind(this)}>
-				<div className="table-row-item" >
+				<div className="table-row-item qty-sm" >
 					<Link to="singlejob" params={{id: cells.job_id}}>{cells.job_id}</Link>
 				</div>
-				<div className="table-row-item" >
+				<div className="table-row-item u-flex-grow2" >
 					<input type="text" value={cells.client}
 							onChange={ks("client", changeDetails)}/>
 				</div>
@@ -52,7 +52,7 @@ export default class JobsTableRow extends Component {
 							onChange={ks("shipping_date", changeDetails)}/>
 				</div>
 				<div className="table-row-item" >
-					<input type="text" value={cells.job_items} />
+					<input type="text" readOnly disabled value={cells.job_items} />
 				</div>
 				<div className="table-row-item" >
 					<select value={cells.parts_status}
@@ -61,10 +61,6 @@ export default class JobsTableRow extends Component {
 							return <option key={opt}>{opt}</option>;
 						})}
 					</select>
-				</div>
-				<div className="table-row-item u-flex-grow2" >
-					<input type="date" value={cells.last_update}
-							onChange={ks("last_update", changeDetails)} />
 				</div>
 			</div>
 		);
