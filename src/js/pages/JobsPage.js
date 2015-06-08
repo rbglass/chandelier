@@ -41,7 +41,7 @@ class JobsPage extends Component {
 }
 
 JobsPage.defaultProps = {
-	headers: [
+	tableScheme: [
 		{ key: "job_id",        display: "Job #",         "className": "qty-sm",
 				type: "link", to: "singlejob" },
 		{ key: "client",        display: "Client",        "className": "u-flex-grow2",

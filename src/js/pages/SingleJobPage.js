@@ -39,7 +39,7 @@ class SingleJobPage extends Component {
 }
 // merge these two
 SingleJobPage.defaultProps = {
-	headers: [
+	tableScheme: [
 		{ key: "-", 	       display: "",         className: "fixed-col",
 			type: "button", inputClassName: "btn-left", onClick: SingleJobActionCreators.deleteItem   },
 		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
