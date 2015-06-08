@@ -1,6 +1,7 @@
 "use strict";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
+import * as RouterContainer from "../routing/RouterContainer";
 
 export function receiveSelections(selections) {
 	AppDispatcher.dispatch({
@@ -14,6 +15,10 @@ export function receiveAllJobs(jobsArray) {
 		type: ActionTypes.RECEIVE_ALL_JOBS,
 		data: jobsArray
 	});
+}
+
+export function receiveNewJob(job) {
+	RouterContainer.get().transitionTo("singlejob", {id: job.job_id});
 }
 
 export function receiveSingleJob(jobObject) {

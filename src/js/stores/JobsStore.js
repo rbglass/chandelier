@@ -44,16 +44,10 @@ const JobsStore = createStore({
 });
 
 const onReceivingAction = action => {
-
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_ALL_JOBS:
 				jobs = action.data;
-				JobsStore.emitChange();
-				break;
-		// causing a duplicate bug
-		case ActionTypes.RECEIVE_SINGLE_JOB:
-				jobs.push(action.data);
 				JobsStore.emitChange();
 				break;
 

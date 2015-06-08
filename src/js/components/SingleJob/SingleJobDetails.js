@@ -65,7 +65,7 @@ export default class SingleJobDetails extends Component {
 				<div className="job-details-field">
 					<label htmlFor="lastupdate">Last Update:</label>
 					<input type="date" value={details.last_update} className="job-text-input" id="lastupdate"
-							onChange={ks("last_update", changeDetails)} />
+							disabled readOnly/>
 				</div>
 				<div className="job-details-field">
 					<label htmlFor="partsstatus">Parts Status:</label>

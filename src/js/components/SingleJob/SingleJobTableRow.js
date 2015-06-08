@@ -8,7 +8,7 @@ export default class SingleJobTableRow extends Component {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
 		if(currentRowNode !== destinationNode) {
-			saveItem(this.props.cells.item_id, this.props.cells);
+			saveItem(this.props.cells.job_id, this.props.cells.item_id, this.props.cells);
 		}
 	}
 
@@ -59,7 +59,7 @@ export default class SingleJobTableRow extends Component {
 					<button className="btn btn-left" onClick={deleteItem.bind(this, this.props.cells.item_id)}>-</button>
 				</div>
 				{cells}
-				<div className="table-row-item fixed-col" onClick={createItem.bind(this, this.props.cells)}>
+				<div className="table-row-item fixed-col" onClick={createItem.bind(this, this.props.cells.job_id, this.props.cells)}>
 					<button className="btn btn-right">+</button>
 				</div>
 			</div>

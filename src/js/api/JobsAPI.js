@@ -70,25 +70,27 @@ export function createSingleJob() {
 		let newJobs = sampleJobs.slice(0);
 		newJobs.push(dummyJobItem);
 		sampleJobs = newJobs;
-		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: objectAssign({}, dummyJobItem)});
+		onReply(ServerActionCreators.receiveNewJob)(null, {ok: true, body: objectAssign({}, dummyJobItem)});
 	}, 1000);
 	// request.post(jobs)
 	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
 export function createSingleJobItem(jobId, blueprint) {
-	let i = objectAssign({}, blueprint);
-	i.item_id = +("" + Date.now()).slice(-5);
+	let newItem;
 
 	sampleJobs = sampleJobs.map(job => {
-		if (job.job_id === jobId) {
-			job.items.push(i);
+		if (jobId === job.job_id) {
+			newItem = objectAssign({}, blueprint);
+			newItem.job_id = jobId;
+			newItem.item_id = +("" + Date.now()).slice(-5);
+			job.items.push(newItem);
 		}
 		return job;
 	});
 
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: objectAssign({}, i)});
+		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: objectAssign({}, newItem)});
 	}, 200);
 }
 
@@ -110,17 +112,22 @@ export function saveDetails(jobId, updateObj) {
 	// 				.end(onReply(ServerActionCreators.receiveUpdatedJob));
 }
 
-export function saveItem(itemId, updateObj) {
+export function saveItem(jobId, itemId, updateObj) {
 	let item;
-	sampleJobs = sampleJobs.map(e => {
-		e.items = e.items.map(g => {
-			if(g.item_id === itemId) {
-				item = objectAssign(updateObj, g);
-				return item;
-			} else {
-				return e;
-			}
-		});
+	// console.log(updateObj);
+	// console.log(jobId, itemId, updateObj);
+	sampleJobs = sampleJobs.slice(0);
+
+	sampleJobs.some(job => {
+		if(job.job_id === jobId) {
+			job.items.forEach(g => {
+				if(g.item_id === itemId) {
+					item = objectAssign(updateObj);
+					g = item;
+				}
+			});
+			return true;
+		}
 	});
 
 	setTimeout(() => {
@@ -135,7 +142,7 @@ export function getPDF(jobId) {
 	request.get(`${jobs}/${jobId}`)
 					.query({pdf: true})
 					.end((err, res) => {
-						if(err) console.log(err);
-						console.log(res.body);
+						if(err) console.log(err.status, err.message);
+						else console.log(res.body);
 					});
 }

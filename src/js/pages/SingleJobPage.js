@@ -28,7 +28,7 @@ class SingleJobPage extends Component {
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 					<Table {...this.props} />
-					<button className="add-button" onClick={SingleJobActionCreators.createItem.bind(this, this.props.details.job_id)}>+</button>
+					<button className="add-button" onClick={SingleJobActionCreators.createItem.bind(this, this.props.details.job_id, {})}>+</button>
 				</div>
 			</div>
 		);

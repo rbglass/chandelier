@@ -11,8 +11,8 @@ export function createItem(jobId, blueprint) {
 	JobsAPI.createSingleJobItem(jobId, blueprint);
 }
 
-export function saveItem(jobId, item) {
-	JobsAPI.saveItem(jobId, item);
+export function saveItem(jobId, itemId, item) {
+	JobsAPI.saveItem(jobId, itemId, item);
 }
 
 export function getPDF(jobId) {
