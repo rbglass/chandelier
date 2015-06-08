@@ -1,6 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import { changeItem, saveItem, createItem, deleteItem } from "../../actions/SingleJobActionCreators";
+import { Link } from "react-router";
 import keySealer from "../../utils/keySealer";
 
 export default class SingleJobTableRow extends Component {
@@ -8,12 +8,14 @@ export default class SingleJobTableRow extends Component {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
 		if(currentRowNode !== destinationNode) {
-			saveItem(this.props.cells.item_id, this.props.cells);
+			this.props.onBlur(this.props.cells[this.props.primaryKey], this.props.cells);
 		}
 	}
 
 	// Break this into components
 	render() {
+		const ks = keySealer.bind(this, this.props.cells[this.props.primaryKey]);
+
 		const cells = this.props.cellConfig.map((cell, i) => {
 			let cellValue = this.props.cells[cell.key];
 			let input;
@@ -29,15 +31,35 @@ export default class SingleJobTableRow extends Component {
 						break;
 
 				case "text":
-						input = <input type="text" value={cellValue} />;
+						let isDisabled = !cell.onChange;
+						input = <input type="text" readOnly={isDisabled} disabled={isDisabled} value={cellValue} />;
+						break;
+
+				case "date":
+						input = <input type="date" value={cellValue} />;
 						break;
 
 				case "select":
 						input = (
 							<select value={cellValue}>
-								{ this.props.selections[cell.key].map(e => { return <option>{e}</option>; }, this) }
+								{ this.props.selections[cell.key].map(opt => {
+									return <option key={opt}>{opt}</option>;
+								}, this) }
 							</select>
 						);
+						break;
+
+				case "button":
+						input = (
+							<button className={`btn ${cell.inputClassName}`}
+								onClick={cell.onClick.bind(this, this.props.cells.job_id, this.props.cells)}>
+								{cell.key}
+							</button>
+						);
+						break;
+
+				case "link":
+						input = <Link to={cell.to} params={{id: cellValue}}>{cellValue}</Link>;
 						break;
 
 				default:
@@ -47,7 +69,7 @@ export default class SingleJobTableRow extends Component {
 
 			return (
 				<div className={`table-row-item ${cell.className}`} key={i}
-							onChange={cell.key ? keySealer(this.props.cells.item_id, cell.key, changeItem) : null}>
+							onChange={cell.onChange ? ks(cell.key, cell.onChange) : null}>
 					{input}
 				</div>
 			);
@@ -55,32 +77,12 @@ export default class SingleJobTableRow extends Component {
 
 		return (
 			<div ref="row" className="table-row" onBlur={this.handleBlur.bind(this)}>
-				<div className="table-row-item fixed-col">
-					<button className="btn btn-left" onClick={deleteItem.bind(this, this.props.cells.item_id)}>-</button>
-				</div>
 				{cells}
-				<div className="table-row-item fixed-col" onClick={createItem.bind(this, this.props.cells)}>
-					<button className="btn btn-right">+</button>
-				</div>
 			</div>
 		);
 	}
 }
 
 SingleJobTableRow.propTypes = {
-	cells: PropTypes.shape({
-		item: PropTypes.string,
-		product: PropTypes.string,
-		description: PropTypes.string,
-		glass: PropTypes.string,
-		metal: PropTypes.string,
-		flex: PropTypes.string,
-		bulb: PropTypes.string,
-		qty_req: PropTypes.number,
-		qty_hot: PropTypes.number,
-		qty_cold: PropTypes.number,
-		qty_assem: PropTypes.number,
-		qty_packed: PropTypes.number,
-		notes: PropTypes.string
-	})
-};
+	cells: PropTypes.object
+}

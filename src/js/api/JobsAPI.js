@@ -1,3 +1,5 @@
+// All mocks until API is sorted
+
 "use strict";
 import request from "superagent";
 import compose from "../utils/compose";
@@ -9,21 +11,25 @@ import * as sampledata from "../sampledata/data.js";
 
 const root = "/api";
 const jobs = `${root}/jobs`;
+const items = `${root}/items`;
 const selections = `${root}/selections`;
 
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
 															SharedActionCreators.receiveAlert);
 
+var sampleSelections = sampledata.selections;
+var sampleJobs = sampledata.jobs;
+
 function onReply(successAction, ...etc) {
 	return function(err, res) {
-		if(err) errToAction(err);
-		else    successAction(res.body, ...etc);
+		if(res.ok) successAction(res.body, ...etc);
+		else errToAction(err);
 	};
 }
 
 export function getSelections() {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSelections)(null, {body: sampledata.selections});
+		onReply(ServerActionCreators.receiveSelections)(null, {ok: true, body: objectAssign({}, sampleSelections)});
 	}, 1000);
 
 	// request.get(`${selections}`)
@@ -32,7 +38,7 @@ export function getSelections() {
 
 export function getAllJobs() {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveAllJobs)(null, {body: sampledata.jobs});
+		onReply(ServerActionCreators.receiveAllJobs)(null, {ok: true, body: sampleJobs.slice(0)});
 	}, 1000);
 	// request.get(jobs)
 					// .end(onReply(ServerActionCreators.receiveAllJobs));
@@ -40,7 +46,8 @@ export function getAllJobs() {
 
 export function getSingleJob(jobId) {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSingleJob)(null, {body: sampledata.job});
+		var job = sampleJobs.filter(e => e.job_id === jobId).slice(0)[0];
+		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: objectAssign({}, job)});
 	}, 1000);
 
 	// request.get(`${jobs}/${jobId}`)
@@ -51,57 +58,119 @@ export function createSingleJob() {
 	setTimeout(() => {
 		const id = "RB" + ("" + Date.now()).slice(-4);
 
-		let dummyJobItem = {
+		let dummyJobItem = objectAssign({}, {
 			job_id: id,
 			details: {
 				job_id: id,
-				last_update: new Date().toISOString().substring(0, 10)
+				last_update: new Date().toISOString().substring(0, 10),
+				job_status: "TBC",
+				order_type: "Standard"
 			},
 			items: []
-		};
+		});
 
-		onReply(ServerActionCreators.receiveSingleJob)(null, {body: dummyJobItem });
+		let newJobs = sampleJobs.slice(0);
+		newJobs.push(dummyJobItem);
+		sampleJobs = newJobs;
+		onReply(ServerActionCreators.receiveNewJob)(null, {ok: true, body: objectAssign({}, dummyJobItem)});
 	}, 1000);
 	// request.post(jobs)
 	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
-export function createSingleJobItem(blueprint) {
-	let i = objectAssign({}, blueprint);
-	i.item_id = +("" + Date.now()).slice(-5);
+export function createSingleJobItem(jobId, blueprint) {
+	let newItem;
+
+	sampleJobs = sampleJobs.map(job => {
+		if (jobId === job.job_id) {
+			newItem = objectAssign({}, blueprint);
+			newItem.job_id = jobId;
+			newItem.item_id = +("" + Date.now()).slice(-5);
+			job.items.push(newItem);
+		}
+		return job;
+	});
 
 	setTimeout(() => {
-		let id;
-		id = blueprint && blueprint.item_id;
-		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
+		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: objectAssign({}, newItem)});
 	}, 200);
+	// request.post(`${items}/${jobId}`)
+	// 				.send(blueprint)
+	// 				.end(onReply(ServerActionCreators.receiveSingleItem));
+}
+
+export function deleteSingleItem(jobId, itemId) {
+
+	sampleJobs.some(job => {
+		if(job.job_id === jobId) {
+			return job.items.some((item, i) => {
+				if(item.item_id === itemId) {
+					job.items.splice(i, 1);
+					return true;
+				}
+			});
+		}
+	});
+
+	setTimeout(() => {
+		onReply(ServerActionCreators.deleteItem)(null, {ok: true, body: itemId});
+	}, 200);
+
+	// request.delete(`${items}/${jobId}/${itemId}`)
+	// 				.end(onReply(ServerActionCreators.deleteItem));
 }
 
 export function saveDetails(jobId, updateObj) {
-
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveUpdatedJob)(null, {body: objectAssign(updateObj, sampledata.job)});
+		console.log(jobId, updateObj);
+		sampleJobs = sampleJobs.map(e => {
+			if(e.job_id === jobId) {
+				e = objectAssign(updateObj, e);
+			}
+			return e;
+		});
+
+		var job = sampleJobs.filter(e => e.job_id === jobId)[0];
+
+		onReply(ServerActionCreators.receiveUpdatedJob)(null, {ok: true, body: objectAssign({}, job)});
 	}, 200);
 	// request.put(`${jobs}/${jobId}`)
 	// 				.send(updateObj)
 	// 				.end(onReply(ServerActionCreators.receiveUpdatedJob));
 }
 
-export function saveItem(itemId, updateObj) {
-	let item = objectAssign(updateObj, sampledata.job.items.filter(e => e.item_id === itemId)[0]);
+export function saveItem(jobId, itemId, updateObj) {
+	let item;
+	sampleJobs = sampleJobs.slice(0);
+
+	sampleJobs.some(job => {
+		if(job.job_id === jobId) {
+			job.items.forEach(g => {
+				if(g.item_id === itemId) {
+					item = objectAssign(updateObj);
+					g = item;
+				}
+			});
+			return true;
+		}
+	});
 
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedItem)(null, {
-			body: item
+			ok: true,
+			body: objectAssign({}, item)
 		});
 	}, 200);
+	// request.put(`${items}/${jobId}`)
+	// 				.send(updateObj)
+	// 				.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
 export function getPDF(jobId) {
 	request.get(`${jobs}/${jobId}`)
 					.query({pdf: true})
 					.end((err, res) => {
-						if(err) console.log(err);
-						console.log(res.body);
+						if(err) console.log(err.status, err.message);
+						else console.log(res.body);
 					});
 }

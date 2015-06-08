@@ -7,23 +7,21 @@ export function getSingleJob(jobId) {
 	JobsAPI.getSingleJob(jobId);
 }
 
-export function createItem(blueprint) {
-	JobsAPI.createSingleJobItem(blueprint);
+export function createItem(jobId, blueprint) {
+	JobsAPI.createSingleJobItem(jobId, blueprint);
 }
 
-export function saveItem(jobId, item) {
-	JobsAPI.saveItem(jobId, item);
+export function saveItem(jobId, itemId, item) {
+	JobsAPI.saveItem(jobId, itemId, item);
 }
 
 export function getPDF(jobId) {
 	JobsAPI.getPDF(jobId);
 }
 
-export function deleteItem(id) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.DELETE_ITEM,
-		data: id
-	});
+export function deleteItem(jobId, cells) {
+	const itemId = cells.item_id;
+	JobsAPI.deleteSingleItem(jobId, itemId);
 }
 
 export function changeItem(updateObj) {
