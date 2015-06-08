@@ -16,8 +16,8 @@ const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
 
 function onReply(successAction, ...etc) {
 	return function(err, res) {
-		if(err) errToAction(err);
-		else    successAction(res.body, ...etc);
+		if(res.ok) successAction(res.body, ...etc);
+		else errToAction(err);
 	};
 }
 
@@ -55,7 +55,9 @@ export function createSingleJob() {
 			job_id: id,
 			details: {
 				job_id: id,
-				last_update: new Date().toISOString().substring(0, 10)
+				last_update: new Date().toISOString().substring(0, 10),
+				job_status: "TBC",
+				order_type: "Standard"
 			},
 			items: []
 		};

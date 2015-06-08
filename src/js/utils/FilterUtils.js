@@ -1,7 +1,8 @@
 "use strict";
 
 function strIncludes(str, term) {
-	return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
+	if (typeof term !== "string") return false;
+	else return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
 }
 
 function isDateStr(entity) {
@@ -16,7 +17,7 @@ function isDateStr(entity) {
 
 // use tilt
 export function contains(obj, term) {
-	if(!term) return true;
+	if(term === "" || term === undefined) return true;
 
 	const k = Object.keys(obj);
 
@@ -26,6 +27,8 @@ export function contains(obj, term) {
 					return strIncludes(obj[cell], term);
 			case "number":
 					return strIncludes("" + obj[cell], "" + term);
+			case "boolean":
+					return obj[cell] === term;
 			default:
 					return false;
 		}
@@ -56,13 +59,15 @@ export function genericSort(arr, sortBy, asc, sortPath) {
 	});
 }
 
-export function isWithinBounds(obj, lower, upper, key) {
+export function isWithinBounds(field, lower, upper) {
+	if(lower === "" && upper === "") return true;
+
 	const lowerAsDate = Date.parse(lower || "1970-01-01");
 	const upperAsDate = Date.parse(upper || "3070-01-01");
 
-	if(isDateStr(obj[key])) {
-		let d = Date.parse(obj[key]);
-		return lowerAsDate < d && d < upperAsDate;
+	if(isDateStr(field)) {
+		let d = Date.parse(field);
+		return lowerAsDate <= d && d <= upperAsDate;
 	} else {
 		return false;
 	}
@@ -73,17 +78,5 @@ export function restrictTo(obj, restrictionObj) {
 
 	return restrictBy.every(field => {
 		return restrictionObj[field].options.indexOf(obj[field]) !== -1;
-	});
-}
-
-// Turns an object into an array of objects
-// Currently not being used
-// todo: immut
-export function tilt(obj) {
-	return Object.keys(obj).map((e) => {
-		return {
-			key: e,
-			val: obj[e]
-		};
 	});
 }
