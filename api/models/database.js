@@ -2,8 +2,9 @@
 var config    = require("../config.js");
 var Sequelize = require("sequelize");
 
-var seqlz = new Sequelize(config.localdb.localdburl, {
+var seqlz = new Sequelize(config.database.dburl, {
 	dialect:'postgres',
+	ssl: true,
 	define: {
 			timestamps: true,
 			updatedAt: 'updatedat',
