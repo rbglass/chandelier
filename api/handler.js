@@ -5,25 +5,32 @@ var index = path.resolve(__dirname + "/../public/index.html");
 var Users = require("./models/Users");
 var Jobs = require("./models/Jobs");
 var Job_items = require("./models/Job_items");
+var pdfMaker = require("./utils/pdfMaker");
 
 var handler = {
 
-  home : function(request, reply) {
+	home : function(request, reply) {
 
     if (request.auth.isAuthenticated) {
     	console.log("home handler");
       reply.file(index);
     } else if (!request.auth.isAuthenticated) {
-      reply.redirect("/login");
+			reply.redirect("/login");
     }
-  },
+	},
 
 // -------------------------------------------------- \\
 
-  getJobsTable : function(request, reply) {
+	getJobsTable : function(request, reply) {
 		console.log("jobs table handler");
 		Jobs.findAll().then(function(jobs){
-				reply(jobs);
+				var formattedJobs = jobs.map(function(job) {
+					return {
+						job_id: job.job_id,
+						details: job
+					}
+				})
+				reply(formattedJobs);
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
@@ -31,11 +38,12 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-  createJob : function(request, reply) {
+	createJob : function(request, reply) {
 		//create an empty row (the updateJob handler should then be triggered)
 		var entry = request.payload;
-  	Jobs.create({
-			job_id: 						entry.job_id,
+
+		Jobs.create({
+			job_id: 						undefined,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
 			job_status: 				entry.job_status || "",
@@ -49,54 +57,61 @@ var handler = {
 				reply(job);
 		}).catch(function(err){
 			if (err) return console.log(err);
-  	});
-  },
+		});
+	},
 
-  updateJob : function(request, reply) {
+	updateJob : function(request, reply) {
 
-  	var target = request.payload[target];
+		var target = request.payload[target];
 			var value = request.payload.value;
 			Jobs.update({
-  		target : value
-  	}, {
-  		where : {
-  			job_id : request.payload.job_id }
-  	}).then(function(job) {
+			target : value
+		}, {
+			where : {
+				job_id : request.payload.job_id }
+		}).then(function(job) {
 			reply(job);
-  	}).catch(function(err) {
+		}).catch(function(err) {
 				if (err) return console.log(err);
 			});
 
-  },
+	},
 
-  deleteJob : function(request, reply) {
+	deleteJob : function(request, reply) {
 
-  	var entry = request.payload;
-  	Jobs.destroy({
-  		where : { job_id : entry.job_id }
+		var entry = request.payload;
+		Jobs.destroy({
+			where : { job_id : entry.job_id }
 
-  	}).then(function(job) {
-	  	reply(job);
-  	}).catch(function(err){
+		}).then(function(job) {
+			reply(job);
+		}).catch(function(err){
 			if (err) return console.log(err);
 		});
-  },
+	},
 
-  getSingleJob : function(request, reply) {
+	getSingleJob : function(request, reply) {
 		//for the details on top of the job_items table
+		var pdf = request.query.pdf;
+
 
   	var entry = request.payload;
   	Jobs.find({
-  		where : { job_id: 3001 }
+  		where : { job_id: entry.job_id }
   	}).then(function(details) {
 			Job_items.findAll({
 				where : { job_id: entry.job_id }
 			}).then(function(items){
-				reply({
+				var job = {
 					job_id: entry.job_id,
 					details: details,
 					items: items
-				});
+				};
+				if(pdf) {
+					pdfMaker(job, reply);
+				} else{
+					reply(job);
+				}
 			});
 
 		}).catch(function(err) {
@@ -116,7 +131,7 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-  getJobItems : function(request, reply) {
+	getJobItems : function(request, reply) {
 
   	var entry = request.payload;
 //		var JobID = "RB" + entry.job_id.toString();
@@ -130,13 +145,13 @@ var handler = {
   	}).catch(function(err){
 			if (err) return console.log(err);
 		});
-  },
+	},
 
-  createJobItem : function(request, reply) {
+	createJobItem : function(request, reply) {
 		var entry = request.payload;
 
 		Job_items.create({
-			item_id: 			entry.item_id 		|| "",
+			item_id: 			undefined,
 			job_id: 			entry.job_id,
 			product: 			entry.product 		|| "",
 			description: 	entry.description || "",
@@ -148,36 +163,36 @@ var handler = {
 			qty_hot: 			entry.qty_hot 		|| 0,
 			qty_cold: 		entry.qty_cold 		|| 0,
 			qty_assem: 		entry.qty_assem 	|| 0,
-			qty_packed: 	entry.qty_assem 	|| 0,
+			qty_packed: 	entry.qty_packed 	|| 0,
 			notes: 				entry.notes 			|| ""
 		}).then(function(job_item){
-  		reply(job_item);
+			reply(job_item);
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
 	},
 
-  updateJobItems : function(request, reply) {
+	updateJobItems : function(request, reply) {
 			var target = request.payload[target];
 			var value = request.payload.value;
 			Job_items.update({
-  		target : value
-  	}, {
-  		where : {
-  			target : {
+			target : value
+		}, {
+			where : {
+				target : {
 					$ne: value
 					//update where original value is NOT the updated value
 				}
-  		}
-  	}).then(function(jobItem) {
+			}
+		}).then(function(jobItem) {
 			reply(jobItem);
-  	}).catch(function(err) {
+		}).catch(function(err) {
 				if (err) return console.log(err);
 			});
 
-  },
+	},
 
-  deleteJobItems : function(request, reply) {
+	deleteJobItems : function(request, reply) {
 
 		var entry = request.payload;
 		//delete rows with this job id
@@ -190,11 +205,11 @@ var handler = {
 		}).catch(function(err){
 			if (err) return console.log(err);
 		});
-  },
+	},
 
 // -------------------------------------------------- \\
 
-  login : function(request, reply) {
+	login : function(request, reply) {
 
     var creds = request.auth.credentials;
 
@@ -221,11 +236,11 @@ var handler = {
 		 });
   },
 
-  logout : function(request, reply) {
+	logout : function(request, reply) {
 
-    request.auth.session.clear();
-    reply("Succesfully logged out");
-  }
+		request.auth.session.clear();
+		reply("Succesfully logged out");
+	}
 
 };
 

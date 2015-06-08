@@ -17,16 +17,30 @@ export function receiveAllJobs(jobsArray) {
 }
 
 export function receiveSingleJob(jobObject) {
+	console.log(jobObject)
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SINGLE_JOB,
 		data: jobObject
 	});
 }
 
-export function receiveSingleItem(itemObject, dupeId) {
+export function receiveUpdatedJob(jobObject) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_UPDATED_JOB,
+		data: jobObject
+	});
+}
+
+export function receiveSingleItem(itemObject) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SINGLE_ITEM,
-		data: itemObject,
-		dupeId: dupeId
+		data: itemObject
+	});
+}
+
+export function receiveUpdatedItem(itemObject) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_UPDATED_ITEM,
+		data: itemObject
 	});
 }

@@ -4,7 +4,7 @@ import compose from "../utils/compose";
 import objectAssign from "object-assign";
 import * as JobAPIUtils from "../utils/JobAPIUtils";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
-import { receiveAllJobs, receiveSingleJob, receiveSingleItem, receiveSelections } from "../actions/ServerActionCreators";
+import * as ServerActionCreators from "../actions/ServerActionCreators";
 import * as sampledata from "../sampledata/data.js";
 
 const root = "/api";
@@ -23,64 +23,79 @@ function onReply(successAction, ...etc) {
 
 export function getSelections() {
 	setTimeout(() => {
-		onReply(receiveSelections)(null, {body: sampledata.selections});
+		onReply(ServerActionCreators.receiveSelections)(null, {body: sampledata.selections});
 	}, 1000);
 
-	// request.get(`${selections}`)
-					// .end(onReply(receiveSelections));
+//	 request.get(`${selections}`)
+//					 .end(onReply(ServerActionCreators.receiveSelections));
 }
 
 export function getAllJobs() {
-	setTimeout(() => {
-		onReply(receiveAllJobs)(null, {body: sampledata.jobs});
-	}, 1000);
-	// request.get(jobs)
-					// .end(onReply(receiveAllJobs));
-}
-
-export function createJob() {
-	setTimeout(() => {
-		const id = +("" + Date.now()).substring(0, 5);
-
-		let dummyJobItem = {
-			job_id: id,
-			details: {
-				job_id: id,
-				last_update: new Date().toISOString().substring(0, 10)
-			}
-		};
-
-		onReply(receiveSingleJob)(null, {body: dummyJobItem });
-	}, 1000);
-	// request.post(jobs)
-	// 				.end(onReply);
+//	setTimeout(() => {
+//		onReply(ServerActionCreators.receiveAllJobs)(null, {body: sampledata.jobs});
+//	}, 1000);
+	 request.get(jobs)
+					 .end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
 export function getSingleJob(jobId) {
-	setTimeout(() => {
-		onReply(receiveSingleJob)(null, {body: sampledata.job});
-	}, 1000);
+//	setTimeout(() => {
+//		onReply(ServerActionCreators.receiveSingleJob)(null, {body: sampledata.job});
+//	}, 1000);
 
-	// request.get(`${jobs}/${jobId}`)
-	// 				.end(onReply(receiveOneJob()));
+	 request.get(`${jobs}/${jobId}`)
+	 				.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
-export function updateSingleJobDetails(jobId, updateObj) {
-	setTimeout(() => {
-		onReply(receiveSingleJob)(null, {body: objectAssign(updateObj, sampledata.job)});
-	}, 200);
-	// request.put(`${jobs}/${jobId}`)
-	// 				.send(updateObj)
-	// 				.end(onReply);
+export function createSingleJob() {
+//	setTimeout(() => {
+//		const id = +("" + Date.now()).substring(0, 5);
+//
+//		let dummyJobItem = {
+//			job_id: id,
+//			details: {
+//				job_id: id,
+//				last_update: new Date().toISOString().substring(0, 10)
+//			},
+//			items: []
+//		};
+//
+//		onReply(ServerActionCreators.receiveSingleJob)(null, {body: dummyJobItem });
+//	}, 1000);
+	 request.post(jobs)
+	 				.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
 export function createSingleJobItem(blueprint) {
-	let i = objectAssign({}, blueprint);
-	i.item_id = +("" + Date.now()).substring(6);
+//	let i = objectAssign({}, blueprint);
+//	i.item_id = +("" + Date.now()).substring(6);
+//
+//	setTimeout(() => {
+//		let id;
+//		id = blueprint && blueprint.item_id;
+//		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
+//	}, 200);
+	request.post(`${jobs}/${blueprint.item_id}`)
+					.send(blueprint)
+					.end(onReply(ServerActionCreators.receiveSingleItem, id))
+}
 
+export function saveDetails(jobId, updateObj) {
+	console.log(jobId, updateObj);
 	setTimeout(() => {
-		let id;
-		id = blueprint && blueprint.item_id;
-		onReply(receiveSingleItem, id)(null, {body: i});
+		onReply(ServerActionCreators.receiveUpdatedJob)(null, {body: objectAssign(updateObj, sampledata.job)});
+	}, 200);
+	// request.put(`${jobs}/${jobId}`)
+	// 				.send(updateObj)
+	// 				.end(onReply(ServerActionCreators.receiveUpdatedJob));
+}
+
+export function saveItem(itemId, updateObj) {
+	let item = objectAssign(updateObj, sampledata.job.items.filter(e => e.item_id === itemId)[0]);
+		console.log(item);
+	setTimeout(() => {
+		onReply(ServerActionCreators.receiveUpdatedItem)(null, {
+			body: item
+		});
 	}, 200);
 }

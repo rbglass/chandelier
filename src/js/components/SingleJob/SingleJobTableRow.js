@@ -1,11 +1,15 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import { updateItem, createItem, deleteItem } from "../../actions/SingleJobActionCreators";
+import { changeItem, saveItem, createItem, deleteItem } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 
 export default class SingleJobTableRow extends Component {
 	handleBlur(e) {
-		console.log("blurred!", e.target.value);
+		const currentRowNode = React.findDOMNode(this.refs.row);
+		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
+		if(currentRowNode !== destinationNode) {
+			saveItem(this.props.cells.item_id, this.props.cells);
+		}
 	}
 
 	// Break this into components
@@ -43,14 +47,14 @@ export default class SingleJobTableRow extends Component {
 
 			return (
 				<div className={`table-row-item ${cell.className}`} key={i}
-							onChange={cell.key ? keySealer(this.props.cells.item_id, cell.key, updateItem) : null}>
+							onChange={cell.key ? keySealer(this.props.cells.item_id, cell.key, changeItem) : null}>
 					{input}
 				</div>
 			);
 		}, this);
 
 		return (
-			<div className="table-row" onBlur={this.handleBlur.bind(this)}>
+			<div ref="row" className="table-row" onBlur={this.handleBlur.bind(this)}>
 				<div className="table-row-item fixed-col">
 					<button className="btn btn-left" onClick={deleteItem.bind(this, this.props.cells.item_id)}>-</button>
 				</div>

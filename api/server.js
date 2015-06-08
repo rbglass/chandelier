@@ -16,26 +16,26 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
   if (err) {
     throw new Error("Error registering authorization: ", err);
   }
-//
-//  server.auth.strategy("google", "bell", {
-//    provider       : "google",
-//    password       : config.bell.password,
-//    clientId       : config.bell.clientID,
-//    clientSecret   : config.bell.clientSecret,
-//    isSecure       : false,
-//    providerParams : {
-//      redirect_uri : server.info.uri + "/login"
-//    }
-//  });
-//
-//  server.auth.strategy("session", "cookie", {
-//    password   : config.cookie.password,
-//    cookie     : "sid",
-//    redirectTo : "/",
-//    isSecure   : "false"
-//  });
-//
-//  server.auth.default("session");
+
+  server.auth.strategy("google", "bell", {
+    provider       : "google",
+    password       : config.bell.password,
+    clientId       : config.bell.clientID,
+    clientSecret   : config.bell.clientSecret,
+    isSecure       : false,
+    providerParams : {
+      redirect_uri : server.info.uri + "/login"
+    }
+  });
+
+  server.auth.strategy("session", "cookie", {
+    password   : config.cookie.password,
+    cookie     : "sid",
+    redirectTo : "/",
+    isSecure   : "false"
+  });
+
+  server.auth.default("session");
 
 });
 

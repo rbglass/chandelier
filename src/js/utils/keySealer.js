@@ -1,12 +1,13 @@
 "use strict";
 
-// probably not necessary after refactoring...
+// AM I MISSING SOMETHING???
 export default (id, key, action) => {
 	return (e) => {
 		action({
 			id: id,
 			key: key,
-			value: e.target.value
+			// TERRIBLE HACK TO GET AROUND BLOODY STRNUMS
+			value: +e.target.value || e.target.value
 		});
 	};
 };
