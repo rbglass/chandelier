@@ -16,9 +16,7 @@ const SelectionStore = createStore({
 	}
 });
 
-export default SelectionStore;
-
-AppDispatcher.register(action => {
+const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_SELECTIONS:
@@ -27,4 +25,8 @@ AppDispatcher.register(action => {
 				break;
 
 	}
-});
+};
+
+export default SelectionStore;
+
+SelectionStore.dispatchToken = AppDispatcher.register(onReceivingAction);

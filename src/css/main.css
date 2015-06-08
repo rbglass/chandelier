@@ -7,12 +7,20 @@
 	--lightgrey:;
 }
 
+body {
+	margin: 0;
+}
+
 input {
 	box-sizing: border-box;
 }
 
+a:visited {
+	color:inherit;
+}
+
 label {
-	font-size: 0.8rem;
+  font-size: 1rem;
 	line-height: 25px;
 }
 
@@ -22,6 +30,66 @@ label {
 
 button:focus {
 	outline: none;
+}
+
+/* App container */
+.container {
+	margin: 5px;
+}
+/* Nav */
+
+.nav {
+	background-color: rgba(39, 92, 152, 1);
+}
+
+.nav.navbar {
+	display: flex;
+  flex-direction: row;
+  height: 40px;
+  padding-left: 10px;
+  border-bottom: 2px solid rgba(1,1,1,0.5);
+}
+
+.nav.nav-item {
+	display: flex;
+	flex-basis: 50px;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+}
+
+.nav.nav-item a {
+	text-decoration: none;
+	width: 50px;
+	height: 40px;
+  padding-bottom: 5px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.nav.nav-item a:hover {
+	background-color: rgba(0,0,0,0.2);
+}
+.nav.nav-item a.active {
+	background-color: rgba(1, 1, 1, 0.5);
+	text-decoration: underline;
+}
+
+.nav.nav-item a.active:hover {
+	background-color: rgba(1, 1, 1, 0.5);
+	text-decoration: underline;
+}
+
+.nav.nav-title {
+	flex-grow: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+  display: flex;
+  font-size: 30px;
+  padding-right: 4px;
+  color: white;
+  cursor: default;
 }
 
 /* Alert */
@@ -46,10 +114,18 @@ button:focus {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content:  flex-end;
-  align-items: flex-start;
+  align-items: stretch;
+  margin-left: 8px;
 
-	width: 40%;
-	height: 50px;
+	width: 100%;
+	height: auto;
+}
+
+.table-manip-col {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  align-content: inherit;
 }
 
 .job-text-input {
@@ -59,6 +135,8 @@ button:focus {
 
 .filter {
   width: 75%;
+  font-size: 20px;
+  margin-bottom:5px;
 }
 
 .date {
@@ -66,6 +144,26 @@ button:focus {
 	flex-grow: 0;
 	flex-shrink: 0;
 	flex-basis: 45%;
+}
+
+/* MultiSelect */
+.multiselect-holder {
+  flex-direction: column;
+  display: flex;
+  position:relative;
+  width: 200px;
+  margin-right:5px;
+}
+
+.multiselect-checkbox {
+	position:absolute;
+	right: 0;
+}
+
+.multiselect-title {
+	margin: auto;
+	text-decoration: underline;
+	font-weight: bolder;
 }
 
 /* Table */
@@ -83,8 +181,7 @@ button:focus {
 
 	font-size: 0.7rem;
 	line-height: 1.5;
-	margin: 0.5rem;
-	margin-bottom: 0;
+	margin-top: 0.5rem;
 }
 
 /* Header */
@@ -219,6 +316,7 @@ button:focus {
 
 .table-row-item .btn:hover {
 	background-color: rgba(5, 5, 5, 0.8);
+	cursor: pointer;
 }
 
 /* Specific job details */
@@ -230,6 +328,7 @@ button:focus {
   align-content: flex-start;
   align-items: stretch;
 
+  font-size: 1rem;
   min-height: 200px;
 }
 

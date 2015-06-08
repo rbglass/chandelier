@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
+import NavBar from "../components/common/NavBar";
 import SingleJobTableRow from "../components/SingleJob/SingleJobTableRow";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
@@ -23,15 +24,17 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<h1 className="page-header">Single Job</h1>
-				<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
-				<Table {...this.props} />
-				<button className="add-button" onClick={SingleJobActionCreators.createItem}>+</button>
+				<NavBar title={`${this.props.params.id}`}/>
+				<div className="container">
+					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
+					<Table {...this.props} />
+					<button className="add-button" onClick={SingleJobActionCreators.createItem}>+</button>
+				</div>
 			</div>
 		);
 	}
 }
-
+// merge these two
 SingleJobPage.defaultProps = {
 	headers: [
 		{ key: "none", 	      display: "",        		className: "fixed-col" },

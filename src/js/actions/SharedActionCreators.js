@@ -27,7 +27,7 @@ export function sortBy(field) {
 
 export function changeDetails(updateObj) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.CHANGE_DETAILS,
+		type: ActionTypes.CHANGE_SINGLE_JOB_DETAILS,
 		data: updateObj
 	});
 }

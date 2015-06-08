@@ -48,6 +48,7 @@ export function getSingleJob(jobId) {
 }
 
 export function createSingleJob() {
+<<<<<<< HEAD
 //	setTimeout(() => {
 //		const id = +("" + Date.now()).substring(0, 5);
 //
@@ -78,10 +79,39 @@ export function createSingleJobItem(blueprint) {
 	request.post(`${jobs}/${blueprint.item_id}`)
 					.send(blueprint)
 					.end(onReply(ServerActionCreators.receiveSingleItem, id))
+=======
+	setTimeout(() => {
+		const id = "RB" + ("" + Date.now()).slice(-4);
+
+		let dummyJobItem = {
+			job_id: id,
+			details: {
+				job_id: id,
+				last_update: new Date().toISOString().substring(0, 10)
+			},
+			items: []
+		};
+
+		onReply(ServerActionCreators.receiveSingleJob)(null, {body: dummyJobItem });
+	}, 1000);
+	// request.post(jobs)
+	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
+}
+
+export function createSingleJobItem(blueprint) {
+	let i = objectAssign({}, blueprint);
+	i.item_id = +("" + Date.now()).slice(-5);
+
+	setTimeout(() => {
+		let id;
+		id = blueprint && blueprint.item_id;
+		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
+	}, 200);
+>>>>>>> dev
 }
 
 export function saveDetails(jobId, updateObj) {
-	console.log(jobId, updateObj);
+
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedJob)(null, {body: objectAssign(updateObj, sampledata.job)});
 	}, 200);
@@ -92,10 +122,19 @@ export function saveDetails(jobId, updateObj) {
 
 export function saveItem(itemId, updateObj) {
 	let item = objectAssign(updateObj, sampledata.job.items.filter(e => e.item_id === itemId)[0]);
-		console.log(item);
+
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveUpdatedItem)(null, {
 			body: item
 		});
 	}, 200);
+}
+
+export function getPDF(jobId) {
+	request.get(`${jobs}/${jobId}`)
+					.query({pdf: true})
+					.end((err, res) => {
+						if(err) console.log(err);
+						console.log(res.body);
+					});
 }

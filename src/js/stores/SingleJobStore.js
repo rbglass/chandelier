@@ -1,6 +1,6 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
-import { genericSort } from "../utils/ConvenienceUtils";
+import { genericSort } from "../utils/FilterUtils";
 import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
@@ -27,9 +27,7 @@ const SingleJobStore = createStore({
 	}
 });
 
-export default SingleJobStore;
-
-AppDispatcher.register(action => {
+const onReceivingAction = action => {
 
 	switch(action.type) {
 
@@ -57,12 +55,12 @@ AppDispatcher.register(action => {
 				break;
 
 
-		case ActionTypes.CHANGE_DETAILS:
+		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
 				job.details[action.data.key] = action.data.value;
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.CHANGE_ITEM:
+		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
 				job.items = job.items.map(jobitem => {
 					if(jobitem.item_id === d.id) {
@@ -96,4 +94,8 @@ AppDispatcher.register(action => {
 		default:
 				break;
 	}
-});
+};
+
+export default SingleJobStore;
+
+AppDispatcher.register(onReceivingAction);
