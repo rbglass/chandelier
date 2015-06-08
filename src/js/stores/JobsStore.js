@@ -7,7 +7,7 @@ import SelectionStore from "./SelectionStore";
 
 var jobs = [],
 		filters = {
-			sortTerm: "job_id",
+			sortTerm: "shipping_date",
 			isAsc: false,
 			filterBy: "",
 			dateField: "shipping_date",
@@ -53,7 +53,7 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				// jobs.push(action.data);
+				jobs.push(action.data);
 				JobsStore.emitChange();
 				break;
 

@@ -27,7 +27,7 @@ function onReply(successAction, ...etc) {
 
 export function getSelections() {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSelections)(null, {ok: true, body: sampleSelections});
+		onReply(ServerActionCreators.receiveSelections)(null, {ok: true, body: objectAssign({}, sampleSelections)});
 	}, 1000);
 
 	// request.get(`${selections}`)
@@ -44,7 +44,7 @@ export function getAllJobs() {
 
 export function getSingleJob(jobId) {
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: sampleJob});
+		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: objectAssign({}, sampleJob)});
 	}, 1000);
 
 	// request.get(`${jobs}/${jobId}`)
@@ -66,9 +66,10 @@ export function createSingleJob() {
 			items: []
 		};
 
-		sampleJobs.push(dummyJobItem);
-
-		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: dummyJobItem });
+		let newJobs = sampleJobs.slice(0);
+		newJobs.push(dummyJobItem);
+		sampleJobs = newJobs;
+		onReply(ServerActionCreators.receiveSingleJob)(null, {ok: true, body: dummyJobItem});
 	}, 1000);
 	// request.post(jobs)
 	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
@@ -78,7 +79,10 @@ export function createSingleJobItem(blueprint) {
 	let i = objectAssign({}, blueprint);
 	i.item_id = +("" + Date.now()).slice(-5);
 
-	sampleJob.items.push(i);
+	let newItems = sampleJob.items.slice(0);
+	newItems.push(i);
+
+	sampleJob.items = newItems;
 
 	setTimeout(() => {
 		onReply(ServerActionCreators.receiveSingleItem)(null, {ok: true, body: i});
@@ -86,10 +90,8 @@ export function createSingleJobItem(blueprint) {
 }
 
 export function saveDetails(jobId, updateObj) {
-	sampleJob = objectAssign(updateObj, sampleJob);
-
 	setTimeout(() => {
-		onReply(ServerActionCreators.receiveUpdatedJob)(null, {ok: true, body: sampleJob});
+		onReply(ServerActionCreators.receiveUpdatedJob)(null, {ok: true, body: objectAssign(updateObj, sampleJob)});
 	}, 200);
 	// request.put(`${jobs}/${jobId}`)
 	// 				.send(updateObj)

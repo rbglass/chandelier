@@ -70,7 +70,7 @@ describe("JobsStore", function() {
 		};
 
 		this.onReceivingAction(jobAction);
-		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data);
+		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data.reverse());
 	});
 
 	it("#updates the respective job in the jobs array upon a RECEIVE_UPDATED_JOB action", function() {
