@@ -7,8 +7,8 @@ export function getSingleJob(jobId) {
 	JobsAPI.getSingleJob(jobId);
 }
 
-export function createItem(blueprint) {
-	JobsAPI.createSingleJobItem(blueprint);
+export function createItem(jobId, blueprint) {
+	JobsAPI.createSingleJobItem(jobId, blueprint);
 }
 
 export function saveItem(jobId, item) {
