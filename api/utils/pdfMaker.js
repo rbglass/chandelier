@@ -1,18 +1,3 @@
-Skip to content
-This repository
-Explore
-Gist
-Blog
-Help
-@Neats29 Neats29
-
- Unwatch 18
-  Star 3
- Fork 0foundersandcoders/chandelier
- branch: dev  chandelier/api/utils/pdfMaker.js
-@MIJOTHYMIJOTHY 14 hours ago filters done
-1 contributor
-RawBlameHistory     104 lines (86 sloc)  2.483 kB
 "use strict";
 
 var PDFDocument = require("pdfkit");

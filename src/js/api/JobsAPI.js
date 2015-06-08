@@ -26,60 +26,28 @@ export function getSelections() {
 		onReply(ServerActionCreators.receiveSelections)(null, {body: sampledata.selections});
 	}, 1000);
 
-//	 request.get(`${selections}`)
-//					 .end(onReply(ServerActionCreators.receiveSelections));
+	// request.get(`${selections}`)
+					// .end(onReply(ServerActionCreators.receiveSelections));
 }
 
 export function getAllJobs() {
-//	setTimeout(() => {
-//		onReply(ServerActionCreators.receiveAllJobs)(null, {body: sampledata.jobs});
-//	}, 1000);
-	 request.get(jobs)
-					 .end(onReply(ServerActionCreators.receiveAllJobs));
+	setTimeout(() => {
+		onReply(ServerActionCreators.receiveAllJobs)(null, {body: sampledata.jobs});
+	}, 1000);
+	// request.get(jobs)
+					// .end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
 export function getSingleJob(jobId) {
-//	setTimeout(() => {
-//		onReply(ServerActionCreators.receiveSingleJob)(null, {body: sampledata.job});
-//	}, 1000);
+	setTimeout(() => {
+		onReply(ServerActionCreators.receiveSingleJob)(null, {body: sampledata.job});
+	}, 1000);
 
-	 request.get(`${jobs}/${jobId}`)
-	 				.end(onReply(ServerActionCreators.receiveSingleJob));
+	// request.get(`${jobs}/${jobId}`)
+	// 				.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
 export function createSingleJob() {
-<<<<<<< HEAD
-//	setTimeout(() => {
-//		const id = +("" + Date.now()).substring(0, 5);
-//
-//		let dummyJobItem = {
-//			job_id: id,
-//			details: {
-//				job_id: id,
-//				last_update: new Date().toISOString().substring(0, 10)
-//			},
-//			items: []
-//		};
-//
-//		onReply(ServerActionCreators.receiveSingleJob)(null, {body: dummyJobItem });
-//	}, 1000);
-	 request.post(jobs)
-	 				.end(onReply(ServerActionCreators.receiveSingleJob));
-}
-
-export function createSingleJobItem(blueprint) {
-//	let i = objectAssign({}, blueprint);
-//	i.item_id = +("" + Date.now()).substring(6);
-//
-//	setTimeout(() => {
-//		let id;
-//		id = blueprint && blueprint.item_id;
-//		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
-//	}, 200);
-	request.post(`${jobs}/${blueprint.item_id}`)
-					.send(blueprint)
-					.end(onReply(ServerActionCreators.receiveSingleItem, id))
-=======
 	setTimeout(() => {
 		const id = "RB" + ("" + Date.now()).slice(-4);
 
@@ -107,7 +75,6 @@ export function createSingleJobItem(blueprint) {
 		id = blueprint && blueprint.item_id;
 		onReply(ServerActionCreators.receiveSingleItem, id)(null, {body: i});
 	}, 200);
->>>>>>> dev
 }
 
 export function saveDetails(jobId, updateObj) {
