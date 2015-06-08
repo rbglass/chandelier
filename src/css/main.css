@@ -316,6 +316,7 @@ button:focus {
 
 .table-row-item .btn:hover {
 	background-color: rgba(5, 5, 5, 0.8);
+	cursor: pointer;
 }
 
 /* Specific job details */

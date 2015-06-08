@@ -27,9 +27,7 @@ const SingleJobStore = createStore({
 	}
 });
 
-export default SingleJobStore;
-
-AppDispatcher.register(action => {
+const onReceivingAction = action => {
 
 	switch(action.type) {
 
@@ -96,4 +94,8 @@ AppDispatcher.register(action => {
 		default:
 				break;
 	}
-});
+};
+
+export default SingleJobStore;
+
+AppDispatcher.register(onReceivingAction);

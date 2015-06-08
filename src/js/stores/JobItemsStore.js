@@ -11,9 +11,7 @@ const JobItemsStore = createStore({
 	}
 });
 
-export default JobItemsStore;
-
-AppDispatcher.register(action => {
+const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_JOB_ITEMS:
@@ -22,4 +20,8 @@ AppDispatcher.register(action => {
 				break;
 
 	}
-});
+};
+
+export default JobItemsStore;
+
+AppDispatcher.register(onReceivingAction);
