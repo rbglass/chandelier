@@ -1,5 +1,9 @@
 "use strict";
 
+function strIncludes(str, term) {
+	return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
+}
+
 function isDateStr(entity) {
 	const dateRegEx = /\d{4}-\d{2}-\d{2}/g;
 
@@ -19,25 +23,23 @@ export function contains(obj, term) {
 	return k.some(cell => {
 		switch (typeof obj[cell]) {
 			case "string":
-					return obj[cell].includes(term);
+					return strIncludes(obj[cell], term);
 			case "number":
-					return ("" + obj[cell]).includes("" + term);
+					return strIncludes("" + obj[cell], "" + term);
 			default:
 					return false;
 		}
 	});
 }
 
-// Change to Array.prototype method?
-// localeCompare w/ datestring correctly?
-// use sort table
-export function genericSort(arr, sortBy, asc) {
+export function genericSort(arr, sortBy, asc, sortPath) {
 
 	arr = arr.slice(0);
 
 	return arr.sort((a, b) => {
-		let t1 = a[sortBy],
-				t2 = b[sortBy],
+		// ugly hack
+		let t1 = sortPath ? a[sortPath][sortBy] : a[sortBy],
+				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
 				sortVal;
 
 		if (isDateStr(t1)) {
@@ -54,18 +56,23 @@ export function genericSort(arr, sortBy, asc) {
 	});
 }
 
-export function isWithinBounds(obj, lower, upper) {
-	const k = Object.keys(obj);
+export function isWithinBounds(obj, lower, upper, key) {
 	const lowerAsDate = Date.parse(lower || "1970-01-01");
 	const upperAsDate = Date.parse(upper || "3070-01-01");
 
-	return k.some(cell => {
-		if(isDateStr(obj[cell])) {
-			let d = Date.parse(obj[cell]);
-			return lowerAsDate < d && d < upperAsDate;
-		} else {
-			return false;
-		}
+	if(isDateStr(obj[key])) {
+		let d = Date.parse(obj[key]);
+		return lowerAsDate < d && d < upperAsDate;
+	} else {
+		return false;
+	}
+}
+
+export function restrictTo(obj, restrictionObj) {
+	const restrictBy = Object.keys(restrictionObj);
+
+	return restrictBy.every(field => {
+		return restrictionObj[field].options.indexOf(obj[field]) !== -1;
 	});
 }
 

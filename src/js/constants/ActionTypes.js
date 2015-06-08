@@ -12,18 +12,20 @@ export default keyMirror({
 	"RECEIVE_SINGLE_ITEM": null,
 	"RECEIVE_UPDATED_ITEM": null,
 
+	"RECEIVE_JOB_ITEMS": null,
+
 	"RECEIVE_ALERT": null,
 
 	// Sending to API
 	// On blur/click
 	"CREATE_SINGLE_JOB": null,
-	"SAVE_DETAILS": null,
-	"SAVE_ITEM": null,
+	"SAVE_SINGLE_JOB_DETAILS": null,
+	"SAVE_SINGLE_JOB_ITEM": null,
 
 	// Local pre-server actions
 	// On change
-	"CHANGE_DETAILS": null,
-	"CHANGE_ITEM": null,
+	"CHANGE_SINGLE_JOB_DETAILS": null,
+	"CHANGE_SINGLE_JOB_ITEM": null,
 
 	// unnecessary?
 	"CREATE_ITEM": null,
@@ -36,5 +38,6 @@ export default keyMirror({
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,
 
-	"FILTER_BY": null
+	"FILTER_BY": null,
+	"RESTRICT_TO": null
 });

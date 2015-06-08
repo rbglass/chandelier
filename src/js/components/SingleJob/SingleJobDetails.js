@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { changeDetails, saveDetails } from "../../actions/SharedActionCreators";
+import { getPDF } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 
 export default class SingleJobDetails extends Component {
@@ -97,7 +98,7 @@ export default class SingleJobDetails extends Component {
 
 			<div className="job-details-column">
 				<div className="job-details-field">
-					<input type="button" value="pdf" />
+					<input type="button" value="pdf" onClick={getPDF.bind(this, details.job_id)}/>
 				</div>
 			</div>
 			</div>

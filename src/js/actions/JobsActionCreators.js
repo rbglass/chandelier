@@ -7,8 +7,8 @@ export function getAllJobs() {
 	JobsAPI.getAllJobs();
 }
 
-export function createJob() {
-	JobsAPI.createJob();
+export function createSingleJob() {
+	JobsAPI.createSingleJob();
 }
 
 export function setFilter(text) {
@@ -32,3 +32,12 @@ export function setEndDate(date) {
 	});
 }
 
+export function restrictTo(key, options) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RESTRICT_TO,
+		data: {
+			key: key,
+			options: options
+		}
+	});
+}
