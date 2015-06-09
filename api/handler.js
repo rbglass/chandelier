@@ -57,8 +57,8 @@ var handler = {
 			job_id: 						undefined,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
-			job_status: 				entry.job_status || "",
-			order_type: 				entry.order_type || "",
+			job_status: 				entry.job_status || "TBC",
+			order_type: 				entry.order_type || "Standard",
 			shipping_date: 			entry.shipping_date || "",
 			num_of_job_items: 	entry.num_of_job_items || 0,
 			parts_status: 			entry.parts_status || "",
@@ -229,7 +229,6 @@ var handler = {
 	// 	var entry = request.payload;
 
 	// 	var itemData = {
-	// 		item_id: 			undefined,
 	// 		job_id: 			entry.job_id,
 	// 		product: 			entry.product 		|| "",
 	// 		description: 	entry.description || "",
