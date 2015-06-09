@@ -2,7 +2,7 @@
 var seqlz = require("./database");
 var Sequelize = require("sequelize");
 
-var Jobs = seqlz.define('jobs', {
+var Jobs = seqlz.define("jobs", {
 	job_id: 						Sequelize.INTEGER,
 	client: 						Sequelize.STRING,
 	project: 						Sequelize.STRING,
