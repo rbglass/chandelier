@@ -26,7 +26,7 @@ export default class Filter extends Component {
 				<div className="table-manip-col" >
 					<FilterInput type="text" value={this.props.filterBy}
 						setFilter={this.props.setFilter} className={textFilterClassName}
-						placeholder="Filter by..."
+						placeholder="Filter all by..."
 					/>
 					<FilterInput type="date" value={this.props.startDate}
 						setFilter={this.props.setStartDate} className={dateFilterClassName}

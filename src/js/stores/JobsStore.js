@@ -19,6 +19,9 @@ var jobs = [],
 				},
 				"order_type": {
 					key: "order_type"
+				},
+				"payment": {
+					key: "payment"
 				}
 			}
 		};

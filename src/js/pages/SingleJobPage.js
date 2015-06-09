@@ -31,8 +31,9 @@ class SingleJobPage extends Component {
 							onBlur={SharedActionCreators.saveItem.bind(this, this.props.details.job_id)}
 							sortFunc={SharedActionCreators.sortBy}
 						/>
-					<div>
-					<button className="add-button" onClick={SharedActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
+					</div>
+					<button className="add-button"
+							onClick={SharedActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
 						+
 					</button>
 				</div>
@@ -66,7 +67,7 @@ SingleJobPage.defaultProps = {
 				type: "",         onChange: SharedActionCreators.changeItem },
 		{ key: "product",    display: "Product",    className: "",
 				type: "text",     onChange: SharedActionCreators.changeItem },
-		{ key: "description", display: "Description", className: "u-flex-grow3",
+		{ key: "description", display: "Description", className: "u-flex-grow2",
 				type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",      display: "Glass",      className: "",
 				type: "select",     onChange: SharedActionCreators.changeItem },
@@ -86,7 +87,7 @@ SingleJobPage.defaultProps = {
 				type: "number",   onChange: SharedActionCreators.changeItem },
 		{ key: "qty_packed", display: "Qty Packed", className: "qty-md",
 				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "notes",      display: "Notes",      className: "u-flex-grow3",
+		{ key: "notes",      display: "Notes",      className: "u-flex-grow2",
 				type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "+", 	       display: "",         className: "fixed-col",
 				type: "button", inputClassName: "btn-right", onClick: SharedActionCreators.createItem  }

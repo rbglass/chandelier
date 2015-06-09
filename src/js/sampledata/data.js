@@ -114,7 +114,8 @@ export const jobs = [
 			parts_status: "waiting",
 			parts_notes: "when they coming???",
 			shipping_date: "2015-12-30",
-			delivery_details: "53 sussex rd"
+			delivery_details: "53 sussex rd",
+			payment: ""
 		},
 		"items": jobitems.filter(item => item.job_id === "RB1234")
 	},
@@ -132,7 +133,8 @@ export const jobs = [
 			parts_status: "waiting",
 			parts_notes: "when they coming???",
 			shipping_date: "2015-12-30",
-			delivery_details: "53 sussex rd"
+			delivery_details: "53 sussex rd",
+			payment: ""
 		},
 		"items": jobitems.filter(item => item.job_id === "RB2325")
 	},
@@ -150,7 +152,8 @@ export const jobs = [
 			parts_status: "waiting",
 			parts_notes: "when they coming???",
 			shipping_date: "2015-12-30",
-			delivery_details: "53 sussex rd"
+			delivery_details: "53 sussex rd",
+			payment: ""
 		},
 		"items": jobitems.filter(item => item.job_id === "RB2845")
 	}

@@ -60,21 +60,14 @@ export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",
-				type: "link", to: "singlejob" },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow2",
-				type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "",
-				type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",    "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "order_type",    display: "Order Type",    "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2",
-				type: "date", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_items",     display: "# Job Items",   "className": "",
-				type: "text" },
-		{ key: "parts_status",  display: "Parts Status",  "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails }
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",       type: "link", to: "singlejob" },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2", type: "date",   onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
+		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
 	]
 };

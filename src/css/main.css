@@ -147,7 +147,7 @@ button:focus {
 	margin-left: 0;
 	flex-grow: 0;
 	flex-shrink: 0;
-	flex-basis: 45%;
+	flex-basis: 38%;
 }
 
 /* MultiSelect */
@@ -385,7 +385,7 @@ button:focus {
 	font-size: 18px;
 	line-height: 10px;
 
-	background-color: rgba(128, 128, 128, 0.3);
+	background-color: rgba(39, 92, 152, 1);
 	color: white;
 
 	border: none;
