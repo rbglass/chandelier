@@ -24,6 +24,23 @@ describe("/api/jobs", function() {
 				done();
 			});
 		});
+
+		it("should reply with an array of results", function(done) {
+
+			var options = {
+				method  : "GET",
+				url     : "/api/jobs",
+				handler : handler.getJobsTable,
+				credentials : {
+					isAuthenticated : true
+				}
+			};
+
+			server.inject(options, function(res) {
+				assert.equal("[object Array]", Object.prototype.toString.call(res.result));
+				done();
+			});
+		});
 	});
 });
 
@@ -55,7 +72,7 @@ describe("/api/jobs/{id}", function() {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/rb12",
+				url     : "/api/jobs/3012",
 				handler : handler.jobs,
 				credentials : {
 					isAuthenticated : true
@@ -68,6 +85,23 @@ describe("/api/jobs/{id}", function() {
 				done();
 			});
 		});
+
+		it("should reply with an array of results", function(done) {
+
+			var options = {
+				method  : "GET",
+				url     : "/api/jobs/3012",
+				handler : handler.jobs,
+				credentials : {
+					isAuthenticated : true
+				}
+			};
+
+			server.inject(options, function(res) {
+				assert.equal("[object Array]", Object.prototype.toString.call(res.result));
+				done();
+			});
+		});
 	});
 });
 
@@ -77,7 +111,7 @@ describe("/api/jobs/{id}", function() {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/rb12",
+				url     : "/api/jobs/3012",
 				handler : handler.jobs
 			};
 
@@ -97,7 +131,7 @@ describe("/api/jobs/{id}", function() {
 
 			var options = {
 				method  : "POST",
-				url     : "/api/jobs/rb12",
+				url     : "/api/jobs/3012",
 				handler : handler.jobs
 			};
 
@@ -112,12 +146,49 @@ describe("/api/jobs/{id}", function() {
 });
 
 describe("/api/jobs/{id}", function() {
+	describe("authenticated PUT", function() {
+
+		var options = {
+			method  : "PUT",
+			url     : "/api/jobs/3003",
+			payload : {
+				job_status : "pending"
+			},
+			handler : handler.jobs,
+			credentials : {
+				isAuthenticated : true
+			}
+		};
+
+		it("should reply with a 200 status code", function(done) {
+
+			server.inject(options, function(res) {
+				assert.equal(200, res.statusCode);
+				assert.equal(true, res.request.auth.isAuthenticated);
+				done();
+			});
+		});
+
+		it("should reply with the single updated object, in JSON form", function(done) {
+
+			server.inject(options, function(res) {
+				assert.equal("[object Array]", Object.prototype.toString.call(JSON.parse(res.payload)));
+				assert.equal("[object String]", Object.prototype.toString.call(res.payload));
+				assert.equal(1, res.result.length);
+				assert.equal(options.payload.job_status, res.result[0].job_status);
+				done();
+			});
+		});
+	});
+});
+
+describe("/api/jobs/{id}", function() {
 	describe("not authenticated PUT", function() {
 		it("should reply with a 302 redirect status code", function(done) {
 
 			var options = {
 				method  : "PUT",
-				url     : "/api/jobs/rb12",
+				url     : "/api/jobs/3012",
 				handler : handler.jobs
 			};
 
@@ -137,7 +208,7 @@ describe("/api/jobs/{id}", function() {
 
 			var options = {
 				method  : "DELETE",
-				url     : "/api/jobs/rb12",
+				url     : "/api/jobs/3012",
 				handler : handler.jobs
 			};
 

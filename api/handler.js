@@ -26,7 +26,6 @@ var handler = {
 // // -------------------------------------------------- \\
 
 	getJobsTable : function(request, reply) {
-		console.log("pg jobs table handler");
 
 		var results = [];
 		pg.connect(conString, function(err, client, done) {
@@ -96,8 +95,6 @@ var handler = {
 	},
 
 	updateJob : function(request, reply) {
-		console.log("req params: ", request.params);
-		console.log("payload:", request.payload);
 		var results = [];
 
 		var data = request.payload.job_status;
@@ -203,6 +200,7 @@ var handler = {
 	getJobItems : function(request, reply) {
 
 		var results = [];
+		var id = request.params.id;
 
 		pg.connect(conString, function(err, client, done) {
 
