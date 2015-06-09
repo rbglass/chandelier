@@ -28,6 +28,7 @@ class SingleJobPage extends Component {
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 					<Table {...this.props} primaryKey={"item_id"}
 						onBlur={SingleJobActionCreators.saveItem.bind(this, this.props.details.job_id)}
+						sortFunc={SharedActionCreators.sortBy}
 					/>
 					<button className="add-button" onClick={SingleJobActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
 						+

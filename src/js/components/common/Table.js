@@ -11,9 +11,13 @@ export default class Table extends Component {
 		}, this);
 		return (
 			<div className="table">
-				<TableHeader filters={this.props.filters} headers={this.props.tableScheme} />
+				<TableHeader filters={this.props.filters} headers={this.props.tableScheme} sortFunc={this.props.sortFunc} />
 				{rows}
 			</div>
 		);
 	}
 }
+
+Table.PropTypes = {
+
+};
