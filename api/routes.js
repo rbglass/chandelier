@@ -6,7 +6,7 @@ var handler = require("./handler");
 var server  = require("./server");
 
 
-module.exports =([
+module.exports = ([
 
   {
     path    : "/",
@@ -30,7 +30,7 @@ module.exports =([
     method  : "GET",
     handler : {
       directory : {
-        path  : path.resolve(__dirname + "/../public"),
+        path  : path.join(__dirname, "/../public"),
         index : false
       }
     }
@@ -74,11 +74,11 @@ module.exports =([
 
  // --------------------------------- \\
 
-	 {
-	 	path    : "/api/items",
-	 	method  : "GET",
-	 	handler : handler.getJobItemsTable
-	 },
+	{
+		path    : "/api/items",
+		method  : "GET",
+		handler : handler.getJobItemsTable
+	},
 
  // --------------------------------- \\
 
@@ -89,9 +89,9 @@ module.exports =([
   },
 
   {
-  	path    : "/api/jobs/{id}/{item}",
-  	method  : "POST",
-  	handler : handler.createJobItem
+		path    : "/api/jobs/{id}/{item}",
+		method  : "POST",
+		handler : handler.createJobItem
   },
 
   {
@@ -114,7 +114,7 @@ module.exports =([
     method : ["GET", "POST"],
     config : {
       auth    : "google",
-      handler : handler.login,
+      handler : handler.login
     }
   },
 
