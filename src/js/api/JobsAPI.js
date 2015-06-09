@@ -14,12 +14,11 @@ const jobs = `${root}/jobs`;
 const items = `${root}/items`;
 const selections = `${root}/selections`;
 
-const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
-															SharedActionCreators.receiveAlert);
-
 var sampleSelections = sampledata.selections;
 var sampleJobs = sampledata.jobs;
 
+const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
+															SharedActionCreators.receiveAlert);
 function onReply(successAction, ...etc) {
 	return function(err, res) {
 		if(res.ok) successAction(res.body, ...etc);
@@ -86,7 +85,8 @@ export function createSingleJobItem(jobId, blueprint) {
 			newItem = objectAssign({}, blueprint);
 			newItem.job_id = jobId;
 			newItem.item_id = +("" + Date.now()).slice(-5);
-			job.items.push(newItem);
+			// This is causing a dupe - only shallow copy from objectAssign in other funcs
+			// job.items.push(newItem);
 		}
 		return job;
 	});
