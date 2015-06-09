@@ -31,7 +31,7 @@ var handler = {
 		var results = [];
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				console.log("getJobsTable error: ", err);
+				console.log("getJobsTable handler error: ", err);
 			}
 
 			var query = client.query("SELECT * FROM jobs");
@@ -47,34 +47,19 @@ var handler = {
 		});
 	},
 
-	// getJobsTable : function(request, reply) {
-	// 	console.log("jobs table handler");
-	// 	Jobs.findAll().then(function(jobs){
-	// 			var formattedJobs = jobs.map(function(job) {
-	// 				return {
-	// 					job_id: job.job_id,
-	// 					details: job
-	// 				}
-	// 			})
-	// 			reply(formattedJobs);
-	// 	}).catch(function(err){
-	// 		if (err) return console.log(err);
-	// 	});
-	// },
-
 // // -------------------------------------------------- \\
 
 	createJob : function(request, reply) {
 
 		var results = [];
-		var entry = request.payload.data;
+		var entry = request.payload;
 		var jobData = {
 			job_id: 						undefined,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
 			job_status: 				entry.job_status || "",
 			order_type: 				entry.order_type || "",
-			shipping_date: 			entry.shipping_date || new Date(),
+			shipping_date: 			entry.shipping_date || "",
 			num_of_job_items: 	entry.num_of_job_items || 0,
 			parts_status: 			entry.parts_status || "",
 			last_update: 				entry.last_update || new Date()
@@ -83,19 +68,21 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
-				console.log("createJob error: ", err);
+				console.log("createJob handler error: ", err);
 			}
 
-			client.query("INSERT INTO jobs (jobData) values ($1, $2)", [jobData.client,
-																																	jobData.project,
-																																	jobData.job_status,
-																																	jobData.order_type,
-																																	jobData.shipping_date,
-																																	jobData.num_of_job_items,
-																																	jobData.parts_status,
-																																	jobData.last_update]);
+			client.query("INSERT INTO jobs (job_id, client, project, job_status, order_type, shipping_date, num_of_job_items, parts_status, last_update) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+							[jobData.id,
+							jobData.client,
+							jobData.project,
+							jobData.job_status,
+							jobData.order_type,
+							jobData.shipping_date,
+							jobData.num_of_job_items,
+							jobData.parts_status,
+							jobData.last_update]);
 
-			var query = client.query("SELECT * FROM jobs ORDER BY lastupdated");
+			var query = client.query("SELECT * FROM jobs ORDER BY last_update");
 
 			query.on("row", function(row) {
 				results.push(row);
@@ -108,33 +95,13 @@ var handler = {
 		});
 	},
 
-// 	createJob : function(request, reply) {
-// 		//create an empty row (the updateJob handler should then be triggered)
-// 		var entry = request.payload;
-
-// 		Jobs.create({
-// 			job_id: 						undefined,
-// 			client: 						entry.client || "",
-// 			project: 						entry.project || "",
-// 			job_status: 				entry.job_status || "",
-// 			order_type: 				entry.order_type || "",
-// 			shipping_date: 			entry.shipping_date || new Date(),
-// 			num_of_job_items: 	entry.num_of_job_items || 0,
-// 			parts_status: 			entry.parts_status || "",
-// 			last_update: 				entry.last_update || new Date()
-// 		}).then(function(job){
-// 			//TODO need an oclick on the frontend to create an empty row.
-// 				reply(job);
-// 		}).catch(function(err){
-// 			if (err) return console.log(err);
-// 		});
-// 	},
-
 	updateJob : function(request, reply) {
+		console.log("req params: ", request.params);
+		console.log("payload:", request.payload);
 		var results = [];
 
+		var data = request.payload.job_status;
 		var id = request.params.id;
-		var data = request.payload.data;
 
 		pg.connect(conString, function(err, client, done) {
 
@@ -142,7 +109,9 @@ var handler = {
 				console.log("updateJob handler error: ", err);
 			}
 
-			var query = client.query("UPDATE jobs SET ");
+			client.query("UPDATE jobs SET job_status=($1) WHERE job_id=($2)", [data, id]);
+
+			var query = client.query("SELECT * FROM jobs WHERE job_id=($1)", [id]);
 
 			query.on("row", function(row) {
 				results.push(row);
@@ -155,25 +124,11 @@ var handler = {
 		});
 	},
 
-// 	updateJob : function(request, reply) {
-
-// 		var target = request.payload[target];
-// 			var value = request.payload.value;
-// 			Jobs.update({
-// 			target : value
-// 		}, {
-// 			where : {
-// 				job_id : request.payload.job_id }
-// 		}).then(function(job) {
-// 			reply(job);
-// 		}).catch(function(err) {
-// 				if (err) return console.log(err);
-// 			});
-// 	},
-
 	deleteJob : function(request, reply) {
 		var results = [];
-		var entry = request.payload.entry;
+		var id = request.payload.job_id;
+		console.log("payload:", request.payload);
+		console.log("params: ", request.params);
 
 		pg.connect(conString, function(err, client, done) {
 
@@ -181,61 +136,65 @@ var handler = {
 				console.log("deleteJob handler error: ", err);
 			}
 
-			client.query("DELETE FROM jobs WHERE job_id=($1)", [entry]);
+			client.query("DELETE FROM jobs WHERE job_id=($1)", [id]);
 
-			var query = client.query("SELECT * FROM items");
-		});
-	},
-
-// 	deleteJob : function(request, reply) {
-
-// 		var entry = request.payload;
-// 		Jobs.destroy({
-// 			where : { job_id : entry.job_id }
-
-// 		}).then(function(job) {
-// 			reply(job);
-// 		}).catch(function(err){
-// 			if (err) return console.log(err);
-// 		});
-// 	},
-
-	getSingleJob : function(request, reply) {
-		//for the details on top of the job_items table
-		var pdf = request.query.pdf;
-
-
-  	var entry = request.payload;
-  	Jobs.find({
-  		where : { job_id: entry.job_id }
-  	}).then(function(details) {
-			Job_items.findAll({
-				where : { job_id: entry.job_id }
-			}).then(function(items){
-				var job = {
-					job_id: entry.job_id,
-					details: details,
-					items: items
-				};
-				if(pdf) {
-					pdfMaker(job, reply);
-				} else{
-					reply(job);
-				}
+			var query = client.query("SELECT * FROM jobs");
+			query.on("row", function(row) {
+				results.push(row);
 			});
 
-		}).catch(function(err) {
-			if (err) return console.log(err);
+			query.on("end", function() {
+				client.end();
+				return reply().code(204);
+				});
 		});
 	},
 
+
+	getSingleJob : function(request, reply) {
+
+		var results = [];
+		var id = request.params.id;
+
+		pg.connect(conString, function(err, client, done) {
+
+			if (err) {
+				console.log("getSingleJob handler error: ", err);
+			}
+
+			var query = client.query("SELECT * FROM jobs WHERE job_id=($1)", [id]);
+
+			query.on("row", function(row) {
+				results.push(row);
+			});
+
+			query.on("end", function() {
+				client.end();
+				return reply(results);
+				});
+			});
+		},
+
 // -------------------------------------------------- \\
-//************************ (might need to remove this for now)
+
 	getJobItemsTable : function(request, reply) {
-		Job_items.findAll().then(function(singleItems){
-			reply(singleItems);
-		}).catch(function(err){
-			if (err) return console.log(err);
+		var results = [];
+
+		pg.connect(conString, function(err, client, done) {
+
+			if (err) {
+				console.log("getJobItemsTable handler error: ", err);
+			}
+			var query = client.query("SELECT * FROM job_items");
+
+			query.on("row", function(row) {
+				results.push(row);
+			});
+
+			query.on("end", function() {
+				client.end();
+				return reply(results);
+			});
 		});
 	},
 
@@ -243,77 +202,126 @@ var handler = {
 
 	getJobItems : function(request, reply) {
 
-  	var entry = request.payload;
-//		var JobID = "RB" + entry.job_id.toString();
+		var results = [];
 
-  	Job_items.findAll({
-  		where : {
-  			job_id : entry.job_id
-  		}
-  	}).then(function(jobItems) {
-  		reply(jobItems);
-  	}).catch(function(err){
-			if (err) return console.log(err);
+		pg.connect(conString, function(err, client, done) {
+
+			if (err) {
+				console.log("getJobItems handler error: ", err);
+			}
+			var query = client.query("SELECT * FROM job_items WHERE id=($1)", [id]);
+
+			query.on("row", function(row) {
+				results.push(row);
+			});
+
+			query.on("end", function() {
+				client.end();
+				return reply(results);
+			});
 		});
+
 	},
 
 	createJobItem : function(request, reply) {
-		var entry = request.payload;
 
-		Job_items.create({
-			item_id: 			undefined,
-			job_id: 			entry.job_id,
-			product: 			entry.product 		|| "",
-			description: 	entry.description || "",
-			glass: 				entry.glass 			|| "",
-			metal: 				entry.metal 			|| "",
-			flex: 				entry.flex 				|| "",
-			bulb: 				entry.bulb 				|| "",
-			qty_req: 			entry.qty_req 		|| 0,
-			qty_hot: 			entry.qty_hot 		|| 0,
-			qty_cold: 		entry.qty_cold 		|| 0,
-			qty_assem: 		entry.qty_assem 	|| 0,
-			qty_packed: 	entry.qty_packed 	|| 0,
-			notes: 				entry.notes 			|| ""
-		}).then(function(job_item){
-			reply(job_item);
-		}).catch(function(err){
-			if (err) return console.log(err);
-		});
+	// 	var results = [];
+	// 	var entry = request.payload;
+
+	// 	var itemData = {
+	// 		item_id: 			undefined,
+	// 		job_id: 			entry.job_id,
+	// 		product: 			entry.product 		|| "",
+	// 		description: 	entry.description || "",
+	// 		glass: 				entry.glass 			|| "",
+	// 		metal: 				entry.metal 			|| "",
+	// 		flex: 				entry.flex 				|| "",
+	// 		bulb: 				entry.bulb 				|| "",
+	// 		qty_req: 			entry.qty_req 		|| 0,
+	// 		qty_hot: 			entry.qty_hot 		|| 0,
+	// 		qty_cold: 		entry.qty_cold 		|| 0,
+	// 		qty_assem: 		entry.qty_assem 	|| 0,
+	// 		qty_packed: 	entry.qty_packed 	|| 0,
+	// 		notes: 				entry.notes 			|| ""
+	// 	};
+
+	// 	pg.connect(conString, function(err, client, done) {
+
+	// 		if (err) {
+	// 			console.log("createJobItem handler error: ", err);
+	// 		}
+
+	// 		client.query("INSERT INTO job_items (item_id, job_id. product, description, glass, metal, flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, qty_packed, notes) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $14)",
+	// 			[itemData.id,
+	// 			itemData.job_id,
+	// 			itemData.product,
+	// 			itemData.description,
+	// 			itemData.glass,
+	// 			itemData.metal,
+	// 			itemData.flex,
+	// 			itemData.bulb,
+	// 			itemData.qty_req,
+	// 			itemData.qty_cold,
+	// 			itemData.assem,
+	// 			itemData.packed,
+	// 			itemData.notes]
+	// 		);
+
+	// 		var query = client.query("SELECT * FROM job_items WHERE job_id=($1)", [entry]);
+	// 	});
 	},
 
 	updateJobItems : function(request, reply) {
-			var target = request.payload[target];
-			var value = request.payload.value;
-			Job_items.update({
-			target : value
-		}, {
-			where : {
-				target : {
-					$ne: value
-					//update where original value is NOT the updated value
-				}
-			}
-		}).then(function(jobItem) {
-			reply(jobItem);
-		}).catch(function(err) {
-				if (err) return console.log(err);
-			});
+		// console.log("req params: ", request.params);
+		// console.log("req payload:", request.payload);
+		// var results = [];
+
+		// var data = request.payload.metal;
+		// var id = request.params.id;
+
+		// pg.connect(conString, function(err, client, done) {
+
+		// 	if (err) {
+		// 		console.log("updateJobItems handler error: ", err);
+		// 	}
+
+		// 	client.query("UPDATE job_items SET metal=($1) WHERE id=($2)", [data, id]);
+
+		// 	var query = client.query("SELECT * FROM jobs WHERE id=($1)", [id]);
+
+		// 	query.on("row", function(row) {
+		// 		results.push(row);
+		// 	});
+
+		// 	query.on("end", function() {
+		// 		client.end();
+		// 		return reply(results);
+		// 	});
+		// });
 
 	},
 
 	deleteJobItems : function(request, reply) {
+		var results = [];
+		var id = request.params.item;
 
-		var entry = request.payload;
-		//delete rows with this job id
-		Job_items.destroy({
-			where : {
-				job_id : entry.job_id
+		pg.connect(conString, function(err, client, done) {
+
+			if (err) {
+				console.log("deleteJobItems handler error: ", err);
 			}
-		}).then(function(jobItem) {
-			reply(jobItem);
-		}).catch(function(err){
-			if (err) return console.log(err);
+
+			client.query("DELETE FROM job_items WHERE item_id=($1)", [id]);
+
+			var query = client.query("SELECT * FROM job_items");
+			query.on("row", function(row) {
+				results.push(row);
+			});
+
+			query.on("end", function() {
+				client.end();
+				return reply(results);
+				});
 		});
 	},
 
@@ -332,13 +340,11 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			var results = [];
-			var email = profile.email;
-			console.log("req:", request);
 
 			if (err) {
 				console.log("login error: ", err);
 			}
-			var query = client.query("SELECT * FROM users WHERE email=($1)", [email]);
+			var query = client.query("SELECT * FROM users WHERE email=($1)", ["ben@wesort.co.uk"]);
 
 			query.on("row", function(row){
 				results.push(row);
@@ -353,38 +359,11 @@ var handler = {
 					reply.redirect("/");
 				} else if (results.length <= 0) {
 					console.log("not authenticated!");
-					reply("You must be an authenticated user to use this application");
+					reply("You must be an authenticated user to use this application.");
 				}
 			});
 		});
 	},
-
-// 	login : function(request, reply) {
-
-//     var creds = request.auth.credentials;
-
-//     var profile = {
-//       auth_method : "google",
-//       username    : creds.profile.raw.name,
-//       auth_id     : creds.profile.raw.id,
-//       email       : creds.profile.raw.email
-//     };
-
-// 		 Users.findOne({
-// 			 where: {email: profile.email}
-// 		 }).then(function(email) {
-// 			 console.log("email: ", email);
-// 			if (email) {
-// 				request.auth.session.clear();
-// 				request.auth.session.set(profile);
-// 				reply.redirect("/");
-// 			} else {
-// 				reply("not a valid user");
-// 			}
-// 		 }).catch(function(err){
-// 			 if (err) return console.log(err);
-// 		 });
-//   },
 
 	logout : function(request, reply) {
 
