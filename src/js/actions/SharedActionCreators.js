@@ -11,6 +11,33 @@ export function saveDetails(jobId, details) {
 	JobsAPI.saveDetails(jobId, details);
 }
 
+export function createItem(jobId, blueprint) {
+	JobsAPI.createSingleJobItem(jobId, blueprint);
+}
+
+export function saveItem(jobId, itemId, item) {
+	JobsAPI.saveItem(jobId, itemId, item);
+}
+
+export function deleteItem(jobId, cells) {
+	const itemId = cells.item_id;
+	JobsAPI.deleteSingleItem(jobId, itemId);
+}
+
+export function changeItem(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CHANGE_SINGLE_JOB_ITEM,
+		data: updateObj
+	});
+}
+
+export function changeDetails(updateObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CHANGE_SINGLE_JOB_DETAILS,
+		data: updateObj
+	});
+}
+
 export function recieveAlert(alert) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALERT,
@@ -25,9 +52,33 @@ export function sortBy(field) {
 	});
 }
 
-export function changeDetails(updateObj) {
+export function setFilter(text) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.CHANGE_SINGLE_JOB_DETAILS,
-		data: updateObj
+		type: ActionTypes.FILTER_BY,
+		data: text
+	});
+}
+
+export function setStartDate(date) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SET_START_DATE,
+		data: date
+	});
+}
+
+export function setEndDate(date) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SET_END_DATE,
+		data: date
+	});
+}
+
+export function restrictTo(key, options) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RESTRICT_TO,
+		data: {
+			key: key,
+			options: options
+		}
 	});
 }

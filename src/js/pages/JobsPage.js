@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
-import JobsFilter from "../components/Jobs/JobsFilter";
+import Filter from "../components/common/Filter";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
@@ -27,10 +27,10 @@ class JobsPage extends Component {
 			<div>
 				<NavBar title={"All Jobs"}/>
 				<div className="container">
-					<JobsFilter filters={this.props.filters} selections={this.props.selections}
-						setFilter={JobsActionCreators.setFilter} setStartDate={JobsActionCreators.setStartDate}
-						setEndDate={JobsActionCreators.setEndDate}
-						restrictTo={JobsActionCreators.restrictTo}
+					<Filter filters={this.props.filters} selections={this.props.selections}
+						setFilter={SharedActionCreators.setFilter} setStartDate={SharedActionCreators.setStartDate}
+						setEndDate={SharedActionCreators.setEndDate}
+						restrictTo={SharedActionCreators.restrictTo}
 						sortFunc={SharedActionCreators.sortBy}
 					/>
 					<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
@@ -42,14 +42,14 @@ class JobsPage extends Component {
 }
 
 function getState() {
-	const filters = JobsStore.getFilters();
 	const items = JobsStore.getFilteredAndSortedJobs();
+	const filters = JobsStore.getFilters();
 	const selections = SelectionStore.getSelections();
 
 	return {
 		selections,
-		filters,
-		items
+		items,
+		filters
 	};
 }
 
