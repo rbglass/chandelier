@@ -1,9 +1,10 @@
 "use strict";
-var seqlz = require("./database");
-var Sequelize = require("sequelize");
+var client = require("./database");
 
-var Users = seqlz.define("users", {
-		email: Sequelize.STRING
-});
+// var query = client.query("CREATE TABLE users(id SERIAL PRIMARY KEY, email VARCHAR(40)");
+// query.on("end", function() {
+// 	console.log("user table created");
+// 	client.end();
+// });
 
-module.exports = Users;
+// module.exports = Users;
