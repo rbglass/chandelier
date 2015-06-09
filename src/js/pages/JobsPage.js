@@ -28,12 +28,15 @@ class JobsPage extends Component {
 				<NavBar title={"All Jobs"}/>
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={SharedActionCreators.setFilter} setStartDate={SharedActionCreators.setStartDate}
+						setFilter={SharedActionCreators.setFilter}
+						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
 						sortFunc={SharedActionCreators.sortBy}
 					/>
-					<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
+					<div className="table-container">
+						<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
+					</div>
 					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
 				</div>
 			</div>

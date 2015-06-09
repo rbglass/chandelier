@@ -26,10 +26,12 @@ class SingleJobPage extends Component {
 				<NavBar title={`${this.props.params.id}`}/>
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
-					<Table {...this.props} primaryKey={"item_id"}
-						onBlur={SharedActionCreators.saveItem.bind(this, this.props.details.job_id)}
-						sortFunc={SharedActionCreators.sortBy}
-					/>
+					<div className="table-container">
+						<Table {...this.props} primaryKey={"item_id"}
+							onBlur={SharedActionCreators.saveItem.bind(this, this.props.details.job_id)}
+							sortFunc={SharedActionCreators.sortBy}
+						/>
+					<div>
 					<button className="add-button" onClick={SharedActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
 						+
 					</button>
@@ -67,13 +69,13 @@ SingleJobPage.defaultProps = {
 		{ key: "description", display: "Description", className: "u-flex-grow3",
 				type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",      display: "Glass",      className: "",
-				type: "text",     onChange: SharedActionCreators.changeItem },
+				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "metal",      display: "Metal",      className: "",
-				type: "text",     onChange: SharedActionCreators.changeItem },
+				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "flex",       display: "Flex",       className: "",
-				type: "text",     onChange: SharedActionCreators.changeItem },
+				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "bulb",       display: "Bulb",       className: "",
-				type: "text",     onChange: SharedActionCreators.changeItem },
+				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "qty_req",    display: "Qty Req",    className: "qty-sm",
 				type: "number",   onChange: SharedActionCreators.changeItem },
 		{ key: "qty_hot",    display: "Qty Hot",    className: "qty-sm",

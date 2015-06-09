@@ -79,4 +79,7 @@ code.
 ---
 
 ###TODO
-Reorganise actioncreator and store logic
+* Reorganise actioncreator and store logic
+    * Make filterstore, have other stores get from it
+    * Empty stores on page switch
+    * Make filter more generic
