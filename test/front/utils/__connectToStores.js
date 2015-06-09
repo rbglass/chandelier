@@ -8,9 +8,10 @@ global.navigator = {
 	userAgent: "node.js"
 };
 
+var React = require("react");
+var TestUtils = require("react/addons").addons.TestUtils;
+
 describe("connectToStores", function() {
-	var React = require("react");
-	var TestUtils = require("react/addons").addons.TestUtils;
 	var connectToStores = require("../../../src/js/utils/connectToStores");
 
 	var count = 0;

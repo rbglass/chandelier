@@ -42,7 +42,7 @@ export default class MultiSelect extends Component {
 
 MultiSelect.propTypes = {
 	onSelect: PropTypes.func.isRequired,
-	selections: PropTypes.array,
+	selections: PropTypes.array.isRequired,
 	selected: PropTypes.shape({
 		key: PropTypes.string,
 		options: PropTypes.arrayOf(PropTypes.string)

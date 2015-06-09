@@ -1,7 +1,5 @@
 "use strict";
-var assert = require("assert");
-var jsdom = require("jsdom");
-var Router = require("react-router");
+import jsdom from "jsdom";
 
 global.document = jsdom.jsdom("<html><body></body></html>");
 global.window = document.parentWindow;
@@ -9,10 +7,20 @@ global.navigator = {
 	userAgent: "node.js"
 };
 
-describe("NavBar", function() {
-	var React = require("react");
-	var TestUtils = require("react/addons").addons.TestUtils;
-	var NavBar = require("../../../src/js/components/common/NavBar");
+import assert from "assert";
+import Router from "react-router";
+import React from "react/addons";
+let { TestUtils } = React.addons;
+
+import NavBar from "../../../src/js/components/common/NavBar";
+
+describe("NavBar", () => {
+
+	after(done => {
+		React.unmountComponentAtNode(document.body);
+		document.body.innerHTML = "";
+		setTimeout(done, 0);
+	});
 
 	var ShallowRenderer = TestUtils.createRenderer();
 	ShallowRenderer.render(<NavBar title="testing" />);
@@ -20,8 +28,8 @@ describe("NavBar", function() {
 	var renderedOutput = ShallowRenderer.getRenderOutput();
 
 
-	it("#should render the correct title", function() {
-		var numTitleNodes = renderedOutput.props.children.filter(function(el) {
+	it("#should render the correct title", () => {
+		var numTitleNodes = renderedOutput.props.children.filter(el => {
 			return el.props.children === "testing";
 		}).length;
 
@@ -29,8 +37,8 @@ describe("NavBar", function() {
 		assert.equal(numTitleNodes, 1);
 	});
 
-	it("#should render two links", function() {
-		var numLinkNodes = renderedOutput.props.children.filter(function(el) {
+	it("#should render two links", () => {
+		var numLinkNodes = renderedOutput.props.children.filter(el => {
 			return el.props.children.type === Router.Link;
 		}).length;
 
