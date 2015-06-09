@@ -101,5 +101,4 @@ function writeDoc(job, cb) {
 	doc.end();
 	cb(doc);
 }
-Status API Training Shop Blog About
-© 2015 GitHub, Inc. Terms Privacy Security Contact
+

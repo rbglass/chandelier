@@ -28,11 +28,10 @@ const SingleJobStore = createStore({
 });
 
 const onReceivingAction = action => {
-
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				job = action.data;
+				job = objectAssign({}, action.data);
 				SingleJobStore.emitChange();
 				break;
 
@@ -56,14 +55,16 @@ const onReceivingAction = action => {
 
 
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
-				job.details[action.data.key] = action.data.value;
-				SingleJobStore.emitChange();
+				if (action.data.id === job.id) {
+					job.details[action.data.key] = action.data.value;
+					SingleJobStore.emitChange();
+				}
 				break;
 
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
 				job.items = job.items.map(jobitem => {
-					if(jobitem.item_id === d.id) {
+					if (jobitem.item_id === d.id) {
 						jobitem[d.key] = d.value;
 					}
 					return jobitem;
@@ -74,7 +75,7 @@ const onReceivingAction = action => {
 		case ActionTypes.DELETE_ITEM:
 				let newItems = [];
 				job.items.forEach(item => {
-					if(item.item_id === action.data) {
+					if (item.item_id === action.data) {
 						return;
 					}
 					newItems.push(item);
@@ -84,8 +85,10 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if(action.data === filters.sortTerm) {
+				if (action.data === filters.sortTerm) {
 					filters.isAsc = !filters.isAsc;
+				} else {
+					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
 				SingleJobStore.emitChange();

@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
-import SingleJobTableRow from "../components/SingleJob/SingleJobTableRow";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
@@ -27,48 +26,51 @@ class SingleJobPage extends Component {
 				<NavBar title={`${this.props.params.id}`}/>
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
-					<Table {...this.props} />
-					<button className="add-button" onClick={SingleJobActionCreators.createItem}>+</button>
+					<Table {...this.props} primaryKey={"item_id"}
+						onBlur={SingleJobActionCreators.saveItem.bind(this, this.props.details.job_id)}
+					/>
+					<button className="add-button" onClick={SingleJobActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
+						+
+					</button>
 				</div>
 			</div>
 		);
 	}
 }
-// merge these two
+
 SingleJobPage.defaultProps = {
-	headers: [
-		{ key: "none", 	      display: "",        		className: "fixed-col" },
-		{ key: "item_id", 	  display: "Item",        className: "" },
-		{ key: "product",     display: "Product",     className: "" },
-		{ key: "description", display: "Description", className: "u-flex-grow3" },
-		{ key: "glass",       display: "Glass",       className: "" },
-		{ key: "metal",       display: "Metal",       className: "" },
-		{ key: "flex",        display: "Flex",        className: "" },
-		{ key: "bulb",        display: "Bulb",        className: "" },
-		{ key: "qty_req",     display: "Qty Req",     className: "qty-sm" },
-		{ key: "qty_hot",     display: "Qty Hot",     className: "qty-sm" },
-		{ key: "qty_cold",    display: "Qty Cold",    className: "qty-sm" },
-		{ key: "qty_assem",   display: "Qty Assem",   className: "qty-md" },
-		{ key: "qty_packed",  display: "Qty Packed",  className: "qty-md" },
-		{ key: "notes",       display: "Notes",       className: "u-flex-grow3" },
-		{ key: "none", 	      display: "",        		className: "fixed-col" }
-	],
-	cellConfig: [
-		{ key: "item_id", 	                className: "",             type: ""         },
-		{ key: "product",                   className: "",             type: "text"     },
-		{ key: "description",               className: "u-flex-grow3", type: "textarea" },
-		{ key: "glass",                     className: "",             type: "text"   },
-		{ key: "metal",                     className: "",             type: "text"   },
-		{ key: "flex",                      className: "",             type: "text"   },
-		{ key: "bulb",                      className: "",             type: "text"   },
-		{ key: "qty_req",                   className: "qty-sm",       type: "number"   },
-		{ key: "qty_hot",                   className: "qty-sm",       type: "number"   },
-		{ key: "qty_cold",                  className: "qty-sm",       type: "number"   },
-		{ key: "qty_assem",                 className: "qty-md",       type: "number"   },
-		{ key: "qty_packed",                className: "qty-md",       type: "number"   },
-		{ key: "notes",                     className: "u-flex-grow3", type: "textarea" }
-	],
-	RowComponent: SingleJobTableRow
+	tableScheme: [
+		{ key: "-", 	       display: "",         className: "fixed-col",
+				type: "button", inputClassName: "btn-left", onClick: SingleJobActionCreators.deleteItem   },
+		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
+				type: "",         onChange: SingleJobActionCreators.changeItem },
+		{ key: "product",    display: "Product",    className: "",
+				type: "text",     onChange: SingleJobActionCreators.changeItem },
+		{ key: "description", display: "Description", className: "u-flex-grow3",
+				type: "textarea", onChange: SingleJobActionCreators.changeItem },
+		{ key: "glass",      display: "Glass",      className: "",
+				type: "text",     onChange: SingleJobActionCreators.changeItem },
+		{ key: "metal",      display: "Metal",      className: "",
+				type: "text",     onChange: SingleJobActionCreators.changeItem },
+		{ key: "flex",       display: "Flex",       className: "",
+				type: "text",     onChange: SingleJobActionCreators.changeItem },
+		{ key: "bulb",       display: "Bulb",       className: "",
+				type: "text",     onChange: SingleJobActionCreators.changeItem },
+		{ key: "qty_req",    display: "Qty Req",    className: "qty-sm",
+				type: "number",   onChange: SingleJobActionCreators.changeItem },
+		{ key: "qty_hot",    display: "Qty Hot",    className: "qty-sm",
+				type: "number",   onChange: SingleJobActionCreators.changeItem },
+		{ key: "qty_cold",   display: "Qty Cold",   className: "qty-sm",
+				type: "number",   onChange: SingleJobActionCreators.changeItem },
+		{ key: "qty_assem",  display: "Qty Assem",  className: "qty-md",
+				type: "number",   onChange: SingleJobActionCreators.changeItem },
+		{ key: "qty_packed", display: "Qty Packed", className: "qty-md",
+				type: "number",   onChange: SingleJobActionCreators.changeItem },
+		{ key: "notes",      display: "Notes",      className: "u-flex-grow3",
+				type: "textarea", onChange: SingleJobActionCreators.changeItem },
+		{ key: "+", 	       display: "",         className: "fixed-col",
+				type: "button", inputClassName: "btn-right", onClick: SingleJobActionCreators.createItem  }
+	]
 };
 
 

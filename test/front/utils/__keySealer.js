@@ -9,7 +9,7 @@ describe("keySealer", function() {
 		assert.equal(keySealer().length, 1);
 	});
 
-	it("#the return function performs some action on an obj with id, key and value props", function() {
+	it("#the function does some action on an obj with an id, key and value", function() {
 
 		var dummyEvent1 = {
 			target: {
