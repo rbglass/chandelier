@@ -1,33 +1,33 @@
 "use strict";
-var assert = require("assert");
-var EventEmitter = require("events").EventEmitter;
-var StoreUtils = require("../../../src/js/utils/StoreUtils");
+import assert from "assert";
+import { EventEmitter } from "events";
+import * as StoreUtils from "../../../src/js/utils/StoreUtils";
 
-describe("createStore", function() {
-	var createStore = StoreUtils.createStore;
-	var testStore = createStore({});
+describe("createStore", () => {
+	const createStore = StoreUtils.createStore;
+	const testStore = createStore({});
 
-	it("#takes 1 argument", function() {
+	it("#takes 1 argument", () => {
 		assert.equal(createStore.length, 1);
 	});
 
-	it("#returns an object with a addChangeListener(), removeChangeListener(), and emitChange()", function() {
+	it("#returns an object with a addChangeListener(), removeChangeListener(), and emitChange()", () => {
 		assert(testStore.addChangeListener);
 		assert(testStore.removeChangeListener);
 		assert(testStore.emitChange);
 	});
 
-	it("# addChangeListener takes a callback & subs to the store", function() {
-		var called = false;
+	it("# addChangeListener takes a callback & subs to the store", () => {
+		let called = false;
 
-		testStore.addChangeListener(function() { called = true; });
+		testStore.addChangeListener(() => { called = true; });
 		testStore.emitChange();
 		assert(called);
 	});
 
-	it("#removeChangeListener takes a callback & unsubs from the store", function() {
-		var called = 0;
-		var listener = function() {
+	it("#removeChangeListener takes a callback & unsubs from the store", () => {
+		let called = 0;
+		const listener = () => {
 			called += 1;
 		};
 
@@ -43,28 +43,28 @@ describe("createStore", function() {
 		assert.equal(called, 1);
 	});
 
-	it("#does not have EventEmitter in its prototype chain", function() {
+	it("#does not have EventEmitter in its prototype chain", () => {
 		assert.equal(testStore instanceof EventEmitter, false);
 	});
 
-	it("#returns an object with our spec attached", function() {
-		var testStore2 = createStore({
+	it("#returns an object with our spec attached", () => {
+		const testStore2 = createStore({
 			name: "james"
 		});
 
 		assert.equal(testStore2.name, "james");
 	});
 
-	it("#autobinds store methods", function() {
+	it("#autobinds store methods", () => {
 		// not a great test
-		var otherObj = {
+		const otherObj = {
 			name: "don",
-			getName: function() {
+			getName() {
 				return this.name;
 			}
 		};
 
-		var testStore3 = createStore({
+		const testStore3 = createStore({
 			name: "jimmy",
 			getName: otherObj.getName
 		});

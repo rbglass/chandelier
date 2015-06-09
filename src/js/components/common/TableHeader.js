@@ -1,8 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import { sortBy } from "../../actions/SharedActionCreators";
 
-export default class JobsTableHeader extends Component {
+export default class TableHeader extends Component {
 
 	render() {
 		const headerSet = this.props.headers.map((e, i) => {
@@ -14,7 +13,10 @@ export default class JobsTableHeader extends Component {
 
 			var divClass = `table-row-item ${e.className} ${sortDirection}`;
 			return (
-				<div key={i} className={divClass} onClick={sortBy.bind(null, e.key)}>{e.display}</div>
+				<div key={i} className={divClass}
+					onClick={this.props.sortFunc ? this.props.sortFunc.bind(null, e.key) : null}>
+				{e.display}
+				</div>
 			);
 		});
 
@@ -25,3 +27,16 @@ export default class JobsTableHeader extends Component {
 		);
 	}
 }
+
+TableHeader.PropTypes = {
+	headers: PropTypes.arrayOf(PropTypes.shape({
+		key: PropTypes.string,
+		display: PropTypes.string,
+		className: PropTypes.string
+	})).isRequired,
+	filters: PropTypes.shape({
+		sortTerm: PropTypes.string,
+		isAsc: PropTypes.bool
+	}),
+	sortFunc: PropTypes.func
+};

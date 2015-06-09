@@ -1,8 +1,8 @@
 "use strict";
-var assert = require("assert");
-var compose = require("../../../src/js/utils/compose");
+import assert from "assert";
+import compose from "../../../src/js/utils/compose";
 
-describe("compose", function() {
+describe("compose", () => {
 	function add(arr) {
 		return arr.reduce(function(a, b) {
 			return a + b;
@@ -21,13 +21,13 @@ describe("compose", function() {
 		return "" + n;
 	}
 
-	var result = compose(add, add3, multiplyByTwo, numToString);
+	const result = compose(add, add3, multiplyByTwo, numToString);
 
-	it("#returns a composed function", function() {
+	it("#returns a composed function", () => {
 		assert.equal("function", typeof result);
 	});
 
-	it("#composes in the correct order", function() {
+	it("#composes in the correct order", () => {
 		assert.equal("16", result([2, 3]));
 	});
 });
