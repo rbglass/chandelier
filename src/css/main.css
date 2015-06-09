@@ -192,6 +192,8 @@ button:focus {
 .table-header .table-row-item {
 	position: relative;
 	user-select: none;
+	font-size: 0.9rem;
+	font-weight: bold;
 }
 .table-header .table-row-item.asc:after {
 	content: "^";
