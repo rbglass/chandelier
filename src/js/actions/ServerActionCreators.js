@@ -55,3 +55,10 @@ export function deleteSingleItem(itemId) {
 		data: itemId
 	});
 }
+
+export function receiveAllItems(itemsArr) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_ALL_ITEMS,
+		data: itemsArr
+	});
+}

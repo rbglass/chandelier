@@ -41,6 +41,20 @@ class JobsPage extends Component {
 	}
 }
 
+function getState() {
+	const filters = JobsStore.getFilters();
+	const items = JobsStore.getFilteredAndSortedJobs();
+	const selections = SelectionStore.getSelections();
+
+	return {
+		selections,
+		filters,
+		items
+	};
+}
+
+export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);
+
 JobsPage.defaultProps = {
 	tableScheme: [
 		{ key: "job_id",        display: "Job #",         "className": "qty-sm",
@@ -61,17 +75,3 @@ JobsPage.defaultProps = {
 				type: "select", onChange: SharedActionCreators.changeDetails }
 	]
 };
-
-function getState() {
-	const filters = JobsStore.getFilters();
-	const items = JobsStore.getFilteredAndSortedJobs();
-	const selections = SelectionStore.getSelections();
-
-	return {
-		selections,
-		filters,
-		items
-	};
-}
-
-export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);

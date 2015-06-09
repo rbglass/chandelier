@@ -16,6 +16,7 @@ const selections = `${root}/selections`;
 
 var sampleSelections = sampledata.selections;
 var sampleJobs = sampledata.jobs;
+var sampleItems = sampledata.jobitems;
 
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
 															SharedActionCreators.receiveAlert);
@@ -164,6 +165,12 @@ export function saveItem(jobId, itemId, updateObj) {
 	// request.put(`${items}/${jobId}`)
 	// 				.send(updateObj)
 	// 				.end(onReply(ServerActionCreators.receiveUpdatedItem));
+}
+
+export function getAllItems() {
+	setTimeout(() => {
+		onReply(ServerActionCreators.receiveAllItems)(null, {ok: true, body: sampleItems.slice(0)});
+	}, 1000);
 }
 
 export function getPDF(jobId) {

@@ -197,7 +197,7 @@ button:focus {
 	position: relative;
 	user-select: none;
 	font-size: 0.9rem;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 .table-header .table-row-item.asc:after {
 	content: "^";
@@ -251,7 +251,7 @@ button:focus {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	word-break: break-all;
-	padding: 0.5em;
+	padding-left: 0.3em;
 	word-break: break-word;
 }
 
@@ -273,7 +273,7 @@ button:focus {
 @media (min-width: 500px) {
 	.table-row-item {
 		border: 1px solid #fff;
-		padding: 0.5em;
+		padding-left: 0.4em;
 	}
 	.table-row-item:before {
 		content: none;
@@ -400,7 +400,7 @@ button:focus {
 }
 
 .qty-md {
-	flex-grow: 0.6;
+	flex-grow: 0.7;
 }
 .u-flex-grow1 {
 	flex-grow: 1;
