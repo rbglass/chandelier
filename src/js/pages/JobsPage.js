@@ -31,6 +31,7 @@ class JobsPage extends Component {
 						setFilter={JobsActionCreators.setFilter} setStartDate={JobsActionCreators.setStartDate}
 						setEndDate={JobsActionCreators.setEndDate}
 						restrictTo={JobsActionCreators.restrictTo}
+						sortFunc={SharedActionCreators.sortBy}
 					/>
 					<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
 					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>

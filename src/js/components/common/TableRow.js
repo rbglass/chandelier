@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
 import keySealer from "../../utils/keySealer";
 
-export default class SingleJobTableRow extends Component {
+export default class TableRow extends Component {
 	handleBlur(e) {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
@@ -83,6 +83,17 @@ export default class SingleJobTableRow extends Component {
 	}
 }
 
-SingleJobTableRow.propTypes = {
-	cells: PropTypes.object
-}
+TableRow.propTypes = {
+	cells: PropTypes.object,
+	selections: PropTypes.objectOf(PropTypes.array),
+	primaryKey: PropTypes.string,
+	cellConfig: PropTypes.arrayOf(PropTypes.shape({
+		key: PropTypes.string.isRequired,
+		type: PropTypes.string,
+		onChange: PropTypes.func,
+		to: PropTypes.string,
+		className: PropTypes.string,
+		inputClassName: PropTypes.string
+	})),
+	onBlur: PropTypes.func
+};
