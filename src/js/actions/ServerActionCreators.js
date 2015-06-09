@@ -22,6 +22,7 @@ export function receiveNewJob(job) {
 }
 
 export function receiveSingleJob(jobObject) {
+	console.log(jobObject)
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SINGLE_JOB,
 		data: jobObject
