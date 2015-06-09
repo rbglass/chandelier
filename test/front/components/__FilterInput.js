@@ -1,8 +1,8 @@
 "use strict";
 import assert from "assert";
-
 import React from "react/addons";
 let { TestUtils }  = React.addons;
+
 import FilterInput from "../../../src/js/components/common/FilterInput";
 
 describe("FilterInput", () => {

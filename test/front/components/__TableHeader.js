@@ -3,7 +3,6 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import { withContainer } from "../setup/utils";
 import TableHeader from "../../../src/js/components/common/TableHeader";
 
 describe("TableHeader", () => {

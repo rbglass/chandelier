@@ -1,9 +1,9 @@
 "use strict";
 import assert from "assert";
 import sinon from "sinon";
-
 import React from "react/addons";
 let { TestUtils } = React.addons;
+
 import MultiSelect from "../../../src/js/components/common/MultiSelect";
 
 describe("MultiSelect", () => {
