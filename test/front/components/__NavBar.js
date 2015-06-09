@@ -1,5 +1,4 @@
 "use strict";
-
 import assert from "assert";
 import Router from "react-router";
 import React from "react/addons";

@@ -1,20 +1,13 @@
 "use strict";
 import assert from "assert";
-import jsdom from "jsdom";
 import sinon from "sinon";
-
-global.document = jsdom.jsdom("<html><body></body></html>");
-global.window = document.parentWindow;
-global.navigator = {
-	userAgent: "node.js"
-};
 
 import React from "react/addons";
 let { TestUtils } = React.addons;
 import MultiSelect from "../../../src/js/components/common/MultiSelect";
 
 describe("MultiSelect", () => {
-	let currentOptions;
+	let currentOptions = {};
 
 	const key = "tube_lines";
 	const selections = ["met", "central", "piccadilly", "district", "victoria"];
@@ -26,16 +19,11 @@ describe("MultiSelect", () => {
 		};
 	};
 
-	afterEach((done) => {
+	afterEach(done => {
 		currentOptions = {};
-		React.unmountComponentAtNode(document.body);
-		document.body.innerHTML = "";
-		setTimeout(done, 0);
+		done();
 	});
 
-
-	// const holder = TestUtils.findRenderedDOMComponentWithTag(RenderedComponent, "multiselect-holder");
-	// const holderNode = React.findDOMNode(MultiSelect);
 	it("#should render the selected.key as a tidied-up title in the first label", () => {
 
 		const selected = {

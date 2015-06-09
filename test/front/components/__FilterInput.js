@@ -1,24 +1,11 @@
 "use strict";
 import assert from "assert";
-import jsdom from "jsdom";
-
-global.document = jsdom.jsdom("<html><body></body></html>");
-global.window = document.parentWindow;
-global.navigator = {
-	userAgent: "node.js"
-};
 
 import React from "react/addons";
 let { TestUtils }  = React.addons;
 import FilterInput from "../../../src/js/components/common/FilterInput";
 
 describe("FilterInput", () => {
-
-	after(done => {
-		React.unmountComponentAtNode(document.body);
-		document.body.innerHTML = "";
-		setTimeout(done, 0);
-	});
 
 	let currentKey;
 

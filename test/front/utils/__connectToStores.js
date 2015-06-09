@@ -1,13 +1,5 @@
 "use strict";
 var assert = require("assert");
-var jsdom = require("jsdom");
-
-global.document = jsdom.jsdom("<html><body></body></html>");
-global.window = document.parentWindow;
-global.navigator = {
-	userAgent: "node.js"
-};
-
 var React = require("react");
 var TestUtils = require("react/addons").addons.TestUtils;
 
@@ -55,9 +47,7 @@ describe("connectToStores", function() {
 	afterEach(function(done) {
 		count = 0;
 		Store.listeners = [];
-		React.unmountComponentAtNode(document.body);
-		document.body.innerHTML = "";
-		setTimeout(done, 0);
+		done();
 	});
 
 	it("#takes 2 arguments - an array of stores & a getState function", function() {

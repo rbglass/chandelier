@@ -1,16 +1,9 @@
 "use strict";
 import assert from "assert";
-import jsdom from "jsdom";
-
-global.document = jsdom.jsdom("<html><body></body></html>");
-global.window = document.parentWindow;
-global.navigator = {
-	userAgent: "node.js"
-};
-
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
+import { withContainer } from "../setup/utils";
 import TableHeader from "../../../src/js/components/common/TableHeader";
 
 describe("TableHeader", () => {
