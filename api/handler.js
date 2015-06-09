@@ -332,7 +332,7 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			var results = [];
-			var email = "ben@wesort.co.uk";
+			var email = profile.email;
 			console.log("req:", request);
 
 			if (err) {
@@ -353,7 +353,7 @@ var handler = {
 					reply.redirect("/");
 				} else if (results.length <= 0) {
 					console.log("not authenticated!");
-					reply("You're not allowed to do that");
+					reply("You must be an authenticated user to use this application");
 				}
 			});
 		});
