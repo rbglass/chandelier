@@ -80,7 +80,11 @@ module.exports = ([
 		handler : handler.getJobItemsTable
 	},
 
- // --------------------------------- \\
+  {
+		path    : "/api/items",
+		method  : "POST",
+		handler : handler.createJobItem
+  },
 
   {
     path    : "/api/jobs/{id}/{item}",
@@ -89,26 +93,85 @@ module.exports = ([
   },
 
   {
-		path    : "/api/jobs/{id}",
-		method  : "POST",
-		handler : handler.createJobItem
-  },
-
-  {
-    path    : "/api/jobs/{id}/{item}",
+    path    : "/api/items/{item}",
     method  : "PUT",
-    handler : handler.updateJobItems
+    handler : handler.updateJobItem
   },
 
   {
-    path    : "/api/jobs/{id}/{item}",
+    path    : "/api/items/{item}",
     method  : "DELETE",
-    handler : handler.deleteJobItems
+    handler : handler.deleteJobItem
   },
 
 // ---------------------------------- \\
 
+	{
+		path 		: "/api/selections",
+		method 	: "GET",
+		handler : handler.getSelections
+	},
+
+	{
+		path		: "/api/selections",
+		method  : "POST",
+		handler : handler.createSelection
+	},
+
+	// ---------------------------------- \\
+
+	{
+		path		: "/api/products",
+		method  : "GET",
+		handler : handler.getProductsTable
+	},
+
+	{
+		path		: "/api/products",
+		method  : "POST",
+		handler : handler.createProduct
+	},
+
+		{
+		path		: "/api/products/{id}",
+		method  : "PUT",
+		handler : handler.updateProduct
+	},
+
+	{
+		path		: "/api/products/{id}",
+		method  : "DELETE",
+		handler : handler.deleteProduct
+	},
+
+		// ---------------------------------- \\
+
+	{
+		path 		: "/api/contacts",
+		method  : "GET",
+		handler : handler.getContactsTable
+	},
+
+	{
+		path 		: "/api/contacts",
+		method  : "POST",
+		handler : handler.createContact
+	},
+
+	{
+		path 		: "/api/contacts",
+		method  : "UPDATE",
+		handler : handler.updateContact
+	},
+
+	{
+		path 		: "/api/contacts",
+		method  : "DELETE",
+		handler : handler.deleteContact
+	},
+
   // Authentication routes
+
   {
     path   : "/login",
     method : ["GET", "POST"],

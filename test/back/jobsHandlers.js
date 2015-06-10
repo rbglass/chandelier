@@ -42,7 +42,7 @@ describe("/api/jobs", function() {
 			var options = {
 				method  : "GET",
 				url     : "/api/jobs",
-				handler : handler.jobs
+				handler : handler.getJobsTable
 			};
 
 			server.inject(options, function(res) {
@@ -62,7 +62,7 @@ describe("/api/jobs/{id}", function() {
 		var options = {
 			method  : "GET",
 			url     : "/api/jobs/3003",
-			handler : handler.jobs,
+			handler : handler.getSingleJob,
 			credentials : {
 				isAuthenticated : true
 			}
@@ -95,7 +95,7 @@ describe("/api/jobs/{id}", function() {
 			var options = {
 				method  : "GET",
 				url     : "/api/jobs/3012",
-				handler : handler.jobs
+				handler : handler.getSingleJob
 			};
 
 			server.inject(options, function(res) {
@@ -115,7 +115,7 @@ describe("/api/jobs/{id}", function() {
 		var options = {
 			method  : "POST",
 			url     : "/api/jobs/3012",
-			handler : handler.jobs,
+			handler : handler.createJob,
 			credentials : {
 				isAuthenticated : true
 			}
@@ -139,7 +139,7 @@ describe("/api/jobs/{id}", function() {
 			var options = {
 				method  : "POST",
 				url     : "/api/jobs/3012",
-				handler : handler.jobs
+				handler : handler.createJob
 			};
 
 			server.inject(options, function(res) {
@@ -161,7 +161,7 @@ describe("/api/jobs/{id}", function() {
 			payload : {
 				job_status : "pending"
 			},
-			handler : handler.jobs,
+			handler : handler.updateJob,
 			credentials : {
 				isAuthenticated : true
 			}
@@ -196,7 +196,7 @@ describe("/api/jobs/{id}", function() {
 			var options = {
 				method  : "PUT",
 				url     : "/api/jobs/3012",
-				handler : handler.jobs
+				handler : handler.updateJob
 			};
 
 			server.inject(options, function(res) {
@@ -217,7 +217,7 @@ describe("/api/jobs/{id}", function() {
 			var options = {
 				method  : "DELETE",
 				url     : "/api/jobs/3012",
-				handler : handler.jobs,
+				handler : handler.deleteJob,
 				credentials : {
 					isAuthenticated : true
 				}
@@ -239,7 +239,7 @@ describe("/api/jobs/{id}", function() {
 			var options = {
 				method  : "DELETE",
 				url     : "/api/jobs/3012",
-				handler : handler.jobs
+				handler : handler.deleteJob
 			};
 
 			server.inject(options, function(res) {

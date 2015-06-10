@@ -53,7 +53,7 @@ describe("/api/jobs/{id}/{item}", function() {
 
 			var options = {
 				method  : "PUT",
-				url     : "/api/jobs/3012/lamp",
+				url     : "/api/jobs/3012",
 				handler : handler.getJobItems
 			};
 
