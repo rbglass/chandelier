@@ -5,7 +5,8 @@ import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-var job = {
+var isLoading = false,
+		job = {
 			id: "",
 			details: {},
 			items: []
@@ -24,6 +25,9 @@ const SingleJobStore = createStore({
 	},
 	getFilters() {
 		return filters;
+	},
+	getLoadStatus() {
+		return isLoading;
 	}
 });
 
@@ -32,11 +36,13 @@ const onReceivingAction = action => {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
 				job = objectAssign({}, action.data);
+				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
 				job.items.push(action.data);
+				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
 
@@ -50,6 +56,7 @@ const onReceivingAction = action => {
 				});
 
 				job.items = newItems;
+				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
 
@@ -91,6 +98,11 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
+				SingleJobStore.emitChange();
+				break;
+
+		case ActionTypes.IS_LOADING:
+				isLoading = true;
 				SingleJobStore.emitChange();
 				break;
 

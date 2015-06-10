@@ -5,7 +5,8 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
-var items = [],
+var isLoading = false,
+		items = [],
 		filters = {
 			sortTerm: "shipping_date",
 			isAsc: false,
@@ -26,6 +27,7 @@ const ItemsStore = createStore({
 		const filtered = items.filter(row => {
 			return (
 				FilterUtils.contains(row, f.filterBy)
+				// Need parent shipping date & job_status for this
 				// FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
 				// FilterUtils.restrictTo(row, filters.restrictions)
 			);
@@ -36,7 +38,11 @@ const ItemsStore = createStore({
 	},
 	getFilters() {
 		return filters;
+	},
+	getLoadStatus() {
+		return isLoading;
 	}
+
 });
 
 const onReceivingAction = action => {
@@ -44,11 +50,13 @@ const onReceivingAction = action => {
 
 		case ActionTypes.RECEIVE_ALL_ITEMS:
 				items = action.data;
+				isLoading = false;
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
 				items.push(action.data);
+				isLoading = false;
 				ItemsStore.emitChange();
 				break;
 
@@ -62,6 +70,7 @@ const onReceivingAction = action => {
 				});
 
 				items = newItems;
+				isLoading = false;
 				ItemsStore.emitChange();
 				break;
 
@@ -125,6 +134,14 @@ const onReceivingAction = action => {
 				Object.keys(filters.restrictions).forEach(r => {
 					filters.restrictions[r].options = selections[r];
 				});
+				break;
+
+		case ActionTypes.IS_LOADING:
+				isLoading = true;
+				ItemsStore.emitChange();
+				break;
+
+		default:
 				break;
 
 	}

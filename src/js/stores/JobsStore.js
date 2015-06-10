@@ -5,7 +5,8 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
-var jobs = [],
+var isLoading = false,
+		jobs = [],
 		filters = {
 			sortTerm: "shipping_date",
 			isAsc: false,
@@ -40,10 +41,13 @@ const JobsStore = createStore({
 		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
 		return sorted;
 	},
-
 	getFilters() {
 		return filters;
+	},
+	getLoadStatus() {
+		return isLoading;
 	}
+
 });
 
 const onReceivingAction = action => {
@@ -51,6 +55,7 @@ const onReceivingAction = action => {
 
 		case ActionTypes.RECEIVE_ALL_JOBS:
 				jobs = action.data;
+				isLoading = false;
 				JobsStore.emitChange();
 				break;
 
@@ -64,6 +69,7 @@ const onReceivingAction = action => {
 				});
 
 				jobs = newJobs;
+				isLoading = false;
 				JobsStore.emitChange();
 				break;
 
@@ -117,6 +123,11 @@ const onReceivingAction = action => {
 				Object.keys(filters.restrictions).forEach(r => {
 					filters.restrictions[r].options = selections[r];
 				});
+				break;
+
+		case ActionTypes.IS_LOADING:
+				isLoading = true;
+				JobsStore.emitChange();
 				break;
 
 		default:
