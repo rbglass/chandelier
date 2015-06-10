@@ -15,7 +15,6 @@ function isDateStr(entity) {
 	}
 }
 
-// use tilt
 export function contains(obj, term) {
 	if(term === "" || term === undefined) return true;
 

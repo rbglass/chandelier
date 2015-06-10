@@ -14,6 +14,9 @@ export default class NavBar extends Component {
 				<div className="nav nav-item">
 					<Link to="items">Items</Link>
 				</div>
+				<div className="nav nav-item">
+					<a href="/logout">Logout</a>
+				</div>
 				<div className="nav nav-title">
 					{this.props.title}
 				</div>
