@@ -94,7 +94,7 @@ describe("/api/jobs/{id}", function() {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/3012",
+				url     : "/api/jobs/3003",
 				handler : handler.getSingleJob
 			};
 
