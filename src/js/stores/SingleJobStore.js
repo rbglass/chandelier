@@ -41,7 +41,7 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_UPDATED_ITEM:
-				let newItems = job.items.map(item => {
+				let freshItems = job.items.map(item => {
 					if(item.item_id === action.data.item_id) {
 						return action.data;
 					} else {
@@ -49,7 +49,7 @@ const onReceivingAction = action => {
 					}
 				});
 
-				job.items = newItems;
+				job.items = freshItems;
 				SingleJobStore.emitChange();
 				break;
 
