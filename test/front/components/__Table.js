@@ -16,7 +16,7 @@ describe("Table", () => {
 	const selections = "dummyselections";
 	const filters = "dummyfilter";
 	const primaryKey = "dummykey";
-	const onBlur = "dummyfuncblur"
+	const onBlur = "dummyfuncblur";
 	const sortFunc = "dummyfuncsort";
 
 	let columns;
@@ -42,7 +42,7 @@ describe("Table", () => {
 	});
 
 	it("#renders a TableRow component for every element in the 'items' prop", () => {
-		assert.equal(rows.length, items.length)
+		assert.equal(rows.length, items.length);
 		rows.forEach((row, i) => {
 			assert.equal(row.type, TableRow);
 		});
