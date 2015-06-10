@@ -7,16 +7,16 @@ var handler = require("../../api/handler");
 
 describe("/api/jobs", function() {
 	describe("authenticated GET", function() {
-		it("should reply with a 200 status code", function(done) {
+		var options = {
+			method  : "GET",
+			url     : "/api/jobs",
+			handler : handler.getJobsTable,
+			credentials : {
+				isAuthenticated : true
+			}
+		};
 
-			var options = {
-				method  : "GET",
-				url     : "/api/jobs",
-				handler : handler.getJobsTable,
-				credentials : {
-					isAuthenticated : true
-				}
-			};
+		it("should reply with a 200 status code", function(done) {
 
 			server.inject(options, function(res) {
 				assert.equal(200, res.statusCode);
@@ -26,15 +26,6 @@ describe("/api/jobs", function() {
 		});
 
 		it("should reply with an array of results", function(done) {
-
-			var options = {
-				method  : "GET",
-				url     : "/api/jobs",
-				handler : handler.getJobsTable,
-				credentials : {
-					isAuthenticated : true
-				}
-			};
 
 			server.inject(options, function(res) {
 				assert.equal("[object Array]", Object.prototype.toString.call(res.result));
@@ -58,7 +49,6 @@ describe("/api/jobs", function() {
 				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
         assert.equal("/", res.headers.location);
-
 				done();
 			});
 		});
@@ -68,16 +58,17 @@ describe("/api/jobs", function() {
 
 describe("/api/jobs/{id}", function() {
 	describe("authenticated GET", function() {
-		it("should reply with a 200 status code", function(done) {
 
-			var options = {
-				method  : "GET",
-				url     : "/api/jobs/3012",
-				handler : handler.jobs,
-				credentials : {
-					isAuthenticated : true
-				}
-			};
+		var options = {
+			method  : "GET",
+			url     : "/api/jobs/3003",
+			handler : handler.jobs,
+			credentials : {
+				isAuthenticated : true
+			}
+		};
+
+		it("should reply with a 200 status code", function(done) {
 
 			server.inject(options, function(res) {
 				assert.equal(200, res.statusCode);
@@ -88,17 +79,9 @@ describe("/api/jobs/{id}", function() {
 
 		it("should reply with an array of results", function(done) {
 
-			var options = {
-				method  : "GET",
-				url     : "/api/jobs/3012",
-				handler : handler.jobs,
-				credentials : {
-					isAuthenticated : true
-				}
-			};
-
 			server.inject(options, function(res) {
 				assert.equal("[object Array]", Object.prototype.toString.call(res.result));
+				assert.equal(1, res.results.length);
 				done();
 			});
 		});
@@ -119,6 +102,30 @@ describe("/api/jobs/{id}", function() {
 				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
         assert.equal("/", res.headers.location);
+				done();
+			});
+		});
+	});
+});
+
+
+describe("/api/jobs/{id}", function() {
+	describe("authenticated POST", function() {
+
+		var options = {
+			method  : "POST",
+			url     : "/api/jobs/3012",
+			handler : handler.jobs,
+			credentials : {
+				isAuthenticated : true
+			}
+		};
+
+		it("should reply with a 200 status code", function(done) {
+
+			server.inject(options, function(res) {
+				assert.equal(200, res.statusCode);
+				assert.equal(true, res.request.auth.isAuthenticated);
 				done();
 			});
 		});
@@ -196,6 +203,29 @@ describe("/api/jobs/{id}", function() {
 				assert.equal(302, res.statusCode);
 				assert.equal(false, res.request.auth.isAuthenticated);
         assert.equal("/", res.headers.location);
+				done();
+			});
+		});
+	});
+});
+
+
+describe("/api/jobs/{id}", function() {
+	describe("authenticated DELETE", function() {
+		it("should reply with a 204 status code", function(done) {
+
+			var options = {
+				method  : "DELETE",
+				url     : "/api/jobs/3012",
+				handler : handler.jobs,
+				credentials : {
+					isAuthenticated : true
+				}
+			};
+
+			server.inject(options, function(res) {
+				assert.equal(204, res.statusCode);
+				assert.equal(true, res.request.auth.isAuthenticated);
 				done();
 			});
 		});

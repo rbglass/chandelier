@@ -8,7 +8,7 @@ var config = require("./config.js");
 // var Job_items = require("./models/Job_items");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
-var client = require("./models/database");
+// var dbClient = require("./models/database");
 var conString = process.env.DATABASE_URL || config.database.dburl;
 
 var handler = {
@@ -36,7 +36,10 @@ var handler = {
 			var query = client.query("SELECT * FROM jobs");
 
 			query.on("row", function(row) {
-				results.push(row);
+				results.push({
+					job_id : row.job_id,
+					details : row
+				});
 			});
 
 			query.on("end", function() {
@@ -53,12 +56,12 @@ var handler = {
 		var results = [];
 		var entry = request.payload;
 		var jobData = {
-			job_id: 						undefined,
+			job_id: 						entry.job_id,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
 			job_status: 				entry.job_status || "TBC",
 			order_type: 				entry.order_type || "Standard",
-			shipping_date: 			entry.shipping_date || "",
+			shipping_date: 			entry.shipping_date || undefined,
 			num_of_job_items: 	entry.num_of_job_items || 0,
 			parts_status: 			entry.parts_status || "",
 			last_update: 				entry.last_update || new Date()
@@ -71,7 +74,7 @@ var handler = {
 			}
 
 			client.query("INSERT INTO jobs (job_id, client, project, job_status, order_type, shipping_date, num_of_job_items, parts_status, last_update) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-							[jobData.id,
+							[jobData.job_id,
 							jobData.client,
 							jobData.project,
 							jobData.job_status,
@@ -124,8 +127,6 @@ var handler = {
 	deleteJob : function(request, reply) {
 		var results = [];
 		var id = request.payload.job_id;
-		console.log("payload:", request.payload);
-		console.log("params: ", request.params);
 
 		pg.connect(conString, function(err, client, done) {
 
@@ -162,7 +163,21 @@ var handler = {
 			var query = client.query("SELECT * FROM jobs WHERE job_id=($1)", [id]);
 
 			query.on("row", function(row) {
-				results.push(row);
+
+				var itemsQuery = client.query("SELECT * FROM job_items WHERE job_id=($1)", [id]);
+
+				var items = [];
+
+				itemsQuery.on("row", function(itemRow) {
+					items.push(itemRow);
+				});
+
+				itemsQuery.on("end", function() {
+				results.push({
+					job_id : row.job_id,
+					details : row,
+					items : items
+				});
 			});
 
 			query.on("end", function() {
@@ -170,14 +185,16 @@ var handler = {
 				return reply(results);
 				});
 			});
-		},
+		});
+	},
 
 // -------------------------------------------------- \\
 
 	getJobItemsTable : function(request, reply) {
-		var results = [];
+
 
 		pg.connect(conString, function(err, client, done) {
+			var results = [];
 
 			if (err) {
 				console.log("getJobItemsTable handler error: ", err);
@@ -185,12 +202,31 @@ var handler = {
 			var query = client.query("SELECT * FROM job_items");
 
 			query.on("row", function(row) {
-				results.push(row);
+					results.push(row);
 			});
 
 			query.on("end", function() {
-				client.end();
-				return reply(results);
+				var packagedItems = [];
+
+				results.forEach(function(item) {
+					console.log(item.job_id);
+					var jobsQuery = client.query("SELECT * FROM jobs WHERE id=($1)", [item.job_id]);
+
+					jobsQuery.on("row", function(job) {
+						item.shipping_date = job.shipping_date;
+						item.job_status    = job.job_status;
+						console.log(job);
+					});
+
+					jobsQuery.on("end", function() {
+						packagedItems.push(item);
+						if (results.length === packagedItems.length) {
+							client.end();
+							return reply(packagedItems);
+						}
+					});
+				});
+
 			});
 		});
 	},
@@ -223,49 +259,61 @@ var handler = {
 
 	createJobItem : function(request, reply) {
 
-	// 	var results = [];
-	// 	var entry = request.payload;
+		var results = [];
+		var entry = request.payload;
 
-	// 	var itemData = {
-	// 		job_id: 			entry.job_id,
-	// 		product: 			entry.product 		|| "",
-	// 		description: 	entry.description || "",
-	// 		glass: 				entry.glass 			|| "",
-	// 		metal: 				entry.metal 			|| "",
-	// 		flex: 				entry.flex 				|| "",
-	// 		bulb: 				entry.bulb 				|| "",
-	// 		qty_req: 			entry.qty_req 		|| 0,
-	// 		qty_hot: 			entry.qty_hot 		|| 0,
-	// 		qty_cold: 		entry.qty_cold 		|| 0,
-	// 		qty_assem: 		entry.qty_assem 	|| 0,
-	// 		qty_packed: 	entry.qty_packed 	|| 0,
-	// 		notes: 				entry.notes 			|| ""
-	// 	};
+		var itemData = {
+			item_id: 22223,
+			job_id : 			+request.params.id,
+			product: 			entry.product 		|| "",
+			description: 	entry.description || "",
+			glass: 				entry.glass 			|| "",
+			metal: 				entry.metal 			|| "",
+			flex: 				entry.flex 				|| "",
+			bulb: 				entry.bulb 				|| "",
+			qty_req: 			entry.qty_req 		|| 0,
+			qty_hot: 			entry.qty_hot 		|| 0,
+			qty_cold: 		entry.qty_cold 		|| 0,
+			qty_assem: 		entry.qty_assem 	|| 0,
+			qty_packed: 	entry.qty_packed 	|| 0,
+			notes: 				entry.notes 			|| ""
+		};
 
-	// 	pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, client, done) {
 
-	// 		if (err) {
-	// 			console.log("createJobItem handler error: ", err);
-	// 		}
+			if (err) {
+				console.log("createJobItem handler error: ", err);
+			}
 
-	// 		client.query("INSERT INTO job_items (item_id, job_id. product, description, glass, metal, flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, qty_packed, notes) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $14)",
-	// 			[itemData.id,
-	// 			itemData.job_id,
-	// 			itemData.product,
-	// 			itemData.description,
-	// 			itemData.glass,
-	// 			itemData.metal,
-	// 			itemData.flex,
-	// 			itemData.bulb,
-	// 			itemData.qty_req,
-	// 			itemData.qty_cold,
-	// 			itemData.assem,
-	// 			itemData.packed,
-	// 			itemData.notes]
-	// 		);
+			var item = [
+				itemData.item_id,
+				itemData.job_id,
+				itemData.product,
+				itemData.description,
+				itemData.glass,
+				itemData.metal,
+				itemData.flex,
+				itemData.bulb,
+				itemData.qty_req,
+				itemData.qty_hot,
+				itemData.qty_cold,
+				itemData.qty_assem,
+				itemData.qty_packed,
+				itemData.notes
+				];
 
-	// 		var query = client.query("SELECT * FROM job_items WHERE job_id=($1)", [entry]);
-	// 	});
+			client.query("INSERT INTO job_items (item_id, job_id, product, description, glass, metal, " +
+										"flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, qty_packed, notes) values" +
+										"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *",
+										item,
+										function(err, info, res) {
+											if (info.rowCount === 1) {
+												reply(info.rows[0]);
+											} else {
+												reply(err);
+											}
+										});
+		});
 	},
 
 	updateJobItems : function(request, reply) {

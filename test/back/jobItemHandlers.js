@@ -19,7 +19,6 @@ describe("/api/jobs/{id}/{item}", function() {
 			};
 
 			server.inject(options, function(res) {
-				console.log("response:", res.payload.toString());
 				assert.equal(200, res.statusCode);
 				assert.equal(true, res.request.auth.isAuthenticated);
 				done();
