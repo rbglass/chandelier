@@ -1,6 +1,5 @@
 "use strict";
 import assert from "assert";
-import sinon from "sinon";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 

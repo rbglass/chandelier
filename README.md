@@ -1,5 +1,5 @@
 # chandelier
-production management for people who produce  
+production management for people who produce
 
 [![Code Climate](https://codeclimate.com/github/foundersandcoders/chandelier/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/chandelier)
 [![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
@@ -54,9 +54,6 @@ code.
               `watchify -t babelify srcFile -o destFile`
 
 ---
-[__karma-browserify__](https://www.npmjs.com/package/karma-browserify) - Browserify integration for Karma.
-
----
 [__live-reload__](https://www.npmjs.com/package/live-reload) - watches a directory for changes, and refreshes any HTML page currently open with a script tag pointing to the server.
 
               `live-reload watchPath --port 9081`
@@ -68,6 +65,21 @@ code.
 [__Mocha__](http://mochajs.org/) - test framework for front- and back-end.
 
 ---
+[__JSDom__]() - dom simulation for testing
+
+---
+[__rewire__]() - lets us access/set private variables in modules
+
+---
+[__sinon__]() - mocking, stubbing and spying tools
+
+---
 [__Karma__](https://karma-runner.github.io/0.12/index.html) - test runner for browsers
 
 ---
+
+###TODO
+* Reorganise actioncreator and store logic
+    * Make filterstore, have other stores get from it
+    * Empty stores on page switch
+    * Make filter more generic

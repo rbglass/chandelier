@@ -52,7 +52,7 @@ export default class TableRow extends Component {
 				case "button":
 						input = (
 							<button className={`btn ${cell.inputClassName}`}
-								onClick={cell.onClick.bind(this, this.props.cells.job_id, this.props.cells)}>
+								onClick={cell.onClick ? cell.onClick.bind(this, this.props.cells.job_id, this.props.cells) : null}>
 								{cell.key}
 							</button>
 						);

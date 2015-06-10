@@ -1,11 +1,11 @@
 "use strict";
 import { createStore } from "../utils/StoreUtils";
-import * as FilterUtils from "../utils/FilterUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
+import * as FilterUtils from "../utils/FilterUtils";
 
-var jobs = [],
+var items = [],
 		filters = {
 			sortTerm: "shipping_date",
 			isAsc: false,
@@ -16,73 +16,81 @@ var jobs = [],
 			restrictions: {
 				"job_status": {
 					key: "job_status"
-				},
-				"order_type": {
-					key: "order_type"
-				},
-				"payment": {
-					key: "payment"
 				}
 			}
 		};
 
-const JobsStore = createStore({
-
-	getFilteredAndSortedJobs() {
+const ItemsStore = createStore({
+	getFilteredAndSortedItems() {
 		let f = filters;
-		const filtered = jobs.filter(row => {
+		const filtered = items.filter(row => {
 			return (
-				FilterUtils.contains(row.details, f.filterBy) &&
-				FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
-				FilterUtils.restrictTo(row.details, filters.restrictions)
+				FilterUtils.contains(row, f.filterBy)
+				// FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
+				// FilterUtils.restrictTo(row, filters.restrictions)
 			);
 		});
-		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
+
+		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc);
 		return sorted;
 	},
-
 	getFilters() {
 		return filters;
 	}
 });
 
 const onReceivingAction = action => {
-	switch(action.type) {
+	switch (action.type) {
 
-		case ActionTypes.RECEIVE_ALL_JOBS:
-				jobs = action.data;
-				JobsStore.emitChange();
+		case ActionTypes.RECEIVE_ALL_ITEMS:
+				items = action.data;
+				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_UPDATED_JOB:
-				let newJobs = jobs.map(job => {
-					if(job.job_id === action.data.job_id) {
+		case ActionTypes.RECEIVE_SINGLE_ITEM:
+				items.push(action.data);
+				ItemsStore.emitChange();
+				break;
+
+		case ActionTypes.RECEIVE_UPDATED_ITEM:
+				let newItems = items.map(item => {
+					if(item.item_id === action.data.item_id) {
 						return action.data;
 					} else {
-						return job;
+						return item;
 					}
 				});
 
-				jobs = newJobs;
-				JobsStore.emitChange();
+				items = newItems;
+				ItemsStore.emitChange();
 				break;
 
-		// State change but not server interaction
-		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
-				let id = action.data.id;
-				jobs = jobs.map(job => {
-					if (job.job_id === id) {
-						job.details[action.data.key] = action.data.value;
+		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
+				let d = action.data;
+				items = items.map(item => {
+					if (item.item_id === d.id) {
+						item[d.key] = d.value;
 					}
-					return job;
+					return item;
 				});
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
-		// Table manipulation
+		case ActionTypes.DELETE_ITEM:
+				let newItems = [];
+				items.forEach(item => {
+					if (item.item_id === action.data) {
+						return;
+					}
+					newItems.push(item);
+				});
+				items = newItems;
+				ItemsStore.emitChange();
+				break;
+
 		case ActionTypes.FILTER_BY:
 				filters.filterBy = action.data;
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
@@ -92,22 +100,22 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_START_DATE:
 				filters.startDate = action.data;
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_END_DATE:
 				filters.endDate = action.data;
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RESTRICT_TO:
 				filters.restrictions[action.data.key] = action.data;
-				JobsStore.emitChange();
+				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SELECTIONS:
@@ -119,11 +127,9 @@ const onReceivingAction = action => {
 				});
 				break;
 
-		default:
-				break;
 	}
 };
 
-export default JobsStore;
+export default ItemsStore;
 
 AppDispatcher.register(onReceivingAction);

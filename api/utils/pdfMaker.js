@@ -101,4 +101,3 @@ function writeDoc(job, cb) {
 	doc.end();
 	cb(doc);
 }
-
