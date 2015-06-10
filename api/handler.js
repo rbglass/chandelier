@@ -29,6 +29,7 @@ var handler = {
 		console.log("pg jobs table handler");
 
 		var results = [];
+
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
 				console.log("getJobsTable handler error: ", err);
@@ -37,7 +38,10 @@ var handler = {
 			var query = client.query("SELECT * FROM jobs");
 
 			query.on("row", function(row) {
-				results.push(row);
+				results.push({
+					job_id: row.job_id,
+				 	details: row
+				});
 			});
 
 			query.on("end", function() {
@@ -62,7 +66,8 @@ var handler = {
 			shipping_date: 			entry.shipping_date || "",
 			num_of_job_items: 	entry.num_of_job_items || 0,
 			parts_status: 			entry.parts_status || "",
-			last_update: 				entry.last_update || new Date()
+			last_update: 				entry.last_update || new Date(),
+			payment:						entry.last_update || ""
 		};
 
 		pg.connect(conString, function(err, client, done) {
@@ -71,8 +76,8 @@ var handler = {
 				console.log("createJob handler error: ", err);
 			}
 
-			client.query("INSERT INTO jobs (job_id, client, project, job_status, order_type, shipping_date, num_of_job_items, parts_status, last_update) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-							[jobData.id,
+			client.query("INSERT INTO jobs (job_id, client, project, job_status, order_type, shipping_date, num_of_job_items, parts_status, last_update) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+							[jobData.job_id,
 							jobData.client,
 							jobData.project,
 							jobData.job_status,
@@ -80,7 +85,8 @@ var handler = {
 							jobData.shipping_date,
 							jobData.num_of_job_items,
 							jobData.parts_status,
-							jobData.last_update]);
+							jobData.last_update,
+							jobData.payment]);
 
 			var query = client.query("SELECT * FROM jobs ORDER BY last_update");
 
@@ -230,6 +236,7 @@ var handler = {
 
 	// 	var itemData = {
 	// 		job_id: 			entry.job_id,
+	//		item_id:			entry.job_item 		|| "",
 	// 		product: 			entry.product 		|| "",
 	// 		description: 	entry.description || "",
 	// 		glass: 				entry.glass 			|| "",
@@ -332,8 +339,6 @@ var handler = {
 
 		var profile = {
 			auth_method : "google",
-			username    : creds.profile.raw.name,
-			auth_id     : creds.profile.raw.id,
 			email       : creds.profile.raw.email
 		};
 
