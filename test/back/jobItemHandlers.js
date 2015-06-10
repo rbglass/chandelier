@@ -11,8 +11,8 @@ describe("/api/jobs/{id}/{item}", function() {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/rb135/lamp",
-				handler : handler.jobs,
+				url     : "/api/jobs/3003",
+				handler : handler.getJobItems,
 				credentials : {
 					isAuthenticated : true
 				}
@@ -33,8 +33,8 @@ describe("/api/jobs/{id}/{item}", function() {
 
 			var options = {
 				method  : "GET",
-				url     : "/api/jobs/rb135/lamp",
-				handler : handler.jobs
+				url     : "/api/jobs/3003/lamp",
+				handler : handler.jogetJobItemsbs
 			};
 
 			server.inject(options, function(res) {
@@ -53,8 +53,8 @@ describe("/api/jobs/{id}/{item}", function() {
 
 			var options = {
 				method  : "PUT",
-				url     : "/api/jobs/rb135/lamp",
-				handler : handler.jobs
+				url     : "/api/jobs/3012",
+				handler : handler.getJobItems
 			};
 
 			server.inject(options, function(res) {
@@ -73,8 +73,8 @@ describe("/api/jobs/{id}/{item}", function() {
 
 			var options = {
 				method  : "DELETE",
-				url     : "/api/jobs/rb135/lamp",
-				handler : handler.jobs
+				url     : "/api/jobs/3012/lamp",
+				handler : handler.getJobItems
 			};
 
 			server.inject(options, function(res) {

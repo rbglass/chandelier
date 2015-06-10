@@ -12,7 +12,7 @@ export default keyMirror({
 	"RECEIVE_SINGLE_ITEM": null,
 	"RECEIVE_UPDATED_ITEM": null,
 
-	"RECEIVE_JOB_ITEMS": null,
+	"RECEIVE_ALL_ITEMS": null,
 
 	"RECEIVE_ALERT": null,
 

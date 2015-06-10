@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
-import JobsFilter from "../components/Jobs/JobsFilter";
+import Filter from "../components/common/Filter";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
@@ -27,13 +27,16 @@ class JobsPage extends Component {
 			<div>
 				<NavBar title={"All Jobs"}/>
 				<div className="container">
-					<JobsFilter filters={this.props.filters} selections={this.props.selections}
-						setFilter={JobsActionCreators.setFilter} setStartDate={JobsActionCreators.setStartDate}
-						setEndDate={JobsActionCreators.setEndDate}
-						restrictTo={JobsActionCreators.restrictTo}
+					<Filter filters={this.props.filters} selections={this.props.selections}
+						setFilter={SharedActionCreators.setFilter}
+						setStartDate={SharedActionCreators.setStartDate}
+						setEndDate={SharedActionCreators.setEndDate}
+						restrictTo={SharedActionCreators.restrictTo}
 						sortFunc={SharedActionCreators.sortBy}
 					/>
-					<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
+					<div className="table-container">
+						<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
+					</div>
 					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
 				</div>
 			</div>
@@ -41,37 +44,30 @@ class JobsPage extends Component {
 	}
 }
 
-JobsPage.defaultProps = {
-	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",
-				type: "link", to: "singlejob" },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow2",
-				type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "",
-				type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",    "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "order_type",    display: "Order Type",    "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2",
-				type: "date", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_items",     display: "# Job Items",   "className": "",
-				type: "text" },
-		{ key: "parts_status",  display: "Parts Status",  "className": "",
-				type: "select", onChange: SharedActionCreators.changeDetails }
-	]
-};
-
 function getState() {
-	const filters = JobsStore.getFilters();
 	const items = JobsStore.getFilteredAndSortedJobs();
+	const filters = JobsStore.getFilters();
 	const selections = SelectionStore.getSelections();
 
 	return {
 		selections,
-		filters,
-		items
+		items,
+		filters
 	};
 }
 
 export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);
+
+JobsPage.defaultProps = {
+	tableScheme: [
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",       type: "link", to: "singlejob" },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2", type: "date",   onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
+		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
+	]
+};

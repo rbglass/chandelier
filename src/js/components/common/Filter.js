@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from "react";
 import FilterInput from "../common/FilterInput";
 import MultiSelect from "../common/MultiSelect";
 
-export default class JobsFilter extends Component {
+export default class Filter extends Component {
 
 	render() {
 		// use cx
@@ -26,7 +26,7 @@ export default class JobsFilter extends Component {
 				<div className="table-manip-col" >
 					<FilterInput type="text" value={this.props.filterBy}
 						setFilter={this.props.setFilter} className={textFilterClassName}
-						placeholder="Filter by..."
+						placeholder="Filter all by..."
 					/>
 					<FilterInput type="date" value={this.props.startDate}
 						setFilter={this.props.setStartDate} className={dateFilterClassName}
@@ -45,7 +45,7 @@ export default class JobsFilter extends Component {
 	}
 }
 
-JobsFilter.propTypes = {
+Filter.propTypes = {
 	filterBy    : PropTypes.string,
 	startDate   : PropTypes.string,
 	endDate     : PropTypes.string,

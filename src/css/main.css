@@ -19,6 +19,10 @@ a:visited {
 	color:inherit;
 }
 
+a {
+	color: inherit;
+}
+
 label {
   font-size: 1rem;
 	line-height: 25px;
@@ -143,7 +147,7 @@ button:focus {
 	margin-left: 0;
 	flex-grow: 0;
 	flex-shrink: 0;
-	flex-basis: 45%;
+	flex-basis: 38%;
 }
 
 /* MultiSelect */
@@ -193,8 +197,13 @@ button:focus {
 	position: relative;
 	user-select: none;
 	font-size: 0.9rem;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
+.table-header .table-row-item.qty-sm,
+.table-header .table-row-item.qty-md {
+	font-size: 0.7rem;
+}
+
 .table-header .table-row-item.asc:after {
 	content: "^";
 	position: absolute;
@@ -247,7 +256,7 @@ button:focus {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	word-break: break-all;
-	padding: 0.5em;
+	padding-left: 0.3em;
 	word-break: break-word;
 }
 
@@ -269,7 +278,7 @@ button:focus {
 @media (min-width: 500px) {
 	.table-row-item {
 		border: 1px solid #fff;
-		padding: 0.5em;
+		padding-left: 0.4em;
 	}
 	.table-row-item:before {
 		content: none;
@@ -293,7 +302,7 @@ button:focus {
 	border-radius: 2px;
 	width: 100%;
 	border: rgba(169, 169, 169, 0.2);
-	height: 23px;
+	height: auto;
 	font-size: 1.1em;
 }
 .table-row-item .btn {
@@ -376,7 +385,7 @@ button:focus {
 	font-size: 18px;
 	line-height: 10px;
 
-	background-color: rgba(128, 128, 128, 0.3);
+	background-color: rgba(39, 92, 152, 1);
 	color: white;
 
 	border: none;
@@ -396,7 +405,7 @@ button:focus {
 }
 
 .qty-md {
-	flex-grow: 0.6;
+	flex-grow: 0.65;
 }
 .u-flex-grow1 {
 	flex-grow: 1;
