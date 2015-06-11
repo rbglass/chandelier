@@ -8,11 +8,16 @@ export default class NavBar extends Component {
 
 		return (
 			<div className="nav navbar">
+				{	this.props.routeConfig.map((linkConfig, i) => {
+						return (
+							<div key={i} className="nav nav-item">
+								<Link to={linkConfig.to}>{linkConfig.display}</Link>
+							</div>
+						);
+					})
+				}
 				<div className="nav nav-item">
-					<Link to="jobs">Jobs</Link>
-				</div>
-				<div className="nav nav-item">
-					<Link to="items">Items</Link>
+					<a href="/logout">Logout</a>
 				</div>
 				<div className="nav nav-title">
 					{this.props.title}
@@ -21,3 +26,11 @@ export default class NavBar extends Component {
 		);
 	}
 }
+
+NavBar.PropTypes = {
+		routeConfig: PropTypes.arrayOf(PropTypes.shape({
+			display: PropTypes.string,
+			to: PropTypes.string
+		})).isRequired,
+		title: PropTypes.string
+};

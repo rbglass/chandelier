@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Filter from "../components/common/Filter";
+import Alert from "../components/common/Alert";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import connectToStores from "../utils/connectToStores";
@@ -25,17 +26,25 @@ class JobsPage extends Component {
 
 		return (
 			<div>
-				<NavBar title={"All Jobs"}/>
+				<NavBar title={"All Jobs"} routeConfig={this.props.routeScheme}/>
+				{(this.props.isLoading || this.props.alert) ?
+					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<span />
+				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
 						setFilter={SharedActionCreators.setFilter}
 						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
-						sortFunc={SharedActionCreators.sortBy}
+
 					/>
 					<div className="table-container">
-						<Table {...this.props} items={items} primaryKey={"job_id"} onBlur={SharedActionCreators.saveDetails}/>
+						<Table {...this.props}
+								items={items} primaryKey={"job_id"}
+								onBlur={SharedActionCreators.saveDetails}
+								sortFunc={SharedActionCreators.sortBy}
+						/>
 					</div>
 					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
 				</div>
@@ -48,11 +57,13 @@ function getState() {
 	const items = JobsStore.getFilteredAndSortedJobs();
 	const filters = JobsStore.getFilters();
 	const selections = SelectionStore.getSelections();
+	const isLoading = JobsStore.getLoadStatus();
 
 	return {
 		selections,
 		items,
-		filters
+		filters,
+		isLoading
 	};
 }
 
@@ -60,7 +71,7 @@ export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",       type: "link", to: "singlejob" },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
 		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
@@ -69,5 +80,14 @@ JobsPage.defaultProps = {
 		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
 		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
+	// filterScheme: [
+	// 	{ key: "filterBy",  type: "text", setFilter: },
+	// 	{ key: "startDate", type: "date", setFilter: },
+	// 	{ key: "endDate",   type: "date", setFilter: }
+	// ]
 };

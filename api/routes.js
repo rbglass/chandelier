@@ -86,11 +86,11 @@ module.exports = ([
 		handler : handler.createJobItem
   },
 
-  {
-    path    : "/api/jobs/{id}/{item}",
-    method  : "GET",
-    handler : handler.getJobItems
-  },
+  // {
+  //   path    : "/api/jobs/{id}",
+  //   method  : "GET",
+  //   handler : handler.getJobItems
+  // },
 
   {
     path    : "/api/items/{item}",

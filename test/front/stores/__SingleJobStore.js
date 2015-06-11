@@ -133,24 +133,24 @@ describe("SingleJobStore", function() {
 		assert.equal(itemWeGotBack[itemToChange.key], itemToChange.value);
 	});
 
-	it("#deletes an item from the job.items array upon a DELETE_ITEM action", function() {
-		var itemToDelete = {
-			id: samplejob.items[0].item_id
-		};
-		var oldLen = this.SingleJobStore.getSortedItems().length;
+	// it("#deletes an item from the job.items array upon a DELETE_ITEM action", function() {
+	// 	var itemToDelete = {
+	// 		id: samplejob.items[0].item_id
+	// 	};
+	// 	var oldLen = this.SingleJobStore.getSortedItems().length;
 
-		this.onReceivingAction({
-			type: "DELETE_ITEM",
-			data: itemToDelete.id
-		});
+	// 	this.onReceivingAction({
+	// 		type: "DELETE_ITEM",
+	// 		data: itemToDelete.id
+	// 	});
 
-		var itemWeGotBack = this.SingleJobStore.getSortedItems().filter(function(item) {
-			return item.item_id === itemToDelete.id;
-		})[0];
+	// 	var itemWeGotBack = this.SingleJobStore.getSortedItems().filter(function(item) {
+	// 		return item.item_id === itemToDelete.id;
+	// 	})[0];
 
-		assert.equal(itemWeGotBack, undefined);
-		assert.equal(this.SingleJobStore.getSortedItems().length, oldLen - 1);
-	});
+	// 	assert.equal(itemWeGotBack, undefined);
+	// 	assert.equal(this.SingleJobStore.getSortedItems().length, oldLen - 1);
+	// });
 
 	it("#updates the sortTerm filter upon a SORT_ONE action, flipping isAsc if the term is the same, else false", function() {
 		var sortTerm = "job_status";

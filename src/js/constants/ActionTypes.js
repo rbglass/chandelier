@@ -27,9 +27,7 @@ export default keyMirror({
 	"CHANGE_SINGLE_JOB_DETAILS": null,
 	"CHANGE_SINGLE_JOB_ITEM": null,
 
-	// unnecessary?
-	"CREATE_ITEM": null,
-	"DELETE_ITEM": null,
+	"IS_LOADING": null,
 
 	// Data Sorting
 	"SORT_ONE": null,

@@ -15,12 +15,10 @@ function isDateStr(entity) {
 	}
 }
 
-// use tilt
 export function contains(obj, term) {
 	if(term === "" || term === undefined) return true;
 
 	const k = Object.keys(obj);
-
 	return k.some(cell => {
 		switch (typeof obj[cell]) {
 			case "string":
@@ -75,7 +73,6 @@ export function isWithinBounds(field, lower, upper) {
 
 export function restrictTo(obj, restrictionObj) {
 	const restrictBy = Object.keys(restrictionObj);
-
 	return restrictBy.every(field => {
 		return (
 			(restrictionObj[field].options === undefined) ||

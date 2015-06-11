@@ -3,13 +3,6 @@
 var PDFDocument = require("pdfkit");
 var stroke = {stroke: true};
 
-module.exports = function pdfMaker(job, cb) {
-
-	// var stream = doc.pipe(writablestream);
-	writeDoc(job, cb);
-
-};
-
 
 function writeFooter(doc) {
 	doc.fontSize(8)
@@ -34,10 +27,16 @@ function writeAddress(doc) {
 		.text("UK");
 }
 
+function writePageNum(doc, num) {
+	doc.fontSize(8)
+			.text(num, 540, 20);
+}
+
 function writeDoc(job, cb) {
 	var doc = new PDFDocument();
 	var date = new Date();
-	var dateStr = date.getDate() + " " + date.getMonth() + " " + date.getFullYear();
+	var dates = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var dateStr = date.getDate() + " " + dates[date.getMonth()] + " " + date.getFullYear();
 
 	doc.fontSize(25)
 			.text("Specification", 50, 80);
@@ -60,7 +59,8 @@ function writeDoc(job, cb) {
 			.text(job.details.client_ref)
 			.text(job.details.job_status);
 
-	// and some justified text wrapped into columns
+	writeAddress(doc);
+
 	doc.fontSize(12)
 			.text("Qty", 50, 250, stroke)
 			.text("Description", 100, 250, stroke)
@@ -69,14 +69,18 @@ function writeDoc(job, cb) {
 			.moveDown();
 
 	var yPos = 280;
+	var p = 1;
 
-	writeFooter();
+	writePageNum(doc, p);
+	writeFooter(doc);
 
 	job.items.forEach(function(item, i) {
 			if(yPos > 600) {
+					p++;
 					yPos = 50;
 					doc.addPage();
-					writeFooter();
+					writePageNum(doc, p);
+					writeFooter(doc);
 			}
 			doc.fontSize(12)
 					.text(item.qty_req, 50, yPos)
@@ -101,3 +105,10 @@ function writeDoc(job, cb) {
 	doc.end();
 	cb(doc);
 }
+
+module.exports = function pdfMaker(job, cb) {
+
+	// var stream = doc.pipe(writablestream);
+	writeDoc(job, cb);
+
+};

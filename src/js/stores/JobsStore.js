@@ -5,7 +5,8 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
-var jobs = [],
+var isLoading = false,
+		jobs = [],
 		filters = {
 			sortTerm: "shipping_date",
 			isAsc: false,
@@ -19,15 +20,14 @@ var jobs = [],
 				},
 				"order_type": {
 					key: "order_type"
-				},
-				"payment": {
-					key: "payment"
 				}
+				// "payment": {
+				// 	key: "payment"
+				// }
 			}
 		};
 
 const JobsStore = createStore({
-
 	getFilteredAndSortedJobs() {
 		let f = filters;
 		const filtered = jobs.filter(row => {
@@ -37,13 +37,17 @@ const JobsStore = createStore({
 				FilterUtils.restrictTo(row.details, filters.restrictions)
 			);
 		});
+		console.log(filtered);
 		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
 		return sorted;
 	},
-
 	getFilters() {
 		return filters;
+	},
+	getLoadStatus() {
+		return isLoading;
 	}
+
 });
 
 const onReceivingAction = action => {
@@ -51,6 +55,7 @@ const onReceivingAction = action => {
 
 		case ActionTypes.RECEIVE_ALL_JOBS:
 				jobs = action.data;
+				isLoading = false;
 				JobsStore.emitChange();
 				break;
 
@@ -64,6 +69,7 @@ const onReceivingAction = action => {
 				});
 
 				jobs = newJobs;
+				isLoading = false;
 				JobsStore.emitChange();
 				break;
 
@@ -115,8 +121,14 @@ const onReceivingAction = action => {
 				const selections = SelectionStore.getSelections();
 
 				Object.keys(filters.restrictions).forEach(r => {
+					console.log(selections[r]);
 					filters.restrictions[r].options = selections[r];
 				});
+				break;
+
+		case ActionTypes.IS_LOADING:
+				isLoading = true;
+				JobsStore.emitChange();
 				break;
 
 		default:
