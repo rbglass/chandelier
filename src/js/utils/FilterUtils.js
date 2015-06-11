@@ -1,18 +1,9 @@
 "use strict";
+import { isyyyyMMdd } from "./yyyyMMdd";
 
 function strIncludes(str, term) {
 	if (typeof term !== "string") return false;
 	else return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
-}
-
-function isDateStr(entity) {
-	const dateRegEx = /\d{4}-\d{2}-\d{2}/g;
-
-	if (typeof entity === "string") {
-		return dateRegEx.test(entity);
-	} else {
-		return false;
-	}
 }
 
 export function contains(obj, term) {
@@ -43,7 +34,7 @@ export function genericSort(arr, sortBy, asc, sortPath) {
 				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
 				sortVal;
 
-		if (isDateStr(t1)) {
+		if (isyyyyMMdd(t1)) {
 			sortVal = Date.parse(t1) - Date.parse(t2);
 		} else if (typeof t1 === "string") {
 			sortVal = t1.localeCompare(t2, "en", {
@@ -63,7 +54,7 @@ export function isWithinBounds(field, lower, upper) {
 	const lowerAsDate = Date.parse(lower || "1970-01-01");
 	const upperAsDate = Date.parse(upper || "3070-01-01");
 
-	if(isDateStr(field)) {
+	if(isyyyyMMdd(field)) {
 		let d = Date.parse(field);
 		return lowerAsDate <= d && d <= upperAsDate;
 	} else {

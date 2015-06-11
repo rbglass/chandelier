@@ -86,7 +86,7 @@ var handler = {
 					jobData.updatedat
 				], function(errInsert, info) {
 					if (errInsert) {
-						console.log(errInsert)
+						console.log(errInsert);
 						return reply(errInsert).code(400);
 					} else if (info.rowCount === 1) {
 						return reply(formatter.job(info.rows[0]));
@@ -199,7 +199,6 @@ var handler = {
 					console.log(queryErr);
 					return reply(queryErr).code(400);
 				} else {
-					console.log(info.rows);
 					return reply(info.rows);
 				}
 			});
