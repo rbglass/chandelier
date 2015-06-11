@@ -42,9 +42,10 @@ export default class TableRow extends Component {
 				case "select":
 						input = (
 							<select value={cellValue}>
-								{ this.props.selections[cell.key].map(opt => {
+								{ this.props.selections[cell.key] ?
+									this.props.selections[cell.key].map(opt => {
 									return <option key={opt}>{opt}</option>;
-								}, this) }
+								}, this) : "No opts" }
 							</select>
 						);
 						break;

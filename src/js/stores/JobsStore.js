@@ -20,15 +20,14 @@ var isLoading = false,
 				},
 				"order_type": {
 					key: "order_type"
-				},
-				"payment": {
-					key: "payment"
 				}
+				// "payment": {
+				// 	key: "payment"
+				// }
 			}
 		};
 
 const JobsStore = createStore({
-
 	getFilteredAndSortedJobs() {
 		let f = filters;
 		const filtered = jobs.filter(row => {
@@ -38,6 +37,7 @@ const JobsStore = createStore({
 				FilterUtils.restrictTo(row.details, filters.restrictions)
 			);
 		});
+		console.log(filtered);
 		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
 		return sorted;
 	},
@@ -121,6 +121,7 @@ const onReceivingAction = action => {
 				const selections = SelectionStore.getSelections();
 
 				Object.keys(filters.restrictions).forEach(r => {
+					console.log(selections[r]);
 					filters.restrictions[r].options = selections[r];
 				});
 				break;

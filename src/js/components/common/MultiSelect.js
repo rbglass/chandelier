@@ -7,7 +7,6 @@ export default class MultiSelect extends Component {
 		let currentlySelected = [].map.call(e.target.selectedOptions, element => {
 			return element.value;
 		});
-
 		this.props.onSelect(this.props.selected.key, currentlySelected);
 	}
 
@@ -42,7 +41,7 @@ export default class MultiSelect extends Component {
 
 MultiSelect.propTypes = {
 	onSelect: PropTypes.func.isRequired,
-	selections: PropTypes.array.isRequired,
+	selections: PropTypes.arrayOf(PropTypes.string),
 	selected: PropTypes.shape({
 		key: PropTypes.string,
 		options: PropTypes.arrayOf(PropTypes.string)

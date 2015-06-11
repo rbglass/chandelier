@@ -26,7 +26,7 @@ class JobsPage extends Component {
 
 		return (
 			<div>
-				<NavBar title={"All Jobs"}/>
+				<NavBar title={"All Jobs"} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
 					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
 					<span />
@@ -80,6 +80,10 @@ JobsPage.defaultProps = {
 		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
 		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 	// filterScheme: [
 	// 	{ key: "filterBy",  type: "text", setFilter: },

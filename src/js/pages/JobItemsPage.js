@@ -24,7 +24,7 @@ class JobItemsPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title="All Items"/>
+				<NavBar title="All Items" routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
 					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
 					<span />
@@ -83,5 +83,10 @@ JobItemsPage.defaultProps = {
 		{ key: "notes",       display: "Notes",       className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
 		{ key: "+", 	        display: "",            className: "fixed-col hid", type: "button",    onClick: SharedActionCreators.createItem,
 				inputClassName: "btn-right"}
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
+
 };

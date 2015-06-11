@@ -24,7 +24,7 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title={`${this.props.params.id}`}/>
+				<NavBar title={`${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
 					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
 					<span />
@@ -98,5 +98,9 @@ SingleJobPage.defaultProps = {
 				type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "+", 	       display: "",         className: "fixed-col hid",
 				type: "button", inputClassName: "btn-right", onClick: SharedActionCreators.createItem  }
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 };

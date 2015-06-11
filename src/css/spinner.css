@@ -79,6 +79,7 @@ button:focus {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  font-size: 0.9rem;
 }
 
 .nav.nav-item a:hover {

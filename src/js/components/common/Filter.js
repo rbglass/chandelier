@@ -10,14 +10,15 @@ export default class Filter extends Component {
 		const baseClassName = "job-text-input ";
 		const textFilterClassName = baseClassName + "filter";
 		const dateFilterClassName = baseClassName + "date";
-
 		const selects = Object.keys(this.props.filters.restrictions).map(restr => {
 			return (
+				this.props.selections[restr] ?
 				<MultiSelect key={restr}
 					selected={this.props.filters.restrictions[restr]}
 					selections={this.props.selections[restr]}
 					onSelect={this.props.restrictTo}
 				/>
+				: <span />
 			);
 		});
 		return (
@@ -49,7 +50,11 @@ Filter.propTypes = {
 	startDate   : PropTypes.string,
 	endDate     : PropTypes.string,
 
-	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number,
+		label: PropTypes.string,
+		type: PropTypes.string
+	}))),
 	restrictions: PropTypes.objectOf(PropTypes.shape({
 			key    : PropTypes.string,
 			options: PropTypes.arrayOf(PropTypes.string)

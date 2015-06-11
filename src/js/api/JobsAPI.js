@@ -37,7 +37,7 @@ export function getSingleJob(jobId) {
 
 export function createSingleJob() {
 	request.post(jobs)
-					.end(onReply(ServerActionCreators.receiveSingleJob));
+					.end(onReply(ServerActionCreators.receiveNewJob));
 }
 
 export function saveDetails(jobId, updateObj) {
