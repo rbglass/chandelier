@@ -128,7 +128,7 @@ button:focus {
 .alert-box {
   color: white;
   position: fixed;
-  top: 50px;
+  top: 90px;
   height: 40px;
   min-width: 60px;
   right: 0;
