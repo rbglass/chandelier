@@ -10,15 +10,21 @@ describe("SelectionStore", function() {
 	});
 
 	it("#has a selections getter method", function() {
-		assert(this.SelectionStore.getSelections());
+		assert.equal(typeof this.SelectionStore.getSelections, "function");
 	});
 
 	it("#updates its internal state if the actiontype is RECEIVE SELECTIONS", function() {
+		var testData = {
+			testitems: [{label: "hello mum!"}, {label: ":)"}]
+		};
+
 		this.onReceivingAction({
 			type: "RECEIVE_SELECTIONS",
-			data: "hello mum!"
+			data: testData
 		});
 
-		assert.equal(this.SelectionStore.getSelections(), "hello mum!");
+		assert.deepEqual(this.SelectionStore.getSelections(), {
+			testitems: ["hello mum!", ":)"]
+		});
 	});
 });

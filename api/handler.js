@@ -12,7 +12,6 @@ var handler = {
 	home : function(request, reply) {
 
     if (request.auth.isAuthenticated) {
-      console.log("home handler");
       return reply.file(index);
     } else if (!request.auth.isAuthenticated) {
 			return reply.redirect("/login");
@@ -49,13 +48,17 @@ var handler = {
 
 		var entry = request.payload;
 		var jobData = {
-			job_id: 						entry.job_id,
 			client: 						entry.client || "",
 			project: 						entry.project || "",
 			job_status: 				entry.job_status || "TBC",
 			order_type: 				entry.order_type || "Standard",
-			shipping_date: 			entry.shipping_date || undefined,
+			shipping_date: 			entry.shipping_date,
+			shipping_notes:     entry.shipping_notes || "",
 			parts_status: 			entry.parts_status || "",
+			parts_notes:        entry.parts_notes || "",
+			invoice_notes:      entry.invoice_notes || "",
+			payment:            entry.payment || "Awaiting Payment",
+			notes:              entry.notes || "",
 			last_update: 				entry.last_update || new Date(),
 			createdat: 		new Date(),
 			updatedat: 		new Date()
@@ -67,18 +70,22 @@ var handler = {
 				console.log("createJob handler error: ", err);
 			}
 
-			client.query("INSERT INTO jobs (job_id, client, project, job_status, order_type, " +
-				"shipping_date, parts_status, last_update, createdat, updatedat) values " +
-				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+			client.query("INSERT INTO jobs (client, project, job_status, order_type, " +
+				"shipping_date, shipping_notes, parts_status, parts_notes, invoice_notes, " +
+				"payment, notes, last_update, createdat, updatedat) values " +
+				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING job_id",
 				[
-					jobData.job_id,
 					jobData.client,
 					jobData.project,
 					jobData.job_status,
 					jobData.order_type,
 					jobData.shipping_date,
-					jobData.num_of_job_items,
+					jobData.shipping_notes,
 					jobData.parts_status,
+					jobData.parts_notes,
+					jobData.invoice_notes,
+					jobData.payment,
+					jobData.notes,
 					jobData.last_update,
 					jobData.createdat,
 					jobData.updatedat
@@ -86,7 +93,11 @@ var handler = {
 					if (errInsert) {
 						return reply(errInsert).code(400);
 					} else if (info.rowCount === 1) {
-						return reply(info.rows[0]);
+						console.log(info.rows[0]);
+						return reply({
+							job_id: info.rows[0].job_id,
+							details: info.rows[0]
+						});
 					} else {
 						return reply(errInsert);
 					}
@@ -162,15 +173,16 @@ var handler = {
 				if (errJob) {
 					return reply().code(404);
 				} else {
-					client.query("SELECT * FROM job_items WHERE job_id={$1)", [id], function(errItems, moreInfo) {
+					client.query("SELECT * FROM job_items WHERE job_id=($1)", [id], function(errItems, moreInfo) {
 						var jobObj = {
 							job_id: id,
 							details : info.rows[0],
 							items : moreInfo && moreInfo.rows || []
 						};
+						console.log(errItems);
 
 						if (pdf) {
-							reply(pdfMaker(jobObj));
+							pdfMaker(jobObj, reply);
 						} else {
 							reply(jobObj);
 						}
@@ -184,16 +196,22 @@ var handler = {
 
 	getJobItemsTable : function(request, reply) {
 
-
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
 				console.log("getJobItemsTable handler error: ", err);
 			}
-			var query = client.query("SELECT * FROM job_items", function(queryErr, info) {
+
+			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status " +
+												"FROM job_items INNER JOIN jobs " +
+												"ON job_items.job_id = jobs.job_id";
+
+			var query = client.query(queryString, function(queryErr, info) {
 				if (queryErr) {
+					console.log(queryErr);
 					return reply(queryErr).code(400);
 				} else {
+					console.log(info.rows);
 					return reply(info.rows);
 				}
 			});
@@ -202,28 +220,28 @@ var handler = {
 
 // -------------------------------------------------- \\
 
-	getJobItems : function(request, reply) {
+	// getJobItems : function(request, reply) {
 
-		var results = [];
-		var id = request.params.id;
+	// 	var results = [];
+	// 	var id = request.params.id;
 
-		pg.connect(conString, function(err, client, done) {
+	// 	pg.connect(conString, function(err, client, done) {
 
-			if (err) {
-				console.log("getJobItems handler error: ", err);
-			}
-			var query = client.query("SELECT * FROM job_items WHERE id=($1)", [id]);
+	// 		if (err) {
+	// 			console.log("getJobItems handler error: ", err);
+	// 		}
+	// 		var query = client.query("SELECT * FROM job_items WHERE id=($1)", [id]);
 
-			query.on("row", function(row) {
-				results.push(row);
-			});
+	// 		query.on("row", function(row) {
+	// 			results.push(row);
+	// 		});
 
-			query.on("end", function() {
-				client.end();
-				return reply(results);
-			});
-		});
-	},
+	// 		query.on("end", function() {
+	// 			client.end();
+	// 			return reply(results);
+	// 		});
+	// 	});
+	// },
 
 	createJobItem : function(request, reply) {
 
@@ -304,7 +322,7 @@ var handler = {
 				console.log("updateJobItems handler error: ", err);
 			}
 
-			var string = "UPDATE job_items SET updatedat=" + new Date() + " ";
+			var string = "UPDATE job_items SET ";
 
 			var items = fieldsToUpdate.map(function(cell, i) {
 				string += cell + "=($" + (i + 2) + ") ";
@@ -313,8 +331,7 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string);
-
+			console.log(string, items);
 			client.query(string + "WHERE item_id=($1) RETURNING *", [item_id].concat(items), function(errInsert, info, res) {
 				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
@@ -358,7 +375,14 @@ var handler = {
 					if (getErr) {
 						return reply(getErr).code(400);
 					} else {
-						return reply(info.rows);
+						var formattedSelections = {};
+						info.rows.forEach(function(selection) {
+							if(!formattedSelections[selection.type]) {
+								formattedSelections[selection.type] = [];
+							}
+							formattedSelections[selection.type].push(selection);
+						});
+						return reply(formattedSelections);
 					}
 			});
 		});
@@ -388,13 +412,20 @@ var handler = {
 
 	getProductsTable : function(request, reply) {
 
+		var saleable = request.query.saleable;
+
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
 				console.log(err);
 				reply(err).code(400);
 			}
 
-			client.query("SELECT * FROM products", function(getErr, info) {
+			var queryString = "SELECT * FROM products";
+			if(saleable) {
+				queryString += " WHERE saleable=true";
+			}
+
+			client.query(queryString, function(getErr, info) {
 				if (getErr) {
 					return reply(getErr).code(400);
 				} else {
@@ -623,12 +654,10 @@ var handler = {
 			query.on("end", function() {
 				client.end();
 				if (results.length > 0) {
-					console.log("authenticated!");
 					request.auth.session.clear();
 					request.auth.session.set(profile);
 					return reply.redirect("/");
 				} else if (results.length <= 0) {
-					console.log("not authenticated!");
 					return reply("You must be an authenticated user to use this application.");
 				}
 			});

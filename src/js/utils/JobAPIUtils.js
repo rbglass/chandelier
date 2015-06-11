@@ -2,6 +2,7 @@
 
 export function turnErrorIntoAlert(err) {
 	return {
-		code: err.headers["Status-Code"]
+		type: "error",
+		message: err.headers["Status-Code"]
 	};
 }

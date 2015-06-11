@@ -3,12 +3,7 @@ import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-var selections = {
-	job_status: [],
-	order_type: [],
-	parts_status: [],
-	payment: []
-};
+var selections = {};
 
 const SelectionStore = createStore({
 	getSelections() {
@@ -20,7 +15,9 @@ const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_SELECTIONS:
-				selections = action.data;
+				Object.keys(action.data).forEach(type => {
+					selections[type] = action.data[type].map(sel => sel.label);
+				});
 				SelectionStore.emitChange();
 				break;
 

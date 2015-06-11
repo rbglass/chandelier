@@ -9,7 +9,7 @@ export default class FilterInput extends Component {
 
 		return (
 			<input type={this.props.type}
-					value={this.props.filterBy}
+					value={this.props.value}
 					onChange={this.filterChange.bind(this)}
 					className={this.props.className}
 					placeholder={this.props.placeholder} />

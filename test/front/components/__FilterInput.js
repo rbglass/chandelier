@@ -10,7 +10,7 @@ describe("FilterInput", () => {
 	let currentKey;
 
 	const RenderedComponent = TestUtils.renderIntoDocument(
-		<FilterInput type="text" filterBy="hi" setFilter={key => { currentKey = key; }}
+		<FilterInput type="text" value="hi" setFilter={key => { currentKey = key; }}
 				className="testing" placeholder="..." />
 	);
 

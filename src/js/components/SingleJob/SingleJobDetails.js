@@ -48,18 +48,20 @@ export default class SingleJobDetails extends Component {
 					<label htmlFor="jobstatus">Job Status:</label>
 					<select className="job-text-input" id="job_status" value={details.job_status}
 							onChange={ks("job_status", changeDetails)} >
-							{this.props.selections.job_status.map(opt => {
+							{this.props.selections.job_status ?
+								this.props.selections.job_status.map(opt => {
 								return <option key={opt}>{opt}</option>;
-							})}
+							}) : "No opts" }
 					</select>
 				</div>
 				<div className="job-details-field">
 					<label htmlFor="ordertype">Order Type:</label>
 					<select className="job-text-input" id="ordertype" value={details.order_type}
 							onChange={ks("order_type", changeDetails)} >
-						{this.props.selections.order_type.map(opt => {
+						{this.props.selections.order_type ?
+							this.props.selections.order_type.map(opt => {
 							return <option key={opt}>{opt}</option>;
-						})}
+						}) : "No opts" }
 					</select>
 				</div>
 				<div className="job-details-field">
@@ -71,9 +73,10 @@ export default class SingleJobDetails extends Component {
 					<label htmlFor="partsstatus">Parts Status:</label>
 					<select className="job-text-input" id="partsstatus" value={details.parts_status}
 							onChange={ks("parts_status", changeDetails)} >
-							{this.props.selections.parts_status.map(opt => {
+							{this.props.selections.parts_status ?
+								this.props.selections.parts_status.map(opt => {
 								return <option key={opt}>{opt}</option>;
-							})}
+							}) : "No opts" }
 					</select>
 				</div>
 				<div className="job-details-field notes">

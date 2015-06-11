@@ -3,8 +3,9 @@
 :root {
 	--even-row: #f2f2f2;
 	--odd-row: #ffffff;
-	--darkgrey:;
-	--lightgrey:;
+	--blue: rgba(39, 92, 152, 1);
+	--blueborder: rgba(1,1,1,0.5);
+	--hover: 0.8;
 }
 
 body {
@@ -28,10 +29,6 @@ label {
 	line-height: 25px;
 }
 
-.page-header {
-	text-align: center;
-}
-
 button:focus {
 	outline: none;
 }
@@ -43,7 +40,7 @@ button:focus {
 /* Nav */
 
 .nav {
-	background-color: rgba(39, 92, 152, 1);
+	background-color: var(--blue);
 }
 
 .nav.navbar {
@@ -51,7 +48,7 @@ button:focus {
   flex-direction: row;
   height: 40px;
   padding-left: 10px;
-  border-bottom: 2px solid rgba(1,1,1,0.5);
+  border-bottom: 2px solid var(--blueborder);
 }
 
 .nav.nav-item {
@@ -70,18 +67,19 @@ button:focus {
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
+	font-size: 0.9rem;
 }
 
 .nav.nav-item a:hover {
-	background-color: rgba(0,0,0,0.2);
+	opacity: var(--hover);
 }
 .nav.nav-item a.active {
-	background-color: rgba(1, 1, 1, 0.5);
+	background-color: var(--blueborder);
 	text-decoration: underline;
 }
 
 .nav.nav-item a.active:hover {
-	background-color: rgba(1, 1, 1, 0.5);
+	opacity: var(--hover);
 	text-decoration: underline;
 }
 
@@ -98,17 +96,20 @@ button:focus {
 
 /* Alert */
 .alert-box {
+	color: white;
 	position: fixed;
-	top: 0;
+	top: 50px;
+	height: 40px;
+	min-width: 60px;
 	right: 0;
-
 	font-size: 0.8rem;
 	text-align: center;
-
-	padding: 4px;
-	border-radius: 2px;
-
-	background-color: rgba(59, 239, 31, 0.57);
+	padding-left: 8px;
+	border-radius: 4px 0px 0px 4px;
+	background-color: var(--blue);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 /* Table Manipulator Panel */
@@ -192,11 +193,16 @@ button:focus {
 .table-header {
 	display: none;
 	align-items: flex-end;
+	background-color: var(--blue);
 }
 .table-header .table-row-item {
 	position: relative;
 	user-select: none;
-	font-size: 0.9rem;
+	font-size: 0.8rem;
+	align-items: baseline;
+	color: white;
+	height: 33px;
+	background-color: var(--blue);
 	/*font-weight: bold;*/
 }
 .table-header .table-row-item.qty-sm,
@@ -217,10 +223,9 @@ button:focus {
 .table-header .table-row-item.fixed-col:after {
 	content: none;
 }
-@media (min-width: 500px) {
-	.table-header {
-		background-color: #f2f2f2;
-	}
+
+.table-header .table-row-item.hid {
+	visibility: hidden;
 }
 
 /* Row */
@@ -277,7 +282,8 @@ button:focus {
 
 @media (min-width: 500px) {
 	.table-row-item {
-		border: 1px solid #fff;
+		border-left: 1px solid #fff;
+		border-right:1px solid #fff;
 		padding-left: 0.4em;
 	}
 	.table-row-item:before {
@@ -326,7 +332,7 @@ button:focus {
 }
 
 .table-row-item .btn:hover {
-	background-color: rgba(5, 5, 5, 0.8);
+	opacity: var(--hover);
 	cursor: pointer;
 }
 
@@ -385,7 +391,7 @@ button:focus {
 	font-size: 18px;
 	line-height: 10px;
 
-	background-color: rgba(39, 92, 152, 1);
+	background-color: var(--blue);
 	color: white;
 
 	border: none;
@@ -394,7 +400,7 @@ button:focus {
 }
 
 .add-button:hover {
-	background-color: rgba(5, 5, 5, 0.6);
+	opacity: var(--hover);
 }
 
 

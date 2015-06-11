@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
+import Alert from "../components/common/Alert";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
@@ -23,7 +24,11 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title={`${this.props.params.id}`}/>
+				<NavBar title={`${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
+				{(this.props.isLoading || this.props.alert) ?
+					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<span />
+				}
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 					<div className="table-container">
@@ -48,12 +53,14 @@ function getState() {
 	const items = SingleJobStore.getSortedItems();
 	const filters = SingleJobStore.getFilters();
 	const selections = SelectionStore.getSelections();
+	const isLoading = SingleJobStore.getLoadStatus();
 
 	return {
 		selections,
 		details,
 		items,
-		filters
+		filters,
+		isLoading
 	};
 }
 
@@ -61,7 +68,7 @@ export default connectToStores([SingleJobStore, SelectionStore], getState)(Singl
 
 SingleJobPage.defaultProps = {
 	tableScheme: [
-		{ key: "-", 	       display: "",         className: "fixed-col",
+		{ key: "-", 	       display: "",         className: "fixed-col hid",
 				type: "button", inputClassName: "btn-left", onClick: SharedActionCreators.deleteItem   },
 		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
 				type: "",         onChange: SharedActionCreators.changeItem },
@@ -89,7 +96,11 @@ SingleJobPage.defaultProps = {
 				type: "number",   onChange: SharedActionCreators.changeItem },
 		{ key: "notes",      display: "Notes",      className: "u-flex-grow2",
 				type: "textarea", onChange: SharedActionCreators.changeItem },
-		{ key: "+", 	       display: "",         className: "fixed-col",
+		{ key: "+", 	       display: "",         className: "fixed-col hid",
 				type: "button", inputClassName: "btn-right", onClick: SharedActionCreators.createItem  }
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 };
