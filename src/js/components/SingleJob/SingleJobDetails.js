@@ -101,7 +101,7 @@ export default class SingleJobDetails extends Component {
 
 			<div className="job-details-column">
 				<div className="job-details-field">
-					<input type="button" value="pdf" onClick={getPDF.bind(this, details.job_id)}/>
+					<input className="pdfButton" type="button" value="PDF" onClick={getPDF.bind(this, details.job_id)}/>
 				</div>
 			</div>
 			</div>
