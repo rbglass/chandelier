@@ -10,7 +10,7 @@ describe("SelectionStore", function() {
 	});
 
 	it("#has a selections getter method", function() {
-		assert.equal(typeof this.SelectionStore.getSelections(), "function");
+		assert.equal(typeof this.SelectionStore.getSelections, "function");
 	});
 
 	it("#updates its internal state if the actiontype is RECEIVE SELECTIONS", function() {
