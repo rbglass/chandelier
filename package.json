@@ -4,7 +4,7 @@
   "description": "production management for people who produce",
   "main": "app.js",
   "scripts": {
-  	"start": "node app.js",
+    "start": "node app.js",
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
     "build": "npm run build:js & npm run build:css",
@@ -36,6 +36,7 @@
     "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
+    "joi": "^6.4.3",
     "object-assign": "^2.0.0",
     "pdfkit": "^0.7.1",
     "pg": "^4.3.0",
