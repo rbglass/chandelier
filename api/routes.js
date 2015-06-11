@@ -4,7 +4,9 @@ var path = require("path");
 
 var handler = require("./handler");
 var server  = require("./server");
-
+var users		= require("./models/schema_validation");
+var jobs		= require("./models/schema_validation");
+var job_items		= require("./models/schema_validation");
 
 module.exports = ([
 
@@ -51,12 +53,22 @@ module.exports = ([
   {
     path    : "/api/jobs",
     method  : "POST",
+		config: {
+			validate : {
+				jobs: jobs
+			}
+		},
     handler : handler.createJob
   },
 
   {
     path    : "/api/jobs/{id}",
     method  : "PUT",
+			config: {
+			validate : {
+				jobs: jobs
+			}
+		},
     handler : handler.updateJob
   },
 
@@ -83,6 +95,11 @@ module.exports = ([
   {
 		path    : "/api/items",
 		method  : "POST",
+			config: {
+			validate : {
+				job_items: job_items
+			}
+		},
 		handler : handler.createJobItem
   },
 
@@ -95,6 +112,11 @@ module.exports = ([
   {
     path    : "/api/items/{item}",
     method  : "PUT",
+			config: {
+			validate : {
+				job_items: job_items
+			}
+		},
     handler : handler.updateJobItem
   },
 
@@ -177,6 +199,7 @@ module.exports = ([
     method : ["GET", "POST"],
     config : {
       auth    : "google",
+
       handler : handler.login
     }
   },
@@ -185,6 +208,9 @@ module.exports = ([
     path    : "/logout",
     method  : "GET",
     config  : {
+			validate: {
+				users: users
+			},
       handler : handler.logout,
       auth    : "session"
     }
