@@ -74,7 +74,7 @@ SingleJobPage.defaultProps = {
 		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
 				type: "",         onChange: SharedActionCreators.changeItem },
 		{ key: "product",    display: "Product",    className: "",
-				type: "text",     onChange: SharedActionCreators.changeItem },
+				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "description", display: "Description", className: "u-flex-grow2",
 				type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",      display: "Glass",      className: "",

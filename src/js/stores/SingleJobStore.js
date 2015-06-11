@@ -7,7 +7,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 
 var isLoading = false,
 		job = {
-			id: "",
+			job_id: "",
 			details: {},
 			items: []
 		},
@@ -47,22 +47,22 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_UPDATED_ITEM:
-				let itemsPostUpdate = job.items.map(item => {
-					if(item.item_id === action.data.item_id) {
-						return action.data;
-					} else {
-						return item;
-					}
-				});
+				// let itemsPostUpdate = job.items.map(item => {
+				// 	if(item.item_id === action.data.item_id) {
+				// 		return action.data;
+				// 	} else {
+				// 		return item;
+				// 	}
+				// });
 
-				job.items = itemsPostUpdate;
+				// job.items = itemsPostUpdate;
 				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
 
 
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
-				if (action.data.id === job.id) {
+				if (action.data.id === job.job_id) {
 					job.details[action.data.key] = action.data.value;
 					SingleJobStore.emitChange();
 				}

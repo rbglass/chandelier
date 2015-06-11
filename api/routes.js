@@ -1,13 +1,12 @@
 "use strict";
 
 var path = require("path");
-
-var handler = require("./handler");
-var server  = require("./server");
-var Schema  = require("./models/schema_validation");
-var users   = Schema.users;
-var jobs		= Schema.jobs;
-var job_items	= Schema.job_items;
+var handler 		= require("./handler");
+var server 			= require("./server");
+var schema			= require("./models/schema_validation");
+var jobs				= schema.jobs;
+var job_items		= schema.job_items;
+var users				= schema.users;
 
 module.exports = ([
 
@@ -198,7 +197,6 @@ module.exports = ([
     method : ["GET", "POST"],
     config : {
       auth    : "google",
-
       handler : handler.login
     }
   },
@@ -207,10 +205,7 @@ module.exports = ([
     path    : "/logout",
     method  : "GET",
     config  : {
-			// validate: {
-			// 	payload: users
-			// },
-      handler : handler.logout,
+    	handler : handler.logout,
       auth    : "session"
     }
   }

@@ -1,7 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { changeDetails, saveDetails } from "../../actions/SharedActionCreators";
-import { getPDF } from "../../actions/SingleJobActionCreators";
+// import { getPDF } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
@@ -89,6 +89,16 @@ export default class SingleJobDetails extends Component {
 
 			<div className="job-details-column u-flex-grow3">
 				<div className="job-details-field">
+					<label htmlFor="payment">Payment:</label>
+					<select className="job-text-input" id="payment" value={details.payment}
+							onChange={ks("payment", changeDetails)} >
+							{this.props.selections.payment ?
+								this.props.selections.payment.map(opt => {
+								return <option key={opt}>{opt}</option>;
+							}) : "No opts" }
+					</select>
+				</div>
+				<div className="job-details-field">
 					<label htmlFor="shippingdate">Shipping Date:</label>
 					<input type="date" value={yyyyMMdd(details.shipping_date)} className="job-text-input" id="shippingdate"
 							onChange={ks("shipping_date", changeDetails)} />
@@ -102,7 +112,9 @@ export default class SingleJobDetails extends Component {
 
 			<div className="job-details-column">
 				<div className="job-details-field">
-					<input type="button" value="pdf" onClick={getPDF.bind(this, details.job_id)}/>
+					<a href={`/api/jobs/${details.job_id}?pdf=true`} target="_blank">
+						<input className="pdfButton" type="button" value="PDF"/>
+					</a>
 				</div>
 			</div>
 			</div>

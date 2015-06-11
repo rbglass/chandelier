@@ -98,7 +98,7 @@ function writeDoc(job, cb) {
 
 			for(var prop in item) {
 					if(item.hasOwnProperty(prop) && item[prop]) {
-							yPos += 14;
+							yPos += 12;
 					}
 			}
 	});
@@ -107,7 +107,6 @@ function writeDoc(job, cb) {
 }
 
 module.exports = function pdfMaker(job, cb) {
-
 	writeDoc(job, cb);
 
 };

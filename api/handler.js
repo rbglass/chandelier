@@ -81,7 +81,6 @@ var handler = {
 					jobData.invoice_notes,
 					jobData.payment,
 					jobData.notes,
-					jobData.last_update,
 					jobData.createdat,
 					jobData.updatedat
 				], function(errInsert, info) {
@@ -168,7 +167,6 @@ var handler = {
 					client.query("SELECT * FROM job_items WHERE job_id=($1)", [id], function(errItems, moreInfo) {
 						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
 
-						console.log(errItems);
 						if (pdf) {
 							pdfMaker(jobObj, reply);
 						} else {
@@ -297,6 +295,11 @@ var handler = {
 		var data = request.payload;
 		var item_id = request.params.item;
 
+		delete data.job_id;
+		delete data.item_id;
+		delete data.updatedat;
+		delete data.createdat;
+
 		var fieldsToUpdate = Object.keys(data);
 
 		if(fieldsToUpdate.length === 0) {
@@ -318,9 +321,7 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string, items);
 			client.query(string + "WHERE item_id=($1) RETURNING *", [item_id].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {
@@ -343,7 +344,7 @@ var handler = {
 				if (errDelete) {
 					return reply(errDelete);
 				} else {
-					return reply().code(204);
+					return reply(id).code(204);
 				}
 			});
 		});
@@ -476,10 +477,8 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string);
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {
@@ -580,10 +579,8 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string);
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [contact].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {

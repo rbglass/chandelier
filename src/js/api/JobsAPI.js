@@ -62,14 +62,14 @@ export function createSingleJobItem(jobId, blueprint) {
 }
 
 export function saveItem(jobId, itemId, updateObj) {
-	request.put(`${items}/${jobId}`)
+	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
 export function deleteSingleItem(jobId, itemId) {
-	request.delete(`${items}/${jobId}/${itemId}`)
-					.end(onReply(ServerActionCreators.deleteItem));
+	request.del(`${items}/${itemId}`)
+					.end(onReply(ServerActionCreators.deleteSingleItem));
 }
 
 // All Selections
@@ -90,11 +90,11 @@ export function getAllContacts() {
 					.end(onReply());
 }
 
-export function getPDF(jobId) {
-	request.get(`${jobs}/${jobId}`)
-					.query({pdf: true})
-					.end((err, res) => {
-						if(err) console.log(err.status, err.message);
-						else console.log(res.body);
-					});
-}
+// export function getPDF(jobId) {
+// 	request.get(`${jobs}/${jobId}`)
+// 					.query({pdf: true})
+// 					.end((err, res) => {
+// 						if(err) console.log(err.status, err.message);
+// 						else console.log(res.body);
+// 					});
+// }
