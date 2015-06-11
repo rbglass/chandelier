@@ -688,6 +688,7 @@ var handler = {
 			var query = client.query("SELECT * FROM users WHERE email=($1)", [profile.email]);
 
 			query.on("row", function(row){
+				console.log(row);
 				results.push(row);
 			});
 

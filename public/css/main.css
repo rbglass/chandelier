@@ -410,6 +410,7 @@ button:focus {
 /* table inputs */
 
 .table-row-item textarea {
+  width: 95%;
   border: ;
 }
 
