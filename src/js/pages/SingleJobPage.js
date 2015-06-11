@@ -25,7 +25,7 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title={`${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
+				<NavBar title={`RB${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
 					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
 					<span />
@@ -71,8 +71,6 @@ SingleJobPage.defaultProps = {
 	tableScheme: [
 		{ key: "-", 	       display: "",         className: "fixed-col hid",
 				type: "button", inputClassName: "btn-left", onClick: SharedActionCreators.deleteItem   },
-		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
-				type: "",         onChange: SharedActionCreators.changeItem },
 		{ key: "product",    display: "Product",    className: "",
 				type: "select",     onChange: SharedActionCreators.changeItem },
 		{ key: "description", display: "Description", className: "u-flex-grow2",

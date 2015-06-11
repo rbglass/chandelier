@@ -188,7 +188,7 @@ var handler = {
 				console.log("getJobItemsTable handler error: ", err);
 			}
 
-			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status " +
+			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment " +
 												"FROM job_items INNER JOIN jobs " +
 												"ON job_items.job_id = jobs.job_id";
 

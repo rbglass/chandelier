@@ -17,6 +17,9 @@ var isLoading = false,
 			restrictions: {
 				"job_status": {
 					key: "job_status"
+				},
+				"payment": {
+					key: "payment"
 				}
 			}
 		};
@@ -26,10 +29,9 @@ const ItemsStore = createStore({
 		let f = filters;
 		const filtered = items.filter(row => {
 			return (
-				FilterUtils.contains(row, f.filterBy)
-				// Need parent shipping date & job_status for this
-				// FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
-				// FilterUtils.restrictTo(row, filters.restrictions)
+				FilterUtils.contains(row, f.filterBy) &&
+				FilterUtils.isWithinBounds(row[f.dateField], f.startDate, f.endDate) &&
+				FilterUtils.restrictTo(row, filters.restrictions)
 			);
 		});
 

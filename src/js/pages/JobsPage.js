@@ -76,9 +76,8 @@ JobsPage.defaultProps = {
 		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2", type: "date",   onChange: SharedActionCreators.changeDetails },
-		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow", type: "date",   onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow", type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
 	],
 	routeScheme: [

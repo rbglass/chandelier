@@ -102,9 +102,9 @@ button:focus {
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
   -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
@@ -116,6 +116,11 @@ button:focus {
   color: white;
   cursor: default;
   margin-right: 15px;
+}
+
+.nav.nav-item.logout {
+  margin-left: 15px;
+  padding-right: 15px;
 }
 
 /* Alert */

@@ -9,6 +9,7 @@ import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import yyyyMMdd from "../utils/yyyyMMdd";
 
 function requestDataFromServer() {
 	SharedActionCreators.getSelections();
@@ -69,9 +70,11 @@ JobItemsPage.defaultProps = {
 	tableScheme: [
 		{ key: "-",           display: "",            className: "fixed-col hid", type: "button",    onClick:SharedActionCreators.deleteItem,
 				inputClassName: "btn-left" },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
 		// { key: "item_id",     display: "Item",        className: "qty-sm",       type: "" },
 		{ key: "product",     display: "Product",     className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "description", display: "Description", className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
+		{ key: "shipping_date", display: "Shipping Date", "className": "", type: "", formattingFunc: yyyyMMdd  },
 		{ key: "glass",       display: "Glass",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "metal",       display: "Metal",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "flex",        display: "Flex",        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },

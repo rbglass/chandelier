@@ -66,6 +66,7 @@ export default class TableRow extends Component {
 						break;
 
 				default:
+						cellValue = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
 						input = cellValue;
 						break;
 			}

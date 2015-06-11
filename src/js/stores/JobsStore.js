@@ -20,10 +20,10 @@ var isLoading = false,
 				},
 				"order_type": {
 					key: "order_type"
+				},
+				"payment": {
+					key: "payment"
 				}
-				// "payment": {
-				// 	key: "payment"
-				// }
 			}
 		};
 
