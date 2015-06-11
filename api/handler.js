@@ -82,6 +82,7 @@ var handler = {
 					jobData.shipping_date,
 					jobData.shipping_notes,
 					jobData.parts_status,
+					jobData.parts_notes,
 					jobData.invoice_notes,
 					jobData.payment,
 					jobData.notes,
@@ -321,7 +322,7 @@ var handler = {
 				console.log("updateJobItems handler error: ", err);
 			}
 
-			var string = "UPDATE job_items SET updatedat=" + new Date() + " ";
+			var string = "UPDATE job_items SET ";
 
 			var items = fieldsToUpdate.map(function(cell, i) {
 				string += cell + "=($" + (i + 2) + ") ";
@@ -330,7 +331,7 @@ var handler = {
 				}
 				return data[cell];
 			});
-
+			console.log(string, items);
 			client.query(string + "WHERE item_id=($1) RETURNING *", [item_id].concat(items), function(errInsert, info, res) {
 				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {

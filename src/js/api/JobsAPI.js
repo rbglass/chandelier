@@ -54,7 +54,9 @@ export function getAllItems() {
 
 // Single Item
 export function createSingleJobItem(jobId, blueprint) {
-	request.post(`${items}/${jobId}`)
+	blueprint.job_id = jobId;
+
+	request.post(items)
 					.send(blueprint)
 					.end(onReply(ServerActionCreators.receiveSingleItem));
 }
