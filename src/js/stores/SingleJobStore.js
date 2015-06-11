@@ -47,7 +47,7 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_UPDATED_ITEM:
-				let newItems = job.items.map(item => {
+				let itemsPostUpdate = job.items.map(item => {
 					if(item.item_id === action.data.item_id) {
 						return action.data;
 					} else {
@@ -55,7 +55,7 @@ const onReceivingAction = action => {
 					}
 				});
 
-				job.items = newItems;
+				job.items = itemsPostUpdate;
 				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
@@ -80,14 +80,14 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.DELETE_ITEM:
-				let newItems = [];
+				let itemsMinusOne = [];
 				job.items.forEach(item => {
 					if (item.item_id === action.data) {
 						return;
 					}
-					newItems.push(item);
+					itemsMinusOne.push(item);
 				});
-				job.items = newItems;
+				job.items = itemsMinusOne;
 				SingleJobStore.emitChange();
 				break;
 

@@ -86,14 +86,14 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.DELETE_ITEM:
-				let newItems = [];
+				let itemsMinusOne = [];
 				items.forEach(item => {
 					if (item.item_id === action.data) {
 						return;
 					}
-					newItems.push(item);
+					itemsMinusOne.push(item);
 				});
-				items = newItems;
+				items = itemsMinusOne;
 				ItemsStore.emitChange();
 				break;
 
