@@ -2,11 +2,12 @@
 
 var path = require("path");
 
-var handler = require("./handler");
-var server  = require("./server");
-var users		= require("./models/schema_validation");
-var jobs		= require("./models/schema_validation");
-var job_items		= require("./models/schema_validation");
+var handler 		= require("./handler");
+var server 			= require("./server");
+var schema			= require("./models/schema_validation");
+var jobs				= schema.jobs;
+var job_items		= schema.job_items;
+var users				= schema.users;
 
 module.exports = ([
 
@@ -55,7 +56,7 @@ module.exports = ([
     method  : "POST",
 		config: {
 			validate : {
-				jobs: jobs
+				payload: jobs
 			}
 		},
     handler : handler.createJob
@@ -66,7 +67,7 @@ module.exports = ([
     method  : "PUT",
 			config: {
 			validate : {
-				jobs: jobs
+				payload: jobs
 			}
 		},
     handler : handler.updateJob
@@ -97,7 +98,7 @@ module.exports = ([
 		method  : "POST",
 			config: {
 			validate : {
-				job_items: job_items
+				payload: job_items
 			}
 		},
 		handler : handler.createJobItem
@@ -114,7 +115,7 @@ module.exports = ([
     method  : "PUT",
 			config: {
 			validate : {
-				job_items: job_items
+				payload: job_items
 			}
 		},
     handler : handler.updateJobItem
@@ -199,7 +200,6 @@ module.exports = ([
     method : ["GET", "POST"],
     config : {
       auth    : "google",
-
       handler : handler.login
     }
   },
@@ -208,10 +208,7 @@ module.exports = ([
     path    : "/logout",
     method  : "GET",
     config  : {
-			validate: {
-				users: users
-			},
-      handler : handler.logout,
+    	handler : handler.logout,
       auth    : "session"
     }
   }

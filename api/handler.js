@@ -59,9 +59,8 @@ var handler = {
 			invoice_notes:      entry.invoice_notes || "",
 			payment:            entry.payment || "Awaiting Payment",
 			notes:              entry.notes || "",
-			last_update: 				entry.last_update || new Date(),
-			createdat: 		new Date(),
-			updatedat: 		new Date()
+			createdat: 					entry.notes || new Date(),
+			updatedat: 					new Date()
 		};
 
 		pg.connect(conString, function(err, client, done) {
@@ -86,7 +85,6 @@ var handler = {
 					jobData.invoice_notes,
 					jobData.payment,
 					jobData.notes,
-					jobData.last_update,
 					jobData.createdat,
 					jobData.updatedat
 				], function(errInsert, info) {
