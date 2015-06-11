@@ -4,7 +4,6 @@
   "description": "production management for people who produce",
   "main": "app.js",
   "scripts": {
-  	"postinstall": "mkdir public/js & npm run build:js",
     "start": "node app.js",
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
@@ -34,6 +33,8 @@
   "homepage": "https://github.com/foundersandcoders/chandelier",
   "dependencies": {
     "bell": "^3.0.0",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.3",
     "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",
@@ -50,8 +51,6 @@
   "devDependencies": {
     "babel": "^5.4.7",
     "babel-eslint": "^3.1.10",
-    "babelify": "^6.1.2",
-    "browserify": "^10.2.3",
     "eslint": "^0.22.1",
     "http-server": "^0.8.0",
     "jsdom": "^3.1.1",
