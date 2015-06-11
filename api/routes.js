@@ -1,7 +1,6 @@
 "use strict";
 
 var path = require("path");
-
 var handler 		= require("./handler");
 var server 			= require("./server");
 var schema			= require("./models/schema_validation");
@@ -49,27 +48,25 @@ module.exports = ([
     handler : handler.getJobsTable
   },
 
-// --------------------------------- \\
-
   {
     path    : "/api/jobs",
     method  : "POST",
-		config: {
-			validate : {
-				payload: jobs
-			}
-		},
+		// config: {
+		// 	validate : {
+		// 		payload: jobs
+		// 	}
+		// },
     handler : handler.createJob
   },
 
   {
     path    : "/api/jobs/{id}",
     method  : "PUT",
-			config: {
-			validate : {
-				payload: jobs
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: jobs
+		// 	}
+		// },
     handler : handler.updateJob
   },
 
@@ -96,11 +93,11 @@ module.exports = ([
   {
 		path    : "/api/items",
 		method  : "POST",
-			config: {
-			validate : {
-				payload: job_items
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: job_items
+		// 	}
+		// },
 		handler : handler.createJobItem
   },
 
@@ -113,11 +110,11 @@ module.exports = ([
   {
     path    : "/api/items/{item}",
     method  : "PUT",
-			config: {
-			validate : {
-				payload: job_items
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: job_items
+		// 	}
+		// },
     handler : handler.updateJobItem
   },
 

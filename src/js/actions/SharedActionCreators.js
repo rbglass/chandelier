@@ -24,6 +24,10 @@ export function deleteItem(jobId, cells) {
 	JobsAPI.deleteSingleItem(jobId, itemId);
 }
 
+export function getAllProducts() {
+	JobsAPI.getAllProducts();
+}
+
 export function changeItem(updateObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.CHANGE_SINGLE_JOB_ITEM,
@@ -38,7 +42,8 @@ export function changeDetails(updateObj) {
 	});
 }
 
-export function recieveAlert(alert) {
+
+export function receiveAlert(alert) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALERT,
 		data: alert

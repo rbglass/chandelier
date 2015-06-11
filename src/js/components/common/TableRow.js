@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
 import keySealer from "../../utils/keySealer";
+import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class TableRow extends Component {
 	handleBlur(e) {
@@ -36,15 +37,16 @@ export default class TableRow extends Component {
 						break;
 
 				case "date":
-						input = <input type="date" value={cellValue} />;
+						input = <input type="date" value={yyyyMMdd(cellValue)} />;
 						break;
 
 				case "select":
 						input = (
 							<select value={cellValue}>
+								<option></option>
 								{ this.props.selections[cell.key] ?
-									this.props.selections[cell.key].map(opt => {
-									return <option key={opt}>{opt}</option>;
+									this.props.selections[cell.key].map((opt, n) => {
+									return <option key={opt + " " + n}>{opt}</option>;
 								}, this) : "No opts" }
 							</select>
 						);

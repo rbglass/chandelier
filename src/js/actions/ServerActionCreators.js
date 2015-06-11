@@ -42,6 +42,7 @@ export function receiveSingleItem(itemObject) {
 	});
 }
 
+// don't bother with this;
 export function receiveUpdatedItem(itemObject) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_UPDATED_ITEM,
@@ -60,5 +61,12 @@ export function receiveAllItems(itemsArr) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALL_ITEMS,
 		data: itemsArr
+	});
+}
+
+export function receiveAllProducts(productObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_ALL_PRODUCTS,
+		data: productObj
 	});
 }

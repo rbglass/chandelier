@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
+import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class Filter extends Component {
 
@@ -28,11 +29,11 @@ export default class Filter extends Component {
 						setFilter={this.props.setFilter} className={textFilterClassName}
 						placeholder="Filter all by..."
 					/>
-					<FilterInput type="date" value={this.props.filters.startDate}
+					<FilterInput type="date" value={yyyyMMdd(this.props.filters.startDate)}
 						setFilter={this.props.setStartDate} className={dateFilterClassName}
 						placeholder="Start Date"
 					/>
-					<FilterInput type="date" value={this.props.filters.endDate}
+					<FilterInput type="date" value={yyyyMMdd(this.props.filters.endDate)}
 						setFilter={this.props.setEndDate} className={dateFilterClassName}
 						placeholder="End Date"
 					/>
@@ -46,23 +47,25 @@ export default class Filter extends Component {
 }
 
 Filter.propTypes = {
-	filterBy    : PropTypes.string,
-	startDate   : PropTypes.string,
-	endDate     : PropTypes.string,
+	filters: PropTypes.shape({
+		filterBy    : PropTypes.string,
+		startDate   : PropTypes.string,
+		endDate     : PropTypes.string,
+		restrictions: PropTypes.objectOf(PropTypes.shape({
+				key    : PropTypes.string,
+				options: PropTypes.arrayOf(PropTypes.string)
+			})
+		)
+	}),
 
 	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number,
 		label: PropTypes.string,
 		type: PropTypes.string
 	}))),
-	restrictions: PropTypes.objectOf(PropTypes.shape({
-			key    : PropTypes.string,
-			options: PropTypes.arrayOf(PropTypes.string)
-		})
-	),
 
 	setFilter   : PropTypes.func,
 	setStartDate: PropTypes.func,
 	setEndDate  : PropTypes.func,
-	onSelect    : PropTypes.func
+	restrictTo  : PropTypes.func
 };

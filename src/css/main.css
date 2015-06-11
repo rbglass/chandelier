@@ -23,6 +23,7 @@ a:visited {
 
 a {
 	color: inherit;
+	z-index: 99999;
 }
 
 label {
@@ -417,7 +418,7 @@ button:focus {
 	color: white;
 	padding: 10px 20px;
 	font-size: 15px;
-	margin: 10px 30px 10px 0;
+	cursor: pointer;
 }
 
 /* Flex Utility classes */

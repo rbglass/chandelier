@@ -5,6 +5,7 @@ var index = path.join(__dirname, "/../public/index.html");
 var config = require("./config.js");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
+var formatter = require("./utils/formatter");
 var conString = process.env.DATABASE_URL || config.database.dburl;
 
 var handler = {
@@ -31,12 +32,7 @@ var handler = {
 				if (jobErr) {
 					return reply(jobErr).code(400);
 				} else {
-					return reply(info.rows.map(function(row) {
-						return {
-							job_id : row.job_id,
-							details : row
-						};
-					}));
+					return reply(info.rows.map(formatter.job));
 				}
 			});
 		});
@@ -59,8 +55,8 @@ var handler = {
 			invoice_notes:      entry.invoice_notes || "",
 			payment:            entry.payment || "Awaiting Payment",
 			notes:              entry.notes || "",
-			createdat: 					entry.notes || new Date(),
-			updatedat: 					new Date()
+			createdat: 		new Date(),
+			updatedat: 		new Date()
 		};
 
 		pg.connect(conString, function(err, client, done) {
@@ -71,8 +67,8 @@ var handler = {
 
 			client.query("INSERT INTO jobs (client, project, job_status, order_type, " +
 				"shipping_date, shipping_notes, parts_status, parts_notes, invoice_notes, " +
-				"payment, notes, last_update, createdat, updatedat) values " +
-				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING job_id",
+				"payment, notes, createdat, updatedat) values " +
+				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING job_id",
 				[
 					jobData.client,
 					jobData.project,
@@ -89,13 +85,10 @@ var handler = {
 					jobData.updatedat
 				], function(errInsert, info) {
 					if (errInsert) {
+						console.log(errInsert);
 						return reply(errInsert).code(400);
 					} else if (info.rowCount === 1) {
-						console.log(info.rows[0]);
-						return reply({
-							job_id: info.rows[0].job_id,
-							details: info.rows[0]
-						});
+						return reply(formatter.job(info.rows[0]));
 					} else {
 						return reply(errInsert);
 					}
@@ -127,7 +120,7 @@ var handler = {
 
 			client.query(string + "WHERE job_id=($1) RETURNING *", [job_id].concat(items), function(errInsert, info, res) {
 				if(info.rowCount === 1) {
-					return reply(info.rows[0]);
+					return reply(formatter.job(info.rows[0]));
 				} else {
 					return reply(errInsert);
 				}
@@ -172,12 +165,7 @@ var handler = {
 					return reply().code(404);
 				} else {
 					client.query("SELECT * FROM job_items WHERE job_id=($1)", [id], function(errItems, moreInfo) {
-						var jobObj = {
-							job_id: id,
-							details : info.rows[0],
-							items : moreInfo && moreInfo.rows || []
-						};
-						console.log(errItems);
+						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
 
 						if (pdf) {
 							pdfMaker(jobObj, reply);
@@ -209,7 +197,6 @@ var handler = {
 					console.log(queryErr);
 					return reply(queryErr).code(400);
 				} else {
-					console.log(info.rows);
 					return reply(info.rows);
 				}
 			});
@@ -308,6 +295,11 @@ var handler = {
 		var data = request.payload;
 		var item_id = request.params.item;
 
+		delete data.job_id;
+		delete data.item_id;
+		delete data.updatedat;
+		delete data.createdat;
+
 		var fieldsToUpdate = Object.keys(data);
 
 		if(fieldsToUpdate.length === 0) {
@@ -329,9 +321,7 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string, items);
 			client.query(string + "WHERE item_id=($1) RETURNING *", [item_id].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {
@@ -354,7 +344,7 @@ var handler = {
 				if (errDelete) {
 					return reply(errDelete);
 				} else {
-					return reply().code(204);
+					return reply(id).code(204);
 				}
 			});
 		});
@@ -427,7 +417,7 @@ var handler = {
 				if (getErr) {
 					return reply(getErr).code(400);
 				} else {
-					return reply(info.rows);
+					return reply(formatter.products(info.rows));
 				}
 			});
 		});
@@ -487,10 +477,8 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string);
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {
@@ -591,10 +579,8 @@ var handler = {
 				}
 				return data[cell];
 			});
-			console.log(string);
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [contact].concat(items), function(errInsert, info, res) {
-				console.log(errInsert, info, res);
 				if(info.rowCount === 1) {
 					return reply(info.rows[0]);
 				} else {
