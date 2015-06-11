@@ -63,15 +63,15 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_UPDATED_ITEM:
-				let newItems = items.map(item => {
-					if(item.item_id === action.data.item_id) {
-						return action.data;
-					} else {
-						return item;
-					}
-				});
+				// let newItems = items.map(item => {
+				// 	if(item.item_id === action.data.item_id) {
+				// 		return action.data;
+				// 	} else {
+				// 		return item;
+				// 	}
+				// });
 
-				items = newItems;
+				// items = newItems;
 				isLoading = false;
 				ItemsStore.emitChange();
 				break;

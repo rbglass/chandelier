@@ -43,14 +43,14 @@ export function receiveSingleItem(itemObject) {
 }
 
 // don't bother with this;
-export function receiveUpdatedItem(itemObject) {
+export function receiveUpdatedItem() {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_UPDATED_ITEM,
-		data: itemObject
+		data: true
 	});
 }
 
-export function deleteSingleItem(itemId) {
+export function deleteSingleItem(res, itemId) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.DELETE_ITEM,
 		data: itemId

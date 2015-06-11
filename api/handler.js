@@ -30,8 +30,10 @@ var handler = {
 
 			var query = client.query("SELECT * FROM jobs", function(jobErr, info) {
 				if (jobErr) {
+					client.end();
 					return reply(jobErr).code(400);
 				} else {
+					client.end();
 					return reply(info.rows.map(formatter.job));
 				}
 			});
@@ -86,10 +88,13 @@ var handler = {
 				], function(errInsert, info) {
 					if (errInsert) {
 						console.log(errInsert);
+						client.end();
 						return reply(errInsert).code(400);
 					} else if (info.rowCount === 1) {
+						client.end();
 						return reply(formatter.job(info.rows[0]));
 					} else {
+						client.end();
 						return reply(errInsert);
 					}
 				});
@@ -120,8 +125,10 @@ var handler = {
 
 			client.query(string + "WHERE job_id=($1) RETURNING *", [job_id].concat(items), function(errInsert, info, res) {
 				if(info.rowCount === 1) {
+					client.end();
 					return reply(formatter.job(info.rows[0]));
 				} else {
+					client.end();
 					return reply(errInsert);
 				}
 			});
@@ -140,8 +147,10 @@ var handler = {
 
 			client.query("DELETE FROM jobs WHERE job_id=($1)", [id], function(delErr, info) {
 				if (delErr) {
+					client.end();
 					return reply(delErr).code(404);
 				} else {
+					client.end();
 					return reply().code(204);
 				}
 			});
@@ -168,8 +177,10 @@ var handler = {
 						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
 
 						if (pdf) {
+							client.end();
 							pdfMaker(jobObj, reply);
 						} else {
+							client.end();
 							reply(jobObj);
 						}
 					});
@@ -195,8 +206,10 @@ var handler = {
 			var query = client.query(queryString, function(queryErr, info) {
 				if (queryErr) {
 					console.log(queryErr);
+					client.end();
 					return reply(queryErr).code(400);
 				} else {
+					client.end();
 					return reply(info.rows);
 				}
 			});
@@ -282,8 +295,10 @@ var handler = {
 						console.log("err: ", errInsert);
 					}
 					if (info.rowCount === 1) {
+						client.end();
 						reply(info.rows[0]);
 					} else {
+						client.end();
 						reply(errInsert);
 					}
 				});
@@ -299,11 +314,14 @@ var handler = {
 		delete data.item_id;
 		delete data.updatedat;
 		delete data.createdat;
+		delete data.shipping_date;
+		delete data.job_status;
+		delete data.payment;
 
 		var fieldsToUpdate = Object.keys(data);
 
 		if(fieldsToUpdate.length === 0) {
-			return reply("No fields passed");
+			return reply("No fields passed").code(400);
 		}
 
 		pg.connect(conString, function(err, client, done) {
@@ -321,10 +339,16 @@ var handler = {
 				}
 				return data[cell];
 			});
-			client.query(string + "WHERE item_id=($1) RETURNING *", [item_id].concat(items), function(errInsert, info, res) {
-				if(info.rowCount === 1) {
-					return reply(info.rows[0]);
+			client.query(string + "WHERE item_id=($1)", [item_id].concat(items), function(errInsert, info, res) {
+				if(errInsert) {
+					console.log(errInsert);
+					client.end();
+					return reply(errInsert).code(400);
+				} else if(info && info.rowCount === 1) {
+					client.end();
+					return reply().code(200);
 				} else {
+					client.end();
 					return reply(errInsert);
 				}
 			});
@@ -342,8 +366,10 @@ var handler = {
 
 			client.query("DELETE FROM job_items WHERE item_id=($1)", [id], function(errDelete, info) {
 				if (errDelete) {
+					client.end();
 					return reply(errDelete);
 				} else {
+					client.end();
 					return reply(id).code(204);
 				}
 			});
@@ -370,6 +396,7 @@ var handler = {
 							}
 							formattedSelections[selection.type].push(selection);
 						});
+						client.end();
 						return reply(formattedSelections);
 					}
 			});
@@ -388,8 +415,10 @@ var handler = {
 			client.query("INSERT INTO selections (type, label) values ($1, $2) RETURNING *",
 				[data.type, data.label], function(insertErr, info) {
 					if (insertErr) {
+						client.end();
 						return reply(insertErr).code(400);
 					} else {
+						client.end();
 						return reply(info.rows[0]);
 					}
 				});
@@ -404,8 +433,7 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				console.log(err);
-				reply(err).code(400);
+				return reply(err).code(400);
 			}
 
 			var queryString = "SELECT * FROM products";
@@ -415,8 +443,10 @@ var handler = {
 
 			client.query(queryString, function(getErr, info) {
 				if (getErr) {
+					client.end();
 					return reply(getErr).code(400);
 				} else {
+					client.end();
 					return reply(formatter.products(info.rows));
 				}
 			});
@@ -436,14 +466,17 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
+				client.end();
 				reply("createProduct handler error:", err).code(400);
 			}
 
 			client.query("INSERT INTO products (type, name, description, active, saleable) values ($1, $2, $3, $4, $5) RETURNING *",
 				newProduct, function(createErr, info) {
 					if (createErr) {
+						client.end();
 						return reply(createErr).code(400);
 					} else {
+						client.end();
 						return reply(info.rows[0]);
 					}
 				});
@@ -459,7 +492,7 @@ var handler = {
 		var fieldsToUpdate = Object.keys(data);
 
 		if(fieldsToUpdate.length === 0) {
-			return reply("No fields passed");
+			return reply("No fields passed").code(400);
 		}
 
 		pg.connect(conString, function(err, client, done) {
@@ -480,8 +513,10 @@ var handler = {
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
 				if(info.rowCount === 1) {
+					client.end();
 					return reply(info.rows[0]);
 				} else {
+					client.end();
 					return reply(errInsert);
 				}
 			});
@@ -499,8 +534,10 @@ var handler = {
 
 			client.query("DELETE FROM products WHERE id=($1)", [id], function(errDelete, info) {
 				if (errDelete) {
+					client.end();
 					return reply(errDelete);
 				} else {
+					client.end();
 					return reply().code(204);
 				}
 			});
@@ -518,8 +555,10 @@ var handler = {
 
 			client.query("SELECT * FROM contacts", function(getErr, info) {
 				if (getErr) {
+					client.end();
 					return reply(getErr).code(400);
 				} else {
+					client.end();
 					return reply(info.rows);
 				}
 			});
@@ -545,8 +584,10 @@ var handler = {
 			client.query("INSERT INTO contacts (id, type, name, active) values ($1, $2, $3, $4) RETURNING *",
 				newContact, function(createErr, info) {
 					if (createErr) {
+						client.end();
 						return reply(createErr).code(400);
 					} else {
+						client.end();
 						return reply(info.rows[0]);
 					}
 				});
@@ -561,7 +602,7 @@ var handler = {
 		var fieldsToUpdate = Object.keys(data);
 
 		if(fieldsToUpdate.length === 0) {
-			return reply("No fields passed");
+			return reply("No fields passed").code(400);
 		}
 
 		pg.connect(conString, function(err, client, done) {
@@ -582,8 +623,10 @@ var handler = {
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [contact].concat(items), function(errInsert, info, res) {
 				if(info.rowCount === 1) {
+					client.end();
 					return reply(info.rows[0]);
 				} else {
+					client.end();
 					return reply(errInsert);
 				}
 			});
@@ -601,9 +644,11 @@ var handler = {
 
 			client.query("DELETE FROM contacts WHERE id=($1)", [id], function(errDelete, info) {
 				if (errDelete) {
-					return reply(errDelete);
+					client.end();
+					reply(errDelete);
 				} else {
-					return reply().code(204);
+					client.end();
+					reply().code(204);
 				}
 			});
 		});
@@ -618,8 +663,6 @@ var handler = {
 
 		var profile = {
 			auth_method : "google",
-			username    : creds.profile.raw.name,
-			auth_id     : creds.profile.raw.id,
 			email       : creds.profile.raw.email
 		};
 
@@ -629,7 +672,7 @@ var handler = {
 			if (err) {
 				console.log("login error: ", err);
 			}
-			var query = client.query("SELECT * FROM users WHERE email=($1)", ["ben@wesort.co.uk"]);
+			var query = client.query("SELECT * FROM users WHERE email=($1)", profile.email);
 
 			query.on("row", function(row){
 				results.push(row);

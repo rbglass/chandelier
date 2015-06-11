@@ -74,6 +74,7 @@ JobItemsPage.defaultProps = {
 		// { key: "item_id",     display: "Item",        className: "qty-sm",       type: "" },
 		{ key: "product",     display: "Product",     className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "description", display: "Description", className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
+		{ key: "job_status",    display: "Job Status",    "className": "",             type: ""},
 		{ key: "shipping_date", display: "Shipping Date", "className": "", type: "", formattingFunc: yyyyMMdd  },
 		{ key: "glass",       display: "Glass",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "metal",       display: "Metal",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },

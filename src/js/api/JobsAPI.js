@@ -61,7 +61,7 @@ export function createSingleJobItem(jobId, blueprint) {
 					.end(onReply(ServerActionCreators.receiveSingleItem));
 }
 
-export function saveItem(jobId, itemId, updateObj) {
+export function saveItem(itemId, updateObj) {
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
@@ -69,7 +69,7 @@ export function saveItem(jobId, itemId, updateObj) {
 
 export function deleteSingleItem(jobId, itemId) {
 	request.del(`${items}/${itemId}`)
-					.end(onReply(ServerActionCreators.deleteSingleItem));
+					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
 // All Selections
