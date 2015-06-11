@@ -4,9 +4,10 @@ var path = require("path");
 
 var handler = require("./handler");
 var server  = require("./server");
-var users		= require("./models/schema_validation");
-var jobs		= require("./models/schema_validation");
-var job_items		= require("./models/schema_validation");
+var Schema  = require("./models/schema_validation");
+var users   = Schema.users;
+var jobs		= Schema.jobs;
+var job_items	= Schema.job_items;
 
 module.exports = ([
 
@@ -48,27 +49,25 @@ module.exports = ([
     handler : handler.getJobsTable
   },
 
-// --------------------------------- \\
-
   {
     path    : "/api/jobs",
     method  : "POST",
-		config: {
-			validate : {
-				jobs: jobs
-			}
-		},
+		// config: {
+		// 	validate : {
+		// 		payload: jobs
+		// 	}
+		// },
     handler : handler.createJob
   },
 
   {
     path    : "/api/jobs/{id}",
     method  : "PUT",
-			config: {
-			validate : {
-				jobs: jobs
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: jobs
+		// 	}
+		// },
     handler : handler.updateJob
   },
 
@@ -95,11 +94,11 @@ module.exports = ([
   {
 		path    : "/api/items",
 		method  : "POST",
-			config: {
-			validate : {
-				job_items: job_items
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: job_items
+		// 	}
+		// },
 		handler : handler.createJobItem
   },
 
@@ -112,11 +111,11 @@ module.exports = ([
   {
     path    : "/api/items/{item}",
     method  : "PUT",
-			config: {
-			validate : {
-				job_items: job_items
-			}
-		},
+		// 	config: {
+		// 	validate : {
+		// 		payload: job_items
+		// 	}
+		// },
     handler : handler.updateJobItem
   },
 
@@ -208,9 +207,9 @@ module.exports = ([
     path    : "/logout",
     method  : "GET",
     config  : {
-			validate: {
-				users: users
-			},
+			// validate: {
+			// 	payload: users
+			// },
       handler : handler.logout,
       auth    : "session"
     }
