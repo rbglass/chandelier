@@ -3,40 +3,34 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as JobsAPI from "../api/JobsAPI";
 
-function startLoading() {
+export function startLoading() {
 	AppDispatcher.dispatch({
 		type: ActionTypes.IS_LOADING
 	});
 }
 
 export function getSelections() {
-	startLoading();
 	JobsAPI.getSelections();
 }
 
 export function saveDetails(jobId, details) {
-	startLoading();
 	JobsAPI.saveDetails(jobId, details);
 }
 
 export function createItem(jobId, blueprint) {
-	startLoading();
 	JobsAPI.createSingleJobItem(jobId, blueprint);
 }
 
 export function saveItem(itemId, item) {
-	startLoading();
 	JobsAPI.saveItem(itemId, item);
 }
 
 export function deleteItem(jobId, cells) {
-	startLoading();
 	const itemId = cells.item_id;
 	JobsAPI.deleteSingleItem(jobId, itemId);
 }
 
 export function getAllProducts() {
-	startLoading();
 	JobsAPI.getAllProducts();
 }
 

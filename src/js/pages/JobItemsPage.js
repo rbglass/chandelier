@@ -29,7 +29,7 @@ class JobItemsPage extends Component {
 			<div>
 				<NavBar title="All Items" routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
 					<span />
 				}
 				<div className="container">
@@ -67,7 +67,7 @@ function getState() {
 	};
 }
 
-export default connectToStores([ItemsStore, SelectionStore], getState)(JobItemsPage);
+export default connectToStores([ItemsStore, SelectionStore, AlertStore], getState)(JobItemsPage);
 
 JobItemsPage.defaultProps = {
 	tableScheme: [

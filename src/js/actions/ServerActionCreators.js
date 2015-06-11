@@ -52,7 +52,7 @@ export function receiveUpdatedItem() {
 
 export function deleteSingleItem(res, itemId) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.DELETE_ITEM,
+		type: ActionTypes.RECEIVE_DELETION_CONFIRMATION,
 		data: itemId
 	});
 }

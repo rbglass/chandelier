@@ -26,22 +26,26 @@ function onReply(successAction, ...etc) {
 
 // All Jobs
 export function getAllJobs() {
+	SharedActionCreators.startLoading();
 	request.get(jobs)
 					.end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
 // Single Jobs
 export function getSingleJob(jobId) {
+	SharedActionCreators.startLoading();
 	request.get(`${jobs}/${jobId}`)
 					.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
 export function createSingleJob() {
+	SharedActionCreators.startLoading();
 	request.post(jobs)
 					.end(onReply(ServerActionCreators.receiveNewJob));
 }
 
 export function saveDetails(jobId, updateObj) {
+	SharedActionCreators.startLoading();
 	request.put(`${jobs}/${jobId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedJob));
@@ -49,6 +53,7 @@ export function saveDetails(jobId, updateObj) {
 
 // All items
 export function getAllItems() {
+	SharedActionCreators.startLoading();
 	request.get(items)
 					.end(onReply(ServerActionCreators.receiveAllItems));
 }
@@ -57,36 +62,42 @@ export function getAllItems() {
 export function createSingleJobItem(jobId, blueprint) {
 	blueprint.job_id = jobId;
 
+	SharedActionCreators.startLoading();
 	request.post(items)
 					.send(blueprint)
 					.end(onReply(ServerActionCreators.receiveSingleItem));
 }
 
 export function saveItem(itemId, updateObj) {
+	SharedActionCreators.startLoading();
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
 export function deleteSingleItem(jobId, itemId) {
+	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)
 					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
 // All Selections
 export function getSelections() {
+	SharedActionCreators.startLoading();
 	request.get(selections)
 					.end(onReply(ServerActionCreators.receiveSelections));
 }
 
 // All Products
 export function getAllProducts() {
+	SharedActionCreators.startLoading();
 	request.get(products)
 					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
 // All Contacts
 export function getAllContacts() {
+	SharedActionCreators.startLoading();
 	request.get(contacts)
 					.end(onReply());
 }

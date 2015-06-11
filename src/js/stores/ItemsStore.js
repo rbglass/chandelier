@@ -67,7 +67,7 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.DELETE_ITEM:
+		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
 				let itemsMinusOne = [];
 				items.forEach(item => {
 					if (item.item_id === action.data) {
