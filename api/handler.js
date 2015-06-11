@@ -25,10 +25,13 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
+				done();
 				console.log("getJobsTable handler error: ", err);
+				return reply().code(400);
 			}
 
 			var query = client.query("SELECT * FROM jobs", function(jobErr, info) {
+				done();
 				if (jobErr) {
 					client.end();
 					return reply(jobErr).code(400);
@@ -64,7 +67,9 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
 				console.log("createJob handler error: ", err);
+				return reply().code(400);
 			}
 
 			client.query("INSERT INTO jobs (client, project, job_status, order_type, " +
@@ -86,6 +91,7 @@ var handler = {
 					jobData.createdat,
 					jobData.updatedat
 				], function(errInsert, info) {
+					done();
 					if (errInsert) {
 						console.log(errInsert);
 						client.end();
@@ -110,6 +116,8 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
+				return reply().code(400);
 				console.log("updateJob handler error: ", err);
 			}
 
@@ -124,12 +132,17 @@ var handler = {
 			});
 
 			client.query(string + "WHERE job_id=($1) RETURNING *", [job_id].concat(items), function(errInsert, info, res) {
-				if(info.rowCount === 1) {
+				done();
+				if (errInsert) {
+					client.end();
+					console.log(errInsert);
+					return reply(errInsert).code(400);
+				} else if(info.rowCount === 1) {
 					client.end();
 					return reply(formatter.job(info.rows[0]));
 				} else {
 					client.end();
-					return reply(errInsert);
+					return reply(errInsert).code(400);
 				}
 			});
 		});
@@ -142,10 +155,13 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
+				return reply().code(400);
 				console.log("deleteJob handler error: ", err);
 			}
 
 			client.query("DELETE FROM jobs WHERE job_id=($1)", [id], function(delErr, info) {
+				done();
 				if (delErr) {
 					client.end();
 					return reply(delErr).code(404);
@@ -166,6 +182,8 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
+				return reply.code(400);
 				console.log("getSingleJob handler error: ", err);
 			}
 
@@ -175,6 +193,7 @@ var handler = {
 				} else {
 					client.query("SELECT * FROM job_items WHERE job_id=($1)", [id], function(errItems, moreInfo) {
 						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
+						done();
 
 						if (pdf) {
 							client.end();
@@ -196,7 +215,9 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
 				console.log("getJobItemsTable handler error: ", err);
+				return reply().code(400);
 			}
 
 			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment " +
@@ -204,6 +225,7 @@ var handler = {
 												"ON job_items.job_id = jobs.job_id";
 
 			var query = client.query(queryString, function(queryErr, info) {
+				done();
 				if (queryErr) {
 					console.log(queryErr);
 					client.end();
@@ -266,6 +288,8 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
+				return reply().code(400);
 				console.log("createJobItem handler error: ", err);
 			}
 
@@ -291,10 +315,10 @@ var handler = {
 				"flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, qty_packed, notes, createdat, updatedat) values" +
 				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *",
 				item,	function(errInsert, info, res) {
+					done();
 					if (errInsert) {
 						console.log("err: ", errInsert);
-					}
-					if (info.rowCount === 1) {
+					} else if (info.rowCount === 1) {
 						client.end();
 						reply(info.rows[0]);
 					} else {
@@ -318,16 +342,23 @@ var handler = {
 		delete data.job_status;
 		delete data.payment;
 
-		var fieldsToUpdate = Object.keys(data);
+		var fieldsToUpdate;
+
+		try {
+			fieldsToUpdate = Object.keys(data);
+		} catch(e) {
+			return reply("No fields passed").code(400);
+		}
 
 		if(fieldsToUpdate.length === 0) {
 			return reply("No fields passed").code(400);
 		}
 
 		pg.connect(conString, function(err, client, done) {
-
 			if (err) {
+				done();
 				console.log("updateJobItems handler error: ", err);
+				return reply().code(400);
 			}
 
 			var string = "UPDATE job_items SET ";
@@ -339,7 +370,9 @@ var handler = {
 				}
 				return data[cell];
 			});
+
 			client.query(string + "WHERE item_id=($1)", [item_id].concat(items), function(errInsert, info, res) {
+				done();
 				if(errInsert) {
 					console.log(errInsert);
 					client.end();
@@ -358,14 +391,20 @@ var handler = {
 	deleteJobItem : function(request, reply) {
 		var id = request.params.item;
 
+		console.log("req received for delete");
 		pg.connect(conString, function(err, client, done) {
-
+			console.log("pg connect made");
 			if (err) {
+				done();
 				console.log("deleteJobItems handler error: ", err);
+				return reply().code(400);
 			}
 
 			client.query("DELETE FROM job_items WHERE item_id=($1)", [id], function(errDelete, info) {
+				done();
+				console.log("query done");
 				if (errDelete) {
+					console.log(errDelete);
 					client.end();
 					return reply(errDelete);
 				} else {
@@ -382,23 +421,25 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
+				done();
 				return reply("getSelections handler error", err).code(400);
 			}
 
 			client.query("SELECT * FROM selections", function (getErr, info) {
-					if (getErr) {
-						return reply(getErr).code(400);
-					} else {
-						var formattedSelections = {};
-						info.rows.forEach(function(selection) {
-							if(!formattedSelections[selection.type]) {
-								formattedSelections[selection.type] = [];
-							}
-							formattedSelections[selection.type].push(selection);
-						});
-						client.end();
-						return reply(formattedSelections);
-					}
+				done();
+				if (getErr) {
+					return reply(getErr).code(400);
+				} else {
+					var formattedSelections = {};
+					info.rows.forEach(function(selection) {
+						if(!formattedSelections[selection.type]) {
+							formattedSelections[selection.type] = [];
+						}
+						formattedSelections[selection.type].push(selection);
+					});
+					client.end();
+					return reply(formattedSelections);
+				}
 			});
 		});
 	},
@@ -409,11 +450,13 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				reply("createSelection handler error: ", err).code(400);
+				done();
+				return reply("createSelection handler error: ", err).code(400);
 			}
 
 			client.query("INSERT INTO selections (type, label) values ($1, $2) RETURNING *",
 				[data.type, data.label], function(insertErr, info) {
+					done();
 					if (insertErr) {
 						client.end();
 						return reply(insertErr).code(400);
@@ -433,6 +476,7 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
+				done();
 				return reply(err).code(400);
 			}
 
@@ -442,6 +486,7 @@ var handler = {
 			}
 
 			client.query(queryString, function(getErr, info) {
+				done();
 				if (getErr) {
 					client.end();
 					return reply(getErr).code(400);
@@ -466,12 +511,14 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
+				done();
 				client.end();
-				reply("createProduct handler error:", err).code(400);
+				return reply("createProduct handler error:", err).code(400);
 			}
 
 			client.query("INSERT INTO products (type, name, description, active, saleable) values ($1, $2, $3, $4, $5) RETURNING *",
 				newProduct, function(createErr, info) {
+					done();
 					if (createErr) {
 						client.end();
 						return reply(createErr).code(400);
@@ -489,7 +536,13 @@ var handler = {
 		var data = request.payload;
 		var product = request.params.id;
 
-		var fieldsToUpdate = Object.keys(data);
+		var fieldsToUpdate;
+
+		try {
+		 fieldsToUpdate = Object.keys(data);
+		} catch(e) {
+			return reply("No fields passed").code(400)
+		}
 
 		if(fieldsToUpdate.length === 0) {
 			return reply("No fields passed").code(400);
@@ -498,7 +551,9 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
 				console.log("updateProduct handler error: ", err);
+				return reply().code(400);
 			}
 
 			var string = "UPDATE products SET ";
@@ -512,7 +567,11 @@ var handler = {
 			});
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
-				if(info.rowCount === 1) {
+				done();
+				if(errInsert) {
+					client.end();
+					return reply().code(400);
+				} else if(info.rowCount === 1) {
 					client.end();
 					return reply(info.rows[0]);
 				} else {
@@ -529,10 +588,12 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				reply("deleteProduct handler error:", err).code(400);
+				done();
+				return reply("deleteProduct handler error:", err).code(400);
 			}
 
 			client.query("DELETE FROM products WHERE id=($1)", [id], function(errDelete, info) {
+				done();
 				if (errDelete) {
 					client.end();
 					return reply(errDelete);
@@ -550,10 +611,12 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				reply("getContactsTable handler error:", err).code(400);
+				done();
+				return reply("getContactsTable handler error:", err).code(400);
 			}
 
 			client.query("SELECT * FROM contacts", function(getErr, info) {
+				done();
 				if (getErr) {
 					client.end();
 					return reply(getErr).code(400);
@@ -578,11 +641,13 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				reply("createContact handler error:", err).code(400);
+				done();
+				return reply("createContact handler error:", err).code(400);
 			}
 
 			client.query("INSERT INTO contacts (id, type, name, active) values ($1, $2, $3, $4) RETURNING *",
 				newContact, function(createErr, info) {
+					done();
 					if (createErr) {
 						client.end();
 						return reply(createErr).code(400);
@@ -599,7 +664,13 @@ var handler = {
 		var data = request.payload;
 		var contact = request.params.id;
 
-		var fieldsToUpdate = Object.keys(data);
+		var fieldsToUpdate;
+
+		try {
+		 fieldsToUpdate = Object.keys(data);
+		} catch(e) {
+			return reply("No fields passed").code(400)
+		}
 
 		if(fieldsToUpdate.length === 0) {
 			return reply("No fields passed").code(400);
@@ -608,7 +679,9 @@ var handler = {
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
+				done();
 				console.log("updateContact handler error: ", err);
+				return reply().code(400);
 			}
 
 			var string = "UPDATE contacts SET ";
@@ -622,7 +695,10 @@ var handler = {
 			});
 
 			client.query(string + "WHERE item_id=($1) RETURNING *", [contact].concat(items), function(errInsert, info, res) {
-				if(info.rowCount === 1) {
+				done();
+				if(errInsert) {
+					return reply().code(400);
+				} else if(info.rowCount === 1) {
 					client.end();
 					return reply(info.rows[0]);
 				} else {
@@ -639,10 +715,12 @@ var handler = {
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
-				reply("deleteContact handler error:", err).code(400);
+				done();
+				return reply("deleteContact handler error:", err).code(400);
 			}
 
 			client.query("DELETE FROM contacts WHERE id=($1)", [id], function(errDelete, info) {
+				done();
 				if (errDelete) {
 					client.end();
 					reply(errDelete);

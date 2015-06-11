@@ -34,7 +34,7 @@ class SingleJobPage extends Component {
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 					<div className="table-container">
 						<Table {...this.props} primaryKey={"item_id"}
-							onBlur={SharedActionCreators.saveItem.bind(this, this.props.details.job_id)}
+							onBlur={SharedActionCreators.saveItem}
 							sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>

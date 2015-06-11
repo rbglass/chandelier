@@ -62,6 +62,7 @@ export function createSingleJobItem(jobId, blueprint) {
 }
 
 export function saveItem(itemId, updateObj) {
+	console.log(updateObj);
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
