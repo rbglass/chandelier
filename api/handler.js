@@ -416,7 +416,7 @@ var handler = {
 				if (getErr) {
 					return reply(getErr).code(400);
 				} else {
-					return reply(info.rows);
+					return reply(formatter.products(info.rows));
 				}
 			});
 		});

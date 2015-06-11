@@ -44,8 +44,8 @@ export default class TableRow extends Component {
 						input = (
 							<select value={cellValue}>
 								{ this.props.selections[cell.key] ?
-									this.props.selections[cell.key].map(opt => {
-									return <option key={opt}>{opt}</option>;
+									this.props.selections[cell.key].map((opt, n) => {
+									return <option key={opt + " " + n}>{opt}</option>;
 								}, this) : "No opts" }
 							</select>
 						);

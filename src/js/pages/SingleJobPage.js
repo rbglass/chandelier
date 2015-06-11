@@ -12,6 +12,7 @@ import * as SharedActionCreators from "../actions/SharedActionCreators";
 
 function requestDataFromServer(id) {
 	SharedActionCreators.getSelections();
+	SharedActionCreators.getAllProducts();
 	SingleJobActionCreators.getSingleJob(id);
 }
 

@@ -1,6 +1,7 @@
 "use strict";
 import keyMirror from "react/lib/keyMirror";
 
+// Break this into server and client action types
 export default keyMirror({
 	// Receiving from API
 	"RECEIVE_SELECTIONS": null,
@@ -13,6 +14,8 @@ export default keyMirror({
 	"RECEIVE_UPDATED_ITEM": null,
 
 	"RECEIVE_ALL_ITEMS": null,
+
+	"RECEIVE_ALL_PRODUCTS": null,
 
 	"RECEIVE_ALERT": null,
 

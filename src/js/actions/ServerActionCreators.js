@@ -62,3 +62,10 @@ export function receiveAllItems(itemsArr) {
 		data: itemsArr
 	});
 }
+
+export function receiveAllProducts(productObj) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_ALL_PRODUCTS,
+		data: productObj
+	});
+}

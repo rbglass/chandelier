@@ -81,7 +81,7 @@ export function getSelections() {
 // All Products
 export function getAllProducts() {
 	request.get(products)
-					.end(onReply());
+					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
 // All Contacts

@@ -108,7 +108,6 @@ function writeDoc(job, cb) {
 
 module.exports = function pdfMaker(job, cb) {
 
-	// var stream = doc.pipe(writablestream);
 	writeDoc(job, cb);
 
 };
