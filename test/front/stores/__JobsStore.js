@@ -73,28 +73,6 @@ describe("JobsStore", function() {
 		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data.reverse());
 	});
 
-	it("#updates the respective job in the jobs array upon a RECEIVE_UPDATED_JOB action", function() {
-		var jobWeGotBack;
-		var updatedJob = {
-			type: "RECEIVE_UPDATED_JOB",
-			data: {
-				job_id: "RB2234",
-				details: {
-					job_id: "RB2234",
-					client: "ALEX"
-				}
-			}
-		};
-
-		this.onReceivingAction(updatedJob);
-
-		jobWeGotBack = this.JobsStore.getFilteredAndSortedJobs().filter(function(e) {
-			return e.job_id === updatedJob.data.job_id;
-		})[0];
-
-		assert.deepEqual(jobWeGotBack.details, updatedJob.data.details);
-	});
-
 	it("#updates the respective job in the jobs array upon a CHANGE_SINGLE_JOB_DETAILS action", function() {
 		var jobWeGotBack;
 		var updatedInfo = {

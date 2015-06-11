@@ -3,6 +3,7 @@
 :root {
 	--even-row: #f2f2f2;
 	--odd-row: #ffffff;
+	--red: rgba(224, 45, 45, 1);
 	--blue: rgba(39, 92, 152, 1);
 	--blueborder: rgba(1,1,1,0.5);
 	--hover: 0.8;
@@ -118,6 +119,11 @@ button:focus {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.alert-box.error {
+	background-color: var(--red);
+	font-weight: bold;
 }
 
 /* Table Manipulator Panel */

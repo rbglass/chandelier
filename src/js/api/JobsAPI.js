@@ -4,6 +4,7 @@ import compose from "../utils/compose";
 import objectAssign from "object-assign";
 import * as JobAPIUtils from "../utils/JobAPIUtils";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import * as AlertActionCreators from "../actions/AlertActionCreators";
 import * as ServerActionCreators from "../actions/ServerActionCreators";
 
 const root = "/api";
@@ -14,7 +15,7 @@ const contacts = `${root}/contacts`;
 const selections = `${root}/selections`;
 
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
-															SharedActionCreators.receiveAlert);
+															AlertActionCreators.receiveAlert);
 
 function onReply(successAction, ...etc) {
 	return function(err, res) {
@@ -62,7 +63,6 @@ export function createSingleJobItem(jobId, blueprint) {
 }
 
 export function saveItem(itemId, updateObj) {
-	console.log(updateObj);
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
@@ -90,12 +90,3 @@ export function getAllContacts() {
 	request.get(contacts)
 					.end(onReply());
 }
-
-// export function getPDF(jobId) {
-// 	request.get(`${jobs}/${jobId}`)
-// 					.query({pdf: true})
-// 					.end((err, res) => {
-// 						if(err) console.log(err.status, err.message);
-// 						else console.log(res.body);
-// 					});
-// }

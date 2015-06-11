@@ -10,7 +10,6 @@ export default class SingleJobDetails extends Component {
 		const currentNode = e.target && e.target.parentElement.parentElement;
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
 		if(currentNode !== destinationNode) {
-			console.log(currentNode, destinationNode)
 			saveDetails(this.props.details.job_id, this.props.details);
 		}
 	}

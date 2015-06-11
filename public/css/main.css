@@ -148,6 +148,11 @@ button:focus {
   align-items: center;
 }
 
+.alert-box.error {
+  background-color: rgba(224, 45, 45, 1);
+  font-weight: bold;
+}
+
 /* Table Manipulator Panel */
 
 .table-manip {

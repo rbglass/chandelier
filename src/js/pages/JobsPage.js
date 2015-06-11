@@ -6,6 +6,7 @@ import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
+import AlertStore from "../stores/AlertStore";
 import connectToStores from "../utils/connectToStores";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -57,13 +58,15 @@ function getState() {
 	const items = JobsStore.getFilteredAndSortedJobs();
 	const filters = JobsStore.getFilters();
 	const selections = SelectionStore.getSelections();
-	const isLoading = JobsStore.getLoadStatus();
+	const isLoading = AlertStore.getLoadStatus();
+	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
 		items,
 		filters,
-		isLoading
+		isLoading,
+		alert
 	};
 }
 

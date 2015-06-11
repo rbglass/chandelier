@@ -20,7 +20,8 @@ const onReceivingAction = action => {
 
 	if (action.type === ActionTypes.RECEIVE_ALERT) {
 		alert = action.data;
-	} else if (isServerAction) {
+	}
+	if (isServerAction) {
 		isLoading = false;
 	} else if (action.type === ActionTypes.IS_LOADING) {
 		isLoading = true;
@@ -29,5 +30,5 @@ const onReceivingAction = action => {
 
 export default AlertStore;
 
-AlertStore.dispatchToken = AppDispatcher.register(onReceivingAction);
+AppDispatcher.register(onReceivingAction);
 

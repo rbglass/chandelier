@@ -15,7 +15,7 @@ export default class Alert extends Component {
 				</div>
 			);
 		} else if (this.props.alert) {
-			content = `${this.props.alert.type} ${ this.props.alert.message || "" }`;
+			content = `${ this.props.alert.message || "" }`;
 		} else {
 			content = <span />;
 		}

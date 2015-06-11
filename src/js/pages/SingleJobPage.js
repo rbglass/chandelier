@@ -6,6 +6,7 @@ import Alert from "../components/common/Alert";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
+import AlertStore from "../stores/AlertStore";
 import connectToStores from "../utils/connectToStores";
 import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -54,14 +55,16 @@ function getState() {
 	const items = SingleJobStore.getSortedItems();
 	const filters = SingleJobStore.getFilters();
 	const selections = SelectionStore.getSelections();
-	const isLoading = SingleJobStore.getLoadStatus();
+	const isLoading = AlertStore.getLoadStatus();
+	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
 		details,
 		items,
 		filters,
-		isLoading
+		isLoading,
+		alert
 	};
 }
 

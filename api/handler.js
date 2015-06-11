@@ -428,6 +428,7 @@ var handler = {
 			client.query("SELECT * FROM selections", function (getErr, info) {
 				done();
 				if (getErr) {
+					console.log(getErr);
 					return reply(getErr).code(400);
 				} else {
 					var formattedSelections = {};
