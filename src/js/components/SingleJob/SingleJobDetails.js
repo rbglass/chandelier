@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from "react";
 import { changeDetails, saveDetails } from "../../actions/SharedActionCreators";
 import { getPDF } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
+import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class SingleJobDetails extends Component {
 	handleBlur(e) {
@@ -66,7 +67,7 @@ export default class SingleJobDetails extends Component {
 				</div>
 				<div className="job-details-field">
 					<label htmlFor="lastupdate">Last Update:</label>
-					<input type="date" value={details.last_update} className="job-text-input" id="lastupdate"
+					<input type="date" value={yyyyMMdd(details.updatedat)} className="job-text-input" id="lastupdate"
 							disabled readOnly/>
 				</div>
 				<div className="job-details-field">
@@ -89,7 +90,7 @@ export default class SingleJobDetails extends Component {
 			<div className="job-details-column u-flex-grow3">
 				<div className="job-details-field">
 					<label htmlFor="shippingdate">Shipping Date:</label>
-					<input type="date" value={details.shipping_date} className="job-text-input" id="shippingdate"
+					<input type="date" value={yyyyMMdd(details.shipping_date)} className="job-text-input" id="shippingdate"
 							onChange={ks("shipping_date", changeDetails)} />
 				</div>
 				<div className="job-details-field notes u-flex-grow2">
@@ -111,17 +112,17 @@ export default class SingleJobDetails extends Component {
 
 SingleJobDetails.propTypes = {
 	details: PropTypes.shape({
-		jobid: PropTypes.string,
+		jobid: PropTypes.number,
 		client: PropTypes.string,
 		project: PropTypes.string,
 		client_ref: PropTypes.string,
 		notes: PropTypes.string,
 		job_status: PropTypes.string,
 		order_type: PropTypes.string,
-		last_update: PropTypes.string,
+		last_update: PropTypes.date,
 		parts_status: PropTypes.string,
 		parts_notes: PropTypes.string,
-		shipping_date: PropTypes.string,
+		shipping_date: PropTypes.date,
 		delivery_details: PropTypes.string
 	})
 };

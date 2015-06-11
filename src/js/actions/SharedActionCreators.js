@@ -38,7 +38,7 @@ export function changeDetails(updateObj) {
 	});
 }
 
-export function recieveAlert(alert) {
+export function receiveAlert(alert) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALERT,
 		data: alert
