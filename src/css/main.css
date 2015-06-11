@@ -10,6 +10,7 @@
 
 body {
 	margin: 0;
+	font-family: 'Hind', sans-serif;
 }
 
 input {
@@ -92,6 +93,7 @@ button:focus {
   padding-right: 4px;
   color: white;
   cursor: default;
+	margin-right: 15px
 }
 
 /* Alert */
@@ -382,6 +384,11 @@ button:focus {
 	min-height: 72px;
 }
 
+	textarea {
+	border-color: #aaaaaa;
+	border-radius: 4px;
+}
+
 /* Other */
 .add-button {
 	float: right;
@@ -403,6 +410,15 @@ button:focus {
 	opacity: var(--hover);
 }
 
+	.pdfButton {
+	border: none;
+	background-color: #52b152;
+	border-radius: 5px;
+	color: white;
+	padding: 10px 20px;
+	font-size: 15px;
+	margin: 10px 30px 10px 0;
+}
 
 /* Flex Utility classes */
 
