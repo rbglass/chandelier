@@ -4,7 +4,7 @@
   "description": "production management for people who produce",
   "main": "app.js",
   "scripts": {
-  	"postinstall": "mkdir public/js",
+  	"postinstall": "mkdir public/js & npm run build:js",
     "start": "node app.js",
     "deploy": "npm run test & npm run build",
     "dev": "npm run live-reload & npm run build:watch",
