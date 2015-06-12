@@ -66,7 +66,8 @@ export default class TableRow extends Component {
 						break;
 
 				case "link":
-						input = <Link to={cell.to} params={{id: cellValue}}>{cellValue}</Link>;
+						let cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
+						input = <Link to={cell.to} params={{id: cellValue}}>{cellDisplay}</Link>;
 						break;
 
 				default:

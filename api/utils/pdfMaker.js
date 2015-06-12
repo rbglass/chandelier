@@ -53,7 +53,7 @@ function writeDoc(job, cb) {
 	doc.fontSize(10)
 			.text(dateStr, 120, 140)
 			.moveDown()
-			.text(job.job_id)
+			.text("RB" + job.job_id)
 			.text(job.details.client)
 			.text(job.details.project)
 			.text(job.details.client_ref)

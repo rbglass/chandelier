@@ -105,7 +105,9 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RESTRICT_TO:
-				filters.restrictions[action.data.key] = action.data;
+				if (filters.restrictions.hasOwnProperty(action.data.key)) {
+					filters.restrictions[action.data.key] = action.data;
+				}
 				ItemsStore.emitChange();
 				break;
 

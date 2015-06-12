@@ -10,6 +10,7 @@ import AlertStore from "../stores/AlertStore";
 import connectToStores from "../utils/connectToStores";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
 	SharedActionCreators.getSelections();
@@ -74,7 +75,7 @@ export default connectToStores([JobsStore, SelectionStore, AlertStore], getState
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob", formattingFunc: rbPrefixer },
 		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },

@@ -11,6 +11,7 @@ import AlertStore from "../stores/AlertStore";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import yyyyMMdd from "../utils/yyyyMMdd";
+import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
 	SharedActionCreators.getSelections();
@@ -73,7 +74,7 @@ JobItemsPage.defaultProps = {
 	tableScheme: [
 		{ key: "-",           display: "",            className: "fixed-col hid", type: "button",    onClick:SharedActionCreators.deleteItem,
 				inputClassName: "btn-left" },
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob", formattingFunc: rbPrefixer },
 		// { key: "item_id",     display: "Item",        className: "qty-sm",       type: "" },
 		{ key: "product",     display: "Product",     className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "description", display: "Description", className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
