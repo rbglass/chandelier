@@ -228,11 +228,13 @@ button:focus {
 	content: "^";
 	position: absolute;
 	right: 5px;
+	bottom: 0px;
 }
 .table-header .table-row-item.desc:after {
 	content: "v";
 	position: absolute;
 	right: 5px;
+	bottom: 0px;
 }
 .table-header .table-row-item.fixed-col:after {
 	content: none;
@@ -272,6 +274,7 @@ button:focus {
 	flex-flow: row nowrap;
 	flex-grow: 1;
 	flex-basis: 0;
+	height: 51px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	word-break: break-all;
@@ -447,6 +450,9 @@ button:focus {
 	flex-grow: 1;
 }
 
+.u-flex-grow1semi {
+	flex-grow: 1.5;
+}
 .u-flex-grow2 {
 	flex-grow: 2;
 }

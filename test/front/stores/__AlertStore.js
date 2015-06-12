@@ -47,8 +47,15 @@ describe("AlertStore", () => {
 		const alertAction = {
 			type: "RECEIVE_BAD_NEWS"
 		};
+		const alertAction2 = {
+			type: "RECEIVE_ALERT"
+		};
 
 		onReceivingAction(alertAction);
+		assert.deepEqual(AlertStore.getLoadStatus(), false);
+
+		AlertStore.__set__("isLoading", true);
+		onReceivingAction(alertAction2);
 		assert.deepEqual(AlertStore.getLoadStatus(), false);
 	});
 

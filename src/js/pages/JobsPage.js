@@ -76,7 +76,7 @@ export default connectToStores([JobsStore, SelectionStore, AlertStore], getState
 JobsPage.defaultProps = {
 	tableScheme: [
 		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow1semi", type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
