@@ -7,8 +7,10 @@ import Alert from "../components/common/Alert";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
+import AlertStore from "../stores/AlertStore";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import yyyyMMdd from "../utils/yyyyMMdd";
 
 function requestDataFromServer() {
 	SharedActionCreators.getSelections();
@@ -27,7 +29,7 @@ class JobItemsPage extends Component {
 			<div>
 				<NavBar title="All Items" routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
 					<span />
 				}
 				<div className="container">
@@ -53,25 +55,30 @@ function getState() {
 	const items = ItemsStore.getFilteredAndSortedItems();
 	const filters = ItemsStore.getFilters();
 	const selections = SelectionStore.getSelections();
-	const isLoading = ItemsStore.getLoadStatus();
+	const isLoading = AlertStore.getLoadStatus();
+	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
 		items,
 		filters,
-		isLoading
+		isLoading,
+		alert
 	};
 }
 
-export default connectToStores([ItemsStore, SelectionStore], getState)(JobItemsPage);
+export default connectToStores([ItemsStore, SelectionStore, AlertStore], getState)(JobItemsPage);
 
 JobItemsPage.defaultProps = {
 	tableScheme: [
 		{ key: "-",           display: "",            className: "fixed-col hid", type: "button",    onClick:SharedActionCreators.deleteItem,
 				inputClassName: "btn-left" },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
 		// { key: "item_id",     display: "Item",        className: "qty-sm",       type: "" },
 		{ key: "product",     display: "Product",     className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "description", display: "Description", className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
+		{ key: "job_status",    display: "Job Status",    "className": "",             type: ""},
+		{ key: "shipping_date", display: "Shipping Date", "className": "", type: "", formattingFunc: yyyyMMdd  },
 		{ key: "glass",       display: "Glass",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "metal",       display: "Metal",       className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "flex",        display: "Flex",        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },

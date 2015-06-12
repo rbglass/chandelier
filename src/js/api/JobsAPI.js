@@ -4,6 +4,7 @@ import compose from "../utils/compose";
 import objectAssign from "object-assign";
 import * as JobAPIUtils from "../utils/JobAPIUtils";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import * as AlertActionCreators from "../actions/AlertActionCreators";
 import * as ServerActionCreators from "../actions/ServerActionCreators";
 
 const root = "/api";
@@ -14,7 +15,7 @@ const contacts = `${root}/contacts`;
 const selections = `${root}/selections`;
 
 const errToAction = compose(JobAPIUtils.turnErrorIntoAlert,
-															SharedActionCreators.receiveAlert);
+															AlertActionCreators.receiveAlert);
 
 function onReply(successAction, ...etc) {
 	return function(err, res) {
@@ -25,22 +26,26 @@ function onReply(successAction, ...etc) {
 
 // All Jobs
 export function getAllJobs() {
+	SharedActionCreators.startLoading();
 	request.get(jobs)
 					.end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
 // Single Jobs
 export function getSingleJob(jobId) {
+	SharedActionCreators.startLoading();
 	request.get(`${jobs}/${jobId}`)
 					.end(onReply(ServerActionCreators.receiveSingleJob));
 }
 
 export function createSingleJob() {
+	SharedActionCreators.startLoading();
 	request.post(jobs)
 					.end(onReply(ServerActionCreators.receiveNewJob));
 }
 
 export function saveDetails(jobId, updateObj) {
+	SharedActionCreators.startLoading();
 	request.put(`${jobs}/${jobId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedJob));
@@ -48,6 +53,7 @@ export function saveDetails(jobId, updateObj) {
 
 // All items
 export function getAllItems() {
+	SharedActionCreators.startLoading();
 	request.get(items)
 					.end(onReply(ServerActionCreators.receiveAllItems));
 }
@@ -56,45 +62,42 @@ export function getAllItems() {
 export function createSingleJobItem(jobId, blueprint) {
 	blueprint.job_id = jobId;
 
+	SharedActionCreators.startLoading();
 	request.post(items)
 					.send(blueprint)
 					.end(onReply(ServerActionCreators.receiveSingleItem));
 }
 
-export function saveItem(jobId, itemId, updateObj) {
+export function saveItem(itemId, updateObj) {
+	SharedActionCreators.startLoading();
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
 export function deleteSingleItem(jobId, itemId) {
+	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)
-					.end(onReply(ServerActionCreators.deleteSingleItem));
+					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
 // All Selections
 export function getSelections() {
+	SharedActionCreators.startLoading();
 	request.get(selections)
 					.end(onReply(ServerActionCreators.receiveSelections));
 }
 
 // All Products
 export function getAllProducts() {
+	SharedActionCreators.startLoading();
 	request.get(products)
 					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
 // All Contacts
 export function getAllContacts() {
+	SharedActionCreators.startLoading();
 	request.get(contacts)
 					.end(onReply());
 }
-
-// export function getPDF(jobId) {
-// 	request.get(`${jobs}/${jobId}`)
-// 					.query({pdf: true})
-// 					.end((err, res) => {
-// 						if(err) console.log(err.status, err.message);
-// 						else console.log(res.body);
-// 					});
-// }

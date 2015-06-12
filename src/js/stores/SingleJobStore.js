@@ -5,8 +5,7 @@ import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-var isLoading = false,
-		job = {
+var job = {
 			job_id: "",
 			details: {},
 			items: []
@@ -25,9 +24,6 @@ const SingleJobStore = createStore({
 	},
 	getFilters() {
 		return filters;
-	},
-	getLoadStatus() {
-		return isLoading;
 	}
 });
 
@@ -36,30 +32,13 @@ const onReceivingAction = action => {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
 				job = objectAssign({}, action.data);
-				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
 				job.items.push(action.data);
-				isLoading = false;
 				SingleJobStore.emitChange();
 				break;
-
-		case ActionTypes.RECEIVE_UPDATED_ITEM:
-				// let itemsPostUpdate = job.items.map(item => {
-				// 	if(item.item_id === action.data.item_id) {
-				// 		return action.data;
-				// 	} else {
-				// 		return item;
-				// 	}
-				// });
-
-				// job.items = itemsPostUpdate;
-				isLoading = false;
-				SingleJobStore.emitChange();
-				break;
-
 
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
 				if (action.data.id === job.job_id) {
@@ -79,7 +58,7 @@ const onReceivingAction = action => {
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.DELETE_ITEM:
+		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
 				let itemsMinusOne = [];
 				job.items.forEach(item => {
 					if (item.item_id === action.data) {
@@ -98,11 +77,6 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
-				SingleJobStore.emitChange();
-				break;
-
-		case ActionTypes.IS_LOADING:
-				isLoading = true;
 				SingleJobStore.emitChange();
 				break;
 

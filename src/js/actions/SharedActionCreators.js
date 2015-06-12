@@ -3,6 +3,12 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as JobsAPI from "../api/JobsAPI";
 
+export function startLoading() {
+	AppDispatcher.dispatch({
+		type: ActionTypes.IS_LOADING
+	});
+}
+
 export function getSelections() {
 	JobsAPI.getSelections();
 }
@@ -15,8 +21,8 @@ export function createItem(jobId, blueprint) {
 	JobsAPI.createSingleJobItem(jobId, blueprint);
 }
 
-export function saveItem(jobId, itemId, item) {
-	JobsAPI.saveItem(jobId, itemId, item);
+export function saveItem(itemId, item) {
+	JobsAPI.saveItem(itemId, item);
 }
 
 export function deleteItem(jobId, cells) {
@@ -39,14 +45,6 @@ export function changeDetails(updateObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.CHANGE_SINGLE_JOB_DETAILS,
 		data: updateObj
-	});
-}
-
-
-export function receiveAlert(alert) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_ALERT,
-		data: alert
 	});
 }
 

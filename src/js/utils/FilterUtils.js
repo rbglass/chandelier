@@ -34,8 +34,10 @@ export function genericSort(arr, sortBy, asc, sortPath) {
 				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
 				sortVal;
 
-		if (isyyyyMMdd(t1)) {
-			sortVal = Date.parse(t1) - Date.parse(t2);
+		if (isyyyyMMdd(t1) || isyyyyMMdd(t2)) {
+			let date1 = Date.parse(t1) || 0;
+			let date2 = Date.parse(t2) || 0;
+			sortVal = date1 - date2;
 		} else if (typeof t1 === "string") {
 			sortVal = t1.localeCompare(t2, "en", {
 				sensitivity: "base"
