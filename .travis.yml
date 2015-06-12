@@ -4,7 +4,5 @@ branches:
 language: node_js
 node_js:
   - "0.12"
-before_install:
-  - npm run mk
 script:
   - npm run deploy

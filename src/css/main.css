@@ -3,6 +3,7 @@
 :root {
 	--even-row: #f2f2f2;
 	--odd-row: #ffffff;
+	--red: rgba(224, 45, 45, 1);
 	--blue: rgba(39, 92, 152, 1);
 	--blueborder: rgba(1,1,1,0.5);
 	--hover: 0.8;
@@ -87,7 +88,7 @@ button:focus {
 
 .nav.nav-title {
 	flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-end;
   display: flex;
   font-size: 30px;
@@ -97,11 +98,16 @@ button:focus {
 	margin-right: 15px
 }
 
+.nav.nav-item.logout {
+	margin-left: 15px;
+	padding-right: 15px;
+}
+
 /* Alert */
 .alert-box {
 	color: white;
 	position: fixed;
-	top: 50px;
+	top: 57px;
 	height: 40px;
 	min-width: 60px;
 	right: 0;
@@ -113,6 +119,11 @@ button:focus {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.alert-box.error {
+	background-color: var(--red);
+	font-weight: bold;
 }
 
 /* Table Manipulator Panel */
@@ -217,11 +228,13 @@ button:focus {
 	content: "^";
 	position: absolute;
 	right: 5px;
+	bottom: 0px;
 }
 .table-header .table-row-item.desc:after {
 	content: "v";
 	position: absolute;
 	right: 5px;
+	bottom: 0px;
 }
 .table-header .table-row-item.fixed-col:after {
 	content: none;
@@ -261,6 +274,7 @@ button:focus {
 	flex-flow: row nowrap;
 	flex-grow: 1;
 	flex-basis: 0;
+	height: 51px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	word-break: break-all;
@@ -298,6 +312,7 @@ button:focus {
 
 /* table inputs */
 .table-row-item textarea {
+	width: 95%;
 	border: ;
 }
 .table-row-item input {
@@ -355,6 +370,7 @@ button:focus {
 .job-details-column {
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-end;
 
 	min-height: 200px;
 }
@@ -434,6 +450,9 @@ button:focus {
 	flex-grow: 1;
 }
 
+.u-flex-grow1semi {
+	flex-grow: 1.5;
+}
 .u-flex-grow2 {
 	flex-grow: 2;
 }

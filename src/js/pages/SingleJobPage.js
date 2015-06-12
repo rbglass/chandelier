@@ -6,6 +6,7 @@ import Alert from "../components/common/Alert";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
+import AlertStore from "../stores/AlertStore";
 import connectToStores from "../utils/connectToStores";
 import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -25,16 +26,16 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title={`${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
+				<NavBar title={`RB${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
 					<span />
 				}
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}/>
 					<div className="table-container">
 						<Table {...this.props} primaryKey={"item_id"}
-							onBlur={SharedActionCreators.saveItem.bind(this, this.props.details.job_id)}
+							onBlur={SharedActionCreators.saveItem}
 							sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>
@@ -54,51 +55,37 @@ function getState() {
 	const items = SingleJobStore.getSortedItems();
 	const filters = SingleJobStore.getFilters();
 	const selections = SelectionStore.getSelections();
-	const isLoading = SingleJobStore.getLoadStatus();
+	const isLoading = AlertStore.getLoadStatus();
+	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
 		details,
 		items,
 		filters,
-		isLoading
+		isLoading,
+		alert
 	};
 }
 
-export default connectToStores([SingleJobStore, SelectionStore], getState)(SingleJobPage);
+export default connectToStores([SingleJobStore, SelectionStore, AlertStore], getState)(SingleJobPage);
 
 SingleJobPage.defaultProps = {
 	tableScheme: [
-		{ key: "-", 	       display: "",         className: "fixed-col hid",
-				type: "button", inputClassName: "btn-left", onClick: SharedActionCreators.deleteItem   },
-		{ key: "item_id", 	 display: "Item",       className: "qty-sm",
-				type: "",         onChange: SharedActionCreators.changeItem },
-		{ key: "product",    display: "Product",    className: "",
-				type: "select",     onChange: SharedActionCreators.changeItem },
-		{ key: "description", display: "Description", className: "u-flex-grow2",
-				type: "textarea", onChange: SharedActionCreators.changeItem },
-		{ key: "glass",      display: "Glass",      className: "",
-				type: "select",     onChange: SharedActionCreators.changeItem },
-		{ key: "metal",      display: "Metal",      className: "",
-				type: "select",     onChange: SharedActionCreators.changeItem },
-		{ key: "flex",       display: "Flex",       className: "",
-				type: "select",     onChange: SharedActionCreators.changeItem },
-		{ key: "bulb",       display: "Bulb",       className: "",
-				type: "select",     onChange: SharedActionCreators.changeItem },
-		{ key: "qty_req",    display: "Qty Req",    className: "qty-sm",
-				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "qty_hot",    display: "Qty Hot",    className: "qty-sm",
-				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "qty_cold",   display: "Qty Cold",   className: "qty-sm",
-				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "qty_assem",  display: "Qty Assem",  className: "qty-md",
-				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "qty_packed", display: "Qty Packed", className: "qty-md",
-				type: "number",   onChange: SharedActionCreators.changeItem },
-		{ key: "notes",      display: "Notes",      className: "u-flex-grow2",
-				type: "textarea", onChange: SharedActionCreators.changeItem },
-		{ key: "+", 	       display: "",         className: "fixed-col hid",
-				type: "button", inputClassName: "btn-right", onClick: SharedActionCreators.createItem  }
+		{ key: "-", 	        display: "",             className: "fixed-col hid",           type: "button", inputClassName: "btn-left", onClick: SharedActionCreators.deleteItem   },
+		{ key: "product",     display: "Product",      className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "description", display: "Description",  className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
+		{ key: "glass",       display: "Glass",        className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "metal",       display: "Metal",        className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "flex",        display: "Flex",         className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "bulb",        display: "Bulb",         className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_req",     display: "Qty",          className: "qty-sm", line2: "Req",    type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_hot",     display: "Qty",          className: "qty-sm", line2: "Hot",    type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_cold",    display: "Qty",          className: "qty-sm", line2: "Cold",   type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_assem",   display: "Qty",          className: "qty-sm", line2: "Assem",  type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_packed",  display: "Qty",          className: "qty-sm", line2: "Packed", type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "notes",       display: "Notes",        className: "u-flex-grow3",            type: "textarea", onChange: SharedActionCreators.changeItem },
+		{ key: "+", 	        display: "",             className: "fixed-col hid",           type: "button", inputClassName: "btn-right", onClick: SharedActionCreators.createItem  }
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },

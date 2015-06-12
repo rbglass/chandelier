@@ -7,7 +7,7 @@ export default class Alert extends Component {
 		const className = `alert-box ${this.props.alert.type || ""} ${loadStatus}`;
 		var content;
 
-		if(this.props.isLoading) {
+		if (this.props.isLoading) {
 			content = (
 				<div className="spinner">
 					<div className="cube1"></div>
@@ -15,7 +15,7 @@ export default class Alert extends Component {
 				</div>
 			);
 		} else if (this.props.alert) {
-			content = `${this.props.alert.type} ${ this.props.alert.message || "" }`;
+			content = `${ this.props.alert.message || "" }`;
 		} else {
 			content = <span />;
 		}

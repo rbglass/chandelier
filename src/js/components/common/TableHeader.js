@@ -15,7 +15,7 @@ export default class TableHeader extends Component {
 			return (
 				<div key={i} className={divClass}
 					onClick={this.props.sortFunc ? this.props.sortFunc.bind(null, e.key) : null}>
-				{e.display}
+				{ e.line2 ? <span>{e.display}<br/>{e.line2}</span> : e.display }
 				</div>
 			);
 		});

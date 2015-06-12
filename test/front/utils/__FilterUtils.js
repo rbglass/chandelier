@@ -29,20 +29,6 @@ describe("strIncludes", () => {
 	});
 });
 
-describe("isDateStr", () => {
-	const isDateStr = FilterUtils.__get__("isDateStr");
-
-	it("#takes 1 argument", () => {
-		assert.equal(isDateStr.length, 1);
-	});
-
-	it("#checks if a string is a YYYY-MM-DD date", () => {
-		assert(isDateStr("2015-01-01"));
-		assert.equal(isDateStr("2015-0a-01"), false);
-		assert.equal(isDateStr(4444), false);
-	});
-});
-
 describe("contains", () => {
 	const contains = FilterUtils.contains;
 	let testObj = {

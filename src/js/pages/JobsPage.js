@@ -6,9 +6,11 @@ import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
+import AlertStore from "../stores/AlertStore";
 import connectToStores from "../utils/connectToStores";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
+import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
 	SharedActionCreators.getSelections();
@@ -28,7 +30,7 @@ class JobsPage extends Component {
 			<div>
 				<NavBar title={"All Jobs"} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={{type: "error"}} /> :
+					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
 					<span />
 				}
 				<div className="container">
@@ -57,28 +59,29 @@ function getState() {
 	const items = JobsStore.getFilteredAndSortedJobs();
 	const filters = JobsStore.getFilters();
 	const selections = SelectionStore.getSelections();
-	const isLoading = JobsStore.getLoadStatus();
+	const isLoading = AlertStore.getLoadStatus();
+	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
 		items,
 		filters,
-		isLoading
+		isLoading,
+		alert
 	};
 }
 
-export default connectToStores([JobsStore, SelectionStore], getState)(JobsPage);
+export default connectToStores([JobsStore, SelectionStore, AlertStore], getState)(JobsPage);
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob" },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow2", type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob", formattingFunc: rbPrefixer },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow1semi", type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow2", type: "date",   onChange: SharedActionCreators.changeDetails },
-		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow2", type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "job_items",     display: "# Items",       "className": "qty-sm",       type: "text" },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow", type: "date",   onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow", type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
 	],
 	routeScheme: [

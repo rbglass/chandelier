@@ -58,11 +58,7 @@ Filter.propTypes = {
 		)
 	}),
 
-	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number,
-		label: PropTypes.string,
-		type: PropTypes.string
-	}))),
+	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
 
 	setFilter   : PropTypes.func,
 	setStartDate: PropTypes.func,

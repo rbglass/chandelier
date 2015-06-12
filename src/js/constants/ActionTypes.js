@@ -19,6 +19,8 @@ export default keyMirror({
 
 	"RECEIVE_ALERT": null,
 
+	"RECEIVE_DELETION_CONFIRMATION": null,
+
 	// Sending to API
 	// On blur/click
 	"CREATE_SINGLE_JOB": null,

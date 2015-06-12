@@ -8,6 +8,9 @@ export default class NavBar extends Component {
 
 		return (
 			<div className="nav navbar">
+				<div className="nav nav-title">
+					{this.props.title}
+				</div>
 				{	this.props.routeConfig.map((linkConfig, i) => {
 						return (
 							<div key={i} className="nav nav-item">
@@ -16,11 +19,8 @@ export default class NavBar extends Component {
 						);
 					})
 				}
-				<div className="nav nav-item">
+				<div className="nav nav-item logout">
 					<a href="/logout">Logout</a>
-				</div>
-				<div className="nav nav-title">
-					{this.props.title}
 				</div>
 			</div>
 		);
