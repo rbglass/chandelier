@@ -18,14 +18,15 @@ const AlertStore = createStore({
 const onReceivingAction = action => {
 	let isServerAction = /RECEIVE/.test(action.type);
 
-	if (action.type === ActionTypes.RECEIVE_ALERT) {
-		alert = action.data;
-	}
 	if (isServerAction) {
+		if (action.type === ActionTypes.RECEIVE_ALERT) {
+			alert = action.data;
+		}
 		isLoading = false;
 	} else if (action.type === ActionTypes.IS_LOADING) {
 		isLoading = true;
 	}
+	AlertStore.emitChange();
 };
 
 export default AlertStore;

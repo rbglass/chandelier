@@ -4,6 +4,7 @@ import { changeDetails, saveDetails } from "../../actions/SharedActionCreators";
 // import { getPDF } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
+import rbPrefixer from "../../utils/rbPrefixer";
 
 export default class SingleJobDetails extends Component {
 	handleBlur(e) {
@@ -23,7 +24,7 @@ export default class SingleJobDetails extends Component {
 				<div className="job-details-column u-flex-grow3" >
 					<div className="job-details-field">
 						<label htmlFor="job#">Job #:</label>
-						<input type="text" value={details.job_id} className="job-text-input" id="job#"
+						<input type="text" value={rbPrefixer(details.job_id)} className="job-text-input" id="job#"
 								disabled readOnly />
 					</div>
 					<div className="job-details-field">
