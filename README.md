@@ -59,7 +59,7 @@ code.
               `live-reload watchPath --port 9081`
 
 ---
-[__JSXHint__](https://github.com/STRML/JSXHint/) - lint your tings
+[__eslint__](http://eslint.org/) - lint your tings
 
 ---
 [__Mocha__](http://mochajs.org/) - test framework for front- and back-end.
@@ -68,18 +68,11 @@ code.
 [__JSDom__]() - dom simulation for testing
 
 ---
-[__rewire__]() - lets us access/set private variables in modules
+[__rewire__]() - lets us access/set private variables in modules. Used for testing flux stores
 
 ---
-[__sinon__]() - mocking, stubbing and spying tools
-
----
-[__Karma__](https://karma-runner.github.io/0.12/index.html) - test runner for browsers
+[__sinon__]() - mocking, stubbing and spying tools for testing
 
 ---
 
-###TODO
-* Reorganise actioncreator and store logic
-    * Make filterstore, have other stores get from it
-    * Empty stores on page switch
-    * Make filter more generic
+
