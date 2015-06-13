@@ -77,7 +77,7 @@ export default class TableRow extends Component {
 			}
 
 			return (
-				<div className={`table-row-item ${cell.className}`} key={i}
+				<div className={`table-row-item ${cell.className || ""}`} key={i}
 							onChange={cell.onChange ? ks(cell.key, cell.onChange) : null}>
 					{input}
 				</div>
