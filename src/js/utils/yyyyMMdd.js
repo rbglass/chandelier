@@ -26,6 +26,6 @@ export function ddMMyyyy(validDate) {
 		return `${validDate.slice(8, 10)}/${validDate.slice(5, 7)}/${validDate.slice(0, 4)}`;
 	} else {
 		let iso = validDate.toISOString();
-		return `${iso.slice(-2)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
+		return `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
 	}
 }
