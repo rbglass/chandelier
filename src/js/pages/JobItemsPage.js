@@ -10,7 +10,7 @@ import ItemsStore from "../stores/ItemsStore";
 import AlertStore from "../stores/AlertStore";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
-import yyyyMMdd from "../utils/yyyyMMdd";
+import { ddMMyyyy } from "../utils/yyyyMMdd";
 import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
@@ -78,7 +78,7 @@ JobItemsPage.defaultProps = {
 		{ key: "product",     display: "Product",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "description", display: "Description",                      className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
 		{ key: "job_status",    display: "Job Status",                     className: "",              type: ""},
-		{ key: "shipping_date", display: "Shipping Date",                  className: "",              type: "", formattingFunc: yyyyMMdd  },
+		{ key: "shipping_date", display: "Shipping Date",                  className: "",              type: "", formattingFunc: ddMMyyyy  },
 		{ key: "glass",       display: "Glass",                            className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "metal",       display: "Metal",                            className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
 		{ key: "flex",        display: "Flex",                             className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },

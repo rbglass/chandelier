@@ -1,7 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { changeDetails, saveDetails } from "../../actions/SharedActionCreators";
-// import { getPDF } from "../../actions/SingleJobActionCreators";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 import rbPrefixer from "../../utils/rbPrefixer";
@@ -129,7 +128,7 @@ export default class SingleJobDetails extends Component {
 
 SingleJobDetails.propTypes = {
 	details: PropTypes.shape({
-		jobid: PropTypes.number,
+		job_id: PropTypes.number,
 		client: PropTypes.string,
 		project: PropTypes.string,
 		client_ref: PropTypes.string,

@@ -1,6 +1,6 @@
 "use strict";
 import assert from "assert";
-import Router from "react-router";
+import { Link } from "react-router";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
@@ -48,11 +48,16 @@ describe("NavBar", () => {
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
 		const linkNodes = renderedOutput.props.children.filter(el => {
-			return el.props && el.props.children.type === Router.Link;
-		});
+			return Array.isArray(el);
+		}).reduce((a, b) => a.concat(b), [])
+			.map(div => div.props.children);
 
 		assert.equal(linkNodes.length, routeConfig.length);
-		assert.equal(linkNodes[0].props.children.props.to, routeConfig[0].to);
-		assert.equal(linkNodes[1].props.children.props.to, routeConfig[1].to);
+
+		linkNodes.forEach((link, i) => {
+			assert.equal(link.props.children, routeConfig[i].display);
+			assert.equal(link.props.to, routeConfig[i].to);
+			assert.deepEqual(link.type, Link);
+		});
 	});
 });
