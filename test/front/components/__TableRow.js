@@ -207,12 +207,19 @@ describe("TableRow", () => {
 				parentElement: {
 					parentElement: rowNode
 				}
+			},
+			target: {
+				tagName: "INPUT"
 			}
 		});
 
 		assert.equal(counter, 0);
 
-		TestUtils.Simulate.blur(rowNode, {relatedTarget: null});
+		TestUtils.Simulate.blur(rowNode, {
+			relatedTarget: null,
+			target: {
+				tagName: "INPUT"
+			}});
 		assert.equal(testValue, cells[primaryKey]);
 		assert.deepEqual(testCells, cells);
 		assert.equal(counter, 1);
@@ -222,9 +229,49 @@ describe("TableRow", () => {
 				parentElement: {
 					parentElement: "hi"
 				}
+			},
+			target: {
+				tagName: "INPUT"
 			}
 		});
 		assert.equal(counter, 2);
+
+	});
+
+	it("#onBlur is called only if the focus-lost element is useful (inputtable)", () => {
+		var rowNode = React.findDOMNode(row);
+
+		TestUtils.Simulate.blur(rowNode, {
+			relatedTarget: null,
+			target: {
+				tagName: "DIV"
+			}
+		});
+
+		assert.equal(counter, 0);
+
+		TestUtils.Simulate.blur(rowNode, {
+			relatedTarget: null,
+			target: {
+				tagName: "TEXTAREA"
+			}});
+		assert.equal(counter, 1);
+
+		TestUtils.Simulate.blur(rowNode, {
+			relatedTarget: null,
+			target: {
+				tagName: "SELECT"
+			}
+		});
+		assert.equal(counter, 2);
+
+		TestUtils.Simulate.blur(rowNode, {
+			relatedTarget: null,
+			target: {
+				tagName: "OPTION"
+			}
+		});
+		assert.equal(counter, 3);
 
 	});
 
