@@ -166,6 +166,11 @@ button:focus {
 }
 
 /* MultiSelect */
+
+select[multiple] {
+	height: 8em;
+}
+
 .multiselect-holder {
   flex-direction: column;
   display: flex;
@@ -204,6 +209,11 @@ button:focus {
 }
 
 /* Header */
+
+.link {
+	font-size: 1.5em;
+}
+
 .table-header {
 	display: none;
 	align-items: flex-end;
@@ -329,6 +339,17 @@ button:focus {
 	height: auto;
 	font-size: 1.1em;
 }
+
+.table-row-item input[type="number"] {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.table-row-item input::-webkit-outer-spin-button,
+.table-row-item input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
 .table-row-item .btn {
 	border: none;
 	margin: 0;

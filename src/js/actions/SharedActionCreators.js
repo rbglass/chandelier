@@ -25,9 +25,9 @@ export function saveItem(itemId, item) {
 	JobsAPI.saveItem(itemId, item);
 }
 
-export function deleteItem(jobId, cells) {
+export function deleteItem(_, cells) {
 	const itemId = cells.item_id;
-	JobsAPI.deleteSingleItem(jobId, itemId);
+	JobsAPI.deleteSingleItem(itemId);
 }
 
 export function getAllProducts() {

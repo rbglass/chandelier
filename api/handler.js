@@ -486,7 +486,7 @@ var handler = {
 		var fieldsToUpdate;
 
 		try {
-		 fieldsToUpdate = Object.keys(data);
+			fieldsToUpdate = Object.keys(data);
 		} catch(e) {
 			return reply("No fields passed").code(400);
 		}
@@ -605,7 +605,7 @@ var handler = {
 		var fieldsToUpdate;
 
 		try {
-		 fieldsToUpdate = Object.keys(data);
+			fieldsToUpdate = Object.keys(data);
 		} catch(e) {
 			return reply("No fields passed").code(400);
 		}
@@ -682,16 +682,18 @@ var handler = {
 			var results = [];
 
 			if (err) {
+				done();
 				console.log("login error: ", err);
 			}
 
-			var query = client.query("SELECT * FROM users WHERE email=($1)", [profile.email]);
+			var query = client.query("SELECT * FROM users WHERE email=($1)", ["ben@wesort.co.uk"]);
 
 			query.on("row", function(row){
 				results.push(row);
 			});
 
 			query.on("end", function() {
+				done();
 				if (results.length > 0) {
 					request.auth.session.clear();
 					request.auth.session.set(profile);

@@ -75,7 +75,7 @@ export function saveItem(itemId, updateObj) {
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
-export function deleteSingleItem(jobId, itemId) {
+export function deleteSingleItem(itemId) {
 	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)
 					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));

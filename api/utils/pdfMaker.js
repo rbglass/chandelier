@@ -27,11 +27,19 @@ function writeAddress(doc, address) {
 		.text(address);
 }
 
+function formatDate(date) {
+	var dates = [
+		"Jan", "Feb", "Mar", "Apr", "May", "June",
+		"July", "Aug", "Sep", "Oct", "Nov", "Dec"
+	];
+	var formattedDate = date.getDate() + " " + dates[date.getMonth()] + " " + date.getFullYear();
+	return formattedDate;
+}
+
 function writeDoc(job, cb) {
 	var doc = new PDFDocument({margin: 50});
-	var date = new Date();
-	var dates = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	var dateStr = date.getDate() + " " + dates[date.getMonth()] + " " + date.getFullYear();
+	var dateStr = formatDate(new Date());
+	var formattedShippingDate = formatDate(job.details.shipping_date);
 
 	doc.image("public/img/logo.jpg", 350, 20, {width: 200});
 
@@ -44,17 +52,19 @@ function writeDoc(job, cb) {
 			.text("Job #:", stroke)
 			.text("Client:", stroke)
 			.text("Project:", stroke)
-			.text("Client ref:", stroke)
-			.text("Job Status:", stroke);
+			.text("Client Ref:", stroke)
+			.text("Job Status:", stroke)
+			.text("Shipping Date:", stroke);
 
 	doc.fontSize(10)
-			.text(dateStr, 120, 140)
+			.text(dateStr, 130, 140)
 			.moveDown()
 			.text("RB" + job.job_id)
 			.text(job.details.client)
 			.text(job.details.project)
-			.text(job.details.client_ref)
-			.text(job.details.job_status);
+			.text(job.details.client_ref || " ")
+			.text(job.details.job_status)
+			.text(formattedShippingDate);
 
 	writeAddress(doc, job.details.shipping_notes);
 

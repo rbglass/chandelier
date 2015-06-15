@@ -145,13 +145,14 @@ describe("TableRow", () => {
 	});
 
 	it("#cell types: number", () => {
-		// const number = TestUtils.findRenderedDOMComponentWithClass(
-		// 	RenderedComponent,
-		// 	"qty-sm"
-		// );
+		const number = TestUtils.findRenderedDOMComponentWithClass(
+			RenderedComponent,
+			"qty-sm"
+		);
+		console.log(number.props.children.props);
 		// const numberNode = React.findDOMNode(number);
-
-		// console.log(React.findDOMNode(number.props.children));
+		assert.equal(number.props.children.type, "input");
+		// assert.equal(number.props.children.props, );
 		// assert.equal(numberNode.value, cells.qty_req);
 	});
 

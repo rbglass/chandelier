@@ -75,14 +75,14 @@ export default connectToStores([JobsStore, SelectionStore, AlertStore], getState
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm",   type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow1semi", type: "text",   onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "",             type: "text",   onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "order_type",    display: "Order Type",    "className": "",             type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow", type: "date",   onChange: SharedActionCreators.changeDetails },
-		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow", type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "parts_status",  display: "Parts Status",  "className": "",             type: "select", onChange: SharedActionCreators.changeDetails }
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm link",       type: "link", to: "singlejob", formattingFunc: rbPrefixer },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow1 semi", type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",       "className": "",                  type: "text",   onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",    "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "order_type",    display: "Order Type",    "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow",       type: "date",   onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow",       type: "select", onChange: SharedActionCreators.changeDetails },
+		{ key: "parts_status",  display: "Parts Status",  "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails }
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },
