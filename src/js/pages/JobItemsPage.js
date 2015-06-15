@@ -4,6 +4,7 @@ import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
+import DateSelector from "../components/common/DateSelector";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
@@ -45,6 +46,7 @@ class JobItemsPage extends Component {
 							sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>
+				{/* <DateSelector value={"2015-01-01"} onChange={val => console.log(val)} /> */}
 				{/* <button className="add-button" onClick={SharedActionCreators.createItem.bind(this, null, {})}>+</button> */}
 				</div>
 			</div>

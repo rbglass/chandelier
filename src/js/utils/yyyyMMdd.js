@@ -10,22 +10,51 @@ export function isyyyyMMdd(entity) {
 	}
 }
 export default function yyyyMMdd(validDate) {
-	if(!validDate) {
+	let date;
+
+	if (!validDate) {
 		return null;
 	} else if (isyyyyMMdd(validDate)) {
-		return validDate.slice(0, 10);
+		date = validDate;
 	} else {
-		return validDate.toISOString().slice(0, 10);
+		date = validDate.toISOString();
 	}
+
+	return date.slice(0, 10);
 }
 
 export function ddMMyyyy(validDate) {
-	if(!validDate) {
+	let date;
+
+	if (!validDate) {
 		return null;
 	} else if (isyyyyMMdd(validDate)) {
-		return `${validDate.slice(8, 10)}/${validDate.slice(5, 7)}/${validDate.slice(0, 4)}`;
+		date = validDate;
 	} else {
-		let iso = validDate.toISOString();
-		return `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
+		date = validDate.toISOString();
 	}
+
+	return `${date.slice(8, 10)}/${date.slice(5, 7)}/${date.slice(0, 4)}`;
+}
+
+export function ddMMMyyyy(validDate) {
+	const dates = [
+		"Jan", "Feb", "Mar", "Apr", "May", "June",
+		"July", "Aug", "Sep", "Oct", "Nov", "Dec"
+	];
+	let date;
+
+	if (!validDate) {
+		return null;
+	} else if (isyyyyMMdd(validDate)) {
+		date = validDate.slice(0, 10);
+	} else {
+		date = validDate;
+	}
+
+	date = new Date(date);
+	const dOrdd = date.getDate();
+	const dd = `${dOrdd}`.length < 2 ? "0" + dOrdd : dOrdd;
+
+	return `${dd} ${dates[date.getMonth()]} ${date.getFullYear()}`;
 }

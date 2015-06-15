@@ -6,7 +6,8 @@ export default (id, key, action) => {
 		action({
 			id: id,
 			key: key,
-			// TERRIBLE HACK TO GET AROUND BLOODY STRNUMS
+			// We want numeric numbers, but not numeric dates
+			// Hence we don't use valueAsNumber
 			value: +e.target.value || e.target.value
 		});
 	};

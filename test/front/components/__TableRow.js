@@ -180,25 +180,25 @@ describe("TableRow", () => {
 		// assert(textNode.readOnly);
 	});
 
-	it("#cell types: date", () => {
+	// it("#cell types: date", () => {
 
-	});
+	// });
 
-	it("#cell types: select", () => {
+	// it("#cell types: select", () => {
 
-	});
+	// });
 
-	it("#cell types: button", () => {
+	// it("#cell types: button", () => {
 
-	});
+	// });
 
-	it("#cell types: link", () => {
+	// it("#cell types: link", () => {
 
-	});
+	// });
 
-	it("#cell types: default", () => {
+	// it("#cell types: default", () => {
 
-	});
+	// });
 
 	it("#onBlur is called with the (cells[primaryKey], cells) only when focus is lost from the row", () => {
 		var rowNode = React.findDOMNode(row);

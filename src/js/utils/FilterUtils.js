@@ -1,6 +1,7 @@
 "use strict";
 import { isyyyyMMdd } from "./yyyyMMdd";
 
+// string.includes is playing up
 function strIncludes(str, term) {
 	if (typeof term !== "string") return false;
 	else return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);

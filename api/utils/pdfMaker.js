@@ -78,7 +78,6 @@ function writeDoc(job, cb) {
 	var yPos = 280;
 	var p = 1;
 
-	// writePageNum(doc, p);
 	writeFooter(doc, p);
 
 	job.items.forEach(function(item, i) {
@@ -86,9 +85,9 @@ function writeDoc(job, cb) {
 					p++;
 					yPos = 50;
 					doc.addPage();
-					// writePageNum(doc, p);
 					writeFooter(doc, p);
 			}
+
 			doc.fontSize(12)
 					.text(item.qty_req, 50, yPos)
 					.text(item.product, 100, yPos)
