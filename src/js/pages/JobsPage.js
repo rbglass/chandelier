@@ -38,9 +38,9 @@ class JobsPage extends Component {
 						setFilter={SharedActionCreators.setFilter}
 						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
-						restrictTo={SharedActionCreators.restrictTo}
-
-					/>
+						restrictTo={SharedActionCreators.restrictTo} >
+						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>+</button>
+					</Filter>
 					<div className="table-container">
 						<Table {...this.props}
 								items={items} primaryKey={"job_id"}

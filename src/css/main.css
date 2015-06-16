@@ -1,3 +1,4 @@
+/* Split this up when there's time
 /* Generals */
 
 :root {
@@ -34,6 +35,15 @@ label {
 
 button:focus {
 	outline: none;
+}
+
+select {
+	white-space: normal;
+}
+
+select,
+.table-header .table-row-item {
+	cursor: pointer;
 }
 
 /* App container */
@@ -145,6 +155,12 @@ button:focus {
   align-items: flex-end;
   flex-wrap: wrap;
   align-content: inherit;
+}
+
+.table-manip-col.table-manip-children {
+	flex-grow: 1;
+	justify-content: flex-end;
+	padding-right: 5px;
 }
 
 .job-text-input {
@@ -530,4 +546,9 @@ select[multiple] {
 
 .u-flex-grow10 {
 	flex-grow: 10;
+}
+
+/* border-radius classes */
+.rounded {
+	border-radius: 4px 4px 4px 4px;
 }

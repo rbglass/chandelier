@@ -11,7 +11,7 @@ export default class Filter extends Component {
 		const baseClassName = "job-text-input ";
 		const textFilterClassName = baseClassName + "filter";
 		const dateFilterClassName = baseClassName + "date";
-		const selects = Object.keys(this.props.filters.restrictions).map(restr => {
+		const selects = Object.keys(this.props.filters.restrictions).map((restr, i) => {
 			return (
 				this.props.selections[restr] ?
 				<MultiSelect key={restr}
@@ -19,7 +19,7 @@ export default class Filter extends Component {
 					selections={this.props.selections[restr]}
 					onSelect={this.props.restrictTo}
 				/>
-				: <span />
+				: <span key={i}/>
 			);
 		});
 		return (
@@ -41,6 +41,11 @@ export default class Filter extends Component {
 				<div className="table-manip-col">
 					{selects}
 				</div>
+				{ this.props.children ?
+				<div className="table-manip-col table-manip-children">
+					{this.props.children}
+				</div> :
+				<span/> }
 		</div>
 		);
 	}
