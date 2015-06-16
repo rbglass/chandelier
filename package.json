@@ -14,7 +14,7 @@
     "build:css": "myth src/css/main.css public/css/main.css & myth src/css/spinner.css public/css/spinner.css",
     "lint": "eslint **/*.js",
     "live-reload": "live-reload public/ --port 9082",
-    "devserve": "nodemon app.js --watch api",
+    "devserve": "NODE_ENV=development nodemon app.js --watch api",
     "test": "npm run test:back & npm run test:front",
     "test:back": "mocha test/back/**/*.js",
     "test:front": "mocha test/front/**/*.js --compilers js:babel/register --require test/front/setup/setup.js",
@@ -45,7 +45,6 @@
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.2",
     "react": "^0.13.3",
-    "react-datepicker": "^0.8.0",
     "react-router": "^0.13.3",
     "superagent": "^1.2.0"
   },

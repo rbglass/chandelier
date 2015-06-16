@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
+import DateSelector from "../../../src/js/components/common/DateSelector";
+
 import TableRow from "../../../src/js/components/common/TableRow";
 import { withContainer, stubRouterContext } from "../setup/utils";
 
@@ -111,8 +113,10 @@ describe("TableRow", () => {
 		kids.forEach((youngling, i) => {
 			let babies = youngling.props.children;
 
-			if (typeof babies.type === "function") {
-				assert.equal(babies.type, Link);
+			if (cellConfig[i].type === "link") {
+				assert.deepEqual(babies.type, Link);
+			} else if (cellConfig[i].type === "date") {
+				assert.deepEqual(babies.type, DateSelector);
 			} else if (!babies.type) {
 				assert.equal(!!babies.type, !!cellConfig[i].type);
 			} else if (babies.type !== "input") {
