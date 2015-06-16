@@ -181,6 +181,28 @@ select,
 	flex-basis: 38%;
 }
 
+/* Presets */
+.table-manip-presets {
+	width: 40%;
+}
+
+.preset {
+  display: flex;
+  height: auto;
+  justify-content: space-between;
+}
+
+.preset-button {
+  float: right;
+  height: 20px;
+  width: 40px;
+
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: -1px 1px 1px 0px black;
+}
 /* MultiSelect */
 
 select[multiple] {
@@ -300,7 +322,7 @@ select[multiple] {
 	flex-flow: row nowrap;
 	flex-grow: 1;
 	flex-basis: 0;
-	height: 51px;
+  min-height: 51px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	word-break: break-all;

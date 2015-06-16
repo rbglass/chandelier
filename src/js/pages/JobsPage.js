@@ -38,7 +38,8 @@ class JobsPage extends Component {
 						setFilter={SharedActionCreators.setFilter}
 						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
-						restrictTo={SharedActionCreators.restrictTo} >
+						restrictTo={SharedActionCreators.restrictTo}
+						presetConfig={this.props.presetScheme} >
 						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>+</button>
 					</Filter>
 					<div className="table-container">
@@ -87,6 +88,20 @@ JobsPage.defaultProps = {
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },
 		{ display: "Items", "to": "items" }
+	],
+	presetScheme: [
+		{
+			description: "Within 2 weeks & job confirmed",
+			onSelect: [
+				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
+				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+		]},
+		{
+			description: "Parts started",
+			onSelect: [
+				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
+		]}
+
 	]
 	// filterScheme: [
 	// 	{ key: "filterBy",  type: "text", setFilter: },

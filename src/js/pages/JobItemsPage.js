@@ -39,6 +39,7 @@ class JobItemsPage extends Component {
 						setFilter={SharedActionCreators.setFilter} setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
+						presetConfig={this.props.presetScheme}
 					/>
 					<div className="table-container">
 						<Table {...this.props} primaryKey={"item_id"}
@@ -46,8 +47,6 @@ class JobItemsPage extends Component {
 							sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>
-				{/* <DateSelector value={"2015-01-01"} onChange={val => console.log(val)} /> */}
-				{/* <button className="add-button" onClick={SharedActionCreators.createItem.bind(this, null, {})}>+</button> */}
 				</div>
 			</div>
 		);
@@ -73,6 +72,10 @@ function getState() {
 export default connectToStores([ItemsStore, SelectionStore, AlertStore], getState)(JobItemsPage);
 
 JobItemsPage.defaultProps = {
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
+	],
 	tableScheme: [
 		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.deleteItem, inputClassName: "btn-left" },
 		{ key: "job_id",        display: "Job #",                          className: "qty-sm",        type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
@@ -91,9 +94,13 @@ JobItemsPage.defaultProps = {
 		{ key: "notes",         display: "Notes",                          className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
 		{ key: "+", 	          display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right"}
 	],
-	routeScheme: [
-		{ display: "Jobs", "to": "jobs" },
-		{ display: "Items", "to": "items" }
+	presetScheme: [
+		{
+			description: "Within 2 weeks & job confirmed",
+			onSelect: [
+				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
+				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+		]}
 	]
 
 };

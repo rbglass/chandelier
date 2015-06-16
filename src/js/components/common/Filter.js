@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from "react";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
+import Preset from "./Preset";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class Filter extends Component {
@@ -11,6 +12,7 @@ export default class Filter extends Component {
 		const baseClassName = "job-text-input ";
 		const textFilterClassName = baseClassName + "filter";
 		const dateFilterClassName = baseClassName + "date";
+
 		const selects = Object.keys(this.props.filters.restrictions).map((restr, i) => {
 			return (
 				this.props.selections[restr] ?
@@ -22,9 +24,18 @@ export default class Filter extends Component {
 				: <span key={i}/>
 			);
 		});
+
+		const presets = this.props.presetConfig.map(preset => {
+			const key = preset.description.split(" ")[0];
+			return <Preset key={key} description={preset.description} onSelect={preset.onSelect} />;
+		});
+
 		return (
 			<div className="table-manip">
 				<div className="table-manip-col" >
+					<div className="table-manip-presets">
+						{presets}
+					</div>
 					<FilterInput type="text" value={this.props.filters.filterBy}
 						setFilter={this.props.setFilter} className={textFilterClassName}
 						placeholder="Filter all by..."
@@ -63,7 +74,11 @@ Filter.propTypes = {
 		)
 	}),
 
-	selections  : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+	selections   : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+	presetConfig : PropTypes.arrayOf(PropTypes.shape({
+		description: PropTypes.string,
+		onSelect: PropTypes.arrayOf(PropTypes.func)
+	})),
 
 	setFilter   : PropTypes.func,
 	setStartDate: PropTypes.func,

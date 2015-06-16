@@ -31,7 +31,6 @@ describe("JobsStore", function() {
 			}
 		};
 
-		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), samplejobs);
 		this.JobsStore.__set__("filters", filters);
 		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), samplejobs.filter(function(e) {
 			return Date.parse(e.details.shipping_date) > Date.parse(filters.startDate);
@@ -70,7 +69,7 @@ describe("JobsStore", function() {
 		};
 
 		this.onReceivingAction(jobAction);
-		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data.reverse());
+		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data);
 	});
 
 	it("#updates the respective job in the jobs array upon a CHANGE_SINGLE_JOB_DETAILS action", function() {

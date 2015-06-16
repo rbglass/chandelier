@@ -7,8 +7,8 @@ import SelectionStore from "./SelectionStore";
 
 var jobs = [],
 		filters = {
-			sortTerm: "shipping_date",
-			isAsc: false,
+			sortTerm: "job_status",
+			isAsc: true,
 			filterBy: "",
 			dateField: "shipping_date",
 			startDate: "",
@@ -22,6 +22,9 @@ var jobs = [],
 				},
 				"payment": {
 					key: "payment"
+				},
+				"parts_status": {
+					key: "parts_status"
 				}
 			}
 		};
