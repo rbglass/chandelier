@@ -1,8 +1,7 @@
+// Edit headers to match defined ones
+// NOTE: DELETE COLUMNS IN GOOGLE SHEETS WHICH ARE EMPTY/NOT USED
 
-CREATE TABLE jobs(job_id int,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text);
-COPY jobs FROM '~/Downloads/jobs.csv' CSV HEADER;
-
-ALTER TABLE jobs DROP COLUMN dummy;
+CREATE TABLE jobs(job_id bigint,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text,dummy text);
 
 ALTER TABLE jobs ADD PRIMARY KEY (job_id);
 
@@ -17,8 +16,50 @@ CREATE SEQUENCE jobs_job_id_seq
 
 ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
 
+COPY jobs FROM '~/Downloads/rnb/jobs.csv' CSV HEADER;
 
+ALTER TABLE jobs DROP COLUMN dummy;
 
+-------------------------
+
+CREATE TABLE job_items(job_id int,product text,description text,glass text,metal text,flex text,bulb text,qty_req int,qty_hot int,qty_cold int,qty_assem int,qty_packed int,notes text, item_id bigint);
+
+ALTER TABLE job_items ADD PRIMARY KEY (item_id);
+ALTER TABLE job_items
+  ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id)
+      REFERENCES jobs (job_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+SELECT MAX(item_id) FROM job_items;
+
+CREATE SEQUENCE job_items_item_id_seq
+  INCREMENT 1
+  MINVALUE 10051
+  MAXVALUE 9223372036854775807
+  START 10051
+  CACHE 1;
+
+ALTER TABLE job_items ALTER COLUMN item_id SET DEFAULT nextval('job_items_item_id_seq'::regclass);
+
+COPY jobs FROM '~/Downloads/rnb/job_items.csv' CSV HEADER;
+
+ALTER TABLE job_items DROP COLUMN qty_packed;
+
+-------------------------
+
+CREATE TABLE products(id int,SKU text,type text,name text,description text,active boolean,saleable boolean);
+COPY products FROM '~/Downloads/rnb/products.csv' CSV HEADER;
+ALTER TABLE products ADD id INT PRIMARY KEY AUTO_INCREMENT;
+
+CREATE TABLE selections(id int,type text,label text,rank int,active boolean,default boolean);
+COPY selections FROM '~/Downloads/rnb/selections.csv' CSV HEADER;
+ALTER TABLE selections ADD id INT PRIMARY KEY AUTO_INCREMENT;
+
+CREATE TABLE contacts(id int,type text,name text,active boolean);
+COPY contacts FROM '~/Downloads/rnb/contacts.csv' CSV HEADER;
+ALTER TABLE contacts ADD id INT PRIMARY KEY AUTO_INCREMENT;
+
+-------------------------
 
 CREATE TABLE selections(type text, label text);
 
