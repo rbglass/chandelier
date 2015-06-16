@@ -375,6 +375,28 @@ select[multiple] {
 	cursor: pointer;
 }
 
+/* Date Selector */
+.date-selector-input::-webkit-inner-spin-button,
+.date-selector-input::-webkit-calendar-picker-indicator {
+	color: black;
+	z-index: 999999;
+}
+
+.date-selector-input::-webkit-datetime-edit-month-field {
+	color: transparent;
+	letter-spacing: 5px;
+}
+.date-selector-input::-webkit-datetime-edit-day-field {
+	color: transparent;
+}
+.date-selector-input::-webkit-datetime-edit-year-field {
+	color: transparent;
+}
+
+.date-selector-input::-webkit-clear-button {
+	display: none;
+}
+
 /* Specific job details */
 .job-details {
 	display: flex;

@@ -686,7 +686,7 @@ var handler = {
 				console.log("login error: ", err);
 			}
 
-			var query = client.query("SELECT * FROM users WHERE email=($1)", ["ben@wesort.co.uk"]);
+			var query = client.query("SELECT * FROM users WHERE email=($1)", [profile.email]);
 
 			query.on("row", function(row){
 				results.push(row);

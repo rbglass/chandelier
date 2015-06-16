@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
+import DateSelector from "./DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 import isUsefulTag from "../../utils/isUsefulTag";
@@ -41,7 +42,7 @@ export default class TableRow extends Component {
 						break;
 
 				case "date":
-						input = <input type="date" value={yyyyMMdd(cellValue)} />;
+						input = <DateSelector value={cellValue} />;
 						break;
 
 				case "select":

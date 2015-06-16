@@ -3,10 +3,6 @@ import React, { Component, PropTypes } from "react";
 import yyyyMMdd, { ddMMMyyyy } from "../../utils/yyyyMMdd";
 
 export default class DateSelector extends Component {
-	changeHandler(e) {
-		e.stopPropagation();
-		this.props.onChange(e.target.value);
-	}
 
 	render() {
 		const styleHolder = {
@@ -14,11 +10,11 @@ export default class DateSelector extends Component {
 		};
 		const styleFront = {
 			position: "absolute",
-			left: "5px",
-			top: "5px",
+			left: "2px",
+			top: "1px",
 			fontSize: "0.9rem",
 			cursor: "initial",
-			zIndex: "-999999"
+			pointerEvents: "none"
 		};
 		const styleBehind = {
 			color: "transparent",
@@ -29,14 +25,12 @@ export default class DateSelector extends Component {
 			<div className="date-selector" style={styleHolder} >
 				<span className="date-selector-display" style={styleFront}>{ddMMMyyyy(this.props.value)}</span>
 				<input type="date" className="date-selector-input" style={styleBehind}
-						value={yyyyMMdd(this.props.value)}
-						onChange={this.changeHandler.bind(this)}/>
+						value={yyyyMMdd(this.props.value)} />
 			</div>
 		);
 	}
 }
 
 DateSelector.propTypes = {
-	value: PropTypes.string.isRequired,
-	onChange: PropTypes.func.isRequired
+	value: PropTypes.string.isRequired
 };
