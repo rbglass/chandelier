@@ -10,7 +10,7 @@ export default class TableRow extends Component {
 	handleBlur(e) {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
-
+		console.log(this.props.cells["shipping_date"]);
 		if(isUsefulTag(e.target.tagName)) {
 			if(currentRowNode !== destinationNode) {
 				this.props.onBlur(this.props.cells[this.props.primaryKey], this.props.cells);

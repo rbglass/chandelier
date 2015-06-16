@@ -6,7 +6,7 @@ var config = require("./config.js");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
 var formatter = require("./utils/formatter");
-var conString = process.env.DATABASE_URL || config.database.dburl;
+var conString = require("./models/database");
 
 var handler = {
 

@@ -25,6 +25,8 @@ export default class DateSelector extends Component {
 			width: "100%"
 		};
 
+		// console.log(this.props.value);
+
 		return (
 			<div className={`date-selector ${this.props.className}`} style={styleHolder} id={this.props.id}>
 				<span className="date-selector-display" style={styleFront}>{ddMMMyyyy(this.props.value)}</span>
