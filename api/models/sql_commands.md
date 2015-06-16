@@ -1,3 +1,25 @@
+
+CREATE TABLE jobs(job_id int,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text);
+COPY jobs FROM '~/Downloads/jobs.csv' CSV HEADER;
+
+ALTER TABLE jobs DROP COLUMN dummy;
+
+ALTER TABLE jobs ADD PRIMARY KEY (job_id);
+
+SELECT MAX(job_id) FROM jobs;
+
+CREATE SEQUENCE jobs_job_id_seq
+  INCREMENT 1
+  MINVALUE 10051
+  MAXVALUE 9223372036854775807
+  START 10051
+  CACHE 1;
+
+ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
+
+
+
+
 CREATE TABLE selections(type text, label text);
 
 INSERT INTO selections (type, label) VALUES ('job_status', 'TBC'), ('job_status', 'Non-Starter'), ('job_status', 'Confirmed'), ('job_status', 'Packaged'), ('job_status', 'Done'), ('order_type', 'Standard'), ('order_type', 'Bespoke'), ('order_type', 'RB Parts'), ('order_type', 'Outsourced'), ('order_type', 'Loan or Press'), ('parts_status', ' '),('parts_status', 'Started'), ('parts_status', 'Done'), ('product_type', ' '), ('product_type', 'Pendant'), ('product_type', 'Glass Colour & Style'), ('product_type', 'Metal Finish'), ('product_type', 'Flex'), ('product_type', 'Bulb'), ('product_type', 'Ceiling Plate'), ('payment', 'Awaiting Payment'), ('payment', 'Deposit'), ('payment', 'Paid Card'), ('payment', 'Paid BACS'), ('payment', 'Paid Other'), ('payment', 'Non-Starter'), ('contact_type', 'Customer'), ('contact_type', 'Supplier');

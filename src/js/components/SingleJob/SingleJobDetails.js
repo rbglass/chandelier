@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import DateSelector from "../common/DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
@@ -38,11 +39,8 @@ export default class SingleJobDetails extends Component {
 
 				case "date":
 						let isDisabled = !cell.onChange;
-						input = (
-							<input type="date" value={yyyyMMdd(cellValue)}
-									className="job-text-input" id={cellValue}
-									disabled={isDisabled} readOnly={isDisabled} />
-						);
+						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled}
+											id={cellValue} className="job-text-input" />;
 						break;
 
 				case "select":

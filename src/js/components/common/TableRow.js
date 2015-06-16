@@ -42,7 +42,8 @@ export default class TableRow extends Component {
 						break;
 
 				case "date":
-						input = <DateSelector value={cellValue} />;
+						let isDisabled = !cell.onChange;
+						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled} />;
 						break;
 
 				case "select":

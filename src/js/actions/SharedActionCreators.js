@@ -42,6 +42,7 @@ export function changeItem(updateObj) {
 }
 
 export function changeDetails(updateObj) {
+	console.log(updateObj);
 	AppDispatcher.dispatch({
 		type: ActionTypes.CHANGE_SINGLE_JOB_DETAILS,
 		data: updateObj
