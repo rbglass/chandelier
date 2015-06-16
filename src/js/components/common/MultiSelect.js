@@ -24,9 +24,9 @@ export default class MultiSelect extends Component {
 		return (
 			<div className="multiselect-holder">
 				<label className="multiselect-title">{tidy(this.props.selected.key)}</label>
-				<label className="multiselect-label">Select all:
+				<label className="multiselect-label" htmlFor={this.props.selected.key}>Select all:
 					<input type="checkbox" className="multiselect-checkbox"
-						checked={isCheckboxChecked} onChange={this.checkboxChange.bind(this)} />
+						checked={isCheckboxChecked} onChange={this.checkboxChange.bind(this)} id={this.props.selected.key}/>
 				</label>
 				<select multiple={true} value={this.props.selected.options}
 					onChange={this.selectChange.bind(this)} >

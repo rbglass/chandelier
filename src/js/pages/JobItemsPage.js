@@ -4,6 +4,7 @@ import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
+import DateSelector from "../components/common/DateSelector";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
@@ -45,6 +46,7 @@ class JobItemsPage extends Component {
 							sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>
+				{/* <DateSelector value={"2015-01-01"} onChange={val => console.log(val)} /> */}
 				{/* <button className="add-button" onClick={SharedActionCreators.createItem.bind(this, null, {})}>+</button> */}
 				</div>
 			</div>
@@ -72,24 +74,22 @@ export default connectToStores([ItemsStore, SelectionStore, AlertStore], getStat
 
 JobItemsPage.defaultProps = {
 	tableScheme: [
-		{ key: "-",           display: "",                                 className: "fixed-col hid", type: "button",    onClick:SharedActionCreators.deleteItem,
-				inputClassName: "btn-left" },
-		{ key: "job_id",        display: "Job #",                          className: "qty-sm",        type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "product",     display: "Product",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
-		{ key: "description", display: "Description",                      className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
+		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.deleteItem, inputClassName: "btn-left" },
+		{ key: "job_id",        display: "Job #",                          className: "qty-sm",        type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
+		{ key: "product",       display: "Product",                        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "description",   display: "Description",                    className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "job_status",    display: "Job Status",                     className: "",              type: ""},
-		{ key: "shipping_date", display: "Shipping Date",                  className: "",              type: "", formattingFunc: ddMMyyyy  },
-		{ key: "glass",       display: "Glass",                            className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
-		{ key: "metal",       display: "Metal",                            className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
-		{ key: "flex",        display: "Flex",                             className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
-		{ key: "bulb",        display: "Bulb",                             className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem   },
-		{ key: "qty_req",     display: "Qty",            line2: "Req",     className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem   },
-		{ key: "qty_hot",     display: "Qty",            line2: "Hot",     className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem   },
-		{ key: "qty_cold",    display: "Qty",            line2: "Cold",    className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem   },
-		{ key: "qty_assem",   display: "Qty",            line2: "Assem",   className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem   },
-		{ key: "notes",       display: "Notes",                            className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
-		{ key: "+", 	        display: "",                                 className: "fixed-col hid", type: "button",    onClick: SharedActionCreators.createItem,
-				inputClassName: "btn-right"}
+		{ key: "shipping_date", display: "Shipping Date",                  className: "",              type: "",         formattingFunc: ddMMyyyy  },
+		{ key: "glass",         display: "Glass",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "metal",         display: "Metal",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "flex",          display: "Flex",                           className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "bulb",          display: "Bulb",                           className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "qty_req",       display: "Qty",            line2: "Req",   className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+		{ key: "qty_hot",       display: "Qty",            line2: "Hot",   className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+		{ key: "qty_cold",      display: "Qty",            line2: "Cold",  className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+		{ key: "qty_assem",     display: "Qty",            line2: "Assem", className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+		{ key: "notes",         display: "Notes",                          className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
+		{ key: "+", 	          display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right"}
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },

@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
+import DateSelector from "./DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 import isUsefulTag from "../../utils/isUsefulTag";
@@ -9,7 +10,6 @@ export default class TableRow extends Component {
 	handleBlur(e) {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
-
 		if(isUsefulTag(e.target.tagName)) {
 			if(currentRowNode !== destinationNode) {
 				this.props.onBlur(this.props.cells[this.props.primaryKey], this.props.cells);
@@ -41,7 +41,8 @@ export default class TableRow extends Component {
 						break;
 
 				case "date":
-						input = <input type="date" value={yyyyMMdd(cellValue)} />;
+						let isDisabled = !cell.onChange;
+						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled} />;
 						break;
 
 				case "select":
@@ -77,8 +78,8 @@ export default class TableRow extends Component {
 			}
 
 			return (
-				<div className={`table-row-item ${cell.className}`} key={i}
-							onChange={cell.onChange ? ks(cell.key, cell.onChange) : null}>
+				<div className={`table-row-item ${cell.className || ""}`} key={i}
+							onChange={cell.onChange ? ks(cell.key, cell.onChange, cell.isNum) : null}>
 					{input}
 				</div>
 			);

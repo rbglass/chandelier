@@ -30,7 +30,7 @@ export default class Alert extends Component {
 Alert.propTypes = {
 	isLoading: PropTypes.bool.isRequired,
 	alert: PropTypes.shape({
-		type: PropTypes.oneOf(["error", "success"]).isRequired,
+		type: PropTypes.oneOf(["error", "success"]),
 		message: PropTypes.string
 	})
 };

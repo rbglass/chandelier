@@ -1,13 +1,11 @@
 "use strict";
 
-// AM I MISSING SOMETHING???
-export default (id, key, action) => {
+export default (id, key, action, isNum) => {
 	return (e) => {
 		action({
 			id: id,
 			key: key,
-			// TERRIBLE HACK TO GET AROUND BLOODY STRNUMS
-			value: +e.target.value || e.target.value
+			value: isNum ? +e.target.value : e.target.value
 		});
 	};
 };

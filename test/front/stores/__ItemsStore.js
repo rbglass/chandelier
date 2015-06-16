@@ -2,12 +2,12 @@
 import assert from "assert";
 import rewire from "rewire";
 
-describe("AlertStore", () => {
-	let AlertStore, onReceivingAction;
+describe("ItemsStore", () => {
+	let ItemsStore, onReceivingAction;
 
 	beforeEach(function() {
-		AlertStore = rewire("../../../src/js/stores/AlertStore");
-		onReceivingAction = AlertStore.__get__("onReceivingAction");
+		ItemsStore = rewire("../../../src/js/stores/ItemsStore");
+		onReceivingAction = ItemsStore.__get__("onReceivingAction");
 	});
 
 	it("#");

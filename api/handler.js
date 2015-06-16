@@ -6,7 +6,7 @@ var config = require("./config.js");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
 var formatter = require("./utils/formatter");
-var conString = process.env.DATABASE_URL || config.database.dburl;
+var conString = require("./models/database");
 
 var handler = {
 
@@ -486,7 +486,7 @@ var handler = {
 		var fieldsToUpdate;
 
 		try {
-		 fieldsToUpdate = Object.keys(data);
+			fieldsToUpdate = Object.keys(data);
 		} catch(e) {
 			return reply("No fields passed").code(400);
 		}
@@ -605,7 +605,7 @@ var handler = {
 		var fieldsToUpdate;
 
 		try {
-		 fieldsToUpdate = Object.keys(data);
+			fieldsToUpdate = Object.keys(data);
 		} catch(e) {
 			return reply("No fields passed").code(400);
 		}
@@ -682,6 +682,7 @@ var handler = {
 			var results = [];
 
 			if (err) {
+				done();
 				console.log("login error: ", err);
 			}
 
@@ -692,6 +693,7 @@ var handler = {
 			});
 
 			query.on("end", function() {
+				done();
 				if (results.length > 0) {
 					request.auth.session.clear();
 					request.auth.session.set(profile);

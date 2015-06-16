@@ -1,3 +1,4 @@
+/* Split this up when there's time
 /* Generals */
 
 :root {
@@ -34,6 +35,15 @@ label {
 
 button:focus {
 	outline: none;
+}
+
+select {
+	white-space: normal;
+}
+
+select,
+.table-header .table-row-item {
+	cursor: pointer;
 }
 
 /* App container */
@@ -147,6 +157,12 @@ button:focus {
   align-content: inherit;
 }
 
+.table-manip-col.table-manip-children {
+	flex-grow: 1;
+	justify-content: flex-end;
+	padding-right: 5px;
+}
+
 .job-text-input {
 	display: flex;
 	height: auto;
@@ -166,6 +182,11 @@ button:focus {
 }
 
 /* MultiSelect */
+
+select[multiple] {
+	height: 8em;
+}
+
 .multiselect-holder {
   flex-direction: column;
   display: flex;
@@ -204,6 +225,11 @@ button:focus {
 }
 
 /* Header */
+
+.link {
+	font-size: 1.5em;
+}
+
 .table-header {
 	display: none;
 	align-items: flex-end;
@@ -329,6 +355,17 @@ button:focus {
 	height: auto;
 	font-size: 1.1em;
 }
+
+.table-row-item input[type="number"] {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.table-row-item input::-webkit-outer-spin-button,
+.table-row-item input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
 .table-row-item .btn {
 	border: none;
 	margin: 0;
@@ -352,6 +389,28 @@ button:focus {
 .table-row-item .btn:hover {
 	opacity: var(--hover);
 	cursor: pointer;
+}
+
+/* Date Selector */
+.date-selector-input::-webkit-inner-spin-button,
+.date-selector-input::-webkit-calendar-picker-indicator {
+	color: black;
+	z-index: 999999;
+}
+
+.date-selector-input::-webkit-datetime-edit-month-field {
+	color: transparent;
+	letter-spacing: 5px;
+}
+.date-selector-input::-webkit-datetime-edit-day-field {
+	color: transparent;
+}
+.date-selector-input::-webkit-datetime-edit-year-field {
+	color: transparent;
+}
+
+.date-selector-input::-webkit-clear-button {
+	display: none;
 }
 
 /* Specific job details */
@@ -487,4 +546,9 @@ button:focus {
 
 .u-flex-grow10 {
 	flex-grow: 10;
+}
+
+/* border-radius classes */
+.rounded {
+	border-radius: 4px 4px 4px 4px;
 }
