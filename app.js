@@ -1,4 +1,5 @@
-var server = require('./api/server');
+"use strict";
+var server = require("./api/server");
 
 server.start(function(){
     console.log("Server running at port:", server.info.port);
