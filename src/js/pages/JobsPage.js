@@ -85,10 +85,6 @@ JobsPage.defaultProps = {
 		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow",       type: "select", onChange: SharedActionCreators.changeDetails },
 		{ key: "parts_status",  display: "Parts Status",  "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails }
 	],
-	routeScheme: [
-		{ display: "Jobs", "to": "jobs" },
-		{ display: "Items", "to": "items" }
-	],
 	presetScheme: [
 		{
 			description: "Within 2 weeks & job confirmed",
@@ -103,9 +99,4 @@ JobsPage.defaultProps = {
 		]}
 
 	]
-	// filterScheme: [
-	// 	{ key: "filterBy",  type: "text", setFilter: },
-	// 	{ key: "startDate", type: "date", setFilter: },
-	// 	{ key: "endDate",   type: "date", setFilter: }
-	// ]
 };

@@ -24,6 +24,7 @@ export default class TableRow extends Component {
 		const cells = this.props.cellConfig.map((cell, i) => {
 			let cellValue = this.props.cells[cell.key];
 			let input;
+			let isDisabled;
 
 			switch (cell.type) {
 
@@ -36,12 +37,12 @@ export default class TableRow extends Component {
 						break;
 
 				case "text":
-						let isDisabled = !cell.onChange;
+						isDisabled = !cell.onChange;
 						input = <input type="text" readOnly={isDisabled} disabled={isDisabled} value={cellValue} />;
 						break;
 
 				case "date":
-						let isDisabled = !cell.onChange;
+						isDisabled = !cell.onChange;
 						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled} />;
 						break;
 

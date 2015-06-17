@@ -11,5 +11,7 @@ export default (
     <DefaultRoute name="jobs" handler={JobsPage} />
     <Route name="singlejob" path="/jobs/:id" handler={SingleJobPage} />
     <Route name="items" path="/items" handler={JobItemsPage} />
+    <Route name="products" path="/products" handler={JobItemsPage} />
+    <Route name="selections" path="/selections" handler={JobItemsPage} />
   </Route>
 );
