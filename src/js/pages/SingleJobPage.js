@@ -3,11 +3,14 @@ import React, { Component, PropTypes } from "react";
 import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
+import Modal from "../components/common/Modal";
 import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
+import connectToStores from "../utils/connectToStores";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
 import AlertStore from "../stores/AlertStore";
-import connectToStores from "../utils/connectToStores";
+import ModalStore from "../stores/ModalStore";
+import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import rbPrefixer from "../utils/rbPrefixer";
@@ -32,6 +35,16 @@ class SingleJobPage extends Component {
 				<NavBar title={`RB${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
 				{(this.props.isLoading || this.props.alert) ?
 					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+					<span />
+				}
+				{this.props.pendingAction ?
+					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this job?"}
+							hide={ModalActionCreators.clearPendingAction}>
+						<button className="confirm-delete"
+								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
+							Yes I'm sure.
+						</button>
+					</Modal> :
 					<span />
 				}
 				<div className="container">
@@ -59,24 +72,26 @@ function getState() {
 	const items = SingleJobStore.getSortedItems();
 	const filters = SingleJobStore.getFilters();
 	const selections = SelectionStore.getSelections();
+	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
 	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
-		details,
 		items,
+		details,
 		filters,
+		pendingAction,
 		isLoading,
 		alert
 	};
 }
 
-export default connectToStores([SingleJobStore, SelectionStore, AlertStore], getState)(SingleJobPage);
+export default connectToStores([SingleJobStore, SelectionStore, AlertStore, ModalStore], getState)(SingleJobPage);
 
 SingleJobPage.defaultProps = {
 	tableScheme: [
-		{ key: "-", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: SharedActionCreators.deleteItem, inputClassName: "btn-left" },
+		{ key: "-", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
 		{ key: "product",     display: "Product",      className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "description", display: "Description",  className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",       display: "Glass",        className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },

@@ -1,6 +1,7 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
+import TextArea from "react-textarea-autosize";
 import DateSelector from "./DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
@@ -29,7 +30,7 @@ export default class TableRow extends Component {
 			switch (cell.type) {
 
 				case "textarea":
-						input = <textarea value={cellValue} />;
+						input = <TextArea value={cellValue} useCacheForDOMMeasurements={true} minRows={2}/>;
 						break;
 
 				case "number":
