@@ -75,10 +75,6 @@ function getState() {
 export default connectToStores([SingleJobStore, SelectionStore, AlertStore], getState)(SingleJobPage);
 
 SingleJobPage.defaultProps = {
-	routeScheme: [
-		{ display: "Jobs", "to": "jobs" },
-		{ display: "Items", "to": "items" }
-	],
 	tableScheme: [
 		{ key: "-", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: SharedActionCreators.deleteItem, inputClassName: "btn-left" },
 		{ key: "product",     display: "Product",      className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },

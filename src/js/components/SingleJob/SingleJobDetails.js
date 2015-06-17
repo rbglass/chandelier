@@ -25,11 +25,12 @@ export default class SingleJobDetails extends Component {
 			let cellValue = details[cell.key];
 			let input;
 			let field;
+			let isDisabled;
 
 			switch (cell.type) {
 
 				case "text":
-						let isDisabled = !cell.onChange;
+						isDisabled = !cell.onChange;
 						input = (
 							<input type="text" value={cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue}
 									className="job-text-input" id={cellValue}
@@ -38,7 +39,7 @@ export default class SingleJobDetails extends Component {
 						break;
 
 				case "date":
-						let isDisabled = !cell.onChange;
+						isDisabled = !cell.onChange;
 						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled}
 											id={cellValue} className="job-text-input" />;
 						break;

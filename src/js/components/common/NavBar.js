@@ -34,3 +34,12 @@ NavBar.PropTypes = {
 		})).isRequired,
 		title: PropTypes.string
 };
+
+NavBar.defaultProps = {
+	routeConfig: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
+		// { display: "Products", "to": "products" },
+		// { display: "Selections", "to": "selections" }
+	]
+};
