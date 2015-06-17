@@ -4,11 +4,13 @@ import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
-import DateSelector from "../components/common/DateSelector";
+import Modal from "../components/common/Modal";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
 import AlertStore from "../stores/AlertStore";
+import ModalStore from "../stores/ModalStore";
+import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import { ddMMyyyy } from "../utils/yyyyMMdd";
@@ -34,6 +36,16 @@ class JobItemsPage extends Component {
 					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
 					<span />
 				}
+				{this.props.pendingAction ?
+					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this item?"}
+							hide={ModalActionCreators.clearPendingAction}>
+						<button className="confirm-delete"
+								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
+							Yes I'm sure.
+						</button>
+					</Modal> :
+					<span />
+				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
 						setFilter={SharedActionCreators.setFilter} setStartDate={SharedActionCreators.setStartDate}
@@ -57,6 +69,7 @@ function getState() {
 	const items = ItemsStore.getFilteredAndSortedItems();
 	const filters = ItemsStore.getFilters();
 	const selections = SelectionStore.getSelections();
+	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
 	const alert = AlertStore.getAlert();
 
@@ -64,16 +77,18 @@ function getState() {
 		selections,
 		items,
 		filters,
+		pendingAction,
 		isLoading,
 		alert
 	};
 }
 
-export default connectToStores([ItemsStore, SelectionStore, AlertStore], getState)(JobItemsPage);
+export default connectToStores([ItemsStore, SelectionStore, AlertStore, ModalStore], getState)(JobItemsPage);
 
+// Code too wide
 JobItemsPage.defaultProps = {
 	tableScheme: [
-		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.deleteItem, inputClassName: "btn-left" },
+		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
 		{ key: "job_id",        display: "Job #",                          className: "qty-sm",        type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
 		{ key: "product",       display: "Product",                        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "description",   display: "Description",                    className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem },

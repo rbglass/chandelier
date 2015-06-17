@@ -5,6 +5,7 @@ import React from "react/addons";
 let { TestUtils } = React.addons;
 
 import DateSelector from "../../../src/js/components/common/DateSelector";
+import TextArea from "react-textarea-autosize";
 
 import TableRow from "../../../src/js/components/common/TableRow";
 import { withContainer, stubRouterContext } from "../setup/utils";
@@ -117,6 +118,8 @@ describe("TableRow", () => {
 				assert.deepEqual(babies.type, Link);
 			} else if (cellConfig[i].type === "date") {
 				assert.deepEqual(babies.type, DateSelector);
+			} else if (cellConfig[i].type === "textarea") {
+				assert.deepEqual(babies.type, TextArea);
 			} else if (!babies.type) {
 				assert.equal(!!babies.type, !!cellConfig[i].type);
 			} else if (babies.type !== "input") {
@@ -138,13 +141,18 @@ describe("TableRow", () => {
 	});
 
 	it("#cell types: textarea", () => {
-		const textarea = TestUtils.findRenderedDOMComponentWithTag(
+		const textarea = TestUtils.findRenderedComponentWithType(
+			RenderedComponent,
+			TextArea
+		);
+
+		const textareaNode = React.findDOMNode(TestUtils.findRenderedDOMComponentWithTag(
 			RenderedComponent,
 			"textarea"
-		);
-		const textareaNode = React.findDOMNode(textarea);
+		));
 
 		assert(textarea);
+		assert(textareaNode);
 		assert.equal(textareaNode.textContent, cells.description);
 	});
 
@@ -153,20 +161,17 @@ describe("TableRow", () => {
 			RenderedComponent,
 			"qty-sm"
 		);
-		console.log(number.props.children.props);
-		// const numberNode = React.findDOMNode(number);
+
 		assert.equal(number.props.children.type, "input");
-		// assert.equal(number.props.children.props, );
-		// assert.equal(numberNode.value, cells.qty_req);
+		assert.equal(number.props.children.props.value, cells.qty_req);
 	});
 
 	it("#cell types: text - enabled", () => {
-		// const text = TestUtils.scryRenderedDOMComponentsWithTag(
-		// 	RenderedComponent,
-		// 	"text"
-		// ).filter(c => c.props.onChange);
+		const text = TestUtils.findRenderedDOMComponentWithClass(
+			RenderedComponent,
+			"bulb"
+		);
 
-		// // console.log(text);
 		// const textNode = React.findDOMNode(text);
 
 		// assert.equal(textNode.value, cells.bulb);

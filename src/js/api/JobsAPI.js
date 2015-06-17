@@ -24,14 +24,12 @@ function onReply(successAction, ...etc) {
 	};
 }
 
-// All Jobs
 export function getAllJobs() {
 	SharedActionCreators.startLoading();
 	request.get(jobs)
 					.end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
-// Single Jobs
 export function getSingleJob(jobId) {
 	SharedActionCreators.startLoading();
 	request.get(`${jobs}/${jobId}`)
@@ -51,14 +49,12 @@ export function saveDetails(jobId, updateObj) {
 					.end(onReply(ServerActionCreators.receiveUpdatedJob));
 }
 
-// All items
 export function getAllItems() {
 	SharedActionCreators.startLoading();
 	request.get(items)
 					.end(onReply(ServerActionCreators.receiveAllItems));
 }
 
-// Single Item
 export function createSingleJobItem(jobId, blueprint) {
 	blueprint.job_id = jobId;
 
@@ -81,21 +77,18 @@ export function deleteSingleItem(itemId) {
 					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
-// All Selections
 export function getSelections() {
 	SharedActionCreators.startLoading();
 	request.get(selections)
 					.end(onReply(ServerActionCreators.receiveSelections));
 }
 
-// All Products
 export function getAllProducts() {
 	SharedActionCreators.startLoading();
 	request.get(products)
 					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
-// All Contacts
 export function getAllContacts() {
 	SharedActionCreators.startLoading();
 	request.get(contacts)
