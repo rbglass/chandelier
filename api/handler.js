@@ -185,8 +185,15 @@ var handler = {
 						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
 						done();
 
+						function setReplyAsPDF(doc) {
+							reply(doc)
+								.type("application/pdf")
+								.header("Content-Disposition", "inline; filename=" +
+											"RB" + id + "_specification.pdf");
+						}
+
 						if (pdf) {
-							pdfMaker(jobObj, reply);
+							pdfMaker(jobObj, setReplyAsPDF);
 						} else {
 							reply(jobObj);
 						}
@@ -714,3 +721,7 @@ var handler = {
 };
 
 module.exports = handler;
+
+function setReplyHeaders(reply) {
+
+}

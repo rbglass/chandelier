@@ -1,11 +1,23 @@
 "use strict";
+// In need of a hefty refactor
 
 var PDFDocument = require("pdfkit");
-var stroke = {stroke: true};
+var gap = {lineGap: 1.2};
 
+var fieldsWeCareAbout = {
+	qty_req: true,
+	product: true,
+	description: true,
+	glass: true,
+	metal: true,
+	flex: true,
+	bulb: true,
+	notes: true
+};
 
 function writeFooter(doc, num) {
 	doc.fontSize(8)
+			.font("Helvetica")
 			.text("Rothschild & Bickers Ltd.", 50, 692)
 			.text("Registered Office & Studio: Unit 7, Great Northern Works, Hartham Lane, Hertford SG14 1QN UK")
 			.text("+44 (0) 1992 677 292 - info@rothschildbickers.com - www.rothschildbickers.com - UK Company No.8413128")
@@ -22,8 +34,10 @@ function writeAddress(doc, address) {
 		.text("SG14 1QN")
 		.moveDown(2)
 		.fontSize(11)
-		.text("Delivery Address:", stroke)
+		.font("Bold")
+		.text("Delivery Address:")
 		.fontSize(10)
+		.font("Helvetica")
 		.text(address);
 }
 
@@ -41,27 +55,32 @@ function writeDoc(job, cb) {
 	var dateStr = formatDate(new Date());
 	var formattedShippingDate = formatDate(job.details.shipping_date);
 
+	doc.registerFont("Bold", "public/fonts/Helvetica-Bold.ttf");
+	doc.font("Helvetica");
+
 	doc.image("public/img/logo.jpg", 350, 20, {width: 200});
 
 	doc.fontSize(25)
 			.text("Specification", 50, 80);
 
-	doc.fontSize(10)
-			.text("Date: ", 50, 140, stroke)
+	doc.fontSize(11)
+			.font("Bold")
+			.text("Date: ", 50, 140)
 			.moveDown()
-			.text("Job #:", stroke)
-			.text("Client:", stroke)
-			.text("Project:", stroke)
-			.text("Client Ref:", stroke)
-			.text("Job Status:", stroke)
-			.text("Shipping Date:", stroke);
+			.text("Job #:", gap)
+			.text("Client:", gap)
+			.text("Project:", gap)
+			.text("Client Ref:", gap)
+			.text("Job Status:", gap)
+			.text("Shipping Date:", gap);
 
 	doc.fontSize(10)
-			.text(dateStr, 130, 140)
+			.font("Helvetica")
+			.text(dateStr, 140, 140)
 			.moveDown()
 			.text("RB" + job.job_id)
 			.text(job.details.client)
-			.text(job.details.project)
+			.text(job.details.project || " ")
 			.text(job.details.client_ref || " ")
 			.text(job.details.job_status)
 			.text(formattedShippingDate);
@@ -69,10 +88,11 @@ function writeDoc(job, cb) {
 	writeAddress(doc, job.details.shipping_notes);
 
 	doc.fontSize(12)
-			.text("Qty", 50, 250, stroke)
-			.text("Description", 100, 250, stroke)
+			.font("Bold")
+			.text("Qty", 50, 250)
+			.text("Description", 100, 250)
 			.text(" ", 50)
-			.font("Times-Roman", 13)
+			.fontSize(13)
 			.moveDown();
 
 	var yPos = 280;
@@ -89,22 +109,23 @@ function writeDoc(job, cb) {
 			}
 
 			doc.fontSize(12)
+					.font("Helvetica")
 					.text(item.qty_req, 50, yPos)
 					.text(item.product, 100, yPos)
-					.text(item.description && "- Description: " + item.description)
-					.text(item.glass && "- Glass: " + item.glass)
-					.text(item.metal && "- Metal: " + item.metal)
-					.text(item.flex && "- Flex: " + item.flex)
-					.text(item.bulb && "- Bulb: " + item.bulb)
-					.text(item.notes && "- " + item.notes);
+					.text(item.description && "- Description: " + item.description || "")
+					.text(item.glass && "- Glass: " + item.glass || "")
+					.text(item.metal && "- Metal: " + item.metal || "")
+					.text(item.flex && "- Flex: " + item.flex || "")
+					.text(item.bulb && "- Bulb: " + item.bulb || "")
+					.text(item.notes && "- " + item.notes || "");
 
-			doc.moveTo(50, yPos - 10)
-					.lineTo(550, yPos - 10)
+			doc.moveTo(50, yPos - 8)
+					.lineTo(550, yPos - 8)
 					.stroke("grey");
 
 			for(var prop in item) {
-					if(item.hasOwnProperty(prop) && item[prop]) {
-							yPos += 12;
+					if(item.hasOwnProperty(prop) && item[prop] && fieldsWeCareAbout[prop]) {
+						yPos += (Math.ceil((item[prop].length / 82) || 1) * 14);
 					}
 			}
 	});
@@ -112,7 +133,5 @@ function writeDoc(job, cb) {
 	cb(doc);
 }
 
-module.exports = function pdfMaker(job, cb) {
-	writeDoc(job, cb);
+module.exports = writeDoc;
 
-};
