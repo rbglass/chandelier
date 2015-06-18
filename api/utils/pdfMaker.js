@@ -6,6 +6,7 @@ var MARGIN = 72,
 
 		ADDRESS_WIDTH = 144,
 		IMAGE_WIDTH = 200,
+		LABEL_WORD_SPACING = -2,
 
 		TITLE_FONT_SIZE = 25,
 		ADDRESS_FONT_SIZE = 10,
@@ -29,7 +30,6 @@ var MARGIN = 72,
 		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE);
 
 var PDFDocument = require("pdfkit");
-var gap = {lineGap: LINE_GAP};
 
 var fieldsWeCareAbout = {
 	product: true,
@@ -39,6 +39,11 @@ var fieldsWeCareAbout = {
 	flex: true,
 	bulb: true,
 	notes: true
+};
+
+var labelConfig = {
+	lineGap: LINE_GAP,
+	wordSpacing: LABEL_WORD_SPACING
 };
 
 function formatDate(date) {
@@ -91,7 +96,7 @@ function writeAddress(doc, address) {
 		.moveDown(2)
 		.fontSize(DETAIL_HEADER_FONT_SIZE)
 		.font("Bold")
-		.text("Delivery Details:")
+		.text("Delivery Details:", labelConfig)
 		.fontSize(ADDRESS_FONT_SIZE)
 		.font("Helvetica")
 		.text(address);
@@ -105,6 +110,7 @@ function drawImage(doc) {
 
 function writeDoc(job, cb) {
 	var doc = new PDFDocument({size: "A4"});
+
 	var dateStr = formatDate(new Date());
 	var formattedShippingDate;
 
@@ -126,12 +132,12 @@ function writeDoc(job, cb) {
 			.font("Bold")
 			.text("Date: ", MARGIN, DETAILS_LINE)
 			.moveDown()
-			.text("Job #:", gap)
-			.text("Client:", gap)
-			.text("Project:", gap)
-			.text("Client Ref:", gap)
-			.text("Job Status:", gap)
-			.text("Shipping Date:", gap);
+			.text("Job #:", labelConfig)
+			.text("Client:", labelConfig)
+			.text("Project:", labelConfig)
+			.text("Client Ref:", labelConfig)
+			.text("Job Status:", labelConfig)
+			.text("Shipping Date:", labelConfig);
 
 	doc.fontSize(INPUT_FONT_SIZE)
 			.font("Helvetica")

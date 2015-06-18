@@ -8,7 +8,7 @@ import SelectionStore from "./SelectionStore";
 var jobs = [],
 		jobLength = 0,
 		filters = {
-			sortTerm: "job_status",
+			sortTerm: "shipping_date",
 			isAsc: true,
 			filterBy: "",
 			dateField: "shipping_date",
@@ -16,7 +16,8 @@ var jobs = [],
 			endDate: "",
 			restrictions: {
 				"job_status": {
-					key: "job_status"
+					key: "job_status",
+					options: ["Confirmed", "Packaged"]
 				},
 				"order_type": {
 					key: "order_type"
@@ -123,7 +124,9 @@ const onReceivingAction = action => {
 				const selections = SelectionStore.getSelections();
 
 				Object.keys(filters.restrictions).forEach(r => {
-					filters.restrictions[r].options = selections[r];
+					if(filters.restrictions[r].options === undefined) {
+						filters.restrictions[r].options = selections[r];
+					}
 				});
 				break;
 

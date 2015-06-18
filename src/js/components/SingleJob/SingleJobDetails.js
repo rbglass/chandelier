@@ -26,13 +26,16 @@ export default class SingleJobDetails extends Component {
 			let input;
 			let field;
 			let isDisabled;
+			let isUndefined;
 
 			switch (cell.type) {
 
 				case "text":
 						isDisabled = !cell.onChange;
+						isUndefined = cellValue === undefined;
 						input = (
-							<input type="text" value={cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue}
+							<input type="text"
+									value={isUndefined ? "" : cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue}
 									className="job-text-input" id={cellValue}
 									disabled={isDisabled} readOnly={isDisabled} />
 						);
