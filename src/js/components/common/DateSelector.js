@@ -26,7 +26,7 @@ export default class DateSelector extends Component {
 		};
 
 		return (
-			<div className={`date-selector ${this.props.className}`} style={styleHolder} id={this.props.id}>
+			<div className={`date-selector ${this.props.className || ""}`} style={styleHolder} id={this.props.id}>
 				<span className="date-selector-display" style={styleFront}>{ddMMMyyyy(this.props.value)}</span>
 				<input type="date" className="date-selector-input" style={styleBehind}
 						value={yyyyMMdd(this.props.value)} disabled={this.props.disabled}

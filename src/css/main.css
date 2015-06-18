@@ -439,6 +439,16 @@ select[multiple] {
 	z-index: 999999;
 }
 
+.date-selector-input::-webkit-calendar-picker-indicator {
+  font-size: larger;
+  width: 13px;
+  border-radius: 0px 0px 2px 2px;
+}
+
+.date-selector-input::-webkit-inner-spin-button {
+	display: none;
+}
+
 .date-selector-input::-webkit-datetime-edit-month-field {
 	color: transparent;
 	letter-spacing: 5px;
