@@ -1,47 +1,45 @@
 "use strict";
-var sinon = require("sinon");
-var assert = require("assert");
-var rewire = require("rewire");
-var samplejob = require("../testdata/job").job;
-var SelectionStore = require("../../../src/js/stores/SelectionStore");
-var AppDispatcher = require("../../../src/js/dispatchers/AppDispatcher");
+import I from "immutable";
+import sinon from "sinon";
+import assert from "assert";
+import rewire from "rewire";
+import { job as samplejob } from "../testdata/job";
+import { sameVal } from "../setup/utils";
+import SelectionStore from "../../../src/js/stores/SelectionStore";
+import AppDispatcher from "../../../src/js/dispatchers/AppDispatcher";
 
-describe("SingleJobStore", function() {
-	beforeEach(function() {
-		this.SingleJobStore = rewire("../../../src/js/stores/SingleJobStore");
-		this.onReceivingAction = this.SingleJobStore.__get__("onReceivingAction");
-		this.SingleJobStore.__set__("job", samplejob);
+describe("SingleJobStore", () => {
+	let SingleJobStore, onReceivingAction;
+
+	beforeEach(() => {
+		SingleJobStore = rewire("../../../src/js/stores/SingleJobStore");
+		onReceivingAction = SingleJobStore.__get__("onReceivingAction");
+		SingleJobStore.__set__("job", I.fromJS(samplejob));
 	});
 
-	it("#getSortedItems returns an array of sorted items", function() {
-		var sortTerm = "item_id";
-
-		var sortedItems = samplejob.items.sort(function(a, b) {
-			return -(a[sortTerm].localeCompare(b[sortTerm]));
-		});
-
-		assert.deepEqual(this.SingleJobStore.getSortedItems(), sortedItems);
+	it("#getSortedItems returns a List of items", () => {
+		sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items));
 	});
 
-	it("#getJobDetails returns an object containing job details", function() {
-		var details = samplejob.details;
-
-		assert.deepEqual(this.SingleJobStore.getJobDetails(), details);
+	it("#getJobDetails returns a Map containing job details", () => {
+		const details = I.Map(samplejob.details);
+		sameVal(SingleJobStore.getJobDetails(), details);
 	});
 
-	it("#getFilters returns a set of filters", function() {
-		var filters = {
+	it("#getFilters returns a Record of filters", () => {
+		const Filters = I.Record({
 			sortTerm: "shipping_date",
 			isAsc: false
-		};
+		});
+		const filters = new Filters();
 
-		this.SingleJobStore.__set__("filters", filters);
+		SingleJobStore.__set__("filters", filters);
 
-		assert.deepEqual(this.SingleJobStore.getFilters(), filters);
+		sameVal(SingleJobStore.getFilters(), filters);
 	});
 
-	it("#updates the job object upon a RECEIVE_SINGLE_JOB action", function() {
-		var newJob = {
+	it("#updates the job Map upon a RECEIVE_SINGLE_JOB action", () => {
+		const newJob = {
 			id: "RB1101",
 			details: {
 				job_id: "RB1101"
@@ -52,114 +50,145 @@ describe("SingleJobStore", function() {
 			]
 		};
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "RECEIVE_SINGLE_JOB",
 			data: newJob
 		});
 
-		assert.deepEqual(this.SingleJobStore.getJobDetails(), newJob.details);
-		assert.deepEqual(this.SingleJobStore.getSortedItems(), newJob.items);
+		sameVal(SingleJobStore.getJobDetails(), I.Map(newJob.details));
+		sameVal(SingleJobStore.getSortedItems(), I.fromJS(newJob.items));
 	});
 
-	it("#updates the job.items array upon a RECEIVE_SINGLE_ITEM action", function() {
-		var newItem = {
+	it("#updates the job.items array upon a RECEIVE_SINGLE_ITEM action", () => {
+		const newItem = {
 			item_id: "hello everyone"
 		};
+		const newItem2 = {
+			item_id: "tim"
+		};
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "RECEIVE_SINGLE_ITEM",
 			data: newItem
 		});
 
-		var itemWeGotBack = this.SingleJobStore.getSortedItems().filter(function(item) {
-			return item.item_id === newItem.item_id;
-		})[0];
+		const itemWeGotBack = SingleJobStore.getSortedItems().filter(item =>
+			item.get("item_id") === newItem.item_id
+		).last();
 
-		assert.deepEqual(itemWeGotBack, newItem);
+		sameVal(itemWeGotBack, I.fromJS(newItem));
+
+		onReceivingAction({
+			type: "RECEIVE_SINGLE_ITEM",
+			data: newItem2
+		});
+
+		const itemsWeGotBack = SingleJobStore.getSortedItems();
+		const allOurSampleItems = samplejob.items.concat([newItem, newItem2]);
+		sameVal(itemsWeGotBack, I.fromJS(allOurSampleItems));
+
 	});
 
-	it("#changes the details of the job upon a CHANGE_SINGLE_JOB_DETAILS action", function() {
+	it("#changes the details of the job upon a CHANGE_SINGLE_JOB_DETAILS action", () => {
 		var detailsToChange = {
 			key: "shipping_date",
-			id: "RB1234",
+			id: samplejob.job_id,
 			value: "hello m80"
 		};
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "CHANGE_SINGLE_JOB_DETAILS",
 			data: detailsToChange
 		});
 
-		var detailsWeGotBack = this.SingleJobStore.getJobDetails();
-		assert.equal(detailsWeGotBack[detailsToChange.key], detailsToChange.value);
+		var detailsWeGotBack = SingleJobStore.getJobDetails();
+
+		sameVal(detailsWeGotBack.get(detailsToChange.key), detailsToChange.value);
 	});
 
-	it("#updates the job.items array upon a CHANGE_SINGLE_JOB_ITEM action", function() {
-		var itemToChange = {
+	it("#updates the job.items List upon a CHANGE_SINGLE_JOB_ITEM action", () => {
+		const itemToChange = {
 			id: samplejob.items[0].item_id,
 			key: "changedStuff",
 			value: "what is life"
 		};
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "CHANGE_SINGLE_JOB_ITEM",
 			data: itemToChange
 		});
 
-		var itemWeGotBack = this.SingleJobStore.getSortedItems().filter(function(item) {
-			return item.item_id === itemToChange.id;
-		})[0];
+		const itemsWeGotBack = SingleJobStore.getSortedItems();
+		const itemWeGotBack = itemsWeGotBack.filter(item =>
+			item.get("item_id") === itemToChange.id
+		).last();
 
-		assert.equal(itemWeGotBack[itemToChange.key], itemToChange.value);
+		sameVal(itemWeGotBack.get(itemToChange.key), itemToChange.value);
 	});
 
-	it("#deletes an item from the job.items array upon a RECEIVE_DELETION_CONFIRMATION action", function() {
-		var itemToDelete = {
+	it("#deletes an item from the job.items List upon a RECEIVE_DELETION_CONFIRMATION action", () => {
+		const itemToDelete = {
 			id: samplejob.items[0].item_id
 		};
-		var oldLen = this.SingleJobStore.getSortedItems().length;
+		const oldLen = SingleJobStore.getSortedItems().size;
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "RECEIVE_DELETION_CONFIRMATION",
 			data: itemToDelete.id
 		});
 
-		var itemWeGotBack = this.SingleJobStore.getSortedItems().filter(function(item) {
-			return item.item_id === itemToDelete.id;
-		})[0];
+		const itemsWeGotBack = SingleJobStore.getSortedItems();
+		const itemWeGotBack = itemsWeGotBack.filter(item =>
+			item.item_id === itemToDelete.id
+		).last();
 
-		assert.equal(itemWeGotBack, undefined);
-		assert.equal(this.SingleJobStore.getSortedItems().length, oldLen - 1);
+		sameVal(itemWeGotBack, undefined);
+		sameVal(itemsWeGotBack.size, oldLen - 1);
 	});
 
-	it("#updates the sortTerm filter upon a SORT_ONE action, flipping isAsc if the term is the same, else false", function() {
-		var sortTerm = "job_status";
-		var sortTerm2 = "shipping_date";
-		var filters;
+	it("#updates the sortTerm filter upon a SORT_ONE action, flipping isAsc if same, & sorts the List", () => {
+		const sortTerm = "job_status";
+		const sortTerm2 = "shipping_date";
+		let filters;
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm
 		});
 
-		assert.equal(this.SingleJobStore.getFilters().sortTerm, sortTerm);
-		assert.equal(this.SingleJobStore.getFilters().isAsc, false);
+		const filtersWeGotBack = SingleJobStore.getFilters();
 
-		this.onReceivingAction({
+		sameVal(filtersWeGotBack.get("sortTerm"), sortTerm);
+		sameVal(filtersWeGotBack.get("isAsc"), false);
+		sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.slice(0).sort((a, b) =>
+			b[sortTerm].localeCompare(a[sortTerm])
+		)));
+
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm
 		});
 
-		assert.equal(this.SingleJobStore.getFilters().sortTerm, sortTerm);
-		assert.equal(this.SingleJobStore.getFilters().isAsc, true);
+		const moreFiltersWeGotBack = SingleJobStore.getFilters();
 
-		this.onReceivingAction({
+		sameVal(moreFiltersWeGotBack.get("sortTerm"), sortTerm);
+		sameVal(moreFiltersWeGotBack.get("isAsc"), true);
+		sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.slice(0).sort((a, b) =>
+			a[sortTerm].localeCompare(b[sortTerm])
+		)));
+
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm2
 		});
 
-		assert.equal(this.SingleJobStore.getFilters().sortTerm, sortTerm2);
-		assert.equal(this.SingleJobStore.getFilters().isAsc, false);
+		const evenMoreFiltersWeGotback = SingleJobStore.getFilters();
+
+		sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
+		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
+		// sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.sort((a, b) =>
+		// 	b[sortTerm] - a[sortTerm]
+		// )));
 	});
 
 });

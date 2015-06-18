@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import rewire from "rewire";
 
@@ -7,14 +8,16 @@ describe("SelectionStore", function() {
 
 	beforeEach(function() {
 		SelectionStore = rewire("../../../src/js/stores/SelectionStore");
+		SelectionStore.__set__("selections", I.Map());
 		onReceivingAction = SelectionStore.__get__("onReceivingAction");
 	});
 
 	it("#has a selections getter method", function() {
-		let dummy = {hello: "hi"};
+		let dummy = I.Map({hello: "hi"});
 		SelectionStore.__set__("selections", dummy);
+
 		assert.equal(typeof SelectionStore.getSelections, "function");
-		assert.deepEqual(SelectionStore.getSelections(), dummy);
+		assert.equal(SelectionStore.getSelections(), dummy);
 	});
 
 	it("#updates its internal state if the actiontype is RECEIVE SELECTIONS", function() {
@@ -27,9 +30,9 @@ describe("SelectionStore", function() {
 			data: testData
 		});
 
-		assert.deepEqual(SelectionStore.getSelections(), {
-			testitems: ["hello mum!", ":)"]
-		});
+		assert(I.is(SelectionStore.getSelections(), I.Map({
+			testitems: I.List(["hello mum!", ":)"])
+		})));
 	});
 
 	it("#updates its internal state if the actiontype is RECEIVE_ALL_PRODUCTS", function() {
@@ -53,12 +56,12 @@ describe("SelectionStore", function() {
 			data: testData
 		});
 
-		assert.deepEqual(SelectionStore.getSelections(), {
-			product: ["hello mum!", ":)", "tony"],
-			testitems1: ["hello mum!", ":)"],
-			testitems2: ["test2", ":("],
-			testitems3: ["tony"]
-		});
+		assert(I.is(SelectionStore.getSelections(), I.Map({
+			product: I.List(["hello mum!", ":)", "tony"]),
+			testitems1: I.List(["hello mum!", ":)"]),
+			testitems2: I.List(["test2", ":("]),
+			testitems3: I.List(["tony"])
+		})));
 	});
 
 	it("#lowercases productType keys", () => {});

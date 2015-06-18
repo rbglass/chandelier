@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import React, { Component, PropTypes } from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";

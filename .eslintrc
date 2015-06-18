@@ -15,6 +15,7 @@
 		"no-trailing-spaces": [0],
 		"no-multi-spaces": [0],
 		"key-spacing": [0],
-		"no-underscore-dangle": [0]
+		"no-underscore-dangle": [0],
+		"new-cap": [0]
 	}
 }

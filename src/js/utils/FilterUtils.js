@@ -25,14 +25,12 @@ export function contains(obj, term) {
 	});
 }
 
-export function genericSort(arr, sortBy, asc, sortPath) {
+export function genericSort(list, sortBy, asc, sortPath) {
 
-	arr = arr.slice(0);
-
-	return arr.sort((a, b) => {
+	return list.sort((a, b) => {
 		// ugly hack
-		let t1 = sortPath ? a[sortPath][sortBy] : a[sortBy],
-				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
+		let t1 = sortPath ? a.getIn([sortPath, sortBy]) : a.get(sortBy),
+				t2 = sortPath ? b.getIn([sortPath, sortBy]) : b.get(sortBy),
 				sortVal;
 
 		if (isyyyyMMdd(t1) || isyyyyMMdd(t2)) {
@@ -46,7 +44,6 @@ export function genericSort(arr, sortBy, asc, sortPath) {
 		} else {
 			sortVal = t1 - t2;
 		}
-
 		return asc ? sortVal : -sortVal;
 	});
 }

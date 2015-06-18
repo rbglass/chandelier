@@ -1,7 +1,7 @@
 export const job = {
-	"job_id": "RB1234",
+	"job_id": "1234",
 	"details" : {
-		job_id: "RB1234",
+		job_id: "1234",
 		client: "Acme Incorporated Ltd",
 		project: "Showroom",
 		client_ref: "PO-123456-ABC",
@@ -16,11 +16,14 @@ export const job = {
 	},
 	"items": [
 		{
-			item_id: "1234",
+			job_id: "1234",
+			job_status: "Accepted",
+			item_id: "2234",
 			product: "Pick-n-Mix Ball",
 			description: "hello",
 			glass: "Denim ~ Diamond",
 			metal: "Brass",
+			shipping_date: 1,
 			flex: "Havana Gold ~ Twist",
 			bulb: "25W Incandescent Golfball E14 SES",
 			qty_req: 5,
@@ -31,13 +34,16 @@ export const job = {
 			notes: "hello"
 		},
 		{
-			item_id: "hi",
+			job_id: "1234",
+			job_status: "Complete",
+			item_id: "2244",
 			product: "hello",
 			description: "hello",
 			glass: "hello",
 			metal: "hello",
 			flex: "hello",
 			bulb: "hello",
+			shipping_date: 2,
 			qty_req: 2,
 			qty_hot: 2,
 			qty_cold: 2,

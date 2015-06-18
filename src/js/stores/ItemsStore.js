@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
