@@ -130,6 +130,7 @@ select,
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	z-index: 999999;
 }
 
 .alert-box.error {
