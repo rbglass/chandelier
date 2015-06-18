@@ -41,6 +41,11 @@ var fieldsWeCareAbout = {
 	notes: true
 };
 
+var labelConfig = {
+	lineGap: LINE_GAP,
+	wordSpacing: LABEL_WORD_SPACING
+};
+
 function formatDate(date) {
 	var dates = [
 		"Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -91,7 +96,7 @@ function writeAddress(doc, address) {
 		.moveDown(2)
 		.fontSize(DETAIL_HEADER_FONT_SIZE)
 		.font("Bold")
-		.text("Delivery Details:")
+		.text("Delivery Details:", labelConfig)
 		.fontSize(ADDRESS_FONT_SIZE)
 		.font("Helvetica")
 		.text(address);
@@ -106,10 +111,6 @@ function drawImage(doc) {
 function writeDoc(job, cb) {
 	var doc = new PDFDocument({size: "A4"});
 
-	var labelConfig = {
-		lineGap: LINE_GAP,
-		wordSpacing: LABEL_WORD_SPACING
-	};
 	var dateStr = formatDate(new Date());
 	var formattedShippingDate;
 
