@@ -11,7 +11,7 @@
     "build": "npm run build:js & npm run build:css",
     "build:js": "browserify -t babelify src/js/main.js -o public/js/main.js",
     "build:watch": "watchify src/js/main.js -t babelify -o public/js/main.js & myth -w src/css/main.css public/css/main.css",
-    "build:css": "myth src/css/main.css public/css/main.css & myth src/css/spinner.css public/css/spinner.css",
+    "build:css": "myth src/css/main.css public/css/main.css & myth src/css/spinner.css public/css/spinner.css & myth src/css/pager.css public/css/pager.css",
     "lint": "eslint **/*.js",
     "live-reload": "live-reload public/ --port 9082",
     "devserve": "NODE_ENV=development nodemon app.js --watch api",
