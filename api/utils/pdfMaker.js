@@ -145,7 +145,7 @@ function writeDoc(job, cb) {
 			.text(dateStr, MARGIN + 102, DETAILS_LINE)
 			.moveDown()
 			.text("RB" + job.job_id)
-			.text(job.details.client)
+			.text(job.details.client || " ")
 			.text(job.details.project || " ")
 			.text(job.details.client_ref || " ")
 			.text(job.details.job_status)

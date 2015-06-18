@@ -1,5 +1,4 @@
 "use strict";
-import I from "immutable";
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import TableHeader from "./TableHeader";
@@ -7,9 +6,9 @@ import TableRow from "./TableRow";
 
 export default class Table extends Component {
 	shouldComponentUpdate(nextProps) {
-		return !( I.is(nextProps.items, this.props.items) &&
-							I.is(nextProps.selections, this.props.selections) &&
-							I.is(nextProps.filters, this.props.filters));
+		return ( nextProps.items !== this.props.items ||
+							nextProps.selections !== this.props.selections ||
+							nextProps.filters !== this.props.filters);
 	}
 	render() {
 		const rows = this.props.items.map((row, i) => {

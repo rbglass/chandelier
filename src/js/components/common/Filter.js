@@ -11,8 +11,9 @@ import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class Filter extends Component {
 	shouldComponentUpdate(nextProps) {
-		return !( I.is(nextProps.selections, this.props.selections) &&
-							I.is(nextProps.filters, this.props.filters));
+		return 	nextProps.selections !== this.props.selections ||
+							nextProps.filters !== this.props.filters ||
+							nextProps.currentPage !== this.props.currentPage;
 	}
 
 	render() {

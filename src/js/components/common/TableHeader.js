@@ -3,6 +3,9 @@ import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 
 export default class TableHeader extends Component {
+	shouldComponentUpdate(nextProps) {
+		return nextProps.filters !== this.props.filters;
+	}
 
 	render() {
 		const headerSet = this.props.headers.map((e, i) => {

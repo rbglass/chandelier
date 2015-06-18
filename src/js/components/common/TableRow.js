@@ -1,5 +1,4 @@
 "use strict";
-import I from "immutable";
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
@@ -12,8 +11,7 @@ import isUsefulTag from "../../utils/isUsefulTag";
 export default class TableRow extends Component {
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.cells !== this.props.cells ||
-							nextProps.selections !== this.props.selections;
+		return nextProps.cells !== this.props.cells;
 	}
 
 	handleBlur(e) {
