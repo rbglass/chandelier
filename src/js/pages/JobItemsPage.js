@@ -107,6 +107,7 @@ JobItemsPage.defaultProps = {
 	tableScheme: [
 		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
 		{ key: "job_id",        display: "Job #",                          className: "qty-sm",        type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
+		{ key: "client",        display: "Client",                         className: "",              type: "" },
 		{ key: "product",       display: "Product",                        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "description",   display: "Description",                    className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "job_status",    display: "Job Status",                     className: "",              type: ""},

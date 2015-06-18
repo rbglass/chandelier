@@ -18,6 +18,7 @@ CREATE SEQUENCE jobs_job_id_seq
 	CACHE 1;
 
 ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
+ALTER TABLE jobs ADD COLUMN createdat DATE ;
 
 
 -------------------------

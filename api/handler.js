@@ -215,7 +215,7 @@ var handler = {
 				return reply().code(400);
 			}
 
-			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment " +
+			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment, jobs.client " +
 												"FROM job_items INNER JOIN jobs " +
 												"ON job_items.job_id = jobs.job_id";
 
@@ -308,6 +308,7 @@ var handler = {
 		delete data.shipping_date;
 		delete data.job_status;
 		delete data.payment;
+		delete data.client;
 
 		var fieldsToUpdate;
 
