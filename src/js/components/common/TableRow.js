@@ -1,4 +1,6 @@
 "use strict";
+import I from "immutable";
+import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
 import TextArea from "react-textarea-autosize";
@@ -8,22 +10,28 @@ import yyyyMMdd from "../../utils/yyyyMMdd";
 import isUsefulTag from "../../utils/isUsefulTag";
 
 export default class TableRow extends Component {
+
+	shouldComponentUpdate(nextProps) {
+		return nextProps.cells !== this.props.cells ||
+							nextProps.selections !== this.props.selections;
+	}
+
 	handleBlur(e) {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
 		if(isUsefulTag(e.target.tagName)) {
 			if(currentRowNode !== destinationNode) {
-				this.props.onBlur(this.props.cells[this.props.primaryKey], this.props.cells);
+				this.props.onBlur(this.props.cells.get(this.props.primaryKey), this.props.cells);
 			}
 		}
 	}
 
 	// Break this into components
 	render() {
-		const ks = keySealer.bind(this, this.props.cells[this.props.primaryKey]);
+		const ks = keySealer.bind(this, this.props.cells.get(this.props.primaryKey));
 
 		const cells = this.props.cellConfig.map((cell, i) => {
-			let cellValue = this.props.cells[cell.key];
+			let cellValue = this.props.cells.get(cell.key);
 			let input;
 			let isDisabled;
 
@@ -51,8 +59,8 @@ export default class TableRow extends Component {
 						input = (
 							<select value={cellValue}>
 								<option></option>
-								{ this.props.selections[cell.key] ?
-									this.props.selections[cell.key].map((opt, n) => {
+								{ this.props.selections.has(cell.key) ?
+									this.props.selections.get(cell.key).map((opt, n) => {
 									return <option key={opt + " " + n}>{opt}</option>;
 								}, this) : "No opts" }
 							</select>
@@ -62,7 +70,9 @@ export default class TableRow extends Component {
 				case "button":
 						input = (
 							<button className={`btn ${cell.inputClassName}`}
-								onClick={cell.onClick ? cell.onClick.bind(this, this.props.cells.job_id, this.props.cells) : null}>
+								onClick={cell.onClick ?
+									cell.onClick.bind(this, this.props.cells.get("job_id"), this.props.cells) :
+									null}>
 								{cell.key}
 							</button>
 						);
@@ -96,8 +106,8 @@ export default class TableRow extends Component {
 }
 
 TableRow.propTypes = {
-	cells: PropTypes.object,
-	selections: PropTypes.objectOf(PropTypes.array),
+	cells: IPropTypes.map,
+	selections: IPropTypes.mapOf(IPropTypes.list),
 	primaryKey: PropTypes.string,
 	cellConfig: PropTypes.arrayOf(PropTypes.shape({
 		key: PropTypes.string.isRequired,

@@ -2,6 +2,7 @@
 import I from "immutable";
 import assert from "assert";
 import rewire from "rewire";
+import { sameVal } from "../setup/utils";
 
 describe("SelectionStore", function() {
 	let SelectionStore, onReceivingAction;
@@ -30,9 +31,9 @@ describe("SelectionStore", function() {
 			data: testData
 		});
 
-		assert(I.is(SelectionStore.getSelections(), I.Map({
+		sameVal(SelectionStore.getSelections(), I.Map({
 			testitems: I.List(["hello mum!", ":)"])
-		})));
+		}));
 	});
 
 	it("#updates its internal state if the actiontype is RECEIVE_ALL_PRODUCTS", function() {
@@ -56,12 +57,12 @@ describe("SelectionStore", function() {
 			data: testData
 		});
 
-		assert(I.is(SelectionStore.getSelections(), I.Map({
+		sameVal(SelectionStore.getSelections(), I.Map({
 			product: I.List(["hello mum!", ":)", "tony"]),
 			testitems1: I.List(["hello mum!", ":)"]),
 			testitems2: I.List(["test2", ":("]),
 			testitems3: I.List(["tony"])
-		})));
+		}));
 	});
 
 	it("#lowercases productType keys", () => {});

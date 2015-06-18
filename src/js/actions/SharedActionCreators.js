@@ -2,6 +2,7 @@
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as JobsAPI from "../api/JobsAPI";
+import yyyyMMdd from "../utils/yyyyMMdd";
 
 export function startLoading() {
 	AppDispatcher.dispatch({
@@ -26,8 +27,7 @@ export function saveItem(itemId, item) {
 }
 
 export function deleteItem(_, cells) {
-	const itemId = cells.item_id;
-	JobsAPI.deleteSingleItem(itemId);
+	JobsAPI.deleteSingleItem(cells);
 }
 
 export function getAllProducts() {
@@ -63,16 +63,18 @@ export function setFilter(text) {
 }
 
 export function setStartDate(date) {
+	const formattedDate = yyyyMMdd(date);
 	AppDispatcher.dispatch({
 		type: ActionTypes.SET_START_DATE,
-		data: date
+		data: formattedDate
 	});
 }
 
 export function setEndDate(date) {
+	const formattedDate = yyyyMMdd(date);
 	AppDispatcher.dispatch({
 		type: ActionTypes.SET_END_DATE,
-		data: date
+		data: formattedDate
 	});
 }
 

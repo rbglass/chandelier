@@ -1,10 +1,16 @@
 "use strict";
 import I from "immutable";
+import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
 export default class Table extends Component {
+	shouldComponentUpdate(nextProps) {
+		return !( I.is(nextProps.items, this.props.items) &&
+							I.is(nextProps.selections, this.props.selections) &&
+							I.is(nextProps.filters, this.props.filters));
+	}
 	render() {
 		const rows = this.props.items.map((row, i) => {
 			return <TableRow key={i} cells={row} cellConfig={this.props.tableScheme}
@@ -25,9 +31,9 @@ export default class Table extends Component {
 
 Table.PropTypes = {
 	tableScheme: PropTypes.arrayOf(PropTypes.object),
-	items: PropTypes.arrayOf(PropTypes.object),
-	selections: PropTypes.arrayOf(PropTypes.object),
-	filters: PropTypes.object,
+	items: IPropTypes.listOf(IPropTypes.map),
+	selections: IPropTypes.listOf(PropTypes.map),
+	filters: IPropTypes.map,
 	primaryKey: PropTypes.string,
 	onBlur: PropTypes.func,
 	sortFunc: PropTypes.func

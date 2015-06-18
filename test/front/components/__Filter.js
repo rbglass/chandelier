@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import React from "react/addons";
 let { TestUtils }  = React.addons;
@@ -17,7 +18,7 @@ describe("Filter", () => {
 	const restrictTo = () => {};
 	const onSelect = () => {};
 
-	const filters = {
+	const filters = I.fromJS({
 		filterBy: "hi",
 		startDate: "2015-01-01",
 		endDate: "2016-01-01",
@@ -27,11 +28,11 @@ describe("Filter", () => {
 				options: ["jim", "tim"]
 			}
 		}
-	};
+	});
 
-	const selections = {
+	const selections = I.fromJS({
 		name: ["jim"]
-	};
+	});
 
 	const	presetConfig = [
 		{description: "preset", onSelect: []}
@@ -45,6 +46,7 @@ describe("Filter", () => {
 			setEndDate={setEndDate}
 			restrictTo={restrictTo}
 			presetConfig={presetConfig}
+			currentPage={1} totalPages={4}
 		/>
 	);
 
@@ -63,8 +65,8 @@ describe("Filter", () => {
 	it("#renders a MultiSelect for each element in filters.restrictions", () => {
 		const kids = columns[1].props.children;
 		assert.equal(
-			kids.filter(el => el.type === MultiSelect).length,
-			Object.keys(filters.restrictions).length
+			kids.filter(el => el.type === MultiSelect).size,
+			filters.get("restrictions").size
 		);
 	});
 

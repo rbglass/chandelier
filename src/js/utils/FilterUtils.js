@@ -1,24 +1,27 @@
 "use strict";
+import I from "immutable";
 import { isyyyyMMdd } from "./yyyyMMdd";
 
 // string.includes is playing up
 function strIncludes(str, term) {
-	if (typeof term !== "string") return false;
-	else return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
+	return typeof term === "string" ?
+		str.toLowerCase().indexOf(term.toLowerCase()) !== -1 :
+		false;
 }
 
-export function contains(obj, term) {
+export function contains(map, term) {
 	if(term === "" || term === undefined) return true;
 
-	const k = Object.keys(obj);
+	const k = map.keySeq();
+
 	return k.some(cell => {
-		switch (typeof obj[cell]) {
+		switch (typeof map.get(cell)) {
 			case "string":
-					return strIncludes(obj[cell], term);
+					return strIncludes(map.get(cell), term);
 			case "number":
-					return strIncludes("" + obj[cell], "" + term);
+					return strIncludes("" + map.get(cell), "" + term);
 			case "boolean":
-					return obj[cell] === term;
+					return map.get(cell) === term;
 			default:
 					return false;
 		}
@@ -63,11 +66,12 @@ export function isWithinBounds(field, lower, upper) {
 }
 
 export function restrictTo(obj, restrictionObj) {
-	const restrictBy = Object.keys(restrictionObj);
+	const restrictBy = restrictionObj.keySeq();
 	return restrictBy.every(field => {
+		const hasOptionsForField = restrictionObj.hasIn([field, "options"]);
 		return (
-			(restrictionObj[field].options === undefined) ||
-			restrictionObj[field].options.indexOf(obj[field]) !== -1
+			(!hasOptionsForField ||
+			restrictionObj.getIn([field, "options"]).includes(obj.get(field)))
 		);
 	});
 }

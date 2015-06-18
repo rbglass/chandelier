@@ -1,11 +1,12 @@
 "use strict";
 
-var MARGIN = 72,
+var MARGIN = 28,
 		RIGHT_EDGE = 595.28,
 		BOTTOM_EDGE = 841.89,
 
 		ADDRESS_WIDTH = 144,
 		IMAGE_WIDTH = 200,
+		IMAGE_HEIGHT = 50,
 		LABEL_WORD_SPACING = -2,
 
 		TITLE_FONT_SIZE = 25,
@@ -23,11 +24,11 @@ var MARGIN = 72,
 		BETWEEN_DETAILS_AND_ITEMS = 108,
 		SAFETY_GAP = 72,
 
-		TITLE_LINE = MARGIN * 2,
+		TITLE_LINE = IMAGE_HEIGHT + MARGIN,
 		DETAILS_LINE = TITLE_LINE + BETWEEN_TITLE_AND_DETAILS,
 		ITEM_HEADER_LINE = DETAILS_LINE + BETWEEN_DETAILS_AND_ITEMS,
 		ITEMS_LINE = ITEM_HEADER_LINE + (ITEM_HEADER_FONT_SIZE * 3),
-		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE);
+		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE) - 44;
 
 var PDFDocument = require("pdfkit");
 
@@ -141,7 +142,7 @@ function writeDoc(job, cb) {
 
 	doc.fontSize(INPUT_FONT_SIZE)
 			.font("Helvetica")
-			.text(dateStr, MARGIN * 2.25, DETAILS_LINE)
+			.text(dateStr, MARGIN + 102, DETAILS_LINE)
 			.moveDown()
 			.text("RB" + job.job_id)
 			.text(job.details.client)
@@ -154,11 +155,11 @@ function writeDoc(job, cb) {
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
-			.text("Qty", MARGIN, ITEM_HEADER_LINE)
-			.text("Description", MARGIN * 2, ITEM_HEADER_LINE)
+			.text("Qty", MARGIN * 1.5, ITEM_HEADER_LINE)
+			.text("Description", MARGIN * 2.5, ITEM_HEADER_LINE)
 			.text(" ", MARGIN)
-			.fontSize(13)
-			.moveDown();
+			// .fontSize(13)
+			.moveDown(0.5);
 
 	var yPos = ITEMS_LINE;
 	var p = 1;
@@ -177,8 +178,8 @@ function writeDoc(job, cb) {
 
 		doc.fontSize(INPUT_FONT_SIZE)
 				.font("Helvetica")
-				.text(item.qty_req, MARGIN, yPos)
-				.text(item.product, MARGIN * 2, yPos)
+				.text(item.qty_req, MARGIN * 1.5, yPos)
+				.text(item.product, MARGIN * 2.5, yPos)
 				.text(item.description && "- Description: " + item.description || "")
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")

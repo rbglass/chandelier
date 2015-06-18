@@ -1,20 +1,24 @@
 "use strict";
-var sinon = require("sinon");
-var assert = require("assert");
-var rewire = require("rewire");
-var samplejobs = require("../testdata/jobs").jobs;
-var SelectionStore = require("../../../src/js/stores/SelectionStore");
-var AppDispatcher = require("../../../src/js/dispatchers/AppDispatcher");
+import I from "immutable";
+import sinon from "sinon";
+import assert from "assert";
+import rewire from "rewire";
+import { jobs as samplejobs } from "../testdata/jobs";
+import { sameVal } from "../setup/utils";
+import SelectionStore from "../../../src/js/stores/SelectionStore";
+import AppDispatcher from "../../../src/js/dispatchers/AppDispatcher";
 
-describe("JobsStore", function() {
-	beforeEach(function() {
-		this.JobsStore = rewire("../../../src/js/stores/JobsStore");
-		this.onReceivingAction = this.JobsStore.__get__("onReceivingAction");
-		this.JobsStore.__set__("jobs", samplejobs);
+describe("JobsStore", () => {
+	let JobsStore, onReceivingAction;
+
+	beforeEach(() => {
+		JobsStore = rewire("../../../src/js/stores/JobsStore");
+		onReceivingAction = JobsStore.__get__("onReceivingAction");
+		JobsStore.__set__("jobs", I.fromJS(samplejobs));
 	});
 
-	it("#getFilteredAndSortedJobs() returns a filtered and sorted array", function() {
-		var filters = {
+	it("#getFilteredJobs() returns a filtered List", () => {
+		const filters = I.fromJS({
 			sortTerm: "job_id",
 			isAsc: false,
 			filterBy: "",
@@ -29,16 +33,16 @@ describe("JobsStore", function() {
 					key: "order_type"
 				}
 			}
-		};
+		});
 
-		this.JobsStore.__set__("filters", filters);
-		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), samplejobs.filter(function(e) {
+		JobsStore.__set__("filters", filters);
+		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.filter(function(e) {
 			return Date.parse(e.details.shipping_date) > Date.parse(filters.startDate);
-		}));
+		})));
 	});
 
-	it("#getFilters returns a set of filters", function() {
-		var filters = {
+	it("#getFilters returns a Map of filters", () => {
+		const filters = I.fromJS({
 			sortTerm: "job_id",
 			isAsc: false,
 			filterBy: "",
@@ -53,143 +57,186 @@ describe("JobsStore", function() {
 					key: "order_type"
 				}
 			}
-		};
-		this.JobsStore.__set__("filters", filters);
+		});
+		JobsStore.__set__("filters", filters);
 
-		assert.deepEqual(this.JobsStore.getFilters(), filters);
+		assert.deepEqual(JobsStore.getFilters(), filters);
 	});
 
-	it("#updates the private jobs array upon a RECEIVE_ALL_JOBS action", function() {
-		var jobAction = {
+	it("#getNumberOfJobs returns the size of the jobs List", () => {
+		JobsStore.__set__("jobLength", 3);
+		assert.equal(JobsStore.getNumberOfJobs(), 3);
+		JobsStore.__set__("jobLength", 5);
+		assert.equal(JobsStore.getNumberOfJobs(), 5);
+	});
+
+	it("#updates the private jobs List upon a RECEIVE_ALL_JOBS action", () => {
+		const jobAction = {
 			type: "RECEIVE_ALL_JOBS",
-			data: [
-				{ job_id: "RB0102", details: {shipping_date: "2015-01-01" } },
-				{ job_id: "RB0104", details: {shipping_date: "2015-03-01" } }
-			]
+			data: samplejobs
 		};
 
-		this.onReceivingAction(jobAction);
-		assert.deepEqual(this.JobsStore.getFilteredAndSortedJobs(), jobAction.data);
+		onReceivingAction(jobAction);
+		sameVal(JobsStore.getFilteredJobs(), I.fromJS(jobAction.data.filter(e =>
+			["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1
+		)));
 	});
 
-	it("#updates the respective job in the jobs array upon a CHANGE_SINGLE_JOB_DETAILS action", function() {
-		var jobWeGotBack;
-		var updatedInfo = {
+	it("#updates the private jobs List upon a RECEIVE_UPDATED_JOB action", () => {
+		const jobAction = {
+			type: "RECEIVE_UPDATED_JOB",
+			data: {
+				job_id: samplejobs[0].job_id,
+				details: {
+					job_id: samplejobs[0].job_id,
+					job_status: "Packaged"
+				}
+			}
+		};
+
+		onReceivingAction(jobAction);
+		const jobsWeGotBack = JobsStore.getFilteredJobs();
+		const samplesWithUpdate = [jobAction.data].concat(samplejobs.slice(1)).filter(e =>
+			["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1
+		);
+
+		sameVal(jobsWeGotBack, I.fromJS(samplesWithUpdate));
+	});
+
+	it("#updates the respective job in the jobs List upon a CHANGE_SINGLE_JOB_DETAILS action", () => {
+		const updatedInfo = {
 			type: "CHANGE_SINGLE_JOB_DETAILS",
 			data: {
-				id: "RB2234",
+				id: samplejobs[0].job_id,
 				key: "job_status",
-				value: "Accepted"
+				value: "Packaged"
 			}
 		};
-		this.onReceivingAction(updatedInfo);
+		onReceivingAction(updatedInfo);
 
-		jobWeGotBack = this.JobsStore.getFilteredAndSortedJobs().filter(function(e) {
-			return e.job_id === updatedInfo.data.id;
-		})[0];
+		const jobsWeGotBack = JobsStore.getFilteredJobs();
+		const jobWeGotBack = jobsWeGotBack.filter((e) => {
+			return e.get("job_id") === updatedInfo.data.id;
+		}).last();
 
-		assert.deepEqual(jobWeGotBack.details[updatedInfo.data.key], updatedInfo.data.value);
+		assert.equal(jobWeGotBack.getIn(["details", updatedInfo.data.key]), updatedInfo.data.value);
 	});
 
-	it("#updates the filterBy filter upon a FILTER_BY action", function() {
-		var filterTerm = "JIM";
-		assert.notEqual(this.JobsStore.getFilters().filterBy, filterTerm);
+	it("#updates the filterBy filter upon a FILTER_BY action", () => {
+		const filterTerm = "JIM";
+		assert.notEqual(JobsStore.getFilters().get("filterBy"), filterTerm);
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "FILTER_BY",
 			data: filterTerm
 		});
 
-		assert.equal(this.JobsStore.getFilters().filterBy, filterTerm);
+		assert.equal(JobsStore.getFilters().get("filterBy"), filterTerm);
 	});
 
-	it("#updates the sortTerm filter a SORT_ONE action, flipping isAsc if the term is the same, else false", function() {
-		var sortTerm = "job_status";
-		var sortTerm2 = "shipping_date";
-		var filters;
+	it("#updates the sortTerm filter upon a SORT_ONE action, flipping isAsc if same, & sorts the List", () => {
+		const sortTerm = "client";
+		const sortTerm2 = "shipping_date";
+		let filters;
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm
 		});
 
-		assert.equal(this.JobsStore.getFilters().sortTerm, sortTerm);
-		assert.equal(this.JobsStore.getFilters().isAsc, false);
+		const filtersWeGotBack = JobsStore.getFilters();
 
-		this.onReceivingAction({
+		sameVal(filtersWeGotBack.get("sortTerm"), sortTerm);
+		sameVal(filtersWeGotBack.get("isAsc"), false);
+		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.slice(0).sort((a, b) =>
+			b.details[sortTerm].localeCompare(a.details[sortTerm])
+		).filter(e => ["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1)));
+
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm
 		});
 
-		assert.equal(this.JobsStore.getFilters().sortTerm, sortTerm);
-		assert.equal(this.JobsStore.getFilters().isAsc, true);
+		const moreFiltersWeGotBack = JobsStore.getFilters();
 
-		this.onReceivingAction({
+		sameVal(moreFiltersWeGotBack.get("sortTerm"), sortTerm);
+		sameVal(moreFiltersWeGotBack.get("isAsc"), true);
+		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.slice(0).sort((a, b) =>
+			a.details[sortTerm].localeCompare(b.details[sortTerm])
+		).filter(e => ["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1)));
+
+		onReceivingAction({
 			type: "SORT_ONE",
 			data: sortTerm2
 		});
 
-		assert.equal(this.JobsStore.getFilters().sortTerm, sortTerm2);
-		assert.equal(this.JobsStore.getFilters().isAsc, false);
+		const evenMoreFiltersWeGotback = JobsStore.getFilters();
+
+		sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
+		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
+		// sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.sort((a, b) =>
+		// 	b.details[sortTerm] - a.details[sortTerm]
+		// )));
 	});
 
-	it("#updates the startDate filter upon a SET_START_DATE action", function() {
-		var startDate = "1999-01-01";
+	it("#updates the startDate filter upon a SET_START_DATE action", () => {
+		const startDate = "1999-01-01";
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "SET_START_DATE",
 			data: startDate
 		});
 
-		assert.equal(this.JobsStore.getFilters().startDate, startDate);
+		assert.equal(JobsStore.getFilters().get("startDate"), startDate);
 	});
 
-	it("#updates the endDate filter upon a SET_END_DATE action", function() {
-		var endDate = "2019-01-01";
+	it("#updates the endDate filter upon a SET_END_DATE action", () => {
+		const endDate = "2019-01-01";
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "SET_END_DATE",
 			data: endDate
 		});
 
-		assert.equal(this.JobsStore.getFilters().endDate, endDate);
+		assert.equal(JobsStore.getFilters().get("endDate"), endDate);
 	});
 
-	it("#updates the restrictions object upon a RESTRICT_TO action", function() {
-		var newRestrictions = {
+	it("#updates the restrictions object upon a RESTRICT_TO action", () => {
+		const newRestrictions = {
 			key: "job_status",
 			options: ["Accepted", "TBC", "Non-Starter"]
 		};
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "RESTRICT_TO",
 			data: newRestrictions
 		});
+		const filtersWeGotBack = JobsStore.getFilters().getIn(["restrictions", newRestrictions.key]);
 
-		assert.deepEqual(this.JobsStore.getFilters().restrictions[newRestrictions.key], newRestrictions);
+		sameVal(filtersWeGotBack, I.fromJS(newRestrictions));
 	});
 
-	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", function() {
-		var selections = {
+	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", () => {
+		const selections = I.fromJS({
 			job_status: ["hi", "mate"],
 			order_type: ["nice", "one"]
-		};
+		});
 
-		var dispyStub = sinon.stub(AppDispatcher, "waitFor", function() {
+		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {
 			return true;
 		});
-		var SelStoreStub = sinon.stub(SelectionStore, "getSelections", function() {
+		const SelStoreStub = sinon.stub(SelectionStore, "getSelections", () => {
 			return selections;
 		});
-		var filters;
+		let filters;
 
-		this.onReceivingAction({
+		onReceivingAction({
 			type: "RECEIVE_SELECTIONS"
 		});
 
-		filters = this.JobsStore.getFilters();
+		filters = JobsStore.getFilters();
 
 		Object.keys(selections).forEach(function(key) {
-			assert.deepEqual(filters.restrictions[key].options, selections[key]);
+			sameVal(filters.getIn(["restrictions", key, "options"], selections.get(key)));
 		});
 	});
 });

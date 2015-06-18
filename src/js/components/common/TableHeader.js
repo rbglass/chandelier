@@ -1,4 +1,5 @@
 "use strict";
+import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 
 export default class TableHeader extends Component {
@@ -7,8 +8,8 @@ export default class TableHeader extends Component {
 		const headerSet = this.props.headers.map((e, i) => {
 			var sortDirection = "";
 
-			if(this.props.filters.sortTerm === e.key) {
-				sortDirection += this.props.filters.isAsc ? "asc" : "desc";
+			if (this.props.filters.get("sortTerm") === e.key) {
+				sortDirection += this.props.filters.get("isAsc") ? "asc" : "desc";
 			}
 
 			var divClass = `table-row-item ${e.className} ${sortDirection}`;
@@ -34,7 +35,7 @@ TableHeader.PropTypes = {
 		display: PropTypes.string,
 		className: PropTypes.string
 	})).isRequired,
-	filters: PropTypes.shape({
+	filters: IPropTypes.shape({
 		sortTerm: PropTypes.string,
 		isAsc: PropTypes.bool
 	}),

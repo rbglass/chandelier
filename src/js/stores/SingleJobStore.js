@@ -6,7 +6,7 @@ import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-const Filters = I.Record({
+const defaultFilters = I.Map({
 	sortTerm: "item_id",
 	isAsc: false
 });
@@ -16,7 +16,7 @@ var job = I.Map({
 			details: I.Map(),
 			items: I.List()
 		}),
-		filters = new Filters();
+		filters = defaultFilters;
 
 const SingleJobStore = createStore({
 	getSortedItems() {

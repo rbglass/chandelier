@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import { Link } from "react-router";
 import React from "react/addons";
@@ -16,7 +17,7 @@ let testValue = null;
 let testCells = null;
 let counter = 0;
 
-const cells = {
+const cells = I.Map({
 	description  : "desvalue",
 	qty_req      : 123,
 	bulb         : "bulbvalue",
@@ -26,11 +27,11 @@ const cells = {
 	"-"          : "-val",
 	job_id       : "jobidval",
 	item_id      : "itemidval"
-};
+});
 
-const selections = {
-	job_status: [1, 2, 3, 4]
-};
+const selections = I.Map({
+	job_status: I.List([1, 2, 3, 4])
+});
 
 const primaryKey = "bulb";
 
@@ -153,7 +154,7 @@ describe("TableRow", () => {
 
 		assert(textarea);
 		assert(textareaNode);
-		assert.equal(textareaNode.textContent, cells.description);
+		assert.equal(textareaNode.textContent, cells.get("description"));
 	});
 
 	it("#cell types: number", () => {
@@ -163,7 +164,7 @@ describe("TableRow", () => {
 		);
 
 		assert.equal(number.props.children.type, "input");
-		assert.equal(number.props.children.props.value, cells.qty_req);
+		assert.equal(number.props.children.props.value, cells.get("qty_req"));
 	});
 
 	it("#cell types: text - enabled", () => {
@@ -174,7 +175,7 @@ describe("TableRow", () => {
 
 		// const textNode = React.findDOMNode(text);
 
-		// assert.equal(textNode.value, cells.bulb);
+		// assert.equal(textNode.value, cells.get("bulb"));
 	});
 
 	it("#cell types: text - disabled", () => {
@@ -184,7 +185,7 @@ describe("TableRow", () => {
 		// ).filter(c => !c.props.onChange);
 		// const textNode = React.findDOMNode(text);
 
-		// assert.equal(textNode.value, cells.offbulb);
+		// assert.equal(textNode.value, cells.get("offbulb"));
 		// assert(textNode.disabled);
 		// assert(textNode.readOnly);
 	});
@@ -209,7 +210,7 @@ describe("TableRow", () => {
 
 	// });
 
-	it("#onBlur is called with the (cells[primaryKey], cells) only when focus is lost from the row", () => {
+	it("#onBlur is called with the (cells.get(primaryKey), cells) only when focus is lost from the row", () => {
 		var rowNode = React.findDOMNode(row);
 
 		TestUtils.Simulate.blur(rowNode, {
@@ -230,7 +231,7 @@ describe("TableRow", () => {
 			target: {
 				tagName: "INPUT"
 			}});
-		assert.equal(testValue, cells[primaryKey]);
+		assert.equal(testValue, cells.get(primaryKey));
 		assert.deepEqual(testCells, cells);
 		assert.equal(counter, 1);
 
@@ -293,7 +294,7 @@ describe("TableRow", () => {
 		const selectNode = React.findDOMNode(select);
 
 		TestUtils.Simulate.change(selectNode, {target: {value: "hi"}});
-		assert.equal(testId, cells[primaryKey]);
+		assert.equal(testId, cells.get(primaryKey));
 		assert.equal(testKey, "job_status");
 		assert.equal(testValue, "hi");
 
@@ -307,7 +308,7 @@ describe("TableRow", () => {
 		const selectNode = React.findDOMNode(select);
 
 		TestUtils.Simulate.change(selectNode, {target: {value: "123"}});
-		assert.equal(testId, cells[primaryKey]);
+		assert.equal(testId, cells.get(primaryKey));
 		assert.equal(testKey, "job_status");
 		assert.equal(testValue, 123);
 	});
@@ -321,7 +322,7 @@ describe("TableRow", () => {
 
 		TestUtils.Simulate.click(buttonNode);
 
-		assert.equal(testId, cells.job_id);
+		assert.equal(testId, cells.get("job_id"));
 		assert.deepEqual(testCells, cells);
 	});
 

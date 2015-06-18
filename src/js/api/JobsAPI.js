@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import request from "superagent";
 import compose from "../utils/compose";
 import objectAssign from "object-assign";
@@ -42,7 +43,9 @@ export function createSingleJob() {
 					.end(onReply(ServerActionCreators.receiveNewJob));
 }
 
-export function saveDetails(jobId, updateObj) {
+export function saveDetails(jobId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
 	SharedActionCreators.startLoading();
 	request.put(`${jobs}/${jobId}`)
 					.send(updateObj)
@@ -55,7 +58,8 @@ export function getAllItems() {
 					.end(onReply(ServerActionCreators.receiveAllItems));
 }
 
-export function createSingleJobItem(jobId, blueprint) {
+export function createSingleJobItem(jobId, immutBlueprint) {
+	const blueprint = immutBlueprint.toJS && immutBlueprint.toJS() || {};
 	blueprint.job_id = jobId;
 
 	SharedActionCreators.startLoading();
@@ -64,14 +68,19 @@ export function createSingleJobItem(jobId, blueprint) {
 					.end(onReply(ServerActionCreators.receiveSingleItem));
 }
 
-export function saveItem(itemId, updateObj) {
+export function saveItem(itemId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
 	SharedActionCreators.startLoading();
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdatedItem));
 }
 
-export function deleteSingleItem(itemId) {
+export function deleteSingleItem(item) {
+	const itemId = item.get("item_id");
+	console.log(itemId);
+
 	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)
 					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));

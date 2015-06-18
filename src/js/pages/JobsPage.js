@@ -29,7 +29,7 @@ class JobsPage extends Component {
 	}
 
 	render() {
-		let items = this.props.jobs.map(item => item.details);
+		let items = this.props.jobs.map(item => item.get("details"));
 
 		return (
 			<div>
@@ -50,8 +50,10 @@ class JobsPage extends Component {
 						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>+</button>
 					</Filter>
 					<div className="table-container">
-						<Table {...this.props}
+						<Table selections={this.props.selections}
+								filters={this.props.filters}
 								items={items} primaryKey={"job_id"}
+								tableScheme={this.props.tableScheme}
 								onBlur={SharedActionCreators.saveDetails}
 								sortFunc={SharedActionCreators.sortBy}
 						/>
@@ -67,7 +69,7 @@ function getState() {
 	const start = PaginationStore.getOffset();
 	const end = start + PaginationStore.getRowsPerPage();
 
-	const jobs = JobsStore.getFilteredAndSortedJobs(start, end);
+	const jobs = JobsStore.getFilteredJobs(start, end);
 	const filters = JobsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
 	const totalPages = Math.ceil(JobsStore.getNumberOfJobs() / PaginationStore.getRowsPerPage());
@@ -104,7 +106,7 @@ JobsPage.defaultProps = {
 	],
 	presetScheme: [
 		{
-			description: "Within 2 weeks & job confirmed",
+			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
