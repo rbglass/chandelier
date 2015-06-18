@@ -36,8 +36,7 @@ const ItemsStore = createStore({
 			);
 		});
 
-		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc);
-		return sorted.slice(start, end);
+		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
@@ -96,6 +95,8 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
+
+				items = FilterUtils.genericSort(items, filters.sortTerm, filters.isAsc)
 				ItemsStore.emitChange();
 				break;
 

@@ -18,15 +18,9 @@ describe("PaginationStore", () => {
 		assert.equal(PaginationStore.getCurrentPage(), 5);
 	});
 
-	it("#getTotalPages returns the total page count", () => {
-		assert.equal(PaginationStore.getTotalPages(), 1);
-
-		PaginationStore.__set__("totalPages", 5);
-		assert.equal(PaginationStore.getTotalPages(), 5);
-	});
 
 	it("#getRowsPerPage returns the number of rows per page", () => {
-		assert.equal(PaginationStore.getRowsPerPage(), 50);
+		assert.equal(PaginationStore.getRowsPerPage(), 30);
 
 		PaginationStore.__set__("rowsPerPage", 100);
 		assert.equal(PaginationStore.getRowsPerPage(), 100);
@@ -48,7 +42,7 @@ describe("PaginationStore", () => {
 			data: 4
 		};
 
-		assert.equal(PaginationStore.getCurrentPage(), 1);
+		assert.equal(PaginationStore.getCurrentPage(), 0);
 
 		onReceivingAction(nextPageAction);
 		assert.equal(PaginationStore.getCurrentPage(), 4);

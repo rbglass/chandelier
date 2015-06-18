@@ -55,9 +55,9 @@ describe("Filter", () => {
 		assert.equal(columns.length, 2);
 	});
 
-	it("#renders 3 FilterInputs in the first column", () => {
+	it("#renders some FilterInputs in the first column", () => {
 		const kids = columns[0].props.children;
-		assert.equal(kids.filter(el => el.type === FilterInput).length, 3);
+		assert.equal(kids.filter(el => el.type === FilterInput).length, 1);
 	});
 
 	it("#renders a MultiSelect for each element in filters.restrictions", () => {

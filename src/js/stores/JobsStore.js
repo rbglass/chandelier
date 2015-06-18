@@ -39,8 +39,8 @@ const JobsStore = createStore({
 				FilterUtils.restrictTo(row.details, filters.restrictions)
 			);
 		});
-		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
-		return sorted.slice(start, end);
+
+		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
@@ -96,6 +96,8 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
+
+				jobs = FilterUtils.genericSort(jobs, filters.sortTerm, filters.isAsc, "details");
 				JobsStore.emitChange();
 				break;
 
