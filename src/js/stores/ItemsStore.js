@@ -10,17 +10,19 @@ var	items = [],
 		itemLength = 0,
 		filters = {
 			sortTerm: "shipping_date",
-			isAsc: false,
+			isAsc: true,
 			filterBy: "",
 			dateField: "shipping_date",
 			startDate: "",
 			endDate: "",
 			restrictions: {
 				"job_status": {
-					key: "job_status"
+					key: "job_status",
+					options: ["Confirmed", "Packaged"]
 				},
 				"payment": {
-					key: "payment"
+					key: "payment",
+					options: ["Deposit", "Paid Card", "Paid BACS", "Paid Other"]
 				}
 			}
 		};
@@ -98,7 +100,7 @@ const onReceivingAction = action => {
 				}
 				filters.sortTerm = action.data;
 
-				items = FilterUtils.genericSort(items, filters.sortTerm, filters.isAsc)
+				items = FilterUtils.genericSort(items, filters.sortTerm, filters.isAsc);
 				ItemsStore.emitChange();
 				break;
 
@@ -124,7 +126,9 @@ const onReceivingAction = action => {
 				const selections = SelectionStore.getSelections();
 
 				Object.keys(filters.restrictions).forEach(r => {
-					filters.restrictions[r].options = selections[r];
+					if(filters.restrictions[r].options === undefined) {
+						filters.restrictions[r].options = selections[r];
+					}
 				});
 				break;
 

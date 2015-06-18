@@ -30,7 +30,7 @@ var handler = {
 				return reply().code(400);
 			}
 
-			var query = client.query("SELECT * FROM jobs", function(jobErr, info) {
+			var query = client.query("SELECT * FROM jobs ORDER BY shipping_date", function(jobErr, info) {
 				done();
 				if (jobErr) {
 					return reply(jobErr).code(400);
@@ -217,7 +217,7 @@ var handler = {
 
 			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment, jobs.client " +
 												"FROM job_items INNER JOIN jobs " +
-												"ON job_items.job_id = jobs.job_id";
+												"ON job_items.job_id = jobs.job_id ORDER BY shipping_date";
 
 			var query = client.query(queryString, function(queryErr, info) {
 				done();

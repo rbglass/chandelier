@@ -12,6 +12,11 @@ import styles from "../styles/ModalStyles";
 import objectAssign from "object-assign";
 
 export default class Modal extends Component {
+	handleKeyDown(e) {
+		if (e.keyCode === 27) {
+			this.props.hide();
+		}
+	}
 
 	componentWillUpdate(nextProps) {
 		if (nextProps.isVisible && this.props.beforeOpen) {
@@ -54,7 +59,7 @@ export default class Modal extends Component {
 			}
 
 			return (
-					<section className="modal-wrapper">
+					<section className="modal-wrapper" onKeyDown={this.handleKeyDown.bind(this)}>
 							{overlay}
 							<div className="modal-dialogue" style={dialogStyles}>
 									<a role="button" style={closeButtonStyle} onClick={this.props.hide.bind(this)}>&times;</a>
