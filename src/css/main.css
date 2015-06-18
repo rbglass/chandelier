@@ -158,10 +158,16 @@ select,
   align-content: inherit;
 }
 
+
 .table-manip-col.table-manip-children {
 	flex-grow: 1;
 	justify-content: flex-end;
 	padding-right: 5px;
+}
+
+.table-manip-row {
+	display: flex;
+	width: 100%;
 }
 
 .job-text-input {
@@ -203,6 +209,8 @@ select,
   border: none;
   border-radius: 2px 2px 2px 2px;
   box-shadow: -1px 1px 1px 0px black;
+
+  cursor: pointer;
 }
 /* MultiSelect */
 
@@ -343,6 +351,7 @@ select[multiple] {
 	flex-grow: 0;
 	flex-basis: 20px;
 	padding: 0;
+  justify-content: center;
 }
 
 

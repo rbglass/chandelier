@@ -4,10 +4,11 @@ import Table from "../components/common/Table";
 import NavBar from "../components/common/NavBar";
 import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
+import connectToStores from "../utils/connectToStores";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import AlertStore from "../stores/AlertStore";
-import connectToStores from "../utils/connectToStores";
+import PaginationStore from "../stores/PaginationStore";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import rbPrefixer from "../utils/rbPrefixer";
@@ -23,8 +24,12 @@ class JobsPage extends Component {
 		requestDataFromServer();
 	}
 
+	componentWillUnmount() {
+		SharedActionCreators.changePageNumber(0);
+	}
+
 	render() {
-		let items = this.props.items.map(item => item.details);
+		let items = this.props.jobs.map(item => item.details);
 
 		return (
 			<div>
@@ -39,7 +44,9 @@ class JobsPage extends Component {
 						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
-						presetConfig={this.props.presetScheme} >
+						presetConfig={this.props.presetScheme}
+						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
+						changePage={SharedActionCreators.changePageNumber} >
 						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>+</button>
 					</Filter>
 					<div className="table-container">
@@ -57,22 +64,32 @@ class JobsPage extends Component {
 }
 
 function getState() {
-	const items = JobsStore.getFilteredAndSortedJobs();
+	const start = PaginationStore.getOffset();
+	const end = start + PaginationStore.getRowsPerPage();
+
+	const jobs = JobsStore.getFilteredAndSortedJobs(start, end);
 	const filters = JobsStore.getFilters();
+	const currentPage = PaginationStore.getCurrentPage();
+	const totalPages = Math.ceil(JobsStore.getNumberOfJobs() / PaginationStore.getRowsPerPage());
 	const selections = SelectionStore.getSelections();
 	const isLoading = AlertStore.getLoadStatus();
 	const alert = AlertStore.getAlert();
 
 	return {
 		selections,
-		items,
+		jobs,
 		filters,
+		currentPage,
+		totalPages,
 		isLoading,
 		alert
 	};
 }
 
-export default connectToStores([JobsStore, SelectionStore, AlertStore], getState)(JobsPage);
+export default connectToStores([
+	JobsStore, SelectionStore,
+	AlertStore, PaginationStore
+], getState)(JobsPage);
 
 JobsPage.defaultProps = {
 	tableScheme: [

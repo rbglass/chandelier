@@ -30,7 +30,7 @@ var jobs = [],
 		};
 
 const JobsStore = createStore({
-	getFilteredAndSortedJobs() {
+	getFilteredAndSortedJobs(start, end) {
 		let f = filters;
 		const filtered = jobs.filter(row => {
 			return (
@@ -40,10 +40,13 @@ const JobsStore = createStore({
 			);
 		});
 		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
-		return sorted;
+		return sorted.slice(start, end);
 	},
 	getFilters() {
 		return filters;
+	},
+	getNumberOfJobs() {
+		return jobs.length;
 	}
 });
 
