@@ -42,7 +42,7 @@ class SingleJobPage extends Component {
 							hide={ModalActionCreators.clearPendingAction}>
 						<button className="confirm-delete"
 								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
-							Yes I'm sure.
+							Confirm
 						</button>
 					</Modal> :
 					<span />
@@ -110,12 +110,12 @@ SingleJobPage.defaultProps = {
 		{ key: "client",         display: "Client:",           className: "",                   type: "text",     onChange: SharedActionCreators.changeDetails },
 		{ key: "project",        display: "Project:",          className: "",                   type: "text",     onChange: SharedActionCreators.changeDetails },
 		{ key: "client_ref",     display: "Client Ref:",       className: "",                   type: "text",     onChange: SharedActionCreators.changeDetails },
-		{ key: "notes",          display: "Notes:",            className: "notes",              type: "textarea", onChange: SharedActionCreators.changeDetails },
+		{ key: "notes",          display: "Notes:",            className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",     display: "Job Status:",       className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "order_type",     display: "Order Type:",       className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "updatedat",      display: "Last Update:",      className: "",                   type: "date",     formattingFunc: yyyyMMdd },
 		{ key: "parts_status",   display: "Parts Status:",     className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
-		{ key: "parts_notes",    display: "Parts Notes:",      className: "notes",              type: "textarea", onChange: SharedActionCreators.changeDetails },
+		{ key: "parts_notes",    display: "Parts Notes:",      className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "payment",        display: "Payment:",          className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date",  display: "Shipping Date:",    className: "",                   type: "date",     onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_notes", display: "Delivery Details:", className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }

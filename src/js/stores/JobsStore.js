@@ -6,6 +6,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
 var jobs = [],
+		jobLength = 0,
 		filters = {
 			sortTerm: "job_status",
 			isAsc: true,
@@ -40,13 +41,14 @@ const JobsStore = createStore({
 			);
 		});
 
+		jobLength = filtered.length;
 		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
 	},
 	getNumberOfJobs() {
-		return jobs.length;
+		return jobLength;
 	}
 });
 

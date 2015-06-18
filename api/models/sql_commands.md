@@ -2,48 +2,45 @@
 // NOTE: DELETE COLUMNS IN GOOGLE SHEETS WHICH ARE EMPTY/NOT USED
 // Also, potentially add 'createdat date' column
 
-CREATE TABLE jobs(job_id bigint,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text,dummy text);
+CREATE TABLE jobs(job_id bigint,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text);
 
 ALTER TABLE jobs ADD PRIMARY KEY (job_id);
+ALTER TABLE jobs ALTER COLUMN job_id SET NOT NULL;
 
+COPY jobs FROM '~/Downloads/rnb/jobs.csv' CSV HEADER;
 SELECT MAX(job_id) FROM jobs;
 
 CREATE SEQUENCE jobs_job_id_seq
-  INCREMENT 1
-  MINVALUE 10051
-  MAXVALUE 9223372036854775807
-  START 10051
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 4000
+	MAXVALUE 9223372036854775807
+	START 4000
+	CACHE 1;
 
-ALTER TABLE jobs ALTER COLUMN job_id SET UNIQUE DEFAULT nextval('jobs_job_id_seq'::regclass);
+ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
 
-COPY jobs FROM '~/Downloads/rnb/jobs.csv' CSV HEADER;
-
-ALTER TABLE jobs DROP COLUMN dummy;
 
 -------------------------
 
 CREATE TABLE job_items(job_id int,product text,description text,glass text,metal text,flex text,bulb text,qty_req int,qty_hot int,qty_cold int,qty_assem int,notes text);
 
 ALTER TABLE job_items
-  ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id)
-      REFERENCES jobs (job_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+	ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id)
+			REFERENCES jobs (job_id) MATCH SIMPLE
+			ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 
 COPY jobs FROM '~/Downloads/rnb/job_items.csv' CSV HEADER;
 
 CREATE SEQUENCE job_items_item_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT nextval('job_items_item_id_seq'::regclass);
 ALTER TABLE job_items ADD PRIMARY KEY (item_id);
-
-ALTER TABLE job_items DROP COLUMN qty_packed;
 
 -------------------------
 
@@ -51,11 +48,11 @@ CREATE TABLE products(SKU text,type text,name text,description text,active boole
 COPY products FROM '~/Downloads/rnb/products.csv' CSV HEADER;
 
 CREATE SEQUENCE products_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 ALTER TABLE products ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('products_id_seq'::regclass);
 ALTER TABLE products ADD PRIMARY KEY (id);
@@ -66,11 +63,11 @@ CREATE TABLE selections(type text,label text,rank int,active boolean,default_sel
 COPY selections FROM '~/Downloads/rnb/selections.csv' CSV HEADER;
 
 CREATE SEQUENCE selections_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 ALTER TABLE selections ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('selections_id_seq'::regclass);
 ALTER TABLE selections ADD PRIMARY KEY (id);
@@ -81,29 +78,29 @@ CREATE TABLE contacts(type text,name text,active boolean);
 COPY contacts FROM '~/Downloads/rnb/contacts.csv' CSV HEADER;
 
 CREATE SEQUENCE contacts_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 ALTER TABLE contacts ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('contacts_id_seq'::regclass);
 ALTER TABLE contacts ADD PRIMARY KEY (id);
 
 -------------------------
 
-CREATE TABLE contacts(type text,name text,active boolean);
+<!-- CREATE TABLE contacts(type text,name text,active boolean);
 COPY contacts FROM '~/Downloads/rnb/contacts.csv' CSV HEADER;
 
 CREATE SEQUENCE contacts_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 ALTER TABLE contacts ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('contacts_id_seq'::regclass);
-ALTER TABLE contacts ADD PRIMARY KEY (id);
+ALTER TABLE contacts ADD PRIMARY KEY (id); -->
 
 -------------------------
 

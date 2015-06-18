@@ -33,7 +33,7 @@ export default class Filter extends Component {
 
 		return (
 			<div className="table-manip">
-				<div className="table-manip-col" >
+				<div className="table-manip-col table-manip-filters" >
 					<div className="table-manip-presets">
 						{presets}
 					</div>
@@ -52,7 +52,7 @@ export default class Filter extends Component {
 						/>
 					</div>
 					<Pager total={this.props.totalPages} current={this.props.currentPage}
-							visiblePages={3} onPageChanged={this.props.changePage}/>
+							visiblePages={5} onPageChanged={this.props.changePage}/>
 				</div>
 				<div className="table-manip-col">
 					{selects}

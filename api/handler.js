@@ -250,7 +250,6 @@ var handler = {
 			qty_hot: 			entry.qty_hot 		|| 0,
 			qty_cold: 		entry.qty_cold 		|| 0,
 			qty_assem: 		entry.qty_assem 	|| 0,
-			qty_packed: 	entry.qty_packed 	|| 0,
 			notes: 				entry.notes 			|| "",
 			createdat: 		new Date(),
 			updatedat: 		new Date()
@@ -276,15 +275,14 @@ var handler = {
 				itemData.qty_hot,
 				itemData.qty_cold,
 				itemData.qty_assem,
-				itemData.qty_packed,
 				itemData.notes,
 				itemData.createdat,
 				itemData.updatedat
 				];
 
 			client.query("INSERT INTO job_items (job_id, product, description, glass, metal, " +
-				"flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, qty_packed, notes, createdat, updatedat) values" +
-				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *",
+				"flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, notes, createdat, updatedat) values" +
+				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *",
 				item,	function(errInsert, info, res) {
 					done();
 					if (errInsert) {

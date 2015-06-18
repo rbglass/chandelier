@@ -7,6 +7,7 @@ import PaginationStore from "./PaginationStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
 var	items = [],
+		itemLength = 0,
 		filters = {
 			sortTerm: "shipping_date",
 			isAsc: false,
@@ -36,13 +37,14 @@ const ItemsStore = createStore({
 			);
 		});
 
+		itemLength = filtered.length;
 		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
 	},
 	getNumberOfItems() {
-		return items.length;
+		return itemLength;
 	}
 
 });

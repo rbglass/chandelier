@@ -1,5 +1,4 @@
 "use strict";
-// In need of a hefty refactor
 
 var MARGIN = 72,
 		RIGHT_EDGE = 595.28,

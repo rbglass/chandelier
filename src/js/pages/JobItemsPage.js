@@ -46,7 +46,7 @@ class JobItemsPage extends Component {
 							hide={ModalActionCreators.clearPendingAction}>
 						<button className="confirm-delete"
 								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
-							Yes I'm sure.
+							Confirm
 						</button>
 					</Modal> :
 					<span />
