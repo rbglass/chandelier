@@ -1,0 +1,47 @@
+nav {
+  display: flex;
+  justify-content: center;
+  font-family: sans-serif;
+  font-size: small;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: auto;
+  box-shadow: 0px 1px 1px 0px dimgrey;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination li {
+  list-style: none;
+  border: 1px solid rgba(1,1,1,0.2);
+  background-color: rgba(39, 92, 152, 0);
+  color: dimgray;
+}
+
+.pagination li:hover {
+  background-color: rgba(39, 92, 152, 0.7);
+  color: white;
+}
+
+.pagination li.active {
+  background-color: rgba(39, 92, 152, 1);
+  color: white;
+}
+
+.pagination li a {
+  padding: 4px;
+  display: block;
+}
+
+.btn-first-page {
+  border-radius: 4px 0px 0px 4px;
+}
+
+.btn-last-page {
+  border-radius: 0px 4px 4px 0px;
+}

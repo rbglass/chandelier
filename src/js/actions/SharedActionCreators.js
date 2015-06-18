@@ -85,3 +85,10 @@ export function restrictTo(key, options) {
 		}
 	});
 }
+
+export function changePageNumber(n) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.CHANGE_PAGE_NUMBER,
+		data: n
+	});
+}

@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import Pager from "react-pager";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
 import Preset from "./Preset";
@@ -40,14 +41,18 @@ export default class Filter extends Component {
 						setFilter={this.props.setFilter} className={textFilterClassName}
 						placeholder="Filter all by..."
 					/>
-					<FilterInput type="date" value={yyyyMMdd(this.props.filters.startDate)}
-						setFilter={this.props.setStartDate} className={dateFilterClassName}
-						placeholder="Start Date"
-					/>
-					<FilterInput type="date" value={yyyyMMdd(this.props.filters.endDate)}
-						setFilter={this.props.setEndDate} className={dateFilterClassName}
-						placeholder="End Date"
-					/>
+					<div className="table-manip-row">
+						<FilterInput type="date" value={yyyyMMdd(this.props.filters.startDate)}
+							setFilter={this.props.setStartDate} className={dateFilterClassName}
+							placeholder="Start Date"
+						/>
+						<FilterInput type="date" value={yyyyMMdd(this.props.filters.endDate)}
+							setFilter={this.props.setEndDate} className={dateFilterClassName}
+							placeholder="End Date"
+						/>
+					</div>
+					<Pager total={this.props.totalPages} current={this.props.currentPage}
+							visiblePages={3} onPageChanged={this.props.changePage}/>
 				</div>
 				<div className="table-manip-col">
 					{selects}
@@ -83,5 +88,9 @@ Filter.propTypes = {
 	setFilter   : PropTypes.func,
 	setStartDate: PropTypes.func,
 	setEndDate  : PropTypes.func,
-	restrictTo  : PropTypes.func
+	restrictTo  : PropTypes.func,
+
+	currentPage: PropTypes.number,
+	totalPages: PropTypes.number,
+	changePage : PropTypes.func
 };

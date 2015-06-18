@@ -24,6 +24,8 @@ export default keyMirror({
 	"PENDING_ACTION": null,
 	"IS_LOADING": null,
 
+	"CHANGE_PAGE_NUMBER": null,
+
 	"SORT_ONE": null,
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,

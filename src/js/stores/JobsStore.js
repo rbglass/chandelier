@@ -30,7 +30,7 @@ var jobs = [],
 		};
 
 const JobsStore = createStore({
-	getFilteredAndSortedJobs() {
+	getFilteredAndSortedJobs(start, end) {
 		let f = filters;
 		const filtered = jobs.filter(row => {
 			return (
@@ -39,11 +39,14 @@ const JobsStore = createStore({
 				FilterUtils.restrictTo(row.details, filters.restrictions)
 			);
 		});
-		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc, "details");
-		return sorted;
+
+		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
+	},
+	getNumberOfJobs() {
+		return jobs.length;
 	}
 });
 
@@ -93,6 +96,8 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
+
+				jobs = FilterUtils.genericSort(jobs, filters.sortTerm, filters.isAsc, "details");
 				JobsStore.emitChange();
 				break;
 

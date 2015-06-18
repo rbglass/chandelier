@@ -3,6 +3,7 @@ import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
+import PaginationStore from "./PaginationStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
 var	items = [],
@@ -24,8 +25,9 @@ var	items = [],
 		};
 
 const ItemsStore = createStore({
-	getFilteredAndSortedItems() {
+	getFilteredAndSortedItems(start, end) {
 		let f = filters;
+
 		const filtered = items.filter(row => {
 			return (
 				FilterUtils.contains(row, f.filterBy) &&
@@ -34,11 +36,13 @@ const ItemsStore = createStore({
 			);
 		});
 
-		const sorted = FilterUtils.genericSort(filtered, f.sortTerm, f.isAsc);
-		return sorted;
+		return filtered.slice(start, end);
 	},
 	getFilters() {
 		return filters;
+	},
+	getNumberOfItems() {
+		return items.length;
 	}
 
 });
@@ -91,6 +95,8 @@ const onReceivingAction = action => {
 					filters.isAsc = false;
 				}
 				filters.sortTerm = action.data;
+
+				items = FilterUtils.genericSort(items, filters.sortTerm, filters.isAsc)
 				ItemsStore.emitChange();
 				break;
 

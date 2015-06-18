@@ -10,6 +10,7 @@ import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
 import AlertStore from "../stores/AlertStore";
 import ModalStore from "../stores/ModalStore";
+import PaginationStore from "../stores/PaginationStore";
 import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -26,6 +27,10 @@ class JobItemsPage extends Component {
 
 	componentWillMount() {
 		requestDataFromServer();
+	}
+
+	componentWillUnmount() {
+		SharedActionCreators.changePageNumber(0);
 	}
 
 	render() {
@@ -52,6 +57,8 @@ class JobItemsPage extends Component {
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
+						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
+						changePage={SharedActionCreators.changePageNumber}
 					/>
 					<div className="table-container">
 						<Table {...this.props} primaryKey={"item_id"}
@@ -66,8 +73,13 @@ class JobItemsPage extends Component {
 }
 
 function getState() {
-	const items = ItemsStore.getFilteredAndSortedItems();
+	const start = PaginationStore.getOffset();
+	const end = start + PaginationStore.getRowsPerPage();
+
+	const items = ItemsStore.getFilteredAndSortedItems(start, end);
 	const filters = ItemsStore.getFilters();
+	const currentPage = PaginationStore.getCurrentPage();
+	const totalPages = Math.ceil(ItemsStore.getNumberOfItems() / PaginationStore.getRowsPerPage());
 	const selections = SelectionStore.getSelections();
 	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
@@ -77,13 +89,18 @@ function getState() {
 		selections,
 		items,
 		filters,
+		currentPage,
+		totalPages,
 		pendingAction,
 		isLoading,
 		alert
 	};
 }
 
-export default connectToStores([ItemsStore, SelectionStore, AlertStore, ModalStore], getState)(JobItemsPage);
+export default connectToStores([
+	ItemsStore, SelectionStore,
+	AlertStore, ModalStore, PaginationStore
+], getState)(JobItemsPage);
 
 // Code too wide
 JobItemsPage.defaultProps = {
