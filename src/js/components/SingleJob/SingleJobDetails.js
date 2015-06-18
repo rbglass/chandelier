@@ -87,7 +87,7 @@ export default class SingleJobDetails extends Component {
 			<div className="job-details" onBlur={this.handleBlur.bind(this)}>
 				{ columns.map((col, z) => {
 						return (
-							<div className="job-details-column u-flex-grow3" key={z}>
+							<div className="job-details-column job-details-form" key={z}>
 								{col}
 							</div>
 						);

@@ -21,6 +21,7 @@ const onReceivingAction = action => {
 				Object.keys(action.data).forEach(type => {
 					selections[type] = action.data[type].map(sel => sel.label);
 				});
+				console.log(selections);
 				SelectionStore.emitChange();
 				break;
 
@@ -40,6 +41,7 @@ const onReceivingAction = action => {
 					selections[productType.toLowerCase()] = flop(batch.products, "name");
 				});
 
+				console.log(selections);
 				SelectionStore.emitChange();
 				break;
 

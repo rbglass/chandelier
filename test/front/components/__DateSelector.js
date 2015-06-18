@@ -49,4 +49,10 @@ describe("DateSelector", () => {
 		assert.equal(displayNode.textContent, "05 Jan 2015");
 	});
 
+	it("#calls this.props.onChange with e.target.value if onChange is specified", () => {
+		assert.equal(ting, null);
+		TestUtils.Simulate.change(inputNode);
+		assert.equal(ting, "2015-01-05");
+	});
+
 });

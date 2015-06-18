@@ -1,5 +1,4 @@
 "use strict";
-// In need of a hefty refactor
 
 var MARGIN = 72,
 		RIGHT_EDGE = 595.28,
@@ -92,7 +91,7 @@ function writeAddress(doc, address) {
 		.moveDown(2)
 		.fontSize(DETAIL_HEADER_FONT_SIZE)
 		.font("Bold")
-		.text("Delivery Address:")
+		.text("Delivery Details:")
 		.fontSize(ADDRESS_FONT_SIZE)
 		.font("Helvetica")
 		.text(address);

@@ -145,8 +145,10 @@ select,
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content:  flex-end;
-  align-items: stretch;
   margin-left: 8px;
+
+  min-height: 175px;
+  align-items: flex-end;
 
 	width: 100%;
 	height: auto;
@@ -157,6 +159,12 @@ select,
   align-items: flex-end;
   flex-wrap: wrap;
   align-content: inherit;
+}
+
+.table-manip-col.table-manip-filters {
+  flex-direction: column;
+  flex-basis: 600px;
+  align-items: flex-start;
 }
 
 
@@ -191,7 +199,7 @@ select,
 
 /* Presets */
 .table-manip-presets {
-	width: 40%;
+  width: 300px;
 }
 
 .preset {
@@ -431,6 +439,16 @@ select[multiple] {
 	z-index: 999999;
 }
 
+.date-selector-input::-webkit-calendar-picker-indicator {
+  font-size: larger;
+  width: 13px;
+  border-radius: 0px 0px 2px 2px;
+}
+
+.date-selector-input::-webkit-inner-spin-button {
+	display: none;
+}
+
 .date-selector-input::-webkit-datetime-edit-month-field {
 	color: transparent;
 	letter-spacing: 5px;
@@ -444,6 +462,10 @@ select[multiple] {
 
 .date-selector-input::-webkit-clear-button {
 	display: none;
+}
+
+.date-selector-input.clearable::-webkit-clear-button {
+	display: block;
 }
 
 /* Specific job details */
@@ -465,6 +487,11 @@ select[multiple] {
 	justify-content: flex-end;
 
 	min-height: 200px;
+}
+
+.job-details-column.job-details-form {
+  flex-basis: 575px;
+  width: auto;
 }
 
 .job-details-field {
@@ -489,8 +516,10 @@ select[multiple] {
 }
 
 .job-text-area {
-	width: 89%;
+	margin: 0px;
+	width: 523px;
 	min-height: 72px;
+  max-width: 570px;
 }
 
 	textarea {
@@ -509,6 +538,7 @@ select[multiple] {
 
 	background-color: var(--blue);
 	color: white;
+	cursor: pointer;
 
 	border: none;
 	border-radius: 0px 0px 4px 4px;
