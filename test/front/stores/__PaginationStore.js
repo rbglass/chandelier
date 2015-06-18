@@ -48,29 +48,4 @@ describe("PaginationStore", () => {
 		assert.equal(PaginationStore.getCurrentPage(), 4);
 	});
 
-	// it("#changes pendingAction to action.data upon a PENDING_ACTION action", () => {
-	// 	const pendingAction = function() {
-	// 		return true;
-	// 	};
-
-	// 	const testAction1 = {
-	// 		type: "PENDING_ACTION",
-	// 		data: pendingAction
-	// 	};
-
-	// 	const testAction2 = {
-	// 		type: "PENDING_ACTION",
-	// 		data: null
-	// 	};
-
-	// 	assert.equal(PaginationStore.getPendingAction(), null);
-
-	// 	onReceivingAction(testAction1);
-	// 	assert.equal(PaginationStore.getPendingAction(), pendingAction);
-
-	// 	onReceivingAction(testAction2);
-	// 	assert.equal(PaginationStore.getPendingAction(), null);
-
-	// });
-
 });
