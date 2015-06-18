@@ -1,28 +1,35 @@
 "use strict";
+import I from "immutable";
+import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import DateSelector from "../common/DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class SingleJobDetails extends Component {
+	shouldComponentUpdate(nextProps) {
+		return !( I.is(nextProps.details, this.props.details) &&
+							I.is(nextProps.filters, this.props.filters));
+	}
+
 	handleBlur(e) {
 		const currentNode = e.target && e.target.parentElement.parentElement;
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
 
 		if(currentNode !== destinationNode) {
-			this.props.onBlur(this.props.details.job_id, this.props.details);
+			this.props.onBlur(this.props.details.get("job_id"), this.props.details);
 		}
 	}
 
 	render() {
 		const details = this.props.details;
 		const config = this.props.detailsConfig;
-		const ks = keySealer.bind(this, details.job_id);
+		const ks = keySealer.bind(this, details.get("job_id"));
 		let columns = [];
 		let n = 0;
 
 		config.forEach((cell, i) => {
-			let cellValue = details[cell.key];
+			let cellValue = details.get(cell.key);
 			let input;
 			let field;
 			let isDisabled;
@@ -51,8 +58,8 @@ export default class SingleJobDetails extends Component {
 						input = (
 							<select value={cellValue} className="job-text-input">
 								<option></option>
-								{ this.props.selections[cell.key] ?
-									this.props.selections[cell.key].map((opt, j) => {
+								{ this.props.selections.has(cell.key) ?
+									this.props.selections.get(cell.key).map((opt, j) => {
 									return <option key={opt + " " + j}>{opt}</option>;
 								}, this) : "No opts" }
 							</select>
@@ -98,7 +105,7 @@ export default class SingleJobDetails extends Component {
 				}
 				<div className="job-details-column">
 					<div className="job-details-field">
-						<a href={`/api/jobs/${details.job_id}?pdf=true`} target="_blank">
+						<a href={`/api/jobs/${details.get("job_id")}?pdf=true`} target="_blank">
 							<input className="pdfButton" type="button" value="PDF"/>
 						</a>
 					</div>
@@ -109,9 +116,9 @@ export default class SingleJobDetails extends Component {
 }
 
 SingleJobDetails.propTypes = {
-	details: PropTypes.object,
-	selections: PropTypes.objectOf(
-		PropTypes.arrayOf(
+	details: IPropTypes.map,
+	selections: IPropTypes.mapOf(
+		IPropTypes.listOf(
 			PropTypes.string
 		)
 	),

@@ -1,4 +1,6 @@
 "use strict";
+import I from "immutable";
+import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import Pager from "react-pager";
 import FilterInput from "./FilterInput";
@@ -8,6 +10,11 @@ import Preset from "./Preset";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class Filter extends Component {
+	shouldComponentUpdate(nextProps) {
+		return 	nextProps.selections !== this.props.selections ||
+							nextProps.filters !== this.props.filters ||
+							nextProps.currentPage !== this.props.currentPage;
+	}
 
 	render() {
 		// use cx
@@ -15,17 +22,17 @@ export default class Filter extends Component {
 		const textFilterClassName = baseClassName + "filter";
 		const dateFilterClassName = baseClassName + "date";
 
-		const selects = Object.keys(this.props.filters.restrictions).map((restr, i) => {
+		const selects = this.props.filters.get("restrictions").map((field, restr) => {
 			return (
-				this.props.selections[restr] ?
+				this.props.selections.has(restr) ?
 				<MultiSelect key={restr}
-					selected={this.props.filters.restrictions[restr]}
-					selections={this.props.selections[restr]}
+					selected={field}
+					selections={this.props.selections.get(restr)}
 					onSelect={this.props.restrictTo}
 				/>
-				: <span key={i}/>
+				: <span key={restr}/>
 			);
-		});
+		}).toArray();
 
 		const presets = this.props.presetConfig.map(preset => {
 			const key = preset.description.split(" ")[0];
@@ -38,15 +45,15 @@ export default class Filter extends Component {
 					<div className="table-manip-presets">
 						{presets}
 					</div>
-					<FilterInput type="text" value={this.props.filters.filterBy}
+					<FilterInput type="text" value={this.props.filters.get("filterBy")}
 						setFilter={this.props.setFilter} className={textFilterClassName}
 						placeholder="Filter all by..."
 					/>
 					<div className="table-manip-row">
-						<DateSelector value={this.props.filters.startDate}
+						<DateSelector value={this.props.filters.get("startDate")}
 							onChange={this.props.setStartDate} className={dateFilterClassName}
 							inputClass={"clearable"} />
-						<DateSelector value={this.props.filters.endDate}
+						<DateSelector value={this.props.filters.get("endDate")}
 							onChange={this.props.setEndDate} className={dateFilterClassName}
 							inputClass={"clearable"} />
 					</div>
@@ -67,18 +74,19 @@ export default class Filter extends Component {
 }
 
 Filter.propTypes = {
-	filters: PropTypes.shape({
+	filters: IPropTypes.shape({
 		filterBy    : PropTypes.string,
 		startDate   : PropTypes.string,
 		endDate     : PropTypes.string,
-		restrictions: PropTypes.objectOf(PropTypes.shape({
+		restrictions: IPropTypes.mapOf(IPropTypes.shape({
 				key    : PropTypes.string,
-				options: PropTypes.arrayOf(PropTypes.string)
+				options: IPropTypes.listOf(PropTypes.string)
 			})
 		)
 	}),
 
-	selections   : PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+	selections   : IPropTypes.mapOf(IPropTypes.listOf(PropTypes.string)),
+
 	presetConfig : PropTypes.arrayOf(PropTypes.shape({
 		description: PropTypes.string,
 		onSelect: PropTypes.arrayOf(PropTypes.func)

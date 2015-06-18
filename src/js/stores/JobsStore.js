@@ -1,48 +1,51 @@
 "use strict";
+import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import * as FilterUtils from "../utils/FilterUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
-var jobs = [],
+const defaultFilters = I.fromJS({
+	sortTerm: "shipping_date",
+	isAsc: true,
+	filterBy: "",
+	dateField: "shipping_date",
+	startDate: "",
+	endDate: "",
+	restrictions: {
+		"job_status": {
+			key: "job_status",
+			options: ["Confirmed", "Packaged"]
+		},
+		"order_type": {
+			key: "order_type"
+		},
+		"payment": {
+			key: "payment"
+		},
+		"parts_status": {
+			key: "parts_status"
+		}
+	}
+});
+
+var jobs = I.List(),
 		jobLength = 0,
-		filters = {
-			sortTerm: "shipping_date",
-			isAsc: true,
-			filterBy: "",
-			dateField: "shipping_date",
-			startDate: "",
-			endDate: "",
-			restrictions: {
-				"job_status": {
-					key: "job_status",
-					options: ["Confirmed", "Packaged"]
-				},
-				"order_type": {
-					key: "order_type"
-				},
-				"payment": {
-					key: "payment"
-				},
-				"parts_status": {
-					key: "parts_status"
-				}
-			}
-		};
+		filters = defaultFilters;
 
 const JobsStore = createStore({
-	getFilteredAndSortedJobs(start, end) {
+	getFilteredJobs(start, end) {
 		let f = filters;
 		const filtered = jobs.filter(row => {
 			return (
-				FilterUtils.contains(row.details, f.filterBy) &&
-				FilterUtils.isWithinBounds(row.details[f.dateField], f.startDate, f.endDate) &&
-				FilterUtils.restrictTo(row.details, filters.restrictions)
+				FilterUtils.contains(row.get("details"), f.get("filterBy")) &&
+				FilterUtils.isWithinBounds(row.getIn(["details", f.get("dateField")]), f.get("startDate"), f.get("endDate")) &&
+				FilterUtils.restrictTo(row.get("details"), f.get("restrictions"))
 			);
 		});
 
-		jobLength = filtered.length;
+		jobLength = filtered.size;
 		return filtered.slice(start, end);
 	},
 	getFilters() {
@@ -57,20 +60,16 @@ const onReceivingAction = action => {
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_ALL_JOBS:
-				jobs = action.data;
+				jobs = I.fromJS(action.data);
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_UPDATED_JOB:
-				let newJobs = jobs.map(job => {
-					if(job.job_id === action.data.job_id) {
-						return action.data;
-					} else {
-						return job;
-					}
+				jobs = jobs.map(job => {
+					return job.get("job_id") === action.data.job_id ?
+						I.fromJS(action.data) :
+						job;
 				});
-
-				jobs = newJobs;
 				JobsStore.emitChange();
 				break;
 
@@ -78,8 +77,8 @@ const onReceivingAction = action => {
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
 				let id = action.data.id;
 				jobs = jobs.map(job => {
-					if (job.job_id === id) {
-						job.details[action.data.key] = action.data.value;
+					if (job.get("job_id") === id) {
+						job = job.setIn(["details", action.data.key], action.data.value);
 					}
 					return job;
 				});
@@ -88,46 +87,49 @@ const onReceivingAction = action => {
 
 		// Table manipulation
 		case ActionTypes.FILTER_BY:
-				filters.filterBy = action.data;
+				filters = filters.set("filterBy", action.data);
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if (action.data === filters.sortTerm) {
-					filters.isAsc = !filters.isAsc;
-				} else {
-					filters.isAsc = false;
-				}
-				filters.sortTerm = action.data;
+				const asc = action.data === filters.get("sortTerm") ?
+											!filters.get("isAsc") :
+											false;
+				filters = filters.set("isAsc", asc);
+				filters = filters.set("sortTerm", action.data);
+				jobs = FilterUtils.genericSort(jobs, filters.get("sortTerm"), filters.get("isAsc"), "details");
 
-				jobs = FilterUtils.genericSort(jobs, filters.sortTerm, filters.isAsc, "details");
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_START_DATE:
-				filters.startDate = action.data;
+				filters = filters.set("startDate", action.data);
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_END_DATE:
-				filters.endDate = action.data;
+				filters = filters.set("endDate", action.data);
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.RESTRICT_TO:
-				filters.restrictions[action.data.key] = action.data;
+				if (filters.hasIn(["restrictions", action.data.key])) {
+					filters = filters.setIn(["restrictions", action.data.key],  I.fromJS(action.data));
+				}
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);
 				const selections = SelectionStore.getSelections();
+				const rIterable = filters.get("restrictions").keySeq();
 
-				Object.keys(filters.restrictions).forEach(r => {
-					if(filters.restrictions[r].options === undefined) {
-						filters.restrictions[r].options = selections[r];
+				rIterable.forEach(r => {
+					if(!filters.hasIn(["restrictions", r, "options"])) {
+						filters = filters.setIn(["restrictions", r, "options"], selections.get(r));
 					}
 				});
+				JobsStore.emitChange();
 				break;
 
 		default:

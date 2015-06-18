@@ -2,7 +2,7 @@
 import keyMirror from "react/lib/keyMirror";
 
 export default keyMirror({
-
+	// SERVER JS -> LOCAL IMMUTABLE
 	"RECEIVE_SELECTIONS": null,
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,
@@ -14,18 +14,22 @@ export default keyMirror({
 	"RECEIVE_ALERT": null,
 	"RECEIVE_DELETION_CONFIRMATION": null,
 
+	// LOCAL IMMUTABLE -> SERVER JS
 	"CREATE_SINGLE_JOB": null,
 	"SAVE_SINGLE_JOB_DETAILS": null,
 	"SAVE_SINGLE_JOB_ITEM": null,
 
+	// LOCAL JS -> LOCAL IMMUTABLE
 	"CHANGE_SINGLE_JOB_DETAILS": null,
 	"CHANGE_SINGLE_JOB_ITEM": null,
 
+	// LOCAL MUTABLE -> LOCAL MUTABLE
 	"PENDING_ACTION": null,
 	"IS_LOADING": null,
 
 	"CHANGE_PAGE_NUMBER": null,
 
+	// LOCAL IMMUTABLE -> LOCAL IMMUTABLE
 	"SORT_ONE": null,
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,

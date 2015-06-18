@@ -1,10 +1,11 @@
 "use strict";
+import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import flop from "../utils/flop";
 
-var selections = {};
+var selections = I.Map();
 
 const SelectionStore = createStore({
 	getSelections() {
@@ -16,12 +17,11 @@ const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_SELECTIONS:
-				// For now empty the selections object;
-				selections = {};
+
 				Object.keys(action.data).forEach(type => {
-					selections[type] = action.data[type].map(sel => sel.label);
+					let batch = flop(action.data[type], "label");
+					selections = selections.set(type, I.List(batch));
 				});
-				console.log(selections);
 				SelectionStore.emitChange();
 				break;
 
@@ -29,19 +29,20 @@ const onReceivingAction = action => {
 				// Later move this to a product store
 				// For now, assume always overwrite data;
 				let typesOfProduct = Object.keys(action.data);
-				selections.product = [];
+				selections = selections.set("product", I.List());
 
+				// Better functionally done with a reduce & 'withMutable()' perf optimisations
 				typesOfProduct.forEach(productType => {
 					let batch = action.data[productType];
+					let flopped = flop(batch.products, "name");
 
 					if (batch.saleable === true) {
-						selections.product = selections.product.concat(flop(batch.products, "name"));
+						selections = selections.updateIn(["product"], list => list.concat(flopped));
 					}
 
-					selections[productType.toLowerCase()] = flop(batch.products, "name");
+					selections = selections.set(productType.toLowerCase(), I.List(flopped));
 				});
 
-				console.log(selections);
 				SelectionStore.emitChange();
 				break;
 

@@ -1,5 +1,7 @@
 // https://github.com/robertknight/react-testing
 "use strict";
+import I from "immutable";
+import assert from "assert";
 
 export function withContainer(callback) {
 	if (typeof document === "undefined") {
@@ -64,4 +66,8 @@ export function stubRouterContext(Component, props, stubs) {
       return <Component {...props} />;
     }
   });
+}
+
+export function sameVal(first, second) {
+	return assert(I.is(first, second));
 }

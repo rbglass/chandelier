@@ -53,7 +53,8 @@ class JobItemsPage extends Component {
 				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={SharedActionCreators.setFilter} setStartDate={SharedActionCreators.setStartDate}
+						setFilter={SharedActionCreators.setFilter}
+						setStartDate={SharedActionCreators.setStartDate}
 						setEndDate={SharedActionCreators.setEndDate}
 						restrictTo={SharedActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
@@ -61,7 +62,10 @@ class JobItemsPage extends Component {
 						changePage={SharedActionCreators.changePageNumber}
 					/>
 					<div className="table-container">
-						<Table {...this.props} primaryKey={"item_id"}
+						<Table selections={this.props.selections}
+							filters={this.props.filters}
+							items={this.props.items} primaryKey={"item_id"}
+							tableScheme={this.props.tableScheme}
 							onBlur={SharedActionCreators.saveItem}
 							sortFunc={SharedActionCreators.sortBy}
 						/>
@@ -76,7 +80,7 @@ function getState() {
 	const start = PaginationStore.getOffset();
 	const end = start + PaginationStore.getRowsPerPage();
 
-	const items = ItemsStore.getFilteredAndSortedItems(start, end);
+	const items = ItemsStore.getFilteredItems(start, end);
 	const filters = ItemsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
 	const totalPages = Math.ceil(ItemsStore.getNumberOfItems() / PaginationStore.getRowsPerPage());
@@ -125,7 +129,7 @@ JobItemsPage.defaultProps = {
 	],
 	presetScheme: [
 		{
-			description: "Within 2 weeks & job confirmed",
+			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))

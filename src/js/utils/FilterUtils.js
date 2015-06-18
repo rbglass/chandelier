@@ -1,38 +1,39 @@
 "use strict";
+import I from "immutable";
 import { isyyyyMMdd } from "./yyyyMMdd";
 
 // string.includes is playing up
 function strIncludes(str, term) {
-	if (typeof term !== "string") return false;
-	else return (str.toLowerCase().indexOf(term.toLowerCase()) !== -1);
+	return typeof term === "string" ?
+		str.toLowerCase().indexOf(term.toLowerCase()) !== -1 :
+		false;
 }
 
-export function contains(obj, term) {
+export function contains(map, term) {
 	if(term === "" || term === undefined) return true;
 
-	const k = Object.keys(obj);
+	const k = map.keySeq();
+
 	return k.some(cell => {
-		switch (typeof obj[cell]) {
+		switch (typeof map.get(cell)) {
 			case "string":
-					return strIncludes(obj[cell], term);
+					return strIncludes(map.get(cell), term);
 			case "number":
-					return strIncludes("" + obj[cell], "" + term);
+					return strIncludes("" + map.get(cell), "" + term);
 			case "boolean":
-					return obj[cell] === term;
+					return map.get(cell) === term;
 			default:
 					return false;
 		}
 	});
 }
 
-export function genericSort(arr, sortBy, asc, sortPath) {
+export function genericSort(list, sortBy, asc, sortPath) {
 
-	arr = arr.slice(0);
-
-	return arr.sort((a, b) => {
+	return list.sort((a, b) => {
 		// ugly hack
-		let t1 = sortPath ? a[sortPath][sortBy] : a[sortBy],
-				t2 = sortPath ? b[sortPath][sortBy] : b[sortBy],
+		let t1 = sortPath ? a.getIn([sortPath, sortBy]) : a.get(sortBy),
+				t2 = sortPath ? b.getIn([sortPath, sortBy]) : b.get(sortBy),
 				sortVal;
 
 		if (isyyyyMMdd(t1) || isyyyyMMdd(t2)) {
@@ -46,7 +47,6 @@ export function genericSort(arr, sortBy, asc, sortPath) {
 		} else {
 			sortVal = t1 - t2;
 		}
-
 		return asc ? sortVal : -sortVal;
 	});
 }
@@ -66,11 +66,12 @@ export function isWithinBounds(field, lower, upper) {
 }
 
 export function restrictTo(obj, restrictionObj) {
-	const restrictBy = Object.keys(restrictionObj);
+	const restrictBy = restrictionObj.keySeq();
 	return restrictBy.every(field => {
+		const hasOptionsForField = restrictionObj.hasIn([field, "options"]);
 		return (
-			(restrictionObj[field].options === undefined) ||
-			restrictionObj[field].options.indexOf(obj[field]) !== -1
+			(!hasOptionsForField ||
+			restrictionObj.getIn([field, "options"]).includes(obj.get(field)))
 		);
 	});
 }

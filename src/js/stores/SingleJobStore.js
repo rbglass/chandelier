@@ -1,26 +1,29 @@
 "use strict";
+import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import { genericSort } from "../utils/FilterUtils";
 import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-var job = {
+const defaultFilters = I.Map({
+	sortTerm: "item_id",
+	isAsc: false
+});
+
+var job = I.Map({
 			job_id: "",
-			details: {},
-			items: []
-		},
-		filters = {
-			sortTerm: "item_id",
-			isAsc: false
-		};
+			details: I.Map(),
+			items: I.List()
+		}),
+		filters = defaultFilters;
 
 const SingleJobStore = createStore({
 	getSortedItems() {
-		return genericSort(job.items, filters.sortTerm, filters.isAsc);
+		return job.get("items");
 	},
 	getJobDetails() {
-		return job.details;
+		return job.get("details");
 	},
 	getFilters() {
 		return filters;
@@ -31,52 +34,45 @@ const onReceivingAction = action => {
 	switch(action.type) {
 
 		case ActionTypes.RECEIVE_SINGLE_JOB:
-				job = objectAssign({}, action.data);
+				job = I.fromJS(action.data);
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				job.items.push(action.data);
+				let immutData = I.fromJS(action.data);
+				job = job.updateIn(["items"], list => list.push(immutData));
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.CHANGE_SINGLE_JOB_DETAILS:
-				if (action.data.id === job.job_id) {
-					job.details[action.data.key] = action.data.value;
+				if (action.data.id === job.get("job_id")) {
+					job = job.setIn(["details", action.data.key], action.data.value);
 					SingleJobStore.emitChange();
 				}
 				break;
 
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
-				job.items = job.items.map(jobitem => {
-					if (jobitem.item_id === d.id) {
-						jobitem[d.key] = d.value;
-					}
-					return jobitem;
-				});
+				job = job.updateIn(["items"], list => list.map(jobitem =>
+					jobitem.get("item_id") === d.id ? jobitem.set(d.key, d.value) : jobitem
+				));
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
-				let itemsMinusOne = [];
-				job.items.forEach(item => {
-					if (item.item_id === action.data) {
-						return;
-					}
-					itemsMinusOne.push(item);
-				});
-				job.items = itemsMinusOne;
+				job = job.updateIn(["items"], list => list.filterNot(jobitem =>
+					jobitem.get("item_id") === action.data
+				));
 				SingleJobStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if (action.data === filters.sortTerm) {
-					filters.isAsc = !filters.isAsc;
-				} else {
-					filters.isAsc = false;
-				}
-				filters.sortTerm = action.data;
+				const asc = action.data === filters.get("sortTerm") ?
+											!filters.get("isAsc") :
+											false;
+				filters = filters.set("isAsc", asc);
+				filters = filters.set("sortTerm", action.data);
+				job = job.set("items", genericSort(job.get("items"), filters.get("sortTerm"), filters.get("isAsc")));
 				SingleJobStore.emitChange();
 				break;
 

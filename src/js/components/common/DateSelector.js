@@ -41,5 +41,10 @@ export default class DateSelector extends Component {
 }
 
 DateSelector.propTypes = {
-	value: PropTypes.string
+	value: PropTypes.string,
+	id: PropTypes.string,
+	inputClass: PropTypes.string,
+	disabled: PropTypes.bool,
+	readOnly: PropTypes.bool,
+	onChange: PropTypes.func
 };

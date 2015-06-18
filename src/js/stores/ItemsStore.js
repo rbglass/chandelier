@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
@@ -6,40 +7,43 @@ import SelectionStore from "./SelectionStore";
 import PaginationStore from "./PaginationStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
-var	items = [],
+const defaultFilters = I.fromJS({
+	sortTerm: "shipping_date",
+	isAsc: true,
+	filterBy: "",
+	dateField: "shipping_date",
+	startDate: "",
+	endDate: "",
+	restrictions: {
+		"job_status": {
+			key: "job_status",
+			options: ["Confirmed", "Packaged"]
+		},
+		"payment": {
+			key: "payment",
+			options: ["Deposit", "Paid Card", "Paid BACS", "Paid Other"]
+		}
+	}
+});
+
+
+var	items = I.List(),
 		itemLength = 0,
-		filters = {
-			sortTerm: "shipping_date",
-			isAsc: true,
-			filterBy: "",
-			dateField: "shipping_date",
-			startDate: "",
-			endDate: "",
-			restrictions: {
-				"job_status": {
-					key: "job_status",
-					options: ["Confirmed", "Packaged"]
-				},
-				"payment": {
-					key: "payment",
-					options: ["Deposit", "Paid Card", "Paid BACS", "Paid Other"]
-				}
-			}
-		};
+		filters = defaultFilters;
 
 const ItemsStore = createStore({
-	getFilteredAndSortedItems(start, end) {
+	getFilteredItems(start, end) {
 		let f = filters;
 
 		const filtered = items.filter(row => {
 			return (
-				FilterUtils.contains(row, f.filterBy) &&
-				FilterUtils.isWithinBounds(row[f.dateField], f.startDate, f.endDate) &&
-				FilterUtils.restrictTo(row, filters.restrictions)
+				FilterUtils.contains(row, f.get("filterBy")) &&
+				FilterUtils.isWithinBounds(row[f.get("dateField")], f.get("startDate"), f.get("endDate")) &&
+				FilterUtils.restrictTo(row, f.get("restrictions"))
 			);
 		});
 
-		itemLength = filtered.length;
+		itemLength = filtered.size;
 		return filtered.slice(start, end);
 	},
 	getFilters() {
@@ -55,68 +59,61 @@ const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_ALL_ITEMS:
-				items = action.data;
+				items = I.fromJS(action.data);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				items.push(action.data);
+				items = items.push(I.fromJS(action.data));
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
-				items = items.map(item => {
-					if (item.item_id === d.id) {
-						item[d.key] = d.value;
-					}
-					return item;
-				});
+				items = items.map(item =>
+					item.get("item_id") === d.id ?
+						item.set(d.key, d.value) :
+						item
+				);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
-				let itemsMinusOne = [];
-				items.forEach(item => {
-					if (item.item_id === action.data) {
-						return;
-					}
-					itemsMinusOne.push(item);
-				});
-				items = itemsMinusOne;
+				items = items.filterNot(item =>
+					item.get("item_id") === action.data
+				);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.FILTER_BY:
-				filters.filterBy = action.data;
+				filters = filters.set("filterBy", action.data);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SORT_ONE:
-				if (action.data === filters.sortTerm) {
-					filters.isAsc = !filters.isAsc;
-				} else {
-					filters.isAsc = false;
-				}
-				filters.sortTerm = action.data;
+				const asc = action.data === filters.get("sortTerm") ?
+											!filters.get("isAsc") :
+											false;
+				filters = filters.set("isAsc", asc);
+				filters = filters.set("sortTerm", action.data);
+				items = FilterUtils.genericSort(items, filters.get("sortTerm"), filters.get("isAsc"));
 
-				items = FilterUtils.genericSort(items, filters.sortTerm, filters.isAsc);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_START_DATE:
-				filters.startDate = action.data;
+				filters = filters.set("startDate", action.data);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.SET_END_DATE:
-				filters.endDate = action.data;
+				filters = filters.set("endDate", action.data);
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.RESTRICT_TO:
-				if (filters.restrictions.hasOwnProperty(action.data.key)) {
-					filters.restrictions[action.data.key] = action.data;
+				if (filters.hasIn(["restrictions", action.data.key])) {
+					filters = filters.setIn(["restrictions", action.data.key], I.fromJS(action.data));
 				}
 				ItemsStore.emitChange();
 				break;
@@ -124,12 +121,14 @@ const onReceivingAction = action => {
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);
 				const selections = SelectionStore.getSelections();
+				const rIterable = filters.get("restrictions").keySeq();
 
-				Object.keys(filters.restrictions).forEach(r => {
-					if(filters.restrictions[r].options === undefined) {
-						filters.restrictions[r].options = selections[r];
+				rIterable.forEach(r => {
+					if(!filters.hasIn(["restrictions", r, "options"])) {
+						filters = filters.setIn(["restrictions", r, "options"], selections.get(r));
 					}
 				});
+				ItemsStore.emitChange();
 				break;
 
 		default:

@@ -13,7 +13,7 @@ export default function yyyyMMdd(validDate) {
 	let date;
 
 	if (!validDate) {
-		return null;
+		return "";
 	} else if (isyyyyMMdd(validDate)) {
 		date = validDate;
 	} else {
@@ -27,7 +27,7 @@ export function ddMMyyyy(validDate) {
 	let date;
 
 	if (!validDate) {
-		return null;
+		return "";
 	} else if (isyyyyMMdd(validDate)) {
 		date = validDate;
 	} else {
@@ -45,7 +45,7 @@ export function ddMMMyyyy(validDate) {
 	let date;
 
 	if (!validDate) {
-		return null;
+		return "";
 	} else if (isyyyyMMdd(validDate)) {
 		date = validDate.slice(0, 10);
 	} else {

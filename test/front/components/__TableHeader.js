@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
@@ -14,10 +15,10 @@ describe("TableHeader", () => {
 		{ key: "one",   display: "something", className: "pretty" },
 		{ key: "thing", display: "else",      className: "classy" }
 	];
-	const filters = {
+	const filters = I.Map({
 		sortTerm: "one",
 		isAsc: false
-	};
+	});
 
 	let columns;
 
