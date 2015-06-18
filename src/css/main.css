@@ -464,6 +464,10 @@ select[multiple] {
 	display: none;
 }
 
+.date-selector-input.clearable::-webkit-clear-button {
+	display: block;
+}
+
 /* Specific job details */
 .job-details {
 	display: flex;

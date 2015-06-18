@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from "react";
 import Pager from "react-pager";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
+import DateSelector from "./DateSelector";
 import Preset from "./Preset";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
@@ -42,14 +43,12 @@ export default class Filter extends Component {
 						placeholder="Filter all by..."
 					/>
 					<div className="table-manip-row">
-						<FilterInput type="date" value={yyyyMMdd(this.props.filters.startDate)}
-							setFilter={this.props.setStartDate} className={dateFilterClassName}
-							placeholder="Start Date"
-						/>
-						<FilterInput type="date" value={yyyyMMdd(this.props.filters.endDate)}
-							setFilter={this.props.setEndDate} className={dateFilterClassName}
-							placeholder="End Date"
-						/>
+						<DateSelector value={this.props.filters.startDate}
+							onChange={this.props.setStartDate} className={dateFilterClassName}
+							inputClass={"clearable"} />
+						<DateSelector value={this.props.filters.endDate}
+							onChange={this.props.setEndDate} className={dateFilterClassName}
+							inputClass={"clearable"} />
 					</div>
 					<Pager total={this.props.totalPages} current={this.props.currentPage}
 							visiblePages={5} onPageChanged={this.props.changePage}/>
