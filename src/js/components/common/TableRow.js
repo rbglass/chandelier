@@ -14,6 +14,10 @@ export default class TableRow extends Component {
 		return nextProps.cells !== this.props.cells;
 	}
 
+	handleNumFocus(e) {
+		e.target.select();
+	}
+
 	handleBlur(e) {
 		const currentRowNode = React.findDOMNode(this.refs.row);
 		const destinationNode = e.relatedTarget && e.relatedTarget.parentElement.parentElement;
@@ -40,7 +44,7 @@ export default class TableRow extends Component {
 						break;
 
 				case "number":
-						input = <input type="number" min={0} value={cellValue} />;
+						input = <input type="number" min={0} value={cellValue} onClick={this.handleNumFocus.bind(this)}/>;
 						break;
 
 				case "text":

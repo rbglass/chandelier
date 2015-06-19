@@ -60,7 +60,7 @@ class SingleJobPage extends Component {
 						/>
 					</div>
 					<button className="add-button"
-							onClick={SharedActionCreators.createItem.bind(this, this.props.details.job_id, {})}>
+							onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
 						+
 					</button>
 				</div>

@@ -300,9 +300,7 @@ var handler = {
 					if (errInsert) {
 						console.log("err: ", errInsert);
 					} else if (info.rowCount === 1) {
-						console.log(entry);
 						joinedItem = objectAssign(entry, info.rows[0]);
-						console.log(joinedItem);
 						reply(joinedItem);
 					} else {
 						reply(errInsert);

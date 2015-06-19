@@ -31,7 +31,7 @@ const onReceivingAction = action => {
 				let typesOfProduct = Object.keys(action.data);
 				selections = selections.set("product", I.List());
 
-				// Better functionally done with a reduce & 'withMutable()' perf optimisations
+				// Better functionally done with a reduce & 'withMutable()' perf optimisations?
 				typesOfProduct.forEach(productType => {
 					let batch = action.data[productType];
 					let flopped = flop(batch.products, "name");

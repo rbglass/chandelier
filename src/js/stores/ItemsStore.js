@@ -69,7 +69,6 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				console.log(action.data);
 				items = items.unshift(I.fromJS(action.data));
 				ItemsStore.emitChange();
 				break;
@@ -100,7 +99,6 @@ const onReceivingAction = action => {
 				const asc = action.data === filters.get("sortTerm") ?
 											!filters.get("isAsc") :
 											false;
-				// items = FilterUtils.genericSort(items, filters.get("sortTerm"), filters.get("isAsc"));
 
 				filters = filters.set("isAsc", asc);
 				filters = filters.set("sortTerm", action.data);
