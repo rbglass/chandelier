@@ -25,7 +25,7 @@ var MARGIN = 28,
 		BETWEEN_DETAILS_AND_ITEMS = 108,
 		BETWEEN_IMAGE_AND_ADDRESS = 40,
 		BETWEEN_QTY_AND_DESCRIPTION = 28,
-		SAFETY_GAP = 72,
+		SAFETY_GAP = 36,
 
 		TITLE_LINE = 50 + MARGIN,
 		DETAILS_LINE = TITLE_LINE + BETWEEN_TITLE_AND_DETAILS,
@@ -57,7 +57,7 @@ function formatDate(date) {
 	var formattedDate = date.getDate() + " " + dates[date.getMonth()] + " " + date.getFullYear();
 	return formattedDate;
 }
-
+// TODO: revisit this (along with the whole module...)
 function lineCounter(el, wordsPerLine) {
 
 	if (typeof el !== "string") {
@@ -77,6 +77,22 @@ function lineCounter(el, wordsPerLine) {
 	return len;
 }
 
+function isSufficientSpace(obj, position) {
+	var heightOfArticle, articleEndPosition, dangerZoneStartsAt;
+	var lineCount = 0;
+
+	for(var prop in obj) {
+		if (obj.hasOwnProperty(prop) && obj[prop] && fieldsWeCareAbout[prop]) {
+			lineCount += lineCounter(obj[prop], WORDS_PER_LINE);
+		}
+	}
+	heightOfArticle = lineCount * (INPUT_FONT_SIZE + 2);
+	articleEndPosition = position + heightOfArticle;
+	dangerZoneStartsAt = FOOTER_LINE - SAFETY_GAP;
+
+	return articleEndPosition < dangerZoneStartsAt;
+}
+
 function writeFooter(doc, num) {
 	doc.fontSize(FOOTER_FONT_SIZE)
 			.font("Helvetica")
@@ -85,7 +101,16 @@ function writeFooter(doc, num) {
 			.text("+44 (0) 1992 677 292 - info@rothschildbickers.com - www.rothschildbickers.com - UK Company No.8413128")
 			.moveDown()
 			.text("Page " + num, {align: "center"});
+}
 
+function writeAllFooters(doc) {
+	var range = doc.bufferedPageRange();
+	var currentPage = range.start;
+
+	for (currentPage; currentPage < range.count; currentPage += 1) {
+		doc.switchToPage(currentPage);
+		writeFooter(doc, currentPage + 1);
+	}
 }
 
 function writeAddress(doc) {
@@ -100,7 +125,6 @@ function writeAddress(doc) {
 
 function writeDeliveryDetails(doc, address) {
 	var HORIZ_CENTER = Math.floor(RIGHT_EDGE / 2) - 50;
-	console.log(JSON.stringify(address));
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 			.font("Bold")
 			.text("Delivery Details:", HORIZ_CENTER, DETAILS_LINE, labelConfig)
@@ -153,7 +177,8 @@ function writeDetails(doc, job) {
 function writeDoc(job, cb) {
 	var doc = new PDFDocument({
 		size: "A4",
-		margin: MARGIN
+		margin: MARGIN,
+		bufferPages: true
 	});
 
 	doc.registerFont("Bold", "public/fonts/Helvetica-Bold.ttf");
@@ -170,55 +195,44 @@ function writeDoc(job, cb) {
 	var detailsLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
 	var detailsHeight = detailsLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
 	var beginItemHeaders = Math.max(detailsHeight, ITEM_HEADER_LINE);
-	var beginItemBody = beginItemHeaders + (ITEM_HEADER_FONT_SIZE * 2.5);
-	console.log(beginItemHeaders, detailsHeight, beginItemBody);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
-			.text("Qty", MARGIN + 14, beginItemHeaders)
-			.text("Description", MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, beginItemHeaders)
+			.text("Qty", MARGIN + 4, null, {continued: true})
+			.text("Description", MARGIN + BETWEEN_QTY_AND_DESCRIPTION - 6)
 			.text(" ", MARGIN)
-			// .fontSize(13)
 			.moveDown(0.5);
 
-	var yPos = beginItemBody;
-	var p = 1;
-
-	writeFooter(doc, p);
+	var yPos = doc.y;
 
 	job.items.forEach(function(item, i) {
-		var lineCount;
+		var lineCount, currentY;
+		var itWont = !isSufficientSpace(item, doc.y);
 
-		if(yPos > (FOOTER_LINE - SAFETY_GAP)) {
-				p++;
-				yPos = MARGIN;
-				doc.addPage();
-				writeFooter(doc, p);
+		if (itWont) {
+			doc.addPage();
 		}
+
+		doc.moveTo(MARGIN, doc.y - INPUT_FONT_SIZE)
+				.lineTo(RIGHT_EDGE - MARGIN, doc.y - INPUT_FONT_SIZE)
+				.stroke("grey");
+
+		currentY = doc.y;
 
 		doc.fontSize(INPUT_FONT_SIZE)
 				.font("Helvetica")
-				.text(item.qty_req, MARGIN + 14, yPos)
-				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, yPos)
+				.text(item.qty_req, MARGIN + 14, currentY)
+				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, currentY)
 				.text(item.description && "- Description: " + item.description || "")
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")
 				.text(item.flex && "- Flex: " + item.flex || "")
-				.text(item.bulb && "- Bulb: " + item.bulb || "");
+				.text(item.bulb && "- Bulb: " + item.bulb || "")
+				.moveDown(1.5);
 
-		doc.moveTo(MARGIN, yPos - INPUT_FONT_SIZE)
-				.lineTo(RIGHT_EDGE - MARGIN, yPos - INPUT_FONT_SIZE)
-				.stroke("grey");
 
-		yPos += INPUT_FONT_SIZE + 2;
-
-		for(var prop in item) {
-			if (item.hasOwnProperty(prop) && item[prop] && fieldsWeCareAbout[prop]) {
-				lineCount = lineCounter(item[prop], WORDS_PER_LINE);
-				yPos += (lineCount * (INPUT_FONT_SIZE + 2));
-			}
-		}
 	});
+	writeAllFooters(doc);
 	doc.end();
 	cb(doc);
 }
