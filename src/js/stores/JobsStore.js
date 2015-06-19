@@ -37,11 +37,18 @@ var jobs = I.List(),
 const JobsStore = createStore({
 	getFilteredJobs(start, end) {
 		let f = filters;
+		let filterBy = f.get("filterBy");
+		let dateField = f.get("dateField");
+		let startDate = f.get("startDate");
+		let endDate = f.get("endDate");
+		let restrictions = f.get("restrictions");
+
 		const filtered = jobs.filter(row => {
+			const details = row.get("details");
 			return (
-				FilterUtils.contains(row.get("details"), f.get("filterBy")) &&
-				FilterUtils.isWithinBounds(row.getIn(["details", f.get("dateField")]), f.get("startDate"), f.get("endDate")) &&
-				FilterUtils.restrictTo(row.get("details"), f.get("restrictions"))
+				FilterUtils.satisfies(details, restrictions) &&
+				FilterUtils.isWithinBounds(details.get(dateField), startDate, endDate) &&
+				FilterUtils.contains(details, filterBy)
 			);
 		});
 

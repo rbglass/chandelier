@@ -19,11 +19,11 @@ describe("isyyyyMMdd", () => {
 });
 
 describe("yyyyMMdd", () => {
-	it("#returns null if a falsy argument is passed", () => {
-		assert.equal(yyyyMMdd(""), null);
-		assert.equal(yyyyMMdd(false), null);
-		assert.equal(yyyyMMdd(null), null);
-		assert.equal(yyyyMMdd(), null);
+	it("#returns empty string if a falsy argument is passed", () => {
+		assert.equal(yyyyMMdd(""), "");
+		assert.equal(yyyyMMdd(false), "");
+		assert.equal(yyyyMMdd(null), "");
+		assert.equal(yyyyMMdd(), "");
 	});
 
 	it("#returns only the YYYY-MM-DD portion of YYYY-MM-DDa435-esque strings", () => {
@@ -41,11 +41,11 @@ describe("yyyyMMdd", () => {
 });
 
 describe("ddMMyyyy", () => {
-	it("#returns null if a falsy argument is passed", () => {
-		assert.equal(ddMMyyyy(""), null);
-		assert.equal(ddMMyyyy(false), null);
-		assert.equal(ddMMyyyy(null), null);
-		assert.equal(ddMMyyyy(), null);
+	it("#returns empty string if a falsy argument is passed", () => {
+		assert.equal(ddMMyyyy(""), "");
+		assert.equal(ddMMyyyy(false), "");
+		assert.equal(ddMMyyyy(null), "");
+		assert.equal(ddMMyyyy(), "");
 	});
 
 	it("#returns only the YYYY-MM-DD portion of YYYY-MM-DDa435-esque strings, in dd/MM/yyyy format", () => {
@@ -63,11 +63,11 @@ describe("ddMMyyyy", () => {
 });
 
 describe("ddMMMyyyy", () => {
-	it("#returns null if a falsy argument is passed", () => {
-		assert.equal(ddMMMyyyy(""), null);
-		assert.equal(ddMMMyyyy(false), null);
-		assert.equal(ddMMMyyyy(null), null);
-		assert.equal(ddMMMyyyy(), null);
+	it("#returns empty string if a falsy argument is passed", () => {
+		assert.equal(ddMMMyyyy(""), "");
+		assert.equal(ddMMMyyyy(false), "");
+		assert.equal(ddMMMyyyy(null), "");
+		assert.equal(ddMMMyyyy(), "");
 	});
 
 	it("#returns only the YYYY-MM-DD portion of YYYY-MM-DDa435-esque strings, in dd MMM yyyy format", () => {

@@ -65,13 +65,13 @@ export function isWithinBounds(field, lower, upper) {
 	}
 }
 
-export function restrictTo(obj, restrictionObj) {
-	const restrictBy = restrictionObj.keySeq();
+export function satisfies(map, restrictionMap) {
+	const restrictBy = restrictionMap.keySeq();
 	return restrictBy.every(field => {
-		const hasOptionsForField = restrictionObj.hasIn([field, "options"]);
+		const hasOptionsForField = restrictionMap.hasIn([field, "options"]);
 		return (
 			(!hasOptionsForField ||
-			restrictionObj.getIn([field, "options"]).includes(obj.get(field)))
+			restrictionMap.getIn([field, "options"]).includes(map.get(field)))
 		);
 	});
 }

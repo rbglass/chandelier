@@ -64,8 +64,9 @@ describe("Filter", () => {
 
 	it("#renders a MultiSelect for each element in filters.restrictions", () => {
 		const kids = columns[1].props.children;
+
 		assert.equal(
-			kids.filter(el => el.type === MultiSelect).size,
+			kids.filter(el => el.type === MultiSelect).length,
 			filters.get("restrictions").size
 		);
 	});

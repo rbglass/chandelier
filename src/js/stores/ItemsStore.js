@@ -34,12 +34,17 @@ var	items = I.List(),
 const ItemsStore = createStore({
 	getFilteredItems(start, end) {
 		let f = filters;
+		let filterBy = f.get("filterBy");
+		let dateField = f.get("dateField");
+		let startDate = f.get("startDate");
+		let endDate = f.get("endDate");
+		let restrictions = f.get("restrictions");
 
 		const filtered = items.filter(row => {
 			return (
-				FilterUtils.contains(row, f.get("filterBy")) &&
-				FilterUtils.isWithinBounds(row[f.get("dateField")], f.get("startDate"), f.get("endDate")) &&
-				FilterUtils.restrictTo(row, f.get("restrictions"))
+				FilterUtils.satisfies(row, restrictions) &&
+				FilterUtils.isWithinBounds(row.get(dateField), startDate, endDate) &&
+				FilterUtils.contains(row, filterBy)
 			);
 		});
 
