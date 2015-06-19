@@ -311,6 +311,20 @@ select[multiple] {
 	visibility: hidden;
 }
 
+.table-header .table-row-item .other-content {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 0.7rem;
+  background-color: rgba(253, 253, 253, 0.31);
+  border-radius: 0px 2px 0px 0px;
+  line-height: 10px;
+  padding: 2px;
+  color: rgba(255, 255, 255, 0.74);
+
+}
+
 /* Row */
 .table-row {
 	width: 100%;

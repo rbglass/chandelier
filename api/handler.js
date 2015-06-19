@@ -24,6 +24,10 @@ var handler = {
 
 	getJobsTable : function(request, reply) {
 
+		var sortBy = request.query.field || "shipping_date";
+		var sortDir = request.query.asc === "true" ? "ASC" : "DESC";
+		var sortString = sortBy + " " + sortDir;
+
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
 				done();
@@ -31,7 +35,9 @@ var handler = {
 				return reply().code(400);
 			}
 
-			var query = client.query("SELECT * FROM jobs ORDER BY shipping_date DESC NULLS LAST", function(jobErr, info) {
+			var queryString = "SELECT * FROM jobs ORDER BY " + sortString + " NULLS LAST";
+
+			var query = client.query(queryString, function(jobErr, info) {
 				done();
 				if (jobErr) {
 					return reply(jobErr).code(400);
@@ -211,8 +217,6 @@ var handler = {
 		var sortBy = request.query.field || "shipping_date";
 		var sortDir = request.query.asc === "true" ? "ASC" : "DESC";
 		var sortString = sortBy + " " + sortDir;
-
-		console.log(sortString);
 
 		pg.connect(conString, function(err, client, done) {
 

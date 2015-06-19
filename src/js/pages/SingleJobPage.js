@@ -94,17 +94,17 @@ export default connectToStores([SingleJobStore, SelectionStore, AlertStore, Moda
 
 SingleJobPage.defaultProps = {
 	tableScheme: [
-		{ key: "-", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
-		{ key: "product",     display: "Product",      className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "description", display: "Description",  className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
-		{ key: "glass",       display: "Glass",        className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "metal",       display: "Metal",        className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "flex",        display: "Flex",         className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "bulb",        display: "Bulb",         className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "qty_req",     display: "Qty",          className: "qty-sm", line2: "Req",    type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
-		{ key: "qty_hot",     display: "Qty",          className: "qty-sm", line2: "Hot",    type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
-		{ key: "qty_cold",    display: "Qty",          className: "qty-sm", line2: "Cold",   type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
-		{ key: "qty_assem",   display: "Qty",          className: "qty-sm", line2: "Assem",  type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
+		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
+		{ key: "product",     display: "Product",             otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "description", display: "Description",         otherContent: "pdf", className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
+		{ key: "glass",       display: "Glass",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "metal",       display: "Metal",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "flex",        display: "Flex",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "bulb",        display: "Bulb",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "qty_req",     display: "Qty", line2: "Req", otherContent: "pdf",   className: "qty-sm",   type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
+		{ key: "qty_hot",     display: "Qty", line2: "Hot", className: "qty-sm",   type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
+		{ key: "qty_cold",    display: "Qty", line2: "Cold",                       className: "qty-sm",  type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
+		{ key: "qty_assem",   display: "Qty", line2: "Assem",                      className: "qty-sm", type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
 		{ key: "notes",       display: "Notes",        className: "u-flex-grow3",            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "+", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right" }
 	],

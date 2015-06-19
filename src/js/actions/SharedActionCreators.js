@@ -48,6 +48,9 @@ export function changeDetails(updateObj) {
 	});
 }
 
+// Q: a sort action for each domain,
+//    or data as an object with a 'source'
+//    property, on which the store pivots?
 export function sortBy(field) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.SORT_ONE,
@@ -55,10 +58,28 @@ export function sortBy(field) {
 	});
 }
 
+export function sortJobsBy(field) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SORT_JOBS,
+		data: field
+	});
+}
+
+export function sortItemsBy(field) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SORT_ITEMS,
+		data: field
+	});
+}
+
 export function externalSortBy(jobsOrItems, field, currentlyIsAsc) {
 	let thenWeWantAsc;
 
-	sortBy(field);
+	if (jobsOrItems === "jobs") {
+		sortJobsBy(field);
+	} else {
+		sortItemsBy(field);
+	}
 
 	if (currentlyIsAsc === true) {
 		thenWeWantAsc = false;

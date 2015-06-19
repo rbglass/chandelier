@@ -55,7 +55,7 @@ class JobsPage extends Component {
 								items={items} primaryKey={"job_id"}
 								tableScheme={this.props.tableScheme}
 								onBlur={SharedActionCreators.saveDetails}
-								sortFunc={SharedActionCreators.sortBy}
+								sortFunc={SharedActionCreators.externalSortBy.bind(null, "jobs")}
 						/>
 					</div>
 					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>

@@ -96,7 +96,7 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.SORT_ONE:
+		case ActionTypes.SORT_ITEMS:
 				const asc = action.data === filters.get("sortTerm") ?
 											!filters.get("isAsc") :
 											false;
