@@ -138,13 +138,13 @@ describe("JobsStore", () => {
 		assert.equal(JobsStore.getFilters().get("filterBy"), filterTerm);
 	});
 
-	it("#updates the sortTerm filter upon a SORT_ONE action, flipping isAsc if same, & sorts the List", () => {
+	it("#updates the sortTerm filter upon a SORT_JOBS action, flipping isAsc if same, & sorts the List", () => {
 		const sortTerm = "client";
 		const sortTerm2 = "shipping_date";
 		let filters;
 
 		onReceivingAction({
-			type: "SORT_ONE",
+			type: "SORT_JOBS",
 			data: sortTerm
 		});
 
@@ -152,12 +152,9 @@ describe("JobsStore", () => {
 
 		sameVal(filtersWeGotBack.get("sortTerm"), sortTerm);
 		sameVal(filtersWeGotBack.get("isAsc"), false);
-		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.slice(0).sort((a, b) =>
-			b.details[sortTerm].localeCompare(a.details[sortTerm])
-		).filter(e => ["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1)));
 
 		onReceivingAction({
-			type: "SORT_ONE",
+			type: "SORT_JOBS",
 			data: sortTerm
 		});
 
@@ -165,12 +162,10 @@ describe("JobsStore", () => {
 
 		sameVal(moreFiltersWeGotBack.get("sortTerm"), sortTerm);
 		sameVal(moreFiltersWeGotBack.get("isAsc"), true);
-		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.slice(0).sort((a, b) =>
-			a.details[sortTerm].localeCompare(b.details[sortTerm])
-		).filter(e => ["Confirmed", "Packaged"].indexOf(e.details.job_status) !== -1)));
+
 
 		onReceivingAction({
-			type: "SORT_ONE",
+			type: "SORT_JOBS",
 			data: sortTerm2
 		});
 
@@ -178,9 +173,6 @@ describe("JobsStore", () => {
 
 		sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
 		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
-		// sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.sort((a, b) =>
-		// 	b.details[sortTerm] - a.details[sortTerm]
-		// )));
 	});
 
 	it("#updates the startDate filter upon a SET_START_DATE action", () => {

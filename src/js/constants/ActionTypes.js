@@ -31,6 +31,9 @@ export default keyMirror({
 
 	// LOCAL IMMUTABLE -> LOCAL IMMUTABLE
 	"SORT_ONE": null,
+	"SORT_JOBS": null,
+	"SORT_ITEMS": null,
+
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,
 	"FILTER_BY": null,

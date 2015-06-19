@@ -9,17 +9,23 @@ export default class TableHeader extends Component {
 
 	render() {
 		const headerSet = this.props.headers.map((e, i) => {
-			var sortDirection = "";
+			let directionClass = "";
+			let currentlySortedAsc;
+			let otherLines = e.line2 || "";
+			let otherContent = e.otherContent || "";
 
 			if (this.props.filters.get("sortTerm") === e.key) {
-				sortDirection += this.props.filters.get("isAsc") ? "asc" : "desc";
+				currentlySortedAsc = this.props.filters.get("isAsc");
+				directionClass +=  currentlySortedAsc ? "asc" : "desc";
 			}
 
-			var divClass = `table-row-item ${e.className} ${sortDirection}`;
+
+			var divClass = `table-row-item ${e.className} ${directionClass}`;
 			return (
 				<div key={i} className={divClass}
-					onClick={this.props.sortFunc ? this.props.sortFunc.bind(null, e.key) : null}>
-				{ e.line2 ? <span>{e.display}<br/>{e.line2}</span> : e.display }
+					onClick={this.props.sortFunc ? this.props.sortFunc.bind(null, e.key, currentlySortedAsc) : null}>
+					<span className="display"> {e.display} <br/>{otherLines}</span>
+					{ otherContent ? <span className="other-content">{otherContent}</span> : <span /> }
 				</div>
 			);
 		});

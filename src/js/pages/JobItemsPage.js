@@ -67,7 +67,7 @@ class JobItemsPage extends Component {
 							items={this.props.items} primaryKey={"item_id"}
 							tableScheme={this.props.tableScheme}
 							onBlur={SharedActionCreators.saveItem}
-							sortFunc={SharedActionCreators.sortBy}
+							sortFunc={SharedActionCreators.externalSortBy.bind(null, "items")}
 						/>
 					</div>
 				</div>
@@ -109,23 +109,56 @@ export default connectToStores([
 // Code too wide
 JobItemsPage.defaultProps = {
 	tableScheme: [
-		{ key: "-",             display: "",                               className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
-		{ key: "job_id",        display: "Job #",                          className: "qty-sm link",   type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
-		{ key: "client",        display: "Client",                         className: "",              type: "" },
-		{ key: "product",       display: "Product",                        className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "description",   display: "Description",                    className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem },
-		{ key: "job_status",    display: "Job Status",                     className: "",              type: ""},
-		{ key: "shipping_date", display: "Shipping Date",                  className: "",              type: "",         formattingFunc: ddMMMyyyy  },
-		{ key: "glass",         display: "Glass",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
-		{ key: "metal",         display: "Metal",                          className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
-		{ key: "flex",          display: "Flex",                           className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
-		{ key: "bulb",          display: "Bulb",                           className: "u-flex-grow2",  type: "select",   onChange: SharedActionCreators.changeItem                },
-		{ key: "qty_req",       display: "Qty",            line2: "Req",   className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
-		{ key: "qty_hot",       display: "Qty",            line2: "Hot",   className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
-		{ key: "qty_cold",      display: "Qty",            line2: "Cold",  className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
-		{ key: "qty_assem",     display: "Qty",            line2: "Assem", className: "qty-sm",        type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
-		{ key: "notes",         display: "Notes",                          className: "u-flex-grow2",  type: "textarea", onChange: SharedActionCreators.changeItem   },
-		{ key: "+", 	          display: "",                               className: "fixed-col hid", type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right"}
+		{ key: "-",             display: "", className: "fixed-col hid",
+					type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
+
+		{ key: "job_id",        display: "Job #", otherContent: "pdf", className: "qty-sm link",
+					type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
+
+		{ key: "client",        display: "Client", otherContent: "pdf", className: "",
+					type: "" },
+
+		{ key: "product",       display: "Product", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem },
+
+		{ key: "description",   display: "Description", otherContent: "pdf", className: "u-flex-grow2",
+					type: "textarea", onChange: SharedActionCreators.changeItem },
+
+		{ key: "job_status",    display: "Job Status", otherContent: "pdf", className: "",
+					type: ""},
+
+		{ key: "shipping_date", display: "Shipping Date", otherContent: "pdf", className: "",
+					type: "",         formattingFunc: ddMMMyyyy  },
+
+		{ key: "glass",         display: "Glass", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "metal",         display: "Metal", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "flex",          display: "Flex", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "bulb",          display: "Bulb", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "qty_req",       display: "Qty", line2: "Req", otherContent: "pdf", className: "qty-sm",
+					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+
+		{ key: "qty_hot",       display: "Qty", line2: "Hot", className: "qty-sm",
+					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+
+		{ key: "qty_cold",      display: "Qty", line2: "Cold",  className: "qty-sm",
+					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+
+		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm",
+					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+
+		{ key: "notes",         display: "Notes", className: "u-flex-grow2",
+					type: "textarea", onChange: SharedActionCreators.changeItem   },
+
+		{ key: "+", 	          display: "", className: "fixed-col hid",
+					type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right"}
 	],
 	presetScheme: [
 		{

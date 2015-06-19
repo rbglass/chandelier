@@ -8,7 +8,7 @@ import SelectionStore from "./SelectionStore";
 
 const defaultFilters = I.fromJS({
 	sortTerm: "shipping_date",
-	isAsc: true,
+	isAsc: false,
 	filterBy: "",
 	dateField: "shipping_date",
 	startDate: "",
@@ -98,13 +98,13 @@ const onReceivingAction = action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.SORT_ONE:
+		case ActionTypes.SORT_JOBS:
 				const asc = action.data === filters.get("sortTerm") ?
 											!filters.get("isAsc") :
 											false;
 				filters = filters.set("isAsc", asc);
 				filters = filters.set("sortTerm", action.data);
-				jobs = FilterUtils.genericSort(jobs, filters.get("sortTerm"), filters.get("isAsc"), "details");
+				// jobs = FilterUtils.genericSort(jobs, filters.get("sortTerm"), filters.get("isAsc"), "details");
 
 				JobsStore.emitChange();
 				break;
