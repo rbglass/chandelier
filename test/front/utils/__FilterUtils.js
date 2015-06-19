@@ -1,6 +1,8 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import rewire from "rewire";
+import { sameVal } from "../setup/utils";
 
 const FilterUtils = rewire("../../../src/js/utils/FilterUtils");
 
@@ -31,24 +33,24 @@ describe("strIncludes", () => {
 
 describe("contains", () => {
 	const contains = FilterUtils.contains;
-	let testObj = {
+	let testObj = I.Map({
 			name: "james",
 			age: 22,
 			job: "dev",
 			cool: true,
 			thoughts: null
-		};
+		});
 
 	it("#takes 2 arguments", () => {
 		assert.equal(contains.length, 2);
 	});
 
 	it("#returns true if no term/empty string is passed", () => {
-		assert(contains({}));
-		assert(contains({}, ""));
+		assert(contains(I.Map({})));
+		assert(contains(I.Map({}), ""));
 	});
 
-	it("#checks if some value of an obj matches the term", () => {
+	it("#checks if some value of a Map matches the term", () => {
 		assert(contains(testObj, "james"));
 		assert.equal(contains(testObj, "hello"), false);
 	});
@@ -69,8 +71,8 @@ describe("contains", () => {
 		};
 		const n = [1, 2, 3];
 
-		testObj.greet = o;
-		testObj.count = n;
+		testObj = testObj.set("greet", o);
+		testObj = testObj.set("count", n);
 
 		assert.equal(contains(testObj, o), false);
 		assert.equal(contains(testObj, n), false);
@@ -79,35 +81,35 @@ describe("contains", () => {
 
 describe("genericSort", () => {
 	const genericSort = FilterUtils.genericSort;
-	const arrToSort = [
+	const arrToSort = I.fromJS([
 		{ name: "Neats29", age: 3, DOB: "2012-06-08", hobbies: { name: "command line" }, cool: false },
 		{ name: "mij",     age: 1, DOB: "2014-06-08", hobbies: { name: "scribble" },     cool: true  },
 		{ name: "Roz",     age: 2, DOB: "2013-06-08", hobbies: { name: "fishing" },      cool: false }
-	];
+	]);
 
-	const byName = [
+	const byName = I.fromJS([
 		{ name: "Roz",     age: 2, DOB: "2013-06-08", hobbies: { name: "fishing" },      cool: false },
 		{ name: "Neats29", age: 3, DOB: "2012-06-08", hobbies: { name: "command line" }, cool: false },
 		{ name: "mij",     age: 1, DOB: "2014-06-08", hobbies: { name: "scribble" },     cool: true  }
-	];
+	]);
 
-	const byAge = [
+	const byAge = I.fromJS([
 		{ name: "Neats29", age: 3, DOB: "2012-06-08", hobbies: { name: "command line" }, cool: false },
 		{ name: "Roz",     age: 2, DOB: "2013-06-08", hobbies: { name: "fishing" },      cool: false },
 		{ name: "mij",     age: 1, DOB: "2014-06-08", hobbies: { name: "scribble" },     cool: true  }
-	];
+	]);
 
-	const byDOB = [
+	const byDOB = I.fromJS([
 		{ name: "mij",     age: 1, DOB: "2014-06-08", hobbies: { name: "scribble" },     cool: true  },
 		{ name: "Roz",     age: 2, DOB: "2013-06-08", hobbies: { name: "fishing" },      cool: false },
 		{ name: "Neats29", age: 3, DOB: "2012-06-08", hobbies: { name: "command line" }, cool: false }
-	];
+	]);
 
-	const byBool = [
+	const byBool = I.fromJS([
 		{ name: "mij",     age: 1, DOB: "2014-06-08", hobbies: { name: "scribble" },     cool: true  },
 		{ name: "Neats29", age: 3, DOB: "2012-06-08", hobbies: { name: "command line" }, cool: false },
 		{ name: "Roz",     age: 2, DOB: "2013-06-08", hobbies: { name: "fishing" },      cool: false }
-	];
+	]);
 
 	const byHobbies = byAge;
 
@@ -116,38 +118,31 @@ describe("genericSort", () => {
 	});
 
 	it("#sorts an array of objects (descending) by some term", () => {
-		assert.notDeepEqual(genericSort(arrToSort, "name"), arrToSort);
+		assert(!I.is(genericSort(arrToSort, "name"), arrToSort));
 	});
 
 	it("#works for strings, caring not for case", () => {
-		assert.deepEqual(genericSort(arrToSort, "name"), byName);
+		sameVal(genericSort(arrToSort, "name"), byName);
 	});
 
 	it("#works for numbers", () => {
-		assert.deepEqual(genericSort(arrToSort, "age"), byAge);
+		sameVal(genericSort(arrToSort, "age"), byAge);
 	});
 
 	it("#works for YYYY-MM-DD dates", () => {
-		assert.deepEqual(genericSort(arrToSort, "DOB"), byDOB);
+		sameVal(genericSort(arrToSort, "DOB"), byDOB);
 	});
 
 	it("#works for bools", () => {
-		assert.deepEqual(genericSort(arrToSort, "cool"), byBool);
-	});
-
-	it("#doesn't mutate the original array", () => {
-		assert.deepEqual((() => {
-			genericSort(arrToSort, "name");
-			return arrToSort;
-		}()), arrToSort);
+		sameVal(genericSort(arrToSort, "cool"), byBool);
 	});
 
 	it("#takes an optional ascending arg", () => {
-		assert.deepEqual(genericSort(arrToSort, "age", true), byAge.slice(0).reverse());
+		sameVal(genericSort(arrToSort, "age", true), byAge.reverse());
 	});
 
 	it("#takes an optional single-level path to sort prop", () => {
-		assert.deepEqual(genericSort(arrToSort, "name", true, "hobbies"), byHobbies);
+		sameVal(genericSort(arrToSort, "name", true, "hobbies"), byHobbies);
 	});
 });
 
@@ -182,62 +177,63 @@ describe("isWithinBounds", () => {
 	});
 });
 
-describe("restrictTo", () => {
-	const restrictTo = FilterUtils.restrictTo;
-	let o = {
+describe("satisfies", () => {
+	const satisfies = FilterUtils.satisfies;
+	let o = I.fromJS({
 		name: "james"
-	};
+	});
 
-	let ro = {
+	let ro = I.fromJS({
 		name: {
 			options: ["james", "robert", "tim"]
 		},
 		age: {
 			options: [1]
 		}
-	};
+	});
 
 	it("#takes 2 arguments", () => {
-		assert.equal(restrictTo.length, 2);
+		assert.equal(satisfies.length, 2);
 	});
 
-	it("#expects the object and restriction object to have the same field names", () => {
+	it("#expects the Map and restriction Map to have the same field names", () => {
 
-		assert.equal(restrictTo(o, ro), false);
+		assert.equal(satisfies(o, ro), false);
 	});
 
-	it("#returns true if the restriction object has no 'options' array/string prop on a field", () => {
-		let willThrow = {
-			name: "hi"
-		};
+	it("#returns true if the restriction Map has no 'options' List prop on a field", () => {
+		let willThrow = I.fromJS({
+			name: {
+				options: true
+			}
+		});
 
 		let willNotThrow = ro;
 
-		willThrow.name = { options: true };
-		assert.throws(() => { restrictTo(o, willThrow); });
+		assert.throws(() => satisfies(o, willThrow));
 
-		willThrow.name = { options: {name: true} };
-		assert.throws(() => { restrictTo(o, willThrow); });
+		let optionsNotAList = willThrow.set("name", I.fromJS({ options: {name: true} }));
+		assert.equal(satisfies(o, optionsNotAList), false);
 
-		assert.doesNotThrow(() => { restrictTo(o, willNotThrow); });
+		assert.doesNotThrow(() => { satisfies(o, willNotThrow); });
 	});
 
 	it("#checks that a set of fields in an obj contain one of a set of restriction primitives", () => {
-		o.age = 1;
-		assert(restrictTo(o, ro));
+		o = o.set("age", 1);
+		assert(satisfies(o, ro));
 
-		o.name = "robert";
-		assert(restrictTo(o, ro));
+		o = o.set("name", "robert");
+		assert(satisfies(o, ro));
 
-		o.age = 2;
-		assert.equal(restrictTo(o, ro), false);
+		o = o.set("age", 2);
+		assert.equal(satisfies(o, ro), false);
 
-		ro.DOB = "2015-01-12";
-		assert.equal(restrictTo(o, ro), false);
+		ro = ro.set("DOB", "2015-01-12");
+		assert.equal(satisfies(o, ro), false);
 	});
 
 	it("#is case sensitive", () => {
-		assert.equal(restrictTo({name: "JAMES"}, ro), false);
+		assert.equal(satisfies(I.Map({name: "JAMES"}), ro), false);
 	});
 
 });

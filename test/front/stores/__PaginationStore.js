@@ -20,6 +20,7 @@ describe("PaginationStore", () => {
 
 
 	it("#getRowsPerPage returns the number of rows per page", () => {
+		PaginationStore.__set__("rowsPerPage", 30);
 		assert.equal(PaginationStore.getRowsPerPage(), 30);
 
 		PaginationStore.__set__("rowsPerPage", 100);

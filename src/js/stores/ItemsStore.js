@@ -34,12 +34,17 @@ var	items = I.List(),
 const ItemsStore = createStore({
 	getFilteredItems(start, end) {
 		let f = filters;
+		let filterBy = f.get("filterBy");
+		let dateField = f.get("dateField");
+		let startDate = f.get("startDate");
+		let endDate = f.get("endDate");
+		let restrictions = f.get("restrictions");
 
 		const filtered = items.filter(row => {
 			return (
-				FilterUtils.contains(row, f.get("filterBy")) &&
-				FilterUtils.isWithinBounds(row[f.get("dateField")], f.get("startDate"), f.get("endDate")) &&
-				FilterUtils.restrictTo(row, f.get("restrictions"))
+				FilterUtils.satisfies(row, restrictions) &&
+				FilterUtils.isWithinBounds(row.get(dateField), startDate, endDate) &&
+				FilterUtils.contains(row, filterBy)
 			);
 		});
 
@@ -64,7 +69,8 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				items = items.push(I.fromJS(action.data));
+				console.log(action.data);
+				items = items.unshift(I.fromJS(action.data));
 				ItemsStore.emitChange();
 				break;
 

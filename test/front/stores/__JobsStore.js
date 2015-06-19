@@ -36,9 +36,13 @@ describe("JobsStore", () => {
 		});
 
 		JobsStore.__set__("filters", filters);
-		sameVal(JobsStore.getFilteredJobs(), I.fromJS(samplejobs.filter(function(e) {
-			return Date.parse(e.details.shipping_date) > Date.parse(filters.startDate);
-		})));
+
+		const jobsWeGotBack = JobsStore.getFilteredJobs();
+		const jobsWeWant = I.fromJS(samplejobs.filter((e) =>
+			Date.parse(e.details.shipping_date) > Date.parse(filters.get("startDate"))
+		));
+
+		sameVal(jobsWeGotBack, jobsWeWant);
 	});
 
 	it("#getFilters returns a Map of filters", () => {
