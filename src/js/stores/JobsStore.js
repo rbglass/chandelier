@@ -8,7 +8,7 @@ import SelectionStore from "./SelectionStore";
 
 const defaultFilters = I.fromJS({
 	sortTerm: "shipping_date",
-	isAsc: true,
+	isAsc: false,
 	filterBy: "",
 	dateField: "shipping_date",
 	startDate: "",

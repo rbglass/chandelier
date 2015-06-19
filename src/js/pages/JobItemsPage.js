@@ -67,7 +67,7 @@ class JobItemsPage extends Component {
 							items={this.props.items} primaryKey={"item_id"}
 							tableScheme={this.props.tableScheme}
 							onBlur={SharedActionCreators.saveItem}
-							sortFunc={SharedActionCreators.sortBy}
+							sortFunc={SharedActionCreators.externalSortBy.bind(null, "items")}
 						/>
 					</div>
 				</div>

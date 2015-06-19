@@ -3,6 +3,7 @@
 var path  = require("path");
 var index = path.join(__dirname, "/../public/index.html");
 var config = require("./config.js");
+var objectAssign = require("object-assign");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
 var formatter = require("./utils/formatter");
@@ -30,7 +31,7 @@ var handler = {
 				return reply().code(400);
 			}
 
-			var query = client.query("SELECT * FROM jobs ORDER BY shipping_date", function(jobErr, info) {
+			var query = client.query("SELECT * FROM jobs ORDER BY shipping_date DESC NULLS LAST", function(jobErr, info) {
 				done();
 				if (jobErr) {
 					return reply(jobErr).code(400);
@@ -207,6 +208,12 @@ var handler = {
 
 	getJobItemsTable : function(request, reply) {
 
+		var sortBy = request.query.field || "shipping_date";
+		var sortDir = request.query.asc === "true" ? "ASC" : "DESC";
+		var sortString = sortBy + " " + sortDir;
+
+		console.log(sortString);
+
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
@@ -217,7 +224,7 @@ var handler = {
 
 			var queryString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, jobs.payment, jobs.client " +
 												"FROM job_items INNER JOIN jobs " +
-												"ON job_items.job_id = jobs.job_id ORDER BY shipping_date";
+												"ON job_items.job_id = jobs.job_id ORDER BY " + sortString + " NULLS LAST";
 
 			var query = client.query(queryString, function(queryErr, info) {
 				done();
@@ -284,11 +291,15 @@ var handler = {
 				"flex, bulb, qty_req, qty_hot, qty_cold, qty_assem, notes, createdat, updatedat) values" +
 				"($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *",
 				item,	function(errInsert, info, res) {
+					var joinedItem;
 					done();
 					if (errInsert) {
 						console.log("err: ", errInsert);
 					} else if (info.rowCount === 1) {
-						reply(info.rows[0]);
+						console.log(entry);
+						joinedItem = objectAssign(entry, info.rows[0]);
+						console.log(joinedItem);
+						reply(joinedItem);
 					} else {
 						reply(errInsert);
 					}
@@ -442,6 +453,7 @@ var handler = {
 			if(saleable) {
 				queryString += " WHERE saleable=true";
 			}
+			queryString += " ORDER BY name ASC";
 
 			client.query(queryString, function(getErr, info) {
 				done();

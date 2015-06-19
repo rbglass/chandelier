@@ -55,6 +55,19 @@ export function sortBy(field) {
 	});
 }
 
+export function externalSortBy(jobsOrItems, field, currentlyIsAsc) {
+	let thenWeWantAsc;
+
+	sortBy(field);
+
+	if (currentlyIsAsc === true) {
+		thenWeWantAsc = false;
+	} else if (currentlyIsAsc === false) {
+		thenWeWantAsc = true;
+	}
+	JobsAPI.getSortedThings(jobsOrItems, field, thenWeWantAsc);
+}
+
 export function setFilter(text) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.FILTER_BY,

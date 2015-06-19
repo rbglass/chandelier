@@ -38,8 +38,7 @@ var fieldsWeCareAbout = {
 	glass: true,
 	metal: true,
 	flex: true,
-	bulb: true,
-	notes: true
+	bulb: true
 };
 
 var labelConfig = {
@@ -184,8 +183,7 @@ function writeDoc(job, cb) {
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")
 				.text(item.flex && "- Flex: " + item.flex || "")
-				.text(item.bulb && "- Bulb: " + item.bulb || "")
-				.text(item.notes && "- " + item.notes || "");
+				.text(item.bulb && "- Bulb: " + item.bulb || "");
 
 		doc.moveTo(MARGIN, yPos - INPUT_FONT_SIZE)
 				.lineTo(RIGHT_EDGE - MARGIN, yPos - INPUT_FONT_SIZE)

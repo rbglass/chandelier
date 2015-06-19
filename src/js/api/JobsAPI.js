@@ -25,6 +25,17 @@ function onReply(successAction, ...etc) {
 	};
 }
 
+export function getSortedThings(endpoint, field, isAsc) {
+	let action = endpoint === "jobs" ?
+									ServerActionCreators.receiveAllJobs :
+									ServerActionCreators.receiveAllItems;
+
+	SharedActionCreators.startLoading();
+	request.get(`${root}/${endpoint}`)
+					.query({field: field, asc: isAsc})
+					.end(onReply(action));
+}
+
 export function getAllJobs() {
 	SharedActionCreators.startLoading();
 	request.get(jobs)
@@ -79,7 +90,6 @@ export function saveItem(itemId, immutUpdateObj) {
 
 export function deleteSingleItem(item) {
 	const itemId = item.get("item_id");
-	console.log(itemId);
 
 	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)

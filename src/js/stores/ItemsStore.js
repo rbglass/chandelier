@@ -9,7 +9,7 @@ import * as FilterUtils from "../utils/FilterUtils";
 
 const defaultFilters = I.fromJS({
 	sortTerm: "shipping_date",
-	isAsc: true,
+	isAsc: false,
 	filterBy: "",
 	dateField: "shipping_date",
 	startDate: "",
@@ -100,10 +100,10 @@ const onReceivingAction = action => {
 				const asc = action.data === filters.get("sortTerm") ?
 											!filters.get("isAsc") :
 											false;
+				// items = FilterUtils.genericSort(items, filters.get("sortTerm"), filters.get("isAsc"));
+
 				filters = filters.set("isAsc", asc);
 				filters = filters.set("sortTerm", action.data);
-				items = FilterUtils.genericSort(items, filters.get("sortTerm"), filters.get("isAsc"));
-
 				ItemsStore.emitChange();
 				break;
 
