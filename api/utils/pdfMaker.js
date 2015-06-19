@@ -19,6 +19,7 @@ var MARGIN = 28,
 
 		LINE_GAP = 1.2,
 		WORDS_PER_LINE = 82,
+		DESCRIPTION_LINE_WRAP = 82,
 		LINES_IN_FOOTER = 6,
 
 		BETWEEN_TITLE_AND_DETAILS = TITLE_FONT_SIZE * 2,
@@ -34,6 +35,7 @@ var MARGIN = 28,
 		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE);
 
 var PDFDocument = require("pdfkit");
+var LineBreaker = require("linebreak");
 
 var fieldsWeCareAbout = {
 	product: true,
@@ -91,6 +93,43 @@ function isSufficientSpace(obj, position) {
 	dangerZoneStartsAt = FOOTER_LINE - SAFETY_GAP;
 
 	return articleEndPosition < dangerZoneStartsAt;
+}
+
+function indentLineBreaker(description, lineLimit) {
+
+	var breaker = new LineBreaker(description);
+	var last = 0;
+	var lastSlice = 0;
+	var bk = breaker.nextBreak();
+	var lines = "";
+	var prep = "\n   ";
+
+	if (description.length < lineLimit) {
+		return prep.concat(description);
+	}
+	while (bk) {
+		if ((bk.position - last) > lineLimit) {
+			lines += prep.concat(description.slice(last, bk.position - 1));
+			last = bk.position;
+			prep = "\n        ";
+		}
+
+		bk = breaker.nextBreak();
+	}
+
+	if(last < description.length) {
+		lines += prep.concat(description.slice(last));
+	}
+	return lines;
+}
+
+function formatDescription(description, lineLimit) {
+		var initialIndented = description.split("\n");
+
+		var properlyWrapped = initialIndented.map(function(oneLine) {
+				return indentLineBreaker(oneLine, lineLimit);
+		});
+    return properlyWrapped.join("");
 }
 
 function writeFooter(doc, num) {
@@ -194,11 +233,11 @@ function writeDoc(job, cb) {
 
 	var detailsLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
 	var detailsHeight = detailsLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
-	var beginItemHeaders = Math.max(detailsHeight, ITEM_HEADER_LINE);
+	var beginItemHeaders = Math.max(doc.y, ITEM_HEADER_LINE);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
-			.text("Qty", MARGIN + 4, null, {continued: true})
+			.text("Qty", MARGIN + 4, beginItemHeaders, {continued: true})
 			.text("Description", MARGIN + BETWEEN_QTY_AND_DESCRIPTION - 6)
 			.text(" ", MARGIN)
 			.moveDown(0.5);
@@ -223,7 +262,8 @@ function writeDoc(job, cb) {
 				.font("Helvetica")
 				.text(item.qty_req, MARGIN + 14, currentY)
 				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, currentY)
-				.text(item.description && "- Description: " + item.description || "")
+				.text(item.description && "- Description: " +
+					formatDescription(item.description, DESCRIPTION_LINE_WRAP) || "")
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")
 				.text(item.flex && "- Flex: " + item.flex || "")

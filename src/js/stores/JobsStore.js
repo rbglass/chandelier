@@ -104,7 +104,6 @@ const onReceivingAction = action => {
 											false;
 				filters = filters.set("isAsc", asc);
 				filters = filters.set("sortTerm", action.data);
-				// jobs = FilterUtils.genericSort(jobs, filters.get("sortTerm"), filters.get("isAsc"), "details");
 
 				JobsStore.emitChange();
 				break;
