@@ -69,7 +69,8 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				items = items.push(I.fromJS(action.data));
+				console.log(action.data);
+				items = items.unshift(I.fromJS(action.data));
 				ItemsStore.emitChange();
 				break;
 
