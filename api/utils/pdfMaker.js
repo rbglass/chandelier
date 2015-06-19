@@ -4,9 +4,10 @@ var MARGIN = 28,
 		RIGHT_EDGE = 595.28,
 		BOTTOM_EDGE = 841.89,
 
-		ADDRESS_WIDTH = 144,
+		ADDRESS_WIDTH = 200,
+		DETAILS_WIDTH = 200,
 		IMAGE_WIDTH = 200,
-		IMAGE_HEIGHT = 50,
+		IMAGE_HEIGHT = 30,
 		LABEL_WORD_SPACING = -2,
 
 		TITLE_FONT_SIZE = 25,
@@ -22,13 +23,15 @@ var MARGIN = 28,
 
 		BETWEEN_TITLE_AND_DETAILS = TITLE_FONT_SIZE * 2,
 		BETWEEN_DETAILS_AND_ITEMS = 108,
+		BETWEEN_IMAGE_AND_ADDRESS = 40,
+		BETWEEN_QTY_AND_DESCRIPTION = 28,
 		SAFETY_GAP = 72,
 
-		TITLE_LINE = IMAGE_HEIGHT + MARGIN,
+		TITLE_LINE = 50 + MARGIN,
 		DETAILS_LINE = TITLE_LINE + BETWEEN_TITLE_AND_DETAILS,
+		ADDRESS_LINE = IMAGE_HEIGHT + BETWEEN_IMAGE_AND_ADDRESS,
 		ITEM_HEADER_LINE = DETAILS_LINE + BETWEEN_DETAILS_AND_ITEMS,
-		ITEMS_LINE = ITEM_HEADER_LINE + (ITEM_HEADER_FONT_SIZE * 3),
-		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE) - 44;
+		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE);
 
 var PDFDocument = require("pdfkit");
 
@@ -55,7 +58,7 @@ function formatDate(date) {
 	return formattedDate;
 }
 
-function lineCounter(el) {
+function lineCounter(el, wordsPerLine) {
 
 	if (typeof el !== "string") {
 		return 1;
@@ -65,7 +68,7 @@ function lineCounter(el) {
 
 	var matches = el.match(lineReg);
 
-	var len = Math.ceil((el.length / WORDS_PER_LINE) || 1);
+	var len = Math.ceil((el.length / wordsPerLine) || 1);
 
 	if(matches) {
     len += matches.length;
@@ -85,21 +88,27 @@ function writeFooter(doc, num) {
 
 }
 
-function writeAddress(doc, address) {
+function writeAddress(doc) {
 	var FROM_EDGE = RIGHT_EDGE - MARGIN - ADDRESS_WIDTH;
 
 	doc.fontSize(ADDRESS_FONT_SIZE)
-		.text("Unit 7 Great Nothern Works", FROM_EDGE, TITLE_LINE)
+		.text("Unit 7 Great Nothern Works", FROM_EDGE, ADDRESS_LINE)
 		.text("Hartham Lane")
 		.text("Hertford, Herts")
-		.text("SG14 1QN")
-		.moveDown(2)
-		.fontSize(DETAIL_HEADER_FONT_SIZE)
-		.font("Bold")
-		.text("Delivery Details:", labelConfig)
-		.fontSize(ADDRESS_FONT_SIZE)
-		.font("Helvetica")
-		.text(address);
+		.text("SG14 1QN");
+}
+
+function writeDeliveryDetails(doc, address) {
+	var HORIZ_CENTER = Math.floor(RIGHT_EDGE / 2) - 50;
+	console.log(JSON.stringify(address));
+	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
+			.font("Bold")
+			.text("Delivery Details:", HORIZ_CENTER, DETAILS_LINE, labelConfig)
+			.fontSize(ADDRESS_FONT_SIZE)
+			.font("Helvetica")
+			.text(address);
+
+	return lineCounter(address, 60);
 }
 
 function drawImage(doc) {
@@ -108,9 +117,7 @@ function drawImage(doc) {
 	doc.image("public/img/logo.jpg", FROM_EDGE, MARGIN, {width: IMAGE_WIDTH});
 }
 
-function writeDoc(job, cb) {
-	var doc = new PDFDocument({size: "A4"});
-
+function writeDetails(doc, job) {
 	var dateStr = formatDate(new Date());
 	var formattedShippingDate;
 
@@ -119,14 +126,6 @@ function writeDoc(job, cb) {
 	} catch(e) {
 		formattedShippingDate = "TBC";
 	}
-
-	doc.registerFont("Bold", "public/fonts/Helvetica-Bold.ttf");
-	doc.font("Helvetica");
-
-	drawImage(doc);
-
-	doc.fontSize(TITLE_FONT_SIZE)
-			.text("Specification", MARGIN, TITLE_LINE);
 
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 			.font("Bold")
@@ -149,18 +148,40 @@ function writeDoc(job, cb) {
 			.text(job.details.client_ref || " ")
 			.text(job.details.job_status)
 			.text(formattedShippingDate);
+}
 
-	writeAddress(doc, job.details.shipping_notes);
+function writeDoc(job, cb) {
+	var doc = new PDFDocument({
+		size: "A4",
+		margin: MARGIN
+	});
+
+	doc.registerFont("Bold", "public/fonts/Helvetica-Bold.ttf");
+	doc.font("Helvetica");
+
+	drawImage(doc);
+
+	doc.fontSize(TITLE_FONT_SIZE)
+			.text("Specification", MARGIN, TITLE_LINE);
+
+	writeDetails(doc, job);
+	writeAddress(doc);
+
+	var detailsLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
+	var detailsHeight = detailsLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
+	var beginItemHeaders = Math.max(detailsHeight, ITEM_HEADER_LINE);
+	var beginItemBody = beginItemHeaders + (ITEM_HEADER_FONT_SIZE * 2.5);
+	console.log(beginItemHeaders, detailsHeight, beginItemBody);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
-			.text("Qty", MARGIN * 1.5, ITEM_HEADER_LINE)
-			.text("Description", MARGIN * 2.5, ITEM_HEADER_LINE)
+			.text("Qty", MARGIN + 14, beginItemHeaders)
+			.text("Description", MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, beginItemHeaders)
 			.text(" ", MARGIN)
 			// .fontSize(13)
 			.moveDown(0.5);
 
-	var yPos = ITEMS_LINE;
+	var yPos = beginItemBody;
 	var p = 1;
 
 	writeFooter(doc, p);
@@ -177,8 +198,8 @@ function writeDoc(job, cb) {
 
 		doc.fontSize(INPUT_FONT_SIZE)
 				.font("Helvetica")
-				.text(item.qty_req, MARGIN * 1.5, yPos)
-				.text(item.product, MARGIN * 2.5, yPos)
+				.text(item.qty_req, MARGIN + 14, yPos)
+				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, yPos)
 				.text(item.description && "- Description: " + item.description || "")
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")
@@ -193,7 +214,7 @@ function writeDoc(job, cb) {
 
 		for(var prop in item) {
 			if (item.hasOwnProperty(prop) && item[prop] && fieldsWeCareAbout[prop]) {
-				lineCount = lineCounter(item[prop]);
+				lineCount = lineCounter(item[prop], WORDS_PER_LINE);
 				yPos += (lineCount * (INPUT_FONT_SIZE + 2));
 			}
 		}
