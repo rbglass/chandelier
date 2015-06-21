@@ -149,7 +149,7 @@ select,
 
 /* Alert */
 .alert-box {
-	color: white;
+	color: black;
 	height: 40px;
 	min-width: 60px;
 	font-size: 0.8rem;
