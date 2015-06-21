@@ -8,12 +8,15 @@ export default class Alert extends Component {
 		var content;
 
 		if (this.props.isLoading) {
-			content = (
-				<div className="spinner">
-					<div className="cube1"></div>
-					<div className="cube2"></div>
-				</div>
-			);
+			// content = (
+			// 	<div className="spinner">
+			// 		<div className="cube1"></div>
+			// 		<div className="cube2"></div>
+			// 	</div>
+			// );
+			content = "Working...";
+		} else if (this.props.isUnsaved) {
+			content = "Not saved";
 		} else if (this.props.alert) {
 			content = `${ this.props.alert.message || "" }`;
 		} else {
@@ -29,6 +32,7 @@ export default class Alert extends Component {
 
 Alert.propTypes = {
 	isLoading: PropTypes.bool.isRequired,
+	isUnsaved: PropTypes.bool,
 	alert: PropTypes.shape({
 		type: PropTypes.oneOf(["error", "success"]),
 		message: PropTypes.string

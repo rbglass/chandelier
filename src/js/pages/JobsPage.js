@@ -33,11 +33,18 @@ class JobsPage extends Component {
 
 		return (
 			<div>
-				<NavBar title={"All Jobs"} routeConfig={this.props.routeScheme}/>
-				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
-					<span />
-				}
+				<NavBar title={"All Jobs"} >
+					{(this.props.isLoading || this.props.alert) ?
+						<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+						<span />
+					}
+					<img src="/img/transparent.gif" className="logo" />
+				</NavBar>
+				<NavBar routeConfig={this.props.routeScheme}>
+					<div className="nav nav-item logout">
+						<a href="/logout">Logout</a>
+					</div>
+				</NavBar>
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
 						setFilter={SharedActionCreators.setFilter}
@@ -58,7 +65,6 @@ class JobsPage extends Component {
 								sortFunc={SharedActionCreators.externalSortBy.bind(null, "jobs")}
 						/>
 					</div>
-					<button className="add-button" onClick={JobsActionCreators.createSingleJob}>+</button>
 				</div>
 			</div>
 		);
@@ -116,6 +122,9 @@ JobsPage.defaultProps = {
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
 		]}
-
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 };
