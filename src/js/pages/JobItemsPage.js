@@ -36,11 +36,18 @@ class JobItemsPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title="All Items" routeConfig={this.props.routeScheme}/>
-				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
-					<span />
-				}
+				<NavBar title={"All Items"} >
+					{(this.props.isLoading || this.props.alert) ?
+						<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+						<span />
+					}
+					<img src="/img/transparent.gif" className="logo" />
+				</NavBar>
+				<NavBar routeConfig={this.props.routeScheme}>
+					<div className="nav nav-item logout">
+						<a href="/logout">Logout</a>
+					</div>
+				</NavBar>
 				{this.props.pendingAction ?
 					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this job item?"}
 							hide={ModalActionCreators.clearPendingAction}>
@@ -167,6 +174,10 @@ JobItemsPage.defaultProps = {
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
 		]}
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 
 };

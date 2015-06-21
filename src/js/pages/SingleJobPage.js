@@ -32,11 +32,18 @@ class SingleJobPage extends Component {
 	render() {
 		return (
 			<div>
-				<NavBar title={`RB${this.props.params.id}`} routeConfig={this.props.routeScheme}/>
-				{(this.props.isLoading || this.props.alert) ?
-					<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
-					<span />
-				}
+				<NavBar title={`RB${this.props.params.id}`} >
+					{(this.props.isLoading || this.props.alert) ?
+						<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+						<span />
+					}
+					<img src="/img/transparent.gif" className="logo" />
+				</NavBar>
+				<NavBar routeConfig={this.props.routeScheme}>
+					<div className="nav nav-item logout">
+						<a href="/logout">Logout</a>
+					</div>
+				</NavBar>
 				{this.props.pendingAction ?
 					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this job item?"}
 							hide={ModalActionCreators.clearPendingAction}>
@@ -122,5 +129,9 @@ SingleJobPage.defaultProps = {
 		{ key: "payment",        display: "Payment:",          className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date",  display: "Shipping Date:",    className: "",                   type: "date",     onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_notes", display: "Delivery Details:", className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }
+	],
+	routeScheme: [
+		{ display: "Jobs", "to": "jobs" },
+		{ display: "Items", "to": "items" }
 	]
 };

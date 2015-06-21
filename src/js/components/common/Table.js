@@ -22,7 +22,9 @@ export default class Table extends Component {
 				<TableHeader filters={this.props.filters} headers={this.props.tableScheme}
 						sortFunc={this.props.sortFunc}
 				/>
-				{rows}
+				<div className="table-body">
+					{rows}
+				</div>
 			</div>
 		);
 	}

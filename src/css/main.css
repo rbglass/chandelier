@@ -10,9 +10,22 @@
 	--hover: 0.8;
 }
 
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
-	font-family: 'Hind', sans-serif;
+	height: 100%;
+	font-family: "Hind", Helvetica, sans-serif;
+}
+
+#content {
+	height: 100%;
+}
+
+#content > div {
+  height: 100%;
 }
 
 input {
@@ -25,7 +38,7 @@ a:visited {
 
 a {
 	color: inherit;
-	z-index: 99999;
+	z-index: 10;
 }
 
 label {
@@ -46,14 +59,25 @@ select,
 	cursor: pointer;
 }
 
+.logo {
+	width: 200px;
+	height: 21px;
+	align-self: center;
+}
+
 /* App container */
 .container {
 	margin: 5px 24px;
+	box-sizing: border-box;
+  display: flex;
+  height: 89%;
+  align-items: stretch;
+  flex-direction: column;
 }
 /* Nav */
 
 .nav {
-	background-color: var(--blue);
+	background-color: rgba(200, 200, 200, 1);
 }
 
 .nav.navbar {
@@ -61,7 +85,17 @@ select,
   flex-direction: row;
   height: 40px;
   padding-left: 10px;
+  padding-right: 10px;
   border-bottom: 2px solid var(--blueborder);
+  justify-content: space-between;
+}
+
+.nav.navbar > span {
+	display: none;
+}
+
+.nav.nav-links {
+	display:flex;
 }
 
 .nav.nav-item {
@@ -69,26 +103,26 @@ select,
 	flex-basis: auto;
   align-items: flex-end;
   justify-content: center;
-  color: white;
+  color: black;
 }
 
 .nav.nav-item a {
 	text-decoration: none;
   padding-right: 5px;
   padding-left: 5px;
-	height: 40px;
+	height: 35px;
   padding-bottom: 5px;
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
-	font-size: 0.9rem;
+	font-size: 1rem;
 }
 
 .nav.nav-item a:hover {
 	opacity: var(--hover);
 }
 .nav.nav-item a.active {
-	background-color: var(--blueborder);
+	/*background-color: var(--blueborder);*/
 	text-decoration: underline;
 }
 
@@ -98,13 +132,12 @@ select,
 }
 
 .nav.nav-title {
-	flex-grow: 1;
   justify-content: flex-start;
   align-items: flex-end;
   display: flex;
   font-size: 30px;
   padding-right: 4px;
-  color: white;
+  color: black;
   cursor: default;
 	margin-right: 15px
 }
@@ -117,20 +150,13 @@ select,
 /* Alert */
 .alert-box {
 	color: white;
-	position: fixed;
-	top: 57px;
 	height: 40px;
 	min-width: 60px;
-	right: 0;
 	font-size: 0.8rem;
 	text-align: center;
-	padding-left: 8px;
-	border-radius: 4px 0px 0px 4px;
-	background-color: var(--blue);
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	z-index: 999999;
 }
 
 .alert-box.error {
@@ -145,7 +171,6 @@ select,
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content:  flex-end;
-  margin-left: 8px;
 
   min-height: 175px;
   align-items: flex-end;
@@ -238,17 +263,31 @@ select[multiple] {
 .multiselect-checkbox {
 	position:absolute;
 	right: 0;
+	top: 3px;
 }
 
 .multiselect-title {
-	margin: auto;
 	text-decoration: underline;
 	font-weight: bolder;
 }
 
+.multiselect-label {
+	width: 20%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 /* Table */
+.table-container {
+	display: flex;
+  flex-grow: 6;
+}
+
 .table {
-	display: box;
+	transform: translateZ(0);
+	align-items: stretch;
+	width: 100%;
 
 	display: flex;
 	flex-flow: column nowrap;
@@ -275,7 +314,11 @@ select[multiple] {
 	display: none;
 	align-items: flex-end;
 	background-color: var(--blue);
+	z-index: 20;
+  padding-right: 15px;
+  box-sizing: border-box;
 }
+
 .table-header .table-row-item {
 	position: relative;
 	user-select: none;
@@ -284,8 +327,8 @@ select[multiple] {
 	color: white;
 	height: 33px;
 	background-color: var(--blue);
-	/*font-weight: bold;*/
 }
+
 .table-header .table-row-item.qty-sm,
 .table-header .table-row-item.qty-md {
 	font-size: 0.7rem;
@@ -323,6 +366,16 @@ select[multiple] {
   padding: 2px;
   color: rgba(255, 255, 255, 0.74);
 
+}
+
+.table-body {
+	position: absolute;
+  top: 51px;
+  width: 100%;
+  height: 90%;
+  min-height: 200px;
+  padding-right: 20px;
+  overflow-y: scroll;
 }
 
 /* Row */
