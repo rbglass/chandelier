@@ -26,7 +26,7 @@ a:visited {
 
 a {
 	color: inherit;
-	z-index: 99999;
+	z-index: 20;
 }
 
 label {
@@ -50,6 +50,10 @@ select,
 /* App container */
 .container {
 	margin: 5px 24px;
+	position: absolute;
+  top: 50px;
+  background-color: white;
+  width: 97%;
 }
 /* Nav */
 
@@ -64,7 +68,10 @@ select,
   padding-left: 10px;
   border-bottom: 2px solid var(--blueborder);
 
-
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20;
 }
 
 .nav.nav-item {
@@ -154,6 +161,15 @@ select,
 
 	width: 100%;
 	height: auto;
+
+	position: fixed;
+	top: 42px;
+	z-index: 20;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 48px;
+	background-color: white;
+	box-sizing: border-box;
 }
 
 .table-manip-col {
@@ -249,6 +265,11 @@ select[multiple] {
 }
 
 /* Table */
+.table-container {
+  position: relative;
+  top: 163px;
+}
+
 .table {
 	display: box;
 
@@ -266,6 +287,11 @@ select[multiple] {
 	margin-top: 0.5rem;
 }
 
+.table-body {
+  position: relative;
+  top: 40px;
+}
+
 /* Header */
 
 .link {
@@ -277,6 +303,13 @@ select[multiple] {
 	display: none;
 	align-items: flex-end;
 	background-color: var(--blue);
+
+	position: fixed;
+	top: 215px;
+	width: 100%;
+	padding-right: 54px;
+	box-sizing: border-box;
+	z-index: 20;
 }
 .table-header .table-row-item {
 	position: relative;
