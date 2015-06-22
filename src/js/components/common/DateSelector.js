@@ -13,7 +13,7 @@ export default class DateSelector extends Component {
 		};
 		const styleFront = {
 			position: "absolute",
-			left: "2px",
+			left: "3px",
 			bottom: "1px",
 			fontSize: "0.9rem",
 			lineHeight: "24px",
