@@ -1,4 +1,5 @@
 "use strict";
+import I from "immutable";
 import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
@@ -11,13 +12,13 @@ describe("Table", () => {
 
 	const ShallowRenderer = TestUtils.createRenderer();
 
-	const tableScheme = "dummytablescheme";
-	const items = ["dummycells1", "dummycells2", "dummycells3"];
-	const selections = "dummyselections";
-	const filters = "dummyfilter";
+	const tableScheme = [{key: "dummytablescheme"}];
+	const items = I.fromJS([{key: "dummycells1"}, {key: "dummycells2"}, {key: "dummycells3"}]);
+	const selections = I.fromJS({items: ["dummyselections"]});
+	const filters = I.fromJS({key: "dummyfilter"});
 	const primaryKey = "dummykey";
-	const onBlur = "dummyfuncblur";
-	const sortFunc = "dummyfuncsort";
+	const onBlur = () => {};
+	const sortFunc = () => {};
 
 	let columns;
 
@@ -29,10 +30,12 @@ describe("Table", () => {
 	);
 	const renderedOutput = ShallowRenderer.getRenderOutput();
 	const header = renderedOutput.props.children[0];
-	const rows = renderedOutput.props.children[1];
+	const tableBody = renderedOutput.props.children[1];
+	const rows = tableBody.props.children;
 
-	it("#renders a TableHeader component at the top of the table", () => {
+	it("#renders a TableHeader component at the top of the table, and a table body div under it", () => {
 		assert.equal(header.type, TableHeader);
+		assert.equal(tableBody.type, "div");
 	});
 
 	it("#passes TableHeader filters, headers and sortFunc props", () => {
@@ -42,7 +45,7 @@ describe("Table", () => {
 	});
 
 	it("#renders a TableRow component for every element in the 'items' prop", () => {
-		assert.equal(rows.length, items.length);
+		assert.equal(rows.size, items.size);
 		rows.forEach((row, i) => {
 			assert.equal(row.type, TableRow);
 		});
@@ -50,7 +53,7 @@ describe("Table", () => {
 
 	it("#passes TableRow cells, cellConfig, selections, primaryKey and onBlur props", () => {
 		rows.forEach((row, i) => {
-			assert.equal(row.props.cells, items[i]);
+			assert.equal(row.props.cells, items.get(i));
 			assert.equal(row.props.cellConfig, tableScheme);
 			assert.equal(row.props.selections, selections);
 			assert.equal(row.props.primaryKey, primaryKey);

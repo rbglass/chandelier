@@ -19,14 +19,14 @@ describe("Alert", () => {
 	it("#has a different class depending on the isLoading prop", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
 		ShallowRenderer.render(
-			<Alert isLoading={false} alert={{type: "error"}}/>
+			<Alert isLoading={false} />
 		);
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
 		const class1 = renderedOutput.props.className;
 
 		ShallowRenderer.render(
-			<Alert isLoading={true} alert={{type: "error"}}/>
+			<Alert isLoading={true} />
 		);
 
 		const class2 = ShallowRenderer.getRenderOutput().props.className;
@@ -34,16 +34,34 @@ describe("Alert", () => {
 		assert.notEqual(class1, class2);
 	});
 
-	it("#renders a spinner depending on the isLoading prop", () => {
+	it("#renders different content depending on the isLoading prop", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
 		ShallowRenderer.render(
-			<Alert isLoading={true} alert={{type: "error"}}/>
+			<Alert isLoading={true} />
 		);
-		const renderedOutput = ShallowRenderer.getRenderOutput();
+		const renderedOutput1 = ShallowRenderer.getRenderOutput();
 
-		const class1 = renderedOutput.props.children.props.className;
+		ShallowRenderer.render(
+			<Alert isLoading={false} />
+		);
+		const renderedOutput2 = ShallowRenderer.getRenderOutput();
 
-		assert.equal(class1, "spinner");
+		assert.notEqual(renderedOutput1.props.children, renderedOutput2.props.children);
+	});
+
+	it("#renders different content depending on the isUnsaved prop", () => {
+		const ShallowRenderer = TestUtils.createRenderer();
+		ShallowRenderer.render(
+			<Alert isUnsaved={true} />
+		);
+		const renderedOutput1 = ShallowRenderer.getRenderOutput();
+
+		ShallowRenderer.render(
+			<Alert isUnsaved={false} />
+		);
+		const renderedOutput2 = ShallowRenderer.getRenderOutput();
+
+		assert.notEqual(renderedOutput1.props.children, renderedOutput2.props.children);
 	});
 
 	it("#has a different class depending on the alert type", () => {

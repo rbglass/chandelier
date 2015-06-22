@@ -59,7 +59,7 @@ describe("SingleJobStore", () => {
 		sameVal(SingleJobStore.getSortedItems(), I.fromJS(newJob.items));
 	});
 
-	it("#updates the job.items array upon a RECEIVE_SINGLE_ITEM action", () => {
+	it("#updates the job.items List upon a RECEIVE_SINGLE_ITEM action", () => {
 		const newItem = {
 			item_id: "hello everyone"
 		};
@@ -84,7 +84,8 @@ describe("SingleJobStore", () => {
 		});
 
 		const itemsWeGotBack = SingleJobStore.getSortedItems();
-		const allOurSampleItems = samplejob.items.concat([newItem, newItem2]);
+		const allOurSampleItems = [newItem2, newItem].concat(samplejob.items);
+		console.log(itemsWeGotBack, allOurSampleItems)
 		sameVal(itemsWeGotBack, I.fromJS(allOurSampleItems));
 
 	});

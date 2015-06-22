@@ -11,7 +11,7 @@ describe("NavBar", () => {
 
 	it("#should render the correct title", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
-		ShallowRenderer.render(<NavBar title="testing" routeConfig={[]} />);
+		ShallowRenderer.render(<NavBar title="testing" />);
 
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
@@ -22,20 +22,6 @@ describe("NavBar", () => {
 		assert.equal(numTitleNodes, 1);
 	});
 
-	it("#should render one logout link by default", () => {
-		const ShallowRenderer = TestUtils.createRenderer();
-		ShallowRenderer.render(<NavBar title="testing" routeConfig={[]} />);
-
-		const renderedOutput = ShallowRenderer.getRenderOutput();
-
-		const linkNode = renderedOutput.props.children.filter(el => {
-			return el.props && el.props.children && el.props.children.type === "a";
-		})[0];
-
-		assert(linkNode);
-		assert.equal(linkNode.props.children.props.children, "Logout");
-	});
-
 	it("#should render links for each routeConfig object passed to it", () => {
 		const routeConfig = [
 			{ display: "highway", to: "hell" },
@@ -43,21 +29,20 @@ describe("NavBar", () => {
 		];
 
 		const ShallowRenderer = TestUtils.createRenderer();
-		ShallowRenderer.render(<NavBar title="toasting" routeConfig={routeConfig}/>);
+		ShallowRenderer.render(<NavBar routeConfig={routeConfig}/>);
 
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
-		const linkNodes = renderedOutput.props.children.filter(el => {
-			return Array.isArray(el);
-		}).reduce((a, b) => a.concat(b), [])
-			.map(div => div.props.children);
+		const linkNodes = renderedOutput.props.children.filter(el =>
+			el.props.className === "nav nav-links"
+		).pop().props.children[0];
 
 		assert.equal(linkNodes.length, routeConfig.length);
 
 		linkNodes.forEach((link, i) => {
-			assert.equal(link.props.children, routeConfig[i].display);
-			assert.equal(link.props.to, routeConfig[i].to);
-			assert.deepEqual(link.type, Link);
+			assert.equal(link.props.children.props.children, routeConfig[i].display);
+			assert.equal(link.props.children.props.to, routeConfig[i].to);
+			assert.deepEqual(link.props.children.type, Link);
 		});
 	});
 });
