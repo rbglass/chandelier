@@ -15,8 +15,7 @@ const emptyFilters = I.fromJS({
 	endDate: "",
 	restrictions: {
 		"job_status": {
-			key: "job_status",
-			options: ["Confirmed", "Packaged"]
+			key: "job_status"
 		},
 		"order_type": {
 			key: "order_type"
@@ -133,6 +132,12 @@ const onReceivingAction = action => {
 				}
 				JobsStore.emitChange();
 				break;
+
+		case ActionTypes.CLEAR_JOBS_FILTERS:
+				filters = emptyFilters;
+				// DELIBERATE FALLTHROUGH
+				// fuk u eslint i do wat i want
+				// TODO: Refactor so no deliberate fallthrough
 
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);

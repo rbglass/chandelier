@@ -211,6 +211,52 @@ describe("JobsStore", () => {
 		sameVal(filtersWeGotBack, I.fromJS(newRestrictions));
 	});
 
+	it("#resets the filters Map upon a CLEAR_JOBS_FILTERS action, asking for selections again", () => {
+		const emptyFilters = I.fromJS({
+			"Hello": "Hi",
+			restrictions: {
+				job_status: {
+					key: "job_status"
+				},
+				order_type: {
+					key: "order_type"
+				}
+			}
+		});
+
+		const selections = I.fromJS({
+			job_status: ["hi", "mate"],
+			order_type: ["nice", "one"]
+		});
+
+		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {
+			return true;
+		});
+		const SelStoreStub = sinon.stub(SelectionStore, "getSelections", () => {
+			return selections;
+		});
+
+		JobsStore.__set__("emptyFilters", emptyFilters);
+
+		onReceivingAction({
+			type: "CLEAR_JOBS_FILTERS"
+		});
+
+		const filtersWeGotBack = JobsStore.getFilters();
+		const filtersWeHopeToGet = emptyFilters.setIn(
+			["restrictions", "job_status", "options"],
+			selections.get("job_status")
+		).setIn(
+			["restrictions", "order_type", "options"],
+			selections.get("order_type")
+		);
+
+		sameVal(filtersWeGotBack, filtersWeHopeToGet);
+
+		dispyStub.restore();
+		SelStoreStub.restore();
+	});
+
 	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", () => {
 		const selections = I.fromJS({
 			job_status: ["hi", "mate"],
@@ -234,5 +280,8 @@ describe("JobsStore", () => {
 		Object.keys(selections).forEach(function(key) {
 			sameVal(filters.getIn(["restrictions", key, "options"], selections.get(key)));
 		});
+
+		dispyStub.restore();
+		SelStoreStub.restore();
 	});
 });

@@ -1,6 +1,5 @@
 "use strict";
 import I from "immutable";
-import sinon from "sinon";
 import assert from "assert";
 import rewire from "rewire";
 import { job as samplejob } from "../testdata/job";
@@ -84,7 +83,7 @@ describe("SingleJobStore", () => {
 		});
 
 		const itemsWeGotBack = SingleJobStore.getSortedItems();
-		const allOurSampleItems = [newItem2, newItem].concat(samplejob.items);
+		const allOurSampleItems = samplejob.items.concat([newItem, newItem2]);
 
 		sameVal(itemsWeGotBack, I.fromJS(allOurSampleItems));
 

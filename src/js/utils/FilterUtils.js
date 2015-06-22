@@ -10,7 +10,7 @@ function strIncludes(str, term) {
 }
 
 export function contains(map, term, keysToSearch) {
-	if(term.length < 3 || term === undefined) return true;
+	if(term === undefined || term.length < 3) return true;
 
 	const k = keysToSearch || map.keySeq();
 

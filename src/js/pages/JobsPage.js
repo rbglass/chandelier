@@ -119,12 +119,20 @@ JobsPage.defaultProps = {
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
-		]},
+			]
+		},
 		{
 			description: "Parts started",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
-		]}
+			]
+		},
+		{
+			description: "Clear All Filters",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters
+			]
+		}
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },
