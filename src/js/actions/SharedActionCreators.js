@@ -51,6 +51,7 @@ export function changeDetails(updateObj) {
 // Q: a sort action for each domain,
 //    or data as an object with a 'source'
 //    property, on which the store pivots?
+// TODO: Move these to their respective action creators
 export function sortBy(field) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.SORT_ONE,

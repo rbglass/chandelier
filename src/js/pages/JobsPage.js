@@ -35,7 +35,8 @@ class JobsPage extends Component {
 			<div>
 				<NavBar title={"All Jobs"} >
 					{(this.props.isLoading || this.props.alert) ?
-						<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+							alert={this.props.alert} /> :
 						<span />
 					}
 					<img src="/img/transparent.gif" className="logo" />
@@ -81,6 +82,7 @@ function getState() {
 	const totalPages = Math.ceil(JobsStore.getNumberOfJobs() / PaginationStore.getRowsPerPage());
 	const selections = SelectionStore.getSelections();
 	const isLoading = AlertStore.getLoadStatus();
+	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
 
 	return {
@@ -90,6 +92,7 @@ function getState() {
 		currentPage,
 		totalPages,
 		isLoading,
+		isUnsaved,
 		alert
 	};
 }
@@ -112,16 +115,24 @@ JobsPage.defaultProps = {
 	],
 	presetScheme: [
 		{
+			description: "Clear All Filters",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters
+			]
+		},
+		{
 			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
-		]},
+			]
+		},
 		{
 			description: "Parts started",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
-		]}
+			]
+		}
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },

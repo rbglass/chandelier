@@ -37,5 +37,8 @@ export default keyMirror({
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,
 	"FILTER_BY": null,
-	"RESTRICT_TO": null
+	"RESTRICT_TO": null,
+
+	"CLEAR_ITEMS_FILTERS": null,
+	"CLEAR_JOBS_FILTERS": null
 });

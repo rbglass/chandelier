@@ -42,7 +42,7 @@ const onReceivingAction = action => {
 		// use find & splice
 		case ActionTypes.RECEIVE_SINGLE_ITEM:
 				let immutData = I.fromJS(action.data);
-				job = job.updateIn(["items"], list => list.unshift(immutData));
+				job = job.updateIn(["items"], list => list.push(immutData));
 				SingleJobStore.emitChange();
 				break;
 

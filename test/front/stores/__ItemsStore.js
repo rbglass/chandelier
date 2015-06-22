@@ -84,46 +84,6 @@ describe("ItemsStore", () => {
 		)));
 	});
 
-	// it("#updates the private items List upon a RECEIVE_UPDATED_JOB action", () => {
-	// 	const jobAction = {
-	// 		type: "RECEIVE_UPDATED_JOB",
-	// 		data: {
-	// 			job_id: sampleitems[0].job_id,
-	// 			details: {
-	// 				job_id: sampleitems[0].job_id,
-	// 				job_status: "Packaged"
-	// 			}
-	// 		}
-	// 	};
-
-	// 	onReceivingAction(jobAction);
-	// 	const itemsWeGotBack = ItemsStore.getFilteredItems();
-	// 	const samplesWithUpdate = [jobAction.data].concat(sampleitems.slice(1)).filter(e =>
-	// 		["Confirmed", "Packaged"].indexOf(e.job_status) !== -1
-	// 	);
-
-	// 	sameVal(itemsWeGotBack, I.fromJS(samplesWithUpdate));
-	// });
-
-	// it("#updates the respective job in the items List upon a CHANGE_SINGLE_JOB_DETAILS action", () => {
-	// 	const updatedInfo = {
-	// 		type: "CHANGE_SINGLE_JOB_DETAILS",
-	// 		data: {
-	// 			id: sampleitems[0].job_id,
-	// 			key: "job_status",
-	// 			value: "Packaged"
-	// 		}
-	// 	};
-	// 	onReceivingAction(updatedInfo);
-
-	// 	const itemsWeGotBack = ItemsStore.getFilteredItems();
-	// 	const jobWeGotBack = itemsWeGotBack.filter((e) => {
-	// 		return e.get("job_id") === updatedInfo.data.id;
-	// 	}).last();
-
-	// 	assert.equal(jobWeGotBack.getIn(["details", updatedInfo.data.key]), updatedInfo.data.value);
-	// });
-
 	it("#updates the filterBy filter upon a FILTER_BY action", () => {
 		const filterTerm = "JIM";
 		assert.notEqual(ItemsStore.getFilters().get("filterBy"), filterTerm);
@@ -206,6 +166,52 @@ describe("ItemsStore", () => {
 		const filtersWeGotBack = ItemsStore.getFilters().getIn(["restrictions", newRestrictions.key]);
 
 		sameVal(filtersWeGotBack, I.fromJS(newRestrictions));
+	});
+
+	it("#resets the filters Map upon a CLEAR_ITEMS_FILTERS action, asking for selections again", () => {
+		const emptyFilters = I.fromJS({
+			"Hello": "Hi",
+			restrictions: {
+				job_status: {
+					key: "job_status"
+				},
+				order_type: {
+					key: "order_type"
+				}
+			}
+		});
+
+		const selections = I.fromJS({
+			job_status: ["hi", "mate"],
+			order_type: ["nice", "one"]
+		});
+
+		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {
+			return true;
+		});
+		const SelStoreStub = sinon.stub(SelectionStore, "getSelections", () => {
+			return selections;
+		});
+
+		ItemsStore.__set__("emptyFilters", emptyFilters);
+
+		onReceivingAction({
+			type: "CLEAR_ITEMS_FILTERS"
+		});
+
+		const filtersWeGotBack = ItemsStore.getFilters();
+		const filtersWeHopeToGet = emptyFilters.setIn(
+			["restrictions", "job_status", "options"],
+			selections.get("job_status")
+		).setIn(
+			["restrictions", "order_type", "options"],
+			selections.get("order_type")
+		);
+
+		sameVal(filtersWeGotBack, filtersWeHopeToGet);
+
+		dispyStub.restore();
+		SelStoreStub.restore();
 	});
 
 	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", () => {

@@ -7,7 +7,8 @@ import SelectionStore from "./SelectionStore";
 import PaginationStore from "./PaginationStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
-const defaultFilters = I.fromJS({
+// TODO: Eventually set up a 'DefaultsStore'/'PreferencesStore'
+const emptyFilters = I.fromJS({
 	sortTerm: "shipping_date",
 	isAsc: false,
 	filterBy: "",
@@ -16,16 +17,26 @@ const defaultFilters = I.fromJS({
 	endDate: "",
 	restrictions: {
 		"job_status": {
-			key: "job_status",
-			options: ["Confirmed", "Packaged"]
+			key: "job_status"
 		},
 		"payment": {
-			key: "payment",
-			options: ["Deposit", "Paid Card", "Paid BACS", "Paid Other"]
+			key: "payment"
 		}
 	}
 });
 
+const defaultFilters = emptyFilters.setIn(
+	["restrictions", "job_status", "options"],
+	I.List(["Confirmed", "Packaged"])
+).setIn(
+	["restrictions", "payment", "options"],
+	I.List(["Deposit", "Paid Card", "Paid BACS", "Paid Other"])
+);
+
+const keysToSearch = [
+	"client", "product", "description",
+	"glass", "metal", "flex", "bulb", "notes"
+];
 
 var	items = I.List(),
 		itemLength = 0,
@@ -44,7 +55,7 @@ const ItemsStore = createStore({
 			return (
 				FilterUtils.satisfies(row, restrictions) &&
 				FilterUtils.isWithinBounds(row.get(dateField), startDate, endDate) &&
-				FilterUtils.contains(row, filterBy)
+				FilterUtils.contains(row, filterBy, keysToSearch)
 			);
 		});
 
@@ -121,6 +132,12 @@ const onReceivingAction = action => {
 				}
 				ItemsStore.emitChange();
 				break;
+
+		case ActionTypes.CLEAR_ITEMS_FILTERS:
+				filters = emptyFilters;
+				// DELIBERATE FALLTHROUGH
+				// fuk u eslint i do wat i want
+				// TODO: Refactor so no deliberate fallthrough
 
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);

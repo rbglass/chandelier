@@ -21,7 +21,7 @@ export default class Filter extends Component {
 		// use cx
 		const baseClassName = "job-text-input ";
 		const textFilterClassName = baseClassName + "filter";
-		const dateFilterClassName = baseClassName + "date";
+		const dateFilterClassName = "date";
 
 		const selects = this.props.filters.get("restrictions").map((field, restr) => {
 			return (
@@ -42,21 +42,21 @@ export default class Filter extends Component {
 
 		return (
 			<div className="table-manip">
+				<div className="table-manip-presets">
+					{presets}
+				</div>
 				<div className="table-manip-col table-manip-filters" >
-					<div className="table-manip-presets">
-						{presets}
-					</div>
-					<FilterInput type="text" value={this.props.filters.get("filterBy")}
-						setFilter={this.props.setFilter} className={textFilterClassName}
-						placeholder="Filter all by..."
-					/>
 					<div className="table-manip-row">
+						<FilterInput type="text" value={this.props.filters.get("filterBy")}
+							setFilter={this.props.setFilter} className={textFilterClassName}
+							placeholder="Filter all by..."
+						/>
 						<DateSelector value={this.props.filters.get("startDate")}
 							onChange={this.props.setStartDate} className={dateFilterClassName}
-							inputClass={"clearable"} />
+							inputClass={"clearable"} label="Earliest shipping date"/>
 						<DateSelector value={this.props.filters.get("endDate")}
 							onChange={this.props.setEndDate} className={dateFilterClassName}
-							inputClass={"clearable"} />
+							inputClass={"clearable"} label="Latest shipping date"/>
 					</div>
 					<Pager total={this.props.totalPages} current={this.props.currentPage}
 							visiblePages={5} onPageChanged={this.props.changePage}/>
