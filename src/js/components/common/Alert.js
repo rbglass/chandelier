@@ -10,7 +10,7 @@ export default class Alert extends Component {
 		if (this.props.isLoading) {
 			content = "Working...";
 		} else if (this.props.isUnsaved) {
-			content = "Not saved";
+			content = "Unsaved changes";
 		} else if (this.props.alert) {
 			content = `${ this.props.alert.message || "" }`;
 		} else {

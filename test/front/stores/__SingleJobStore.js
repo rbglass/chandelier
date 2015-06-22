@@ -85,7 +85,7 @@ describe("SingleJobStore", () => {
 
 		const itemsWeGotBack = SingleJobStore.getSortedItems();
 		const allOurSampleItems = [newItem2, newItem].concat(samplejob.items);
-		console.log(itemsWeGotBack, allOurSampleItems)
+
 		sameVal(itemsWeGotBack, I.fromJS(allOurSampleItems));
 
 	});

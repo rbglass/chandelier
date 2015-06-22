@@ -38,7 +38,8 @@ class JobItemsPage extends Component {
 			<div>
 				<NavBar title={"All Items"} >
 					{(this.props.isLoading || this.props.alert) ?
-						<Alert isLoading={this.props.isLoading} alert={this.props.alert} /> :
+						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+							alert={this.props.alert} /> :
 						<span />
 					}
 					<img src="/img/transparent.gif" className="logo" />
@@ -94,6 +95,7 @@ function getState() {
 	const selections = SelectionStore.getSelections();
 	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
+	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
 
 	return {
@@ -104,6 +106,7 @@ function getState() {
 		totalPages,
 		pendingAction,
 		isLoading,
+		isUnsaved,
 		alert
 	};
 }

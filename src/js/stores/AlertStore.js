@@ -4,27 +4,36 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
 var alert = {},
-		isLoading = false;
+		loadingTracker = [],
+		isUnsaved = false;
 
 const AlertStore = createStore({
 	getAlert() {
 		return alert;
 	},
 	getLoadStatus() {
-		return isLoading;
+		return loadingTracker.length > 0;
+	},
+	getUnsavedStatus() {
+		return isUnsaved;
 	}
 });
 
 const onReceivingAction = action => {
 	let isServerAction = /RECEIVE/.test(action.type);
+	let isClientAction = /CHANGE/.test(action.type);
 
 	if (isServerAction) {
 		if (action.type === ActionTypes.RECEIVE_ALERT) {
 			alert = action.data;
 		}
-		isLoading = false;
+		isUnsaved = false;
+		loadingTracker.pop();
+	} else if (isClientAction) {
+		isUnsaved = true;
 	} else if (action.type === ActionTypes.IS_LOADING) {
-		isLoading = true;
+		isUnsaved = false;
+		loadingTracker.push(1);
 	}
 	AlertStore.emitChange();
 };

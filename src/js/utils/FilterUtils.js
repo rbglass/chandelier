@@ -9,10 +9,10 @@ function strIncludes(str, term) {
 		false;
 }
 
-export function contains(map, term) {
-	if(term === "" || term === undefined) return true;
+export function contains(map, term, keysToSearch) {
+	if(term.length < 3 || term === undefined) return true;
 
-	const k = map.keySeq();
+	const k = keysToSearch || map.keySeq();
 
 	return k.some(cell => {
 		switch (typeof map.get(cell)) {

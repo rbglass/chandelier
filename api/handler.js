@@ -114,7 +114,6 @@ var handler = {
 		var data = request.payload;
 		var job_id = request.params.id;
 		var fieldsToUpdate = Object.keys(data);
-		console.log(data.shipping_date);
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
@@ -135,7 +134,7 @@ var handler = {
 
 			client.query(string + "WHERE job_id=($1) RETURNING *", [job_id].concat(items), function(errInsert, info, res) {
 				done();
-				console.log(items[14], info.rows[0].shipping_date);
+				console.log(items[14], info.rows[0].shipping_date, info.rows[0].shipping_date.toISOString());
 				if (errInsert) {
 					console.log(errInsert);
 					return reply(errInsert).code(400);

@@ -57,8 +57,6 @@ export function createSingleJob() {
 export function saveDetails(jobId, immutUpdateObj) {
 	const updateObj = immutUpdateObj.toJS();
 
-	console.log(updateObj.shipping_date);
-
 	SharedActionCreators.startLoading();
 	request.put(`${jobs}/${jobId}`)
 					.send(updateObj)

@@ -41,11 +41,11 @@ describe("contains", () => {
 			thoughts: null
 		});
 
-	it("#takes 2 arguments", () => {
-		assert.equal(contains.length, 2);
+	it("#takes 3 arguments", () => {
+		assert.equal(contains.length, 3);
 	});
 
-	it("#returns true if no term/empty string is passed", () => {
+	it("#returns true if no term/a string with length less than 3 is passed", () => {
 		assert(contains(I.Map({})));
 		assert(contains(I.Map({}), ""));
 	});
@@ -53,6 +53,11 @@ describe("contains", () => {
 	it("#checks if some value of a Map matches the term", () => {
 		assert(contains(testObj, "james"));
 		assert.equal(contains(testObj, "hello"), false);
+	});
+
+	it("#checks if some value of a Map at the key specified in the 3rd argument matches the term", () => {
+		assert(contains(testObj, "james", ["name"]));
+		assert.equal(contains(testObj, "james", ["age"]), false);
 	});
 
 	it("#works for numbers", () => {

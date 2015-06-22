@@ -6,7 +6,7 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
-const defaultFilters = I.fromJS({
+const emptyFilters = I.fromJS({
 	sortTerm: "shipping_date",
 	isAsc: false,
 	filterBy: "",
@@ -30,6 +30,15 @@ const defaultFilters = I.fromJS({
 	}
 });
 
+const defaultFilters = emptyFilters.setIn(
+	["restrictions", "job_status", "options"],
+	I.List(["Confirmed", "Packaged"])
+);
+
+const keysToSearch = [
+	"client", "project"
+];
+
 var jobs = I.List(),
 		jobLength = 0,
 		filters = defaultFilters;
@@ -48,7 +57,7 @@ const JobsStore = createStore({
 			return (
 				FilterUtils.satisfies(details, restrictions) &&
 				FilterUtils.isWithinBounds(details.get(dateField), startDate, endDate) &&
-				FilterUtils.contains(details, filterBy)
+				FilterUtils.contains(details, filterBy, keysToSearch)
 			);
 		});
 
