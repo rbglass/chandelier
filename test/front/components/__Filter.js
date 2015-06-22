@@ -51,15 +51,18 @@ describe("Filter", () => {
 	);
 
 	const renderedOutput = ShallowRenderer.getRenderOutput();
-	const columns = renderedOutput.props.children.filter(el => el.type === "div");
+	const youngers = renderedOutput.props.children.filter(el => el.type === "div");
+	const columns = youngers.filter(el => el.props.className.indexOf("table-manip-col") !== -1);
 
-	it("#renders 2 columns if passed no children", () => {
+	it("#renders a preset row and 2 columns if passed no children", () => {
 		assert.equal(columns.length, 2);
 	});
 
-	it("#renders some FilterInputs in the first column", () => {
-		const kids = columns[0].props.children;
-		assert.equal(kids.filter(el => el.type === FilterInput).length, 1);
+	it("#renders a FilterInput in the first row of the first column", () => {
+		const row = columns[0].props.children.filter(el =>
+			el.props.className && el.props.className.indexOf("table-manip-row") !== -1
+		).pop();
+		assert.equal(row.props.children.filter(el => el.type === FilterInput).length, 1);
 	});
 
 	it("#renders a MultiSelect for each element in filters.restrictions", () => {
@@ -72,7 +75,7 @@ describe("Filter", () => {
 	});
 
 	it("#renders a Preset component for each element in presetConfig, with description and onSelect props", () => {
-		const kids = columns[0].props.children;
+		const kids = youngers.filter(el => el.props.className.indexOf("table-manip-presets") !== -1);
 		const presets = kids[0].props.children.filter(el => el.type === Preset);
 
 		assert.equal(

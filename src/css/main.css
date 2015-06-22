@@ -170,9 +170,9 @@ select,
 	flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-content:  flex-end;
+  align-content: flex-start;
 
-  min-height: 175px;
+  min-height: 150px;
   align-items: flex-end;
 
 	width: 100%;
@@ -188,8 +188,12 @@ select,
 
 .table-manip-col.table-manip-filters {
   flex-direction: column;
-  flex-basis: 600px;
+  align-self: stretch;
   align-items: flex-start;
+  justify-content: space-between;
+
+  margin-right: 10px;
+  margin-top: 13px;
 }
 
 
@@ -202,47 +206,46 @@ select,
 .table-manip-row {
 	display: flex;
 	width: 100%;
+	align-items: flex-end;
 }
 
 .job-text-input {
 	display: flex;
-	height: auto;
+	height: 30px;
 }
 
 .filter {
-  width: 75%;
   font-size: 20px;
-  margin-bottom:5px;
 }
 
 .date {
-	margin-left: 0;
-	flex-grow: 0;
-	flex-shrink: 0;
-	flex-basis: 38%;
+	margin-left: 5px;
 }
 
 /* Presets */
 .table-manip-presets {
-  width: 300px;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
 }
 
 .preset {
   display: flex;
   height: auto;
   justify-content: space-between;
+  margin-right: 5px;
 }
 
 .preset-button {
   float: right;
-  height: 20px;
-  width: 40px;
+  width: auto;
+  padding: 6px;
 
   background-color: var(--blue);
   color: white;
   border: none;
   border-radius: 2px 2px 2px 2px;
-  box-shadow: -1px 1px 1px 0px black;
+  box-shadow: -1px 1px 1px 0px rgba(39, 92, 152, 1);
 
   cursor: pointer;
 }
@@ -501,6 +504,11 @@ select[multiple] {
 }
 
 /* Date Selector */
+.date-selector {
+	display: flex;
+	flex-direction: column;
+}
+
 .date-selector-input::-webkit-inner-spin-button,
 .date-selector-input::-webkit-calendar-picker-indicator {
 	color: black;
@@ -534,6 +542,12 @@ select[multiple] {
 
 .date-selector-input.clearable::-webkit-clear-button {
 	display: block;
+}
+
+.date-selector-label {
+	color: dimgrey;
+	font-size: 10px;
+	line-height: 12px;
 }
 
 /* Specific job details */

@@ -14,7 +14,7 @@ export default class DateSelector extends Component {
 		const styleFront = {
 			position: "absolute",
 			left: "2px",
-			top: "1px",
+			bottom: "1px",
 			fontSize: "0.9rem",
 			lineHeight: "24px",
 			cursor: "initial",
@@ -30,6 +30,11 @@ export default class DateSelector extends Component {
 
 		return (
 			<div className={`date-selector ${this.props.className || ""}`} style={styleHolder} id={this.props.id}>
+				{
+					this.props.label ? <label className="date-selector-label">
+						{this.props.label}
+					</label> : null
+				}
 				<span className="date-selector-display" style={styleFront}>{ddMMMyyyy(this.props.value)}</span>
 				<input type="date" className={`date-selector-input ${this.props.inputClass || ""}`} style={styleBehind}
 						value={yyyyMMdd(this.props.value)} disabled={this.props.disabled}
@@ -44,6 +49,7 @@ DateSelector.propTypes = {
 	value: PropTypes.string,
 	id: PropTypes.string,
 	inputClass: PropTypes.string,
+	label: PropTypes.string,
 	disabled: PropTypes.bool,
 	readOnly: PropTypes.bool,
 	onChange: PropTypes.func

@@ -172,16 +172,16 @@ JobItemsPage.defaultProps = {
 	],
 	presetScheme: [
 		{
+			description: "Clear All Filters",
+			onSelect: [
+				JobItemsActionCreators.clearItemsFilters
+			]
+		},
+		{
 			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
 				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
-			]
-		},
-		{
-			description: "Clear All Filters",
-			onSelect: [
-				JobItemsActionCreators.clearItemsFilters
 			]
 		}
 	],

@@ -14,8 +14,10 @@ export default class Preset extends Component {
 
 		return (
 			<div className={base} >
-				<label className={labelClassName} htmlFor={labelId} >{this.props.description}</label>
-				<button className={buttonClassName} id={labelId} onClick={this.clickHandler.bind(this)}>filter</button>
+				<button className={buttonClassName} id={labelId}
+					onClick={this.clickHandler.bind(this)}>
+					{this.props.description}
+				</button>
 			</div>
 		);
 	}

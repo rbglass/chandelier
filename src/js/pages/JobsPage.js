@@ -115,6 +115,12 @@ JobsPage.defaultProps = {
 	],
 	presetScheme: [
 		{
+			description: "Clear All Filters",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters
+			]
+		},
+		{
 			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
@@ -125,12 +131,6 @@ JobsPage.defaultProps = {
 			description: "Parts started",
 			onSelect: [
 				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
-			]
-		},
-		{
-			description: "Clear All Filters",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters
 			]
 		}
 	],

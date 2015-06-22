@@ -26,20 +26,20 @@ describe("Preset", () => {
 		done();
 	});
 
-	it("#should render the preset description in  a the label", () => {
+	it("#should render the description in the button", () => {
 
 		const RenderedComponent = TestUtils.renderIntoDocument(
 			<Preset description={presetConfig.description} onSelect={presetConfig.onSelect} />
 		);
 
-		const label = TestUtils.findRenderedDOMComponentWithTag(
+		const button = TestUtils.findRenderedDOMComponentWithTag(
 			RenderedComponent,
-			"label"
+			"button"
 		);
 
-		const labelNode = React.findDOMNode(label);
+		const buttonNode = React.findDOMNode(button);
 
-		assert.equal(labelNode.textContent, presetConfig.description);
+		assert.equal(buttonNode.textContent, presetConfig.description);
 	});
 
 	it("#should render a button that, when clicked, calls each of its config callbacks", () => {
