@@ -527,10 +527,11 @@ select[multiple] {
 
 .date-selector-input::-webkit-datetime-edit-month-field {
 	color: transparent;
-	letter-spacing: 2px;
+	letter-spacing: 3px;
 }
 .date-selector-input::-webkit-datetime-edit-day-field {
 	color: transparent;
+	font-size: 10px;
 }
 .date-selector-input::-webkit-datetime-edit-year-field {
 	color: transparent;
