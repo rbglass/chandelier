@@ -40,7 +40,7 @@ export default class TableRow extends Component {
 			switch (cell.type) {
 
 				case "textarea":
-						input = <TextArea value={cellValue} useCacheForDOMMeasurements={true} minRows={2}/>;
+						input = <TextArea value={cellValue} useCacheForDOMMeasurements={false} minRows={2}/>;
 						break;
 
 				case "number":

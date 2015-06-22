@@ -187,7 +187,8 @@ JobItemsPage.defaultProps = {
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },
-		{ display: "Items", "to": "items" }
+		{ display: "Items", "to": "items" },
+		{ display: "Products", to: "products"}
 	]
 
 };

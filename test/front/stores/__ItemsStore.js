@@ -17,7 +17,7 @@ describe("ItemsStore", () => {
 		ItemsStore.__set__("items", I.fromJS(sampleitems));
 	});
 
-	it("#getFilteredItems() returns a filtered List", () => {
+	it("#getFilteredItems returns a filtered List of items", () => {
 		const filters = I.fromJS({
 			sortTerm: "job_id",
 			isAsc: false,
@@ -72,7 +72,7 @@ describe("ItemsStore", () => {
 		assert.equal(ItemsStore.getNumberOfItems(), 5);
 	});
 
-	it("#updates the private items List upon a RECEIVE_ALL_ITEMS action", () => {
+	it("#updates the items List upon a RECEIVE_ALL_ITEMS action", () => {
 		const itemAction = {
 			type: "RECEIVE_ALL_ITEMS",
 			data: sampleitems

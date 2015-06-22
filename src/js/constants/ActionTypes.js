@@ -7,10 +7,11 @@ export default keyMirror({
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,
 	"RECEIVE_UPDATED_JOB": null,
+	"RECEIVE_ALL_ITEMS": null,
 	"RECEIVE_SINGLE_ITEM": null,
 	"RECEIVE_UPDATED_ITEM": null,
-	"RECEIVE_ALL_ITEMS": null,
 	"RECEIVE_ALL_PRODUCTS": null,
+	"RECEIVE_SINGLE_PRODUCT": null,
 	"RECEIVE_ALERT": null,
 	"RECEIVE_DELETION_CONFIRMATION": null,
 
@@ -33,6 +34,7 @@ export default keyMirror({
 	"SORT_ONE": null,
 	"SORT_JOBS": null,
 	"SORT_ITEMS": null,
+	"SORT_PRODUCTS": null,
 
 	"SET_START_DATE": null,
 	"SET_END_DATE": null,

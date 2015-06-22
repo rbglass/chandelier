@@ -25,12 +25,11 @@ describe("SingleJobStore", () => {
 		sameVal(SingleJobStore.getJobDetails(), details);
 	});
 
-	it("#getFilters returns a Record of filters", () => {
-		const Filters = I.Record({
+	it("#getFilters returns a Map of filters", () => {
+		const filters = I.Map({
 			sortTerm: "shipping_date",
 			isAsc: false
 		});
-		const filters = new Filters();
 
 		SingleJobStore.__set__("filters", filters);
 
