@@ -20,6 +20,9 @@ export function receiveAllJobs(jobsArray) {
 }
 
 export function receiveNewJob(job) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_JOB_CREATION_CONFIRMATION
+	});
 	RouterContainer.get().transitionTo("singlejob", {id: job.job_id});
 }
 
@@ -31,7 +34,6 @@ export function receiveSingleJob(jobObject) {
 }
 
 export function receiveUpdatedJob(jobObject) {
-	console.log(jobObject);
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_UPDATED_JOB,
 		data: jobObject

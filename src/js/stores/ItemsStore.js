@@ -10,7 +10,7 @@ import * as FilterUtils from "../utils/FilterUtils";
 // TODO: Eventually set up a 'DefaultsStore'/'PreferencesStore'
 const emptyFilters = I.fromJS({
 	sortTerm: "shipping_date",
-	isAsc: false,
+	isAsc: true,
 	filterBy: "",
 	dateField: "shipping_date",
 	startDate: "",
@@ -101,7 +101,7 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.FILTER_BY:
+		case ActionTypes.FILTER_ITEMS_BY:
 				filters = filters.set("filterBy", action.data);
 				ItemsStore.emitChange();
 				break;
@@ -116,17 +116,17 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.SET_START_DATE:
+		case ActionTypes.SET_ITEMS_START_DATE:
 				filters = filters.set("startDate", action.data);
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.SET_END_DATE:
+		case ActionTypes.SET_ITEMS_END_DATE:
 				filters = filters.set("endDate", action.data);
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.RESTRICT_TO:
+		case ActionTypes.RESTRICT_ITEMS_TO:
 				if (filters.hasIn(["restrictions", action.data.key])) {
 					filters = filters.setIn(["restrictions", action.data.key], I.fromJS(action.data));
 				}

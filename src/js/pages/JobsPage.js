@@ -48,14 +48,16 @@ class JobsPage extends Component {
 				</NavBar>
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={SharedActionCreators.setFilter}
-						setStartDate={SharedActionCreators.setStartDate}
-						setEndDate={SharedActionCreators.setEndDate}
-						restrictTo={SharedActionCreators.restrictTo}
+						setFilter={JobsActionCreators.setFilter}
+						setStartDate={JobsActionCreators.setStartDate}
+						setEndDate={JobsActionCreators.setEndDate}
+						restrictTo={JobsActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
 						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
 						changePage={SharedActionCreators.changePageNumber} >
-						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>+</button>
+						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
+							New Job
+						</button>
 					</Filter>
 					<div className="table-container">
 						<Table selections={this.props.selections}
@@ -104,14 +106,15 @@ export default connectToStores([
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm link",       type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow1 semi", type: "text",   onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "",                  type: "text",   onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",    "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "order_type",    display: "Order Type",    "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow",       type: "date",   onChange: SharedActionCreators.changeDetails },
-		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow",       type: "select", onChange: SharedActionCreators.changeDetails },
-		{ key: "parts_status",  display: "Parts Status",  "className": "",                  type: "select", onChange: SharedActionCreators.changeDetails }
+		{ key: "job_id",        display: "Job #",         "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow1 semi",        type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",       "className": "",                         type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "order_type",    display: "Order Type",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow",              type: "date",     onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow",              type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "parts_status",  display: "Parts Status",  "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "notes",         display: "Notes",         "className": "u-flex-grow3", maxRows: 3, type: "textarea", onChange: SharedActionCreators.changeDetails }
 	],
 	presetScheme: [
 		{
@@ -123,14 +126,14 @@ JobsPage.defaultProps = {
 		{
 			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
-				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
+				JobsActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
-				SharedActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
 			]
 		}
 	],

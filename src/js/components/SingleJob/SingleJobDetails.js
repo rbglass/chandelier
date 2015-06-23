@@ -104,10 +104,11 @@ export default class SingleJobDetails extends Component {
 					})
 				}
 				<div className="job-details-column">
-					<div className="job-details-field">
+					<div className="job-details-field job-buttons">
 						<a href={`/api/jobs/${details.get("job_id")}?pdf=true`} target="_blank">
 							<input className="pdfButton" type="button" value="PDF"/>
 						</a>
+						{this.props.children || null}
 					</div>
 				</div>
 			</div>

@@ -25,7 +25,7 @@ var handler = {
 	getJobsTable : function(request, reply) {
 
 		var sortBy = request.query.field || "shipping_date";
-		var sortDir = request.query.asc === "true" ? "ASC" : "DESC";
+		var sortDir = request.query.asc === "false" ? "DESC" : "ASC";
 		var sortString = sortBy + " " + sortDir;
 
 		pg.connect(conString, function(err, client, done) {
@@ -63,7 +63,7 @@ var handler = {
 			parts_status: 			entry.parts_status || "",
 			parts_notes:        entry.parts_notes || "",
 			invoice_notes:      entry.invoice_notes || "",
-			payment:            entry.payment || "Awaiting Payment",
+			payment:            entry.payment || "",
 			notes:              entry.notes || "",
 			createdat: 		new Date(),
 			updatedat: 		new Date()
@@ -134,7 +134,6 @@ var handler = {
 
 			client.query(string + "WHERE job_id=($1) RETURNING *", [job_id].concat(items), function(errInsert, info, res) {
 				done();
-				console.log(items[14], info.rows[0].shipping_date, info.rows[0].shipping_date.toISOString());
 				if (errInsert) {
 					console.log(errInsert);
 					return reply(errInsert).code(400);
@@ -215,7 +214,7 @@ var handler = {
 	getJobItemsTable : function(request, reply) {
 
 		var sortBy = request.query.field || "shipping_date";
-		var sortDir = request.query.asc === "true" ? "ASC" : "DESC";
+		var sortDir = request.query.asc === "false" ?  "DESC" : "ASC";
 		var sortString = sortBy + " " + sortDir;
 
 		pg.connect(conString, function(err, client, done) {

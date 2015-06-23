@@ -24,9 +24,6 @@ const onReceivingAction = action => {
 	let isClientAction = /CHANGE/.test(action.type);
 
 	if (isServerAction) {
-		if (action.type === ActionTypes.RECEIVE_ALERT) {
-			alert = action.data;
-		}
 		isUnsaved = false;
 		loadingTracker.pop();
 	} else if (isClientAction) {
@@ -34,6 +31,12 @@ const onReceivingAction = action => {
 	} else if (action.type === ActionTypes.IS_LOADING) {
 		isUnsaved = false;
 		loadingTracker.push(1);
+	}
+
+	if (action.type === ActionTypes.RECEIVE_ALERT) {
+		alert = action.data;
+	} else {
+		alert = {};
 	}
 	AlertStore.emitChange();
 };

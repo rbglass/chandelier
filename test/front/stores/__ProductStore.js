@@ -112,7 +112,7 @@ describe("ProductStore", () => {
 		});
 
 		const productWeGotBack = ProductStore.getPrettyProducts()
-																					.getIn(["Ceiling Plate", "products"])
+																					.get("Ceiling Plate")
 																					.find(p => p.get("name") === newProduct.name);
 
 		sameVal(productWeGotBack, I.fromJS(newProduct));
@@ -138,12 +138,12 @@ describe("ProductStore", () => {
 		assert.equal(productWeGotBack.get(updatedInfo.data.key), updatedInfo.data.value);
 	});
 
-	it("#updates the filterBy filter upon a FILTER_BY action", () => {
+	it("#updates the filterBy filter upon a FILTER_PRODUCTS_BY action", () => {
 		const filterTerm = "JIM";
 		assert.notEqual(ProductStore.getFilters().get("filterBy"), filterTerm);
 
 		onReceivingAction({
-			type: "FILTER_BY",
+			type: "FILTER_PRODUCTS_BY",
 			data: filterTerm
 		});
 

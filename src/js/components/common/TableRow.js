@@ -11,7 +11,8 @@ import isUsefulTag from "../../utils/isUsefulTag";
 export default class TableRow extends Component {
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.cells !== this.props.cells;
+		let shouldIt = nextProps.cells !== this.props.cells;
+		return shouldIt;
 	}
 
 	handleNumFocus(e) {
@@ -40,7 +41,8 @@ export default class TableRow extends Component {
 			switch (cell.type) {
 
 				case "textarea":
-						input = <TextArea value={cellValue} useCacheForDOMMeasurements={false} minRows={2}/>;
+						input = <TextArea value={cellValue} useCacheForDOMMeasurements={true}
+											minRows={2} maxRows={cell.maxRows}/>;
 						break;
 
 				case "number":

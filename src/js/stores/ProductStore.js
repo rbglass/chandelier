@@ -59,7 +59,7 @@ const onReceivingAction = action => {
 		case ActionTypes.RECEIVE_ALL_PRODUCTS:
 				let uniqueTypes = {};
 				action.data.forEach(e => uniqueTypes[e.type] = true);
-				selections = selections.set("type", I.List(Object.keys(uniqueTypes)));
+				selections = selections.set("type", I.List(Object.keys(uniqueTypes).sort()));
 
 				products = I.fromJS(action.data);
 				ProductStore.emitChange();
@@ -72,7 +72,6 @@ const onReceivingAction = action => {
 
 		case ActionTypes.CHANGE_SINGLE_PRODUCT:
 				let d = action.data;
-				console.log(d)
 				products = products.map(p =>
 					p.get("id") === d.id ?
 						p.set(d.key, d.value) :
@@ -81,7 +80,7 @@ const onReceivingAction = action => {
 				ProductStore.emitChange();
 				break;
 
-		case ActionTypes.FILTER_BY:
+		case ActionTypes.FILTER_PRODUCTS_BY:
 				filters = filters.set("filterBy", action.data);
 				ProductStore.emitChange();
 				break;
@@ -96,7 +95,7 @@ const onReceivingAction = action => {
 				ProductStore.emitChange();
 				break;
 
-		case ActionTypes.RESTRICT_TO:
+		case ActionTypes.RESTRICT_PRODUCTS_TO:
 				if (filters.hasIn(["restrictions", action.data.key])) {
 					filters = filters.setIn(["restrictions", action.data.key], I.fromJS(action.data));
 				}

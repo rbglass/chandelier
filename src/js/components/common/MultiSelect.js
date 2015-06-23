@@ -36,7 +36,7 @@ export default class MultiSelect extends Component {
 					value={selected.toJS().options || this.props.selections.toJS()}
 					onChange={this.selectChange.bind(this)} >
 						{this.props.selections.map(opt => {
-								return <option key={opt}>{opt.toString()}</option>;
+								return <option key={opt}>{opt}</option>;
 						})}
 				</select>
 			</div>

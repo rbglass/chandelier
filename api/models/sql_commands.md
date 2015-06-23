@@ -1,6 +1,7 @@
 // Edit headers to match defined ones
 // NOTE: DELETE COLUMNS IN GOOGLE SHEETS WHICH ARE EMPTY/NOT USED
 // Also, potentially add 'createdat date' column
+// SET DEFAULT FOR STRINGS TO ''
 
 CREATE TABLE jobs(job_id bigint,client text,project text,client_ref text,job_status text,order_type text,updatedat date,shipping_date date,shipping_notes text,parts_status text,parts_notes text,invoice_notes text,payment text,notes text);
 
