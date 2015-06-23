@@ -21,14 +21,10 @@ module.exports = {
 
 		products.forEach(function(product) {
 			var isAlreadySeen = formattedProducts[product.type];
-
 			if (isAlreadySeen) {
-				formattedProducts[product.type].products.push(product);
+				formattedProducts[product.type].push(product);
 			} else {
-				formattedProducts[product.type] = {
-					saleable: product.saleable,
-					products: [product]
-				};
+				formattedProducts[product.type] = [product];
 			}
 
 		});

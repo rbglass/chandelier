@@ -35,13 +35,15 @@ const onReceivingAction = action => {
 				// Can be better functionally done
 				typesOfProduct.forEach(productType => {
 					let batch = products.get(productType);
-					let flopped = batch.get("products").map(e => e.get("name"));
+					let saleable = batch.filter(e => e.get("saleable"));
+					selections = selections.updateIn(["product"], list =>
+						list.concat(saleable.map(p => p.get("name")))
+					);
 
-					if (batch.get("saleable") === true) {
-						selections = selections.updateIn(["product"], list => list.concat(flopped));
-					}
-
-					selections = selections.set(productType.toLowerCase(), I.List(flopped));
+					selections = selections.set(
+						productType.toLowerCase(),
+						I.List(batch.map(p => p.get("name")))
+					);
 				});
 
 				SelectionStore.emitChange();
