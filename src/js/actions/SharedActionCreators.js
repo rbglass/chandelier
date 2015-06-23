@@ -27,7 +27,8 @@ export function saveItem(itemId, item) {
 }
 
 export function deleteItem(_, cells) {
-	JobsAPI.deleteSingleItem(cells);
+	const itemId = cells.get("item_id");
+	JobsAPI.deleteSingleItem(itemId);
 }
 
 export function getAllProducts() {
@@ -73,13 +74,22 @@ export function sortItemsBy(field) {
 	});
 }
 
-export function externalSortBy(jobsOrItems, field, currentlyIsAsc) {
+export function sortProductsBy(field) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SORT_PRODUCTS,
+		data: field
+	});
+}
+
+export function externalSortBy(resource, field, currentlyIsAsc) {
 	let thenWeWantAsc;
 
-	if (jobsOrItems === "jobs") {
+	if (resource === "jobs") {
 		sortJobsBy(field);
-	} else {
+	} else if (resource === "items") {
 		sortItemsBy(field);
+	} else if (resource === "products") {
+		sortProductsBy(field);
 	}
 
 	if (currentlyIsAsc === true) {
@@ -87,7 +97,7 @@ export function externalSortBy(jobsOrItems, field, currentlyIsAsc) {
 	} else if (currentlyIsAsc === false) {
 		thenWeWantAsc = true;
 	}
-	JobsAPI.getSortedThings(jobsOrItems, field, thenWeWantAsc);
+	JobsAPI.getSortedThings(resource, field, thenWeWantAsc);
 }
 
 export function setFilter(text) {
@@ -125,7 +135,7 @@ export function restrictTo(key, options) {
 
 export function changePageNumber(n) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.CHANGE_PAGE_NUMBER,
+		type: ActionTypes.SWITCH_PAGE_NUMBER,
 		data: n
 	});
 }

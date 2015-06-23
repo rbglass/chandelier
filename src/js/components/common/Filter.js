@@ -51,12 +51,16 @@ export default class Filter extends Component {
 							setFilter={this.props.setFilter} className={textFilterClassName}
 							placeholder="Filter all by..."
 						/>
-						<DateSelector value={this.props.filters.get("startDate")}
-							onChange={this.props.setStartDate} className={dateFilterClassName}
-							inputClass={"clearable"} label="Earliest shipping date"/>
-						<DateSelector value={this.props.filters.get("endDate")}
-							onChange={this.props.setEndDate} className={dateFilterClassName}
-							inputClass={"clearable"} label="Latest shipping date"/>
+						{ this.props.filters.has("startDate") ?
+								<DateSelector value={this.props.filters.get("startDate")}
+									onChange={this.props.setStartDate} className={dateFilterClassName}
+									inputClass={"clearable"} label="Earliest shipping date"/> : null
+							}
+						{ this.props.filters.has("endDate") ?
+							<DateSelector value={this.props.filters.get("endDate")}
+								onChange={this.props.setEndDate} className={dateFilterClassName}
+								inputClass={"clearable"} label="Latest shipping date"/> : null
+						}
 					</div>
 					<Pager total={this.props.totalPages} current={this.props.currentPage}
 							visiblePages={5} onPageChanged={this.props.changePage}/>
@@ -81,12 +85,18 @@ Filter.propTypes = {
 		endDate     : PropTypes.string,
 		restrictions: IPropTypes.mapOf(IPropTypes.shape({
 				key    : PropTypes.string,
-				options: IPropTypes.listOf(PropTypes.string)
+				options: IPropTypes.listOf(PropTypes.oneOfType([
+					PropTypes.string, PropTypes.number, PropTypes.bool
+					])
+				)
 			})
 		)
 	}),
 
-	selections   : IPropTypes.mapOf(IPropTypes.listOf(PropTypes.string)),
+	selections   : IPropTypes.mapOf(IPropTypes.listOf(PropTypes.oneOfType([
+			PropTypes.string, PropTypes.number, PropTypes.bool
+		])
+	)),
 
 	presetConfig : PropTypes.arrayOf(PropTypes.shape({
 		description: PropTypes.string,

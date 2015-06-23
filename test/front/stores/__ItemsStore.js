@@ -17,7 +17,7 @@ describe("ItemsStore", () => {
 		ItemsStore.__set__("items", I.fromJS(sampleitems));
 	});
 
-	it("#getFilteredItems() returns a filtered List", () => {
+	it("#getFilteredItems returns a filtered List of items", () => {
 		const filters = I.fromJS({
 			sortTerm: "job_id",
 			isAsc: false,
@@ -72,7 +72,7 @@ describe("ItemsStore", () => {
 		assert.equal(ItemsStore.getNumberOfItems(), 5);
 	});
 
-	it("#updates the private items List upon a RECEIVE_ALL_ITEMS action", () => {
+	it("#updates the items List upon a RECEIVE_ALL_ITEMS action", () => {
 		const itemAction = {
 			type: "RECEIVE_ALL_ITEMS",
 			data: sampleitems
@@ -168,7 +168,7 @@ describe("ItemsStore", () => {
 		sameVal(filtersWeGotBack, I.fromJS(newRestrictions));
 	});
 
-	it("#resets the filters Map upon a CLEAR_ITEMS_FILTERS action, asking for selections again", () => {
+	it("#resets the filters Map upon a CLEAR_ITEMS_FILTERS action", () => {
 		const emptyFilters = I.fromJS({
 			"Hello": "Hi",
 			restrictions: {
@@ -181,18 +181,6 @@ describe("ItemsStore", () => {
 			}
 		});
 
-		const selections = I.fromJS({
-			job_status: ["hi", "mate"],
-			order_type: ["nice", "one"]
-		});
-
-		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {
-			return true;
-		});
-		const SelStoreStub = sinon.stub(SelectionStore, "getSelections", () => {
-			return selections;
-		});
-
 		ItemsStore.__set__("emptyFilters", emptyFilters);
 
 		onReceivingAction({
@@ -200,18 +188,8 @@ describe("ItemsStore", () => {
 		});
 
 		const filtersWeGotBack = ItemsStore.getFilters();
-		const filtersWeHopeToGet = emptyFilters.setIn(
-			["restrictions", "job_status", "options"],
-			selections.get("job_status")
-		).setIn(
-			["restrictions", "order_type", "options"],
-			selections.get("order_type")
-		);
 
-		sameVal(filtersWeGotBack, filtersWeHopeToGet);
-
-		dispyStub.restore();
-		SelStoreStub.restore();
+		sameVal(filtersWeGotBack, emptyFilters);
 	});
 
 	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", () => {

@@ -1,8 +1,12 @@
 "use strict";
 import I from "immutable";
+import sinon from "sinon";
 import assert from "assert";
 import rewire from "rewire";
 import { sameVal } from "../setup/utils";
+import ProductStore from "../../../src/js/stores/ProductStore";
+import AppDispatcher from "../../../src/js/dispatchers/AppDispatcher";
+
 
 describe("SelectionStore", function() {
 	let SelectionStore, onReceivingAction;
@@ -52,12 +56,20 @@ describe("SelectionStore", function() {
 			}
 		};
 
+		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {
+			return true;
+		});
+		const SelStoreStub = sinon.stub(ProductStore, "getPrettyProducts", () => {
+			return I.fromJS(testData);
+		});
+
 		onReceivingAction({
 			type: "RECEIVE_ALL_PRODUCTS",
 			data: testData
 		});
 
-		sameVal(SelectionStore.getSelections(), I.Map({
+		const selectionsWeGotBack = SelectionStore.getSelections();
+		sameVal(selectionsWeGotBack, I.Map({
 			product: I.List(["hello mum!", ":)", "tony"]),
 			testitems1: I.List(["hello mum!", ":)"]),
 			testitems2: I.List(["test2", ":("]),

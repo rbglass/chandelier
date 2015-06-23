@@ -25,12 +25,11 @@ describe("SingleJobStore", () => {
 		sameVal(SingleJobStore.getJobDetails(), details);
 	});
 
-	it("#getFilters returns a Record of filters", () => {
-		const Filters = I.Record({
+	it("#getFilters returns a Map of filters", () => {
+		const filters = I.Map({
 			sortTerm: "shipping_date",
 			isAsc: false
 		});
-		const filters = new Filters();
 
 		SingleJobStore.__set__("filters", filters);
 
@@ -126,14 +125,14 @@ describe("SingleJobStore", () => {
 		sameVal(itemWeGotBack.get(itemToChange.key), itemToChange.value);
 	});
 
-	it("#deletes an item from the job.items List upon a RECEIVE_DELETION_CONFIRMATION action", () => {
+	it("#deletes an item from the job.items List upon a RECEIVE_ITEM_DELETION_CONFIRMATION action", () => {
 		const itemToDelete = {
 			id: samplejob.items[0].item_id
 		};
 		const oldLen = SingleJobStore.getSortedItems().size;
 
 		onReceivingAction({
-			type: "RECEIVE_DELETION_CONFIRMATION",
+			type: "RECEIVE_ITEM_DELETION_CONFIRMATION",
 			data: itemToDelete.id
 		});
 

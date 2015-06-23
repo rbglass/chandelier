@@ -37,9 +37,9 @@ describe("PaginationStore", () => {
 		assert.equal(PaginationStore.getOffset(), 300);
 	});
 
-	it("#changes the current page to action.data upon a CHANGE_PAGE_NUMBER action", () => {
+	it("#changes the current page to action.data upon a SWITCH_PAGE_NUMBER action", () => {
 		const nextPageAction = {
-			type: "CHANGE_PAGE_NUMBER",
+			type: "SWITCH_PAGE_NUMBER",
 			data: 4
 		};
 

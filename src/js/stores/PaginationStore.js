@@ -22,7 +22,7 @@ const onReceivingAction = action => {
 
 	switch (action.type) {
 
-		case ActionTypes.CHANGE_PAGE_NUMBER:
+		case ActionTypes.SWITCH_PAGE_NUMBER:
 				currentPage = action.data;
 				PaginationStore.emitChange();
 				break;

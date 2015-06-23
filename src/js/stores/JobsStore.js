@@ -135,9 +135,8 @@ const onReceivingAction = action => {
 
 		case ActionTypes.CLEAR_JOBS_FILTERS:
 				filters = emptyFilters;
-				// DELIBERATE FALLTHROUGH
-				// fuk u eslint i do wat i want
-				// TODO: Refactor so no deliberate fallthrough
+				JobsStore.emitChange();
+				break;
 
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);

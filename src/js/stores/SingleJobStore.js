@@ -61,7 +61,7 @@ const onReceivingAction = action => {
 				SingleJobStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
+		case ActionTypes.RECEIVE_ITEM_DELETION_CONFIRMATION:
 				job = job.updateIn(["items"], list => list.filterNot(jobitem =>
 					jobitem.get("item_id") === action.data
 				));

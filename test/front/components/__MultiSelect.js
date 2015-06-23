@@ -94,7 +94,7 @@ describe("MultiSelect", () => {
 		sameVal(currentOptions.get("options"), selections);
 	});
 
-	it("#should render a multi-select, with a value determined by selected.option", () => {
+	it("#should render a multi-select, with a value determined by selected.options", () => {
 		const selected = I.fromJS({
 			key: key,
 			options: ["met", "central"]
@@ -111,6 +111,26 @@ describe("MultiSelect", () => {
 		// How to get value of multiselect???
 		assert(select.props.multiple);
 		assert.deepEqual(select.props.value, selected.get("options").toArray());
+		assert.equal(select.props.children.size, 5);
+
+	});
+
+	it("#if a selected key has no accompanying option, it selects all", () => {
+		const selected = I.fromJS({
+			key: key
+		});
+
+		const RenderedComponent = TestUtils.renderIntoDocument(
+			<MultiSelect onSelect={onSelect} selected={selected} selections={selections}/>
+		);
+		const select = TestUtils.findRenderedDOMComponentWithTag(
+			RenderedComponent,
+			"select"
+		);
+
+		// How to get value of multiselect???
+		assert(select.props.multiple);
+		assert.deepEqual(select.props.value, selections.toArray());
 		assert.equal(select.props.children.size, 5);
 
 	});

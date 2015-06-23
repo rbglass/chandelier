@@ -40,7 +40,7 @@ export default class TableRow extends Component {
 			switch (cell.type) {
 
 				case "textarea":
-						input = <TextArea value={cellValue} useCacheForDOMMeasurements={true} minRows={2}/>;
+						input = <TextArea value={cellValue} useCacheForDOMMeasurements={false} minRows={2}/>;
 						break;
 
 				case "number":
@@ -69,6 +69,11 @@ export default class TableRow extends Component {
 						);
 						break;
 
+				case "checkbox":
+						input = <input type="checkbox" checked={cellValue}
+											value={cellValue}/>;
+						break;
+
 				case "button":
 						input = (
 							<button className={`btn ${cell.inputClassName}`}
@@ -93,7 +98,7 @@ export default class TableRow extends Component {
 
 			return (
 				<div className={`table-row-item ${cell.className || ""}`} key={i}
-							onChange={cell.onChange ? ks(cell.key, cell.onChange, cell.isNum) : null}>
+							onChange={cell.onChange ? ks(cell.key, cell.onChange, cell.isNum, cell.isBool) : null}>
 					{input}
 				</div>
 			);

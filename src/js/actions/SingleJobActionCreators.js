@@ -6,7 +6,3 @@ import * as JobsAPI from "../api/JobsAPI";
 export function getSingleJob(jobId) {
 	JobsAPI.getSingleJob(jobId);
 }
-
-export function getPDF(jobId) {
-	JobsAPI.getPDF(jobId);
-}

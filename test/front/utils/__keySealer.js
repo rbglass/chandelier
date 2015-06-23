@@ -26,7 +26,7 @@ describe("keySealer", () =>  {
 		sealed(dummyEvent1);
 	});
 
-	it("#tries to coerce e.target.value into a number", () =>  {
+	it("#tries to coerce e.target.value into a number if isNum arg is true", () =>  {
 		const dummyEvent2 = {
 			target: {
 				value: "1"
@@ -35,8 +35,33 @@ describe("keySealer", () =>  {
 
 		const sealed = keySealer("hi", "nice", (obj) => {
 			assert.equal(obj.value, 1);
-		});
+		}, true);
 
 		sealed(dummyEvent2);
+	});
+
+	it("#uses e.target.checked instead if isBool arg is true", () =>  {
+		const dummyEvent1 = {
+			target: {
+				value: "true"
+			}
+		};
+
+		const dummyEvent2 = {
+			target: {
+				checked: true
+			}
+		};
+
+		const sealed = keySealer("hi", "nice", (obj) => {
+			assert.equal(obj.value, undefined);
+		}, null, true);
+
+		const sealed2 = keySealer("hi", "nice", (obj) => {
+			assert.equal(obj.value, true);
+		}, null, true);
+
+		sealed(dummyEvent1);
+		sealed2(dummyEvent2);
 	});
 });
