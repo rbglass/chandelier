@@ -13,7 +13,7 @@ describe("ProductStore", () => {
 	beforeEach(() => {
 		ProductStore = rewire("../../../src/js/stores/ProductStore");
 		onReceivingAction = ProductStore.__get__("onReceivingAction");
-		ProductStore.__set__("products", I.fromJS(prettyProducts));
+		ProductStore.__set__("products", I.fromJS(uglyProducts));
 	});
 
 	it("#getFilteredProducts returns a filtered List of products", () => {
@@ -57,25 +57,53 @@ describe("ProductStore", () => {
 		assert.equal(ProductStore.getFilters(), filters);
 	});
 
-	it("#updates the products Map upon a RECEIVE_ALL_PRODUCTS action", () => {
+	it("#getNumberOfProducts returns the size of the items List", () => {
+		ProductStore.__set__("productLength", 3);
+		assert.equal(ProductStore.getNumberOfProducts(), 3);
+		ProductStore.__set__("productLength", 5);
+		assert.equal(ProductStore.getNumberOfProducts(), 5);
+	});
+
+	it("#getSelections returns a set of selections specific to products", () => {
+		const selections = I.fromJS({type: [], active: ["hello", "hi"]});
+		ProductStore.__set__("selections", selections);
+		assert.equal(ProductStore.getSelections(), selections);
+	});
+
+	it("#updates the products List upon a RECEIVE_ALL_PRODUCTS action", () => {
 		const productAction = {
 			type: "RECEIVE_ALL_PRODUCTS",
-			data: {}
+			data: []
 		};
 
 		onReceivingAction(productAction);
-		sameVal(ProductStore.getPrettyProducts(), I.fromJS(productAction.data));
+		sameVal(ProductStore.getFilteredProducts(), I.fromJS(productAction.data));
 	});
 
-	it("#updates the products Map upon a RECEIVE_SINGLE_PRODUCT action", () => {
+	it("#updates the selections Map upon a RECEIVE_ALL_PRODUCTS action", () => {
+		const sel = I.fromJS({
+			type: []
+		});
+		ProductStore.__set__("selections", sel);
+
+		const productAction = {
+			type: "RECEIVE_ALL_PRODUCTS",
+			data: [{type: "bling"}]
+		};
+
+		onReceivingAction(productAction);
+		sameVal(ProductStore.getSelections(), sel.set("type", I.List(["bling"])));
+	});
+
+	it("#updates the products List upon a RECEIVE_SINGLE_PRODUCT action", () => {
 		const newProduct = {
 			id: "111",
 			type: "Ceiling Plate",
 			name: "2-Step Murkers",
 			description: null,
-			"active": true,
-			"saleable": true,
-			"sku": null
+			active: true,
+			saleable: true,
+			sku: null
 		};
 
 		onReceivingAction({
@@ -90,24 +118,25 @@ describe("ProductStore", () => {
 		sameVal(productWeGotBack, I.fromJS(newProduct));
 	});
 
-	// it("#updates the respective product upon a CHANGE_SINGLE_PRODUCT action", () => {
-	// 	const updatedInfo = {
-	// 		type: "CHANGE_SINGLE_PRODUCT",
-	// 		data: {
-	// 			id: prettyProducts..job_id,
-	// 			key: "job_status",
-	// 			value: "Packaged"
-	// 		}
-	// 	};
-	// 	onReceivingAction(updatedInfo);
+	it("#updates the respective product upon a CHANGE_SINGLE_PRODUCT action", () => {
+		const updatedInfo = {
+			type: "CHANGE_SINGLE_PRODUCT",
+			data: {
+				id: uglyProducts[0].id,
+				key: "name",
+				value: "Terminator"
+			}
+		};
 
-	// 	const jobsWeGotBack = JobsStore.getFilteredJobs();
-	// 	const jobWeGotBack = jobsWeGotBack.filter((e) => {
-	// 		return e.get("job_id") === updatedInfo.data.id;
-	// 	}).last();
+		onReceivingAction(updatedInfo);
 
-	// 	assert.equal(jobWeGotBack.getIn(["details", updatedInfo.data.key]), updatedInfo.data.value);
-	// });
+		const productsWeGotBack = ProductStore.getFilteredProducts();
+		const productWeGotBack = productsWeGotBack.find(p =>
+			p.get("id") === updatedInfo.data.id
+		);
+
+		assert.equal(productWeGotBack.get(updatedInfo.data.key), updatedInfo.data.value);
+	});
 
 	it("#updates the filterBy filter upon a FILTER_BY action", () => {
 		const filterTerm = "JIM";
@@ -157,5 +186,28 @@ describe("ProductStore", () => {
 		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
 	});
 
+	it("#resets the filters Map upon a CLEAR_PRODUCTS_FILTERS action", () => {
+		const emptyFilters = I.fromJS({
+			"Hello": "Hi",
+			restrictions: {
+				job_status: {
+					key: "job_status"
+				},
+				order_type: {
+					key: "order_type"
+				}
+			}
+		});
+
+		ProductStore.__set__("emptyFilters", emptyFilters);
+
+		onReceivingAction({
+			type: "CLEAR_PRODUCTS_FILTERS"
+		});
+
+		const filtersWeGotBack = ProductStore.getFilters();
+
+		sameVal(filtersWeGotBack, emptyFilters);
+	});
 
 });

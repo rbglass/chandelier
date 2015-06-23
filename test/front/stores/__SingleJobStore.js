@@ -125,14 +125,14 @@ describe("SingleJobStore", () => {
 		sameVal(itemWeGotBack.get(itemToChange.key), itemToChange.value);
 	});
 
-	it("#deletes an item from the job.items List upon a RECEIVE_DELETION_CONFIRMATION action", () => {
+	it("#deletes an item from the job.items List upon a RECEIVE_ITEM_DELETION_CONFIRMATION action", () => {
 		const itemToDelete = {
 			id: samplejob.items[0].item_id
 		};
 		const oldLen = SingleJobStore.getSortedItems().size;
 
 		onReceivingAction({
-			type: "RECEIVE_DELETION_CONFIRMATION",
+			type: "RECEIVE_ITEM_DELETION_CONFIRMATION",
 			data: itemToDelete.id
 		});
 

@@ -444,6 +444,9 @@ var handler = {
 	getProductsTable : function(request, reply) {
 
 		var saleable = request.query.saleable;
+		var sortBy = request.query.field || "name";
+		var sortDir = request.query.asc === "false" ? "DESC" : "ASC";
+		var sortString = sortBy + " " + sortDir;
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
@@ -455,14 +458,14 @@ var handler = {
 			if(saleable) {
 				queryString += " WHERE saleable=true";
 			}
-			queryString += " ORDER BY name ASC";
+			queryString += " ORDER BY " + sortString;
 
 			client.query(queryString, function(getErr, info) {
 				done();
 				if (getErr) {
 					return reply(getErr).code(400);
 				} else {
-					return reply(formatter.products(info.rows));
+					return reply(info.rows);
 				}
 			});
 		});
@@ -476,7 +479,7 @@ var handler = {
 			data.name,
 			data.description || "",
 			data.active || true,
-			data.saleable
+			data.saleable || true
 		];
 
 		pg.connect(conString, function(err, client, done) {
@@ -533,7 +536,7 @@ var handler = {
 				return data[cell];
 			});
 
-			client.query(string + "WHERE item_id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
+			client.query(string + "WHERE id=($1) RETURNING *", [product].concat(items), function(errInsert, info, res) {
 				done();
 				if(errInsert) {
 					return reply().code(400);

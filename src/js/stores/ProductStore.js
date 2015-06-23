@@ -1,13 +1,14 @@
 "use strict";
 import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
+import { products as prettify } from "../../../api/utils/formatter";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import PaginationStore from "./PaginationStore";
 import * as FilterUtils from "../utils/FilterUtils";
 
 const emptyFilters = I.fromJS({
-	sortTerm: "type",
+	sortTerm: "name",
 	isAsc: false,
 	filterBy: "",
 	restrictions: {
@@ -19,24 +20,36 @@ const emptyFilters = I.fromJS({
 
 const keysToSearch = ["name", "description"];
 
-var products = I.Map(),
-		filters = emptyFilters;
+var products = I.List(),
+		productLength = 0,
+		filters = emptyFilters,
+		selections = I.fromJS({
+			type: [],
+			active: [true, false],
+			saleable: [true, false]
+		});
 
 const ProductStore = createStore({
-	getFilteredProducts() {
+	getFilteredProducts(start, end) {
 		let f = filters;
 		// TODO: Lets lazySeq() this
-		const ugly = products.map(p => p.get("products"))
-													.reduce((l, m) => l.concat(m), I.List())
-													.filter(row => FilterUtils.satisfies(row, f.get("restrictions")))
+		const ugly = products.filter(row => FilterUtils.satisfies(row, f.get("restrictions")))
 													.filter(row => FilterUtils.contains(row, f.get("filterBy"), keysToSearch));
-		return ugly;
+
+		productLength = ugly.size;
+		return ugly.slice(start, end);
 	},
 	getPrettyProducts() {
-		return products;
+		return I.fromJS(prettify(products.toJS()));
 	},
 	getFilters() {
 		return filters;
+	},
+	getNumberOfProducts() {
+		return productLength;
+	},
+	getSelections() {
+		return selections;
 	}
 });
 
@@ -44,28 +57,29 @@ const onReceivingAction = action => {
 	switch (action.type) {
 
 		case ActionTypes.RECEIVE_ALL_PRODUCTS:
+				let uniqueTypes = {};
+				action.data.forEach(e => uniqueTypes[e.type] = true);
+				selections = selections.set("type", I.List(Object.keys(uniqueTypes)));
+
 				products = I.fromJS(action.data);
 				ProductStore.emitChange();
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_PRODUCT:
-				products = products.updateIn(
-					[action.data.type, "products"],
-					list => list.push(I.fromJS(action.data))
-				);
+				products = products.push(I.fromJS(action.data));
 				ProductStore.emitChange();
 				break;
 
-		// case ActionTypes.CHANGE_SINGLE_PRODUCT:
-		// 		let d = action.data;
-		// 		products = products.map(type =>
-		// 			type.
-		// 			item.get("id") === d.id ?
-		// 				item.set(d.key, d.value) :
-		// 				item
-		// 		);
-		// 		ProductStore.emitChange();
-		// 		break;
+		case ActionTypes.CHANGE_SINGLE_PRODUCT:
+				let d = action.data;
+				console.log(d)
+				products = products.map(p =>
+					p.get("id") === d.id ?
+						p.set(d.key, d.value) :
+						p
+				);
+				ProductStore.emitChange();
+				break;
 
 		case ActionTypes.FILTER_BY:
 				filters = filters.set("filterBy", action.data);
@@ -82,6 +96,18 @@ const onReceivingAction = action => {
 				ProductStore.emitChange();
 				break;
 
+		case ActionTypes.RESTRICT_TO:
+				if (filters.hasIn(["restrictions", action.data.key])) {
+					filters = filters.setIn(["restrictions", action.data.key], I.fromJS(action.data));
+				}
+				ProductStore.emitChange();
+				break;
+
+		case ActionTypes.CLEAR_PRODUCTS_FILTERS:
+				filters = emptyFilters;
+				ProductStore.emitChange();
+				break;
+
 		default:
 				break;
 	}
@@ -89,4 +115,4 @@ const onReceivingAction = action => {
 
 export default ProductStore;
 
-AppDispatcher.register(onReceivingAction);
+ProductStore.dispatchToken = AppDispatcher.register(onReceivingAction);

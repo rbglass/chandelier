@@ -94,7 +94,7 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_DELETION_CONFIRMATION:
+		case ActionTypes.RECEIVE_ITEM_DELETION_CONFIRMATION:
 				items = items.filterNot(item =>
 					item.get("item_id") === action.data
 				);
@@ -135,9 +135,8 @@ const onReceivingAction = action => {
 
 		case ActionTypes.CLEAR_ITEMS_FILTERS:
 				filters = emptyFilters;
-				// DELIBERATE FALLTHROUGH
-				// fuk u eslint i do wat i want
-				// TODO: Refactor so no deliberate fallthrough
+				ItemsStore.emitChange();
+				break;
 
 		case ActionTypes.RECEIVE_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);

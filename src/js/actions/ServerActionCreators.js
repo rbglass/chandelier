@@ -3,6 +3,8 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as RouterContainer from "../routing/RouterContainer";
 
+
+
 export function receiveSelections(selections) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SELECTIONS,
@@ -43,17 +45,9 @@ export function receiveSingleItem(itemObject) {
 	});
 }
 
-// don't bother with this;
-export function receiveUpdatedItem() {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_UPDATED_ITEM,
-		data: true
-	});
-}
-
 export function deleteSingleItem(res, itemId) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_DELETION_CONFIRMATION,
+		type: ActionTypes.RECEIVE_ITEM_DELETION_CONFIRMATION,
 		data: itemId
 	});
 }
@@ -69,5 +63,25 @@ export function receiveAllProducts(productObj) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ALL_PRODUCTS,
 		data: productObj
+	});
+}
+
+export function receiveSingleProduct(product) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_SINGLE_PRODUCT,
+		data: product
+	});
+}
+
+export function deleteSingleProduct(res, productId) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_PRODUCT_DELETION_CONFIRMATION,
+		data: productId
+	});
+}
+
+export function receiveUpdateConfirmation() {
+	AppDispatcher.dispatch({
+		type: ActionTypes.RECEIVE_UPDATE_CONFIRMATION
 	});
 }

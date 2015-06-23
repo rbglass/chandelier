@@ -3,6 +3,7 @@ import I from "immutable";
 import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
+import ProductStore from "./ProductStore";
 import flop from "../utils/flop";
 
 var selections = I.Map();
@@ -26,17 +27,17 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_ALL_PRODUCTS:
-				// Later move this to a product store
-				// For now, assume always overwrite data;
-				let typesOfProduct = Object.keys(action.data);
+				AppDispatcher.waitFor([ProductStore.dispatchToken]);
+				let products = ProductStore.getPrettyProducts();
+				let typesOfProduct = products.keySeq();
 				selections = selections.set("product", I.List());
 
-				// Better functionally done with a reduce & 'withMutable()' perf optimisations?
+				// Can be better functionally done
 				typesOfProduct.forEach(productType => {
-					let batch = action.data[productType];
-					let flopped = flop(batch.products, "name");
+					let batch = products.get(productType);
+					let flopped = batch.get("products").map(e => e.get("name"));
 
-					if (batch.saleable === true) {
+					if (batch.get("saleable") === true) {
 						selections = selections.updateIn(["product"], list => list.concat(flopped));
 					}
 

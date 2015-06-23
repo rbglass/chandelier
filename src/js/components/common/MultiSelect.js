@@ -19,9 +19,9 @@ export default class MultiSelect extends Component {
 	}
 
 	render() {
-		const isCheckboxChecked = ( this.props.selected.has("options") && this.props.selections &&
-			this.props.selected.get("options").size === this.props.selections.size
-			);
+		const isCheckboxChecked = this.props.selected.has("options") ?
+			(this.props.selections && this.props.selected.get("options").size === this.props.selections.size
+			) : true;
 		const selected = this.props.selected;
 
 		return (
@@ -32,10 +32,11 @@ export default class MultiSelect extends Component {
 						checked={isCheckboxChecked} onChange={this.checkboxChange.bind(this)}
 						id={selected.get("key")}/>
 				</label>
-				<select multiple={true} value={selected.toJS().options}
+				<select multiple={true}
+					value={selected.toJS().options || this.props.selections.toJS()}
 					onChange={this.selectChange.bind(this)} >
 						{this.props.selections.map(opt => {
-								return <option key={opt}>{opt}</option>;
+								return <option key={opt}>{opt.toString()}</option>;
 						})}
 				</select>
 			</div>
@@ -45,9 +46,13 @@ export default class MultiSelect extends Component {
 
 MultiSelect.propTypes = {
 	onSelect: PropTypes.func.isRequired,
-	selections: IPropTypes.listOf(PropTypes.string),
+	selections: IPropTypes.listOf(PropTypes.oneOfType([
+			PropTypes.string, PropTypes.number, PropTypes.bool
+		])),
 	selected: IPropTypes.shape({
 		key: PropTypes.string,
-		options: IPropTypes.listOf(PropTypes.string)
+		options: IPropTypes.listOf(PropTypes.oneOfType([
+			PropTypes.string, PropTypes.number, PropTypes.bool
+		]))
 	})
 };

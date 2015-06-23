@@ -28,6 +28,8 @@ function onReply(successAction, ...etc) {
 export function getSortedThings(endpoint, field, isAsc) {
 	let action = endpoint === "jobs" ?
 									ServerActionCreators.receiveAllJobs :
+								endpoint === "products" ?
+									ServerActionCreators.receiveAllProducts :
 									ServerActionCreators.receiveAllItems;
 
 	SharedActionCreators.startLoading();
@@ -85,12 +87,10 @@ export function saveItem(itemId, immutUpdateObj) {
 	SharedActionCreators.startLoading();
 	request.put(`${items}/${itemId}`)
 					.send(updateObj)
-					.end(onReply(ServerActionCreators.receiveUpdatedItem));
+					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
-export function deleteSingleItem(item) {
-	const itemId = item.get("item_id");
-
+export function deleteSingleItem(itemId) {
 	SharedActionCreators.startLoading();
 	request.del(`${items}/${itemId}`)
 					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
@@ -106,6 +106,21 @@ export function getAllProducts() {
 	SharedActionCreators.startLoading();
 	request.get(products)
 					.end(onReply(ServerActionCreators.receiveAllProducts));
+}
+
+export function createSingleProduct() {
+	SharedActionCreators.startLoading();
+	request.post(products)
+					.end(onReply(ServerActionCreators.receiveSingleProduct));
+}
+
+export function saveProduct(productId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
+	SharedActionCreators.startLoading();
+	request.put(`${products}/${productId}`)
+					.send(updateObj)
+					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
 export function getAllContacts() {
