@@ -57,7 +57,12 @@ class SingleJobPage extends Component {
 				}
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}
-							detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}/>
+						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}>
+						<button className="add-button rounded"
+								onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
+							Add Job Item
+						</button>
+					</SingleJobDetails>
 					<div className="table-container">
 						<Table selections={this.props.selections}
 								filters={this.props.filters}
@@ -67,10 +72,6 @@ class SingleJobPage extends Component {
 								sortFunc={SharedActionCreators.sortBy}
 						/>
 					</div>
-					<button className="add-button"
-							onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
-						+
-					</button>
 				</div>
 			</div>
 		);

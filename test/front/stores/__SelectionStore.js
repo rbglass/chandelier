@@ -42,9 +42,17 @@ describe("SelectionStore", function() {
 
 	it("#updates its internal state if the actiontype is RECEIVE_ALL_PRODUCTS", function() {
 		var testData = {
-			testitems1: [{name: "hello mum!", age: "15"}, {name: ":)"}],
-			TESTITEMS2: [{name: "test2"}, {name: ":("}],
-			testItems3: [{name: "tony"}]
+			testitems1: [
+				{name: "hello mum!", age: "15", active: true, saleable: true},
+				{name: ":)", active: true, saleable: true}
+			],
+			TESTITEMS2: [
+				{name: "test2", active: true, saleable: false},
+				{name: ":(", active: true, saleable: false}
+			],
+			testItems3: [
+				{name: "tony", active: true, saleable: true}
+			]
 		};
 
 		const dispyStub = sinon.stub(AppDispatcher, "waitFor", () => {

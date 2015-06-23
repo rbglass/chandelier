@@ -8,7 +8,7 @@ import SelectionStore from "./SelectionStore";
 
 const emptyFilters = I.fromJS({
 	sortTerm: "shipping_date",
-	isAsc: false,
+	isAsc: true,
 	filterBy: "",
 	dateField: "shipping_date",
 	startDate: "",
@@ -101,7 +101,7 @@ const onReceivingAction = action => {
 				break;
 
 		// Table manipulation
-		case ActionTypes.FILTER_BY:
+		case ActionTypes.FILTER_JOBS_BY:
 				filters = filters.set("filterBy", action.data);
 				JobsStore.emitChange();
 				break;
@@ -116,17 +116,17 @@ const onReceivingAction = action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.SET_START_DATE:
+		case ActionTypes.SET_JOBS_START_DATE:
 				filters = filters.set("startDate", action.data);
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.SET_END_DATE:
+		case ActionTypes.SET_JOBS_END_DATE:
 				filters = filters.set("endDate", action.data);
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.RESTRICT_TO:
+		case ActionTypes.RESTRICT_JOBS_TO:
 				if (filters.hasIn(["restrictions", action.data.key])) {
 					filters = filters.setIn(["restrictions", action.data.key],  I.fromJS(action.data));
 				}

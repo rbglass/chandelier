@@ -8,6 +8,7 @@ export default keyMirror({
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,
 	"RECEIVE_UPDATED_JOB": null,
+	"RECEIVE_JOB_CREATION_CONFIRMATION": null,
 
 	"RECEIVE_ALL_ITEMS": null,
 	"RECEIVE_SINGLE_ITEM": null,
@@ -38,16 +39,23 @@ export default keyMirror({
 
 	// LOCAL IMMUTABLE -> LOCAL IMMUTABLE
 	"SORT_ONE": null,
+
 	"SORT_JOBS": null,
-	"SORT_ITEMS": null,
-	"SORT_PRODUCTS": null,
-
-	"SET_START_DATE": null,
-	"SET_END_DATE": null,
-	"FILTER_BY": null,
-	"RESTRICT_TO": null,
-
-	"CLEAR_ITEMS_FILTERS": null,
+	"SET_JOBS_START_DATE": null,
+	"SET_JOBS_END_DATE": null,
+	"FILTER_JOBS_BY": null,
+	"RESTRICT_JOBS_TO": null,
 	"CLEAR_JOBS_FILTERS": null,
+
+	"SORT_ITEMS": null,
+	"SET_ITEMS_START_DATE": null,
+	"SET_ITEMS_END_DATE": null,
+	"FILTER_ITEMS_BY": null,
+	"RESTRICT_ITEMS_TO": null,
+	"CLEAR_ITEMS_FILTERS": null,
+
+	"SORT_PRODUCTS": null,
+	"FILTER_PRODUCTS_BY": null,
+	"RESTRICT_PRODUCTS_TO": null,
 	"CLEAR_PRODUCTS_FILTERS": null
 });

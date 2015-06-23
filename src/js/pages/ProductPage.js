@@ -56,12 +56,17 @@ class ProductPage extends Component {
 				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={SharedActionCreators.setFilter}
-						restrictTo={SharedActionCreators.restrictTo}
+						setFilter={ProductActionCreators.setFilter}
+						restrictTo={ProductActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
 						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
 						changePage={SharedActionCreators.changePageNumber}
-					/>
+					>
+						<button className="add-button rounded"
+								onClick={ProductActionCreators.createSingleProduct}>
+							Add Product
+						</button>
+					</Filter>
 					<div className="table-container">
 						<Table selections={this.props.selections}
 							filters={this.props.filters}
@@ -71,10 +76,6 @@ class ProductPage extends Component {
 							sortFunc={SharedActionCreators.externalSortBy.bind(null, "products")}
 						/>
 					</div>
-					<button className="add-button"
-							onClick={ProductActionCreators.createSingleProduct}>
-						+
-					</button>
 				</div>
 			</div>
 		);
@@ -116,9 +117,6 @@ export default connectToStores([
 // Code too wide
 ProductPage.defaultProps = {
 	tableScheme: [
-		{ key: "-",             display: "", className: "fixed-col hid",
-					type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, ProductActionCreators.deleteSingleProduct),
-					inputClassName: "btn-left" },
 
 		{ key: "type",        display: "Type", className: "", type: "select", onChange: ProductActionCreators.changeProduct },
 
@@ -135,13 +133,13 @@ ProductPage.defaultProps = {
 					type: "checkbox",   onChange: ProductActionCreators.changeProduct, isBool: true},
 
 		{ key: "sku",         display: "SKU", className: "u-flex-grow2",
-					type: "textarea", onChange: ProductActionCreators.changeProduct }
+					type: "text", onChange: ProductActionCreators.changeProduct }
 	],
 	presetScheme: [
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				ProductActionCreators.clearProductFilters
+				ProductActionCreators.clearProductsFilters
 			]
 		}
 	],

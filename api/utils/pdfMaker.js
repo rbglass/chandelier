@@ -250,6 +250,7 @@ function writeDoc(job, cb) {
 
 		if (itWont) {
 			doc.addPage();
+			doc.moveDown();
 		}
 
 		doc.moveTo(MARGIN, doc.y - INPUT_FONT_SIZE)

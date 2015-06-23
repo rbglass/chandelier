@@ -4,7 +4,7 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
 var currentPage = 0;
-var rowsPerPage = 20;
+var rowsPerPage = 50;
 
 const PaginationStore = createStore({
 	getCurrentPage() {

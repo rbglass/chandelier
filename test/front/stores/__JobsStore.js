@@ -126,12 +126,12 @@ describe("JobsStore", () => {
 		assert.equal(jobWeGotBack.getIn(["details", updatedInfo.data.key]), updatedInfo.data.value);
 	});
 
-	it("#updates the filterBy filter upon a FILTER_BY action", () => {
+	it("#updates the filterBy filter upon a FILTER_JOBS_BY action", () => {
 		const filterTerm = "JIM";
 		assert.notEqual(JobsStore.getFilters().get("filterBy"), filterTerm);
 
 		onReceivingAction({
-			type: "FILTER_BY",
+			type: "FILTER_JOBS_BY",
 			data: filterTerm
 		});
 
@@ -175,35 +175,35 @@ describe("JobsStore", () => {
 		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
 	});
 
-	it("#updates the startDate filter upon a SET_START_DATE action", () => {
+	it("#updates the startDate filter upon a SET_JOBS_START_DATE action", () => {
 		const startDate = "1999-01-01";
 
 		onReceivingAction({
-			type: "SET_START_DATE",
+			type: "SET_JOBS_START_DATE",
 			data: startDate
 		});
 
 		assert.equal(JobsStore.getFilters().get("startDate"), startDate);
 	});
 
-	it("#updates the endDate filter upon a SET_END_DATE action", () => {
+	it("#updates the endDate filter upon a SET_JOBS_END_DATE action", () => {
 		const endDate = "2019-01-01";
 
 		onReceivingAction({
-			type: "SET_END_DATE",
+			type: "SET_JOBS_END_DATE",
 			data: endDate
 		});
 
 		assert.equal(JobsStore.getFilters().get("endDate"), endDate);
 	});
 
-	it("#updates the restrictions object upon a RESTRICT_TO action", () => {
+	it("#updates the restrictions object upon a RESTRICT_JOBS_TO action", () => {
 		const newRestrictions = {
 			key: "job_status",
 			options: ["Accepted", "TBC", "Non-Starter"]
 		};
 		onReceivingAction({
-			type: "RESTRICT_TO",
+			type: "RESTRICT_JOBS_TO",
 			data: newRestrictions
 		});
 		const filtersWeGotBack = JobsStore.getFilters().getIn(["restrictions", newRestrictions.key]);

@@ -6,9 +6,11 @@ import TableRow from "./TableRow";
 
 export default class Table extends Component {
 	shouldComponentUpdate(nextProps) {
-		return ( nextProps.items !== this.props.items ||
-							nextProps.selections !== this.props.selections ||
-							nextProps.filters !== this.props.filters);
+		const shouldIt =  nextProps.items !== this.props.items ||
+											nextProps.selections !== this.props.selections ||
+											nextProps.filters !== this.props.filters;
+
+		return shouldIt;
 	}
 	render() {
 		const rows = this.props.items.map((row, i) => {

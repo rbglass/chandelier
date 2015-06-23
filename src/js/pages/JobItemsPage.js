@@ -61,10 +61,10 @@ class JobItemsPage extends Component {
 				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={SharedActionCreators.setFilter}
-						setStartDate={SharedActionCreators.setStartDate}
-						setEndDate={SharedActionCreators.setEndDate}
-						restrictTo={SharedActionCreators.restrictTo}
+						setFilter={JobItemsActionCreators.setFilter}
+						setStartDate={JobItemsActionCreators.setStartDate}
+						setEndDate={JobItemsActionCreators.setEndDate}
+						restrictTo={JobItemsActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
 						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
 						changePage={SharedActionCreators.changePageNumber}
@@ -131,8 +131,8 @@ JobItemsPage.defaultProps = {
 		{ key: "product",       display: "Product", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem },
 
-		{ key: "description",   display: "Description", otherContent: "pdf", className: "u-flex-grow2",
-					type: "textarea", onChange: SharedActionCreators.changeItem },
+		{ key: "description",   display: "Description", otherContent: "pdf", maxRows: 3,
+					className: "u-flex-grow2", type: "textarea", onChange: SharedActionCreators.changeItem },
 
 		{ key: "job_status",    display: "Job Status", otherContent: "pdf", className: "",
 					type: ""},
@@ -164,7 +164,7 @@ JobItemsPage.defaultProps = {
 		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm",
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
-		{ key: "notes",         display: "Notes", className: "u-flex-grow2",
+		{ key: "notes",         display: "Notes", className: "u-flex-grow2", maxRows: 3,
 					type: "textarea", onChange: SharedActionCreators.changeItem   },
 
 		{ key: "+", 	          display: "", className: "fixed-col hid",
@@ -180,8 +180,8 @@ JobItemsPage.defaultProps = {
 		{
 			description: "Within 2 weeks & job conf/packaged",
 			onSelect: [
-				SharedActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				SharedActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
+				JobItemsActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
 			]
 		}
 	],
