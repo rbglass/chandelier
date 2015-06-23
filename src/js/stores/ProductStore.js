@@ -80,6 +80,13 @@ const onReceivingAction = action => {
 				ProductStore.emitChange();
 				break;
 
+		case ActionTypes.RECEIVE_PRODUCT_DELETION_CONFIRMATION:
+				products = products.filterNot(product =>
+					product.get("id") === action.data
+				);
+				ProductStore.emitChange();
+				break;
+
 		case ActionTypes.FILTER_PRODUCTS_BY:
 				filters = filters.set("filterBy", action.data);
 				ProductStore.emitChange();

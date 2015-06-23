@@ -5,10 +5,13 @@ import { Link } from "react-router";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
+import Select from "../../../src/js/components/table/Select";
+import NumInput from "../../../src/js/components/table/NumInput";
+import TextInput from "../../../src/js/components/table/TextInput";
 import DateSelector from "../../../src/js/components/common/DateSelector";
 import TextArea from "react-textarea-autosize";
 
-import TableRow from "../../../src/js/components/common/TableRow";
+import TableRow from "../../../src/js/components/table/TableRow";
 import { withContainer, stubRouterContext } from "../setup/utils";
 
 let testId = null;
@@ -30,7 +33,7 @@ const cells = I.Map({
 });
 
 const selections = I.Map({
-	job_status: I.List([1, 2, 3, 4])
+	job_status: I.List(["hello", "hi", "test", "one"])
 });
 
 const primaryKey = "bulb";
@@ -115,19 +118,40 @@ describe("TableRow", () => {
 		kids.forEach((youngling, i) => {
 			let babies = youngling.props.children;
 
-			if (cellConfig[i].type === "link") {
-				assert.deepEqual(babies.type, Link);
-			} else if (cellConfig[i].type === "date") {
-				assert.deepEqual(babies.type, DateSelector);
-			} else if (cellConfig[i].type === "textarea") {
-				assert.deepEqual(babies.type, TextArea);
-			} else if (!babies.type) {
-				assert.equal(!!babies.type, !!cellConfig[i].type);
-			} else if (babies.type !== "input") {
-				assert.equal(babies.type, cellConfig[i].type);
+			switch (cellConfig[i].type) {
+				case "link":
+						assert.deepEqual(babies.type, Link);
+						break;
+
+				case "date":
+						assert.deepEqual(babies.type, DateSelector);
+						break;
+
+				case "textarea":
+						assert.deepEqual(babies.type, TextArea);
+						break;
+
+				case "text":
+						assert.deepEqual(babies.type, TextInput);
+						break;
+
+				case "number":
+						assert.deepEqual(babies.type, NumInput);
+						break;
+
+				case "select":
+						assert.deepEqual(babies.type, Select);
+						break;
+
+				case "button":
+						assert.equal(babies.type, "button");
+						break;
+
+				default:
+						assert.equal(babies.type, undefined);
+						break;
 			}
 		});
-
 	});
 
 	it("#renders each element wrapped in a div with the specified className & keySealed onChange", () => {
@@ -163,7 +187,7 @@ describe("TableRow", () => {
 			"qty-sm"
 		);
 
-		assert.equal(number.props.children.type, "input");
+		assert.equal(number.props.children.type, NumInput);
 		assert.equal(number.props.children.props.value, cells.get("qty_req"));
 	});
 

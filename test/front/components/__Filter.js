@@ -4,11 +4,11 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils }  = React.addons;
 
-import FilterInput from "../../../src/js/components/common/FilterInput";
-import MultiSelect from "../../../src/js/components/common/MultiSelect";
-import Preset from "../../../src/js/components/common/Preset";
+import FilterInput from "../../../src/js/components/filter/FilterInput";
+import MultiSelect from "../../../src/js/components/filter/MultiSelect";
+import Preset from "../../../src/js/components/filter/Preset";
 
-import Filter from "../../../src/js/components/common/Filter";
+import Filter from "../../../src/js/components/filter/Filter";
 
 describe("Filter", () => {
 

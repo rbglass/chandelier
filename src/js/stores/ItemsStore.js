@@ -86,11 +86,11 @@ const onReceivingAction = action => {
 
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
-				items = items.map(item =>
-					item.get("item_id") === d.id ?
-						item.set(d.key, d.value) :
-						item
+				let ind = items.findIndex(item =>
+					item.get("item_id") === d.id
 				);
+
+				items = items.setIn([ind, d.key], d.value);
 				ItemsStore.emitChange();
 				break;
 

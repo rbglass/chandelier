@@ -5,7 +5,7 @@ import { sameVal } from "../setup/utils";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import MultiSelect from "../../../src/js/components/common/MultiSelect";
+import MultiSelect from "../../../src/js/components/filter/MultiSelect";
 
 describe("MultiSelect", () => {
 	let currentOptions = {};

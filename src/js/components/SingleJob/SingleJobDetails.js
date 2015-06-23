@@ -8,8 +8,9 @@ import yyyyMMdd from "../../utils/yyyyMMdd";
 
 export default class SingleJobDetails extends Component {
 	shouldComponentUpdate(nextProps) {
-		return ( nextProps.details !== this.props.details ||
-							nextProps.filters !== this.props.filters );
+		const shouldit = nextProps.details !== this.props.details ||
+											nextProps.selections !== this.props.selections;
+		return shouldit;
 	}
 
 	handleBlur(e) {

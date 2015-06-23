@@ -1,8 +1,8 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import Table from "../components/common/Table";
+import Table from "../components/table/Table";
+import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
-import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
 import connectToStores from "../utils/connectToStores";
 import JobsStore from "../stores/JobsStore";
@@ -107,8 +107,8 @@ export default connectToStores([
 JobsPage.defaultProps = {
 	tableScheme: [
 		{ key: "job_id",        display: "Job #",         "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow1 semi",        type: "text",     onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "",                         type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "client",        display: "Client",        "className": "u-flex-grow1 lg-font",     type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",       "className": "lg-font",                  type: "text",     onChange: SharedActionCreators.changeDetails },
 		{ key: "job_status",    display: "Job Status",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "order_type",    display: "Order Type",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow",              type: "date",     onChange: SharedActionCreators.changeDetails },

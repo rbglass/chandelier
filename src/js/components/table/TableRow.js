@@ -3,7 +3,10 @@ import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
 import TextArea from "react-textarea-autosize";
-import DateSelector from "./DateSelector";
+import NumInput from "./NumInput";
+import TextInput from "./TextInput";
+import Select from "./Select";
+import DateSelector from "../common/DateSelector";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 import isUsefulTag from "../../utils/isUsefulTag";
@@ -11,12 +14,9 @@ import isUsefulTag from "../../utils/isUsefulTag";
 export default class TableRow extends Component {
 
 	shouldComponentUpdate(nextProps) {
-		let shouldIt = nextProps.cells !== this.props.cells;
+		let shouldIt = nextProps.cells !== this.props.cells ||
+										nextProps.selections !== this.props.selections;
 		return shouldIt;
-	}
-
-	handleNumFocus(e) {
-		e.target.select();
 	}
 
 	handleBlur(e) {
@@ -34,9 +34,10 @@ export default class TableRow extends Component {
 		const ks = keySealer.bind(this, this.props.cells.get(this.props.primaryKey));
 
 		const cells = this.props.cellConfig.map((cell, i) => {
-			let cellValue = this.props.cells.get(cell.key);
+			const cellValue = this.props.cells.get(cell.key);
+			const isDisabled = !cell.onChange;
 			let input;
-			let isDisabled;
+			let cellDisplay;
 
 			switch (cell.type) {
 
@@ -46,29 +47,20 @@ export default class TableRow extends Component {
 						break;
 
 				case "number":
-						input = <input type="number" min={0} value={cellValue} onClick={this.handleNumFocus.bind(this)}/>;
+						input = <NumInput value={cellValue} />;
 						break;
 
 				case "text":
-						isDisabled = !cell.onChange;
-						input = <input type="text" readOnly={isDisabled} disabled={isDisabled} value={cellValue} />;
+						input = <TextInput disabled={isDisabled} value={cellValue} />;
 						break;
 
 				case "date":
-						isDisabled = !cell.onChange;
-						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled} />;
+						input = <DateSelector value={cellValue} disabled={isDisabled} />;
 						break;
 
 				case "select":
-						input = (
-							<select value={cellValue}>
-								<option></option>
-								{ this.props.selections.has(cell.key) ?
-									this.props.selections.get(cell.key).map((opt, n) => {
-									return <option key={opt + " " + n}>{opt}</option>;
-								}, this) : "No opts" }
-							</select>
-						);
+						input = <Select value={cellValue}
+											selections={this.props.selections.get(cell.key)} />;
 						break;
 
 				case "checkbox":
@@ -88,13 +80,13 @@ export default class TableRow extends Component {
 						break;
 
 				case "link":
-						let cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
+						cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
 						input = <Link to={cell.to} params={{id: cellValue}}>{cellDisplay}</Link>;
 						break;
 
 				default:
-						cellValue = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
-						input = cellValue;
+						cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
+						input = cellDisplay;
 						break;
 			}
 

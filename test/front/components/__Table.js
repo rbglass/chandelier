@@ -4,9 +4,9 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import Table from "../../../src/js/components/common/Table";
-import TableHeader from "../../../src/js/components/common/TableHeader";
-import TableRow from "../../../src/js/components/common/TableRow";
+import Table from "../../../src/js/components/table/Table";
+import TableHeader from "../../../src/js/components/table/TableHeader";
+import TableRow from "../../../src/js/components/table/TableRow";
 
 describe("Table", () => {
 
