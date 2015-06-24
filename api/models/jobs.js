@@ -23,11 +23,11 @@ module.exports = {
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);
-			console.log(queryString);
-			client.query(queryString, function(jobErr, info) {
+
+			client.query(queryString, function(errGet, info) {
 				done();
 
-				if (jobErr) cb(jobErr);
+				if (errGet) cb(errGet);
 				else        cb(null, info.rows);
 			});
 		});
@@ -46,8 +46,8 @@ module.exports = {
 		connect(function(err, client, done) {
 			if (err) return cb(err);
 
-			client.query(jobString, [id], function(jobErr, jobInfo) {
-				if (jobErr) return cb(jobErr);
+			client.query(jobString, [id], function(errGet, jobInfo) {
+				if (errGet) return cb(errGet);
 
 				client.query(itemString, [id], function(itemErr, itemInfo) {
 					done();
