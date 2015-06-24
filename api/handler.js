@@ -478,7 +478,7 @@ var handler = {
 
 		var data = request.payload;
 		var newProduct = [
-			data.type,
+			data.type || "Other",
 			data.name,
 			data.description || "",
 			data.active || true,

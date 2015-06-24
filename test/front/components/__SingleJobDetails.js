@@ -4,7 +4,7 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils }  = React.addons;
 
-// import SingleJobDetails from "../../../src/js/components/SingleJob/SingleJobDetails";
+// import SingleJobDetails from "../../../src/js/components/details/SingleJobDetails";
 
 // let details = {
 // 	job_id: 1234,
