@@ -221,7 +221,7 @@ select,
 }
 
 .filter {
-  font-size: 20px;
+  font-size: 1rem;
   min-width: 200px;
 }
 
@@ -508,6 +508,11 @@ select[multiple] {
 .table-row-item .btn:hover {
 	opacity: var(--hover);
 	cursor: pointer;
+}
+
+/* Field specific */
+.lg-font input{
+	font-size: 0.8rem;
 }
 
 /* Date Selector */

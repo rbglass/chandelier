@@ -1,10 +1,10 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import Table from "../components/common/Table";
+import Table from "../components/table/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
-import SingleJobDetails from "../components/SingleJob/SingleJobDetails";
+import SingleJobDetails from "../components/details/SingleJobDetails";
 import connectToStores from "../utils/connectToStores";
 import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";

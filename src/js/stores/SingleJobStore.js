@@ -5,6 +5,7 @@ import { genericSort } from "../utils/FilterUtils";
 import objectAssign from "object-assign";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
+import SelectionStore from "./SelectionStore";
 
 const defaultFilters = I.Map({
 	sortTerm: "item_id",
@@ -80,6 +81,7 @@ const onReceivingAction = action => {
 
 		default:
 				break;
+
 	}
 };
 

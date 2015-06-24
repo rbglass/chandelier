@@ -68,12 +68,15 @@ describe("SelectionStore", function() {
 		});
 
 		const selectionsWeGotBack = SelectionStore.getSelections();
-		sameVal(selectionsWeGotBack, I.Map({
-			product: I.List(["hello mum!", ":)", "tony"]),
-			testitems1: I.List(["hello mum!", ":)"]),
-			testitems2: I.List(["test2", ":("]),
-			testitems3: I.List(["tony"])
-		}));
+
+		const selectionsWeWant = I.fromJS({
+			product: (testData.testitems1.concat(testData.testItems3)),
+			testitems1: (testData.testitems1),
+			testitems2: (testData.TESTITEMS2),
+			testitems3: (testData.testItems3)
+		});
+
+		sameVal(selectionsWeGotBack, selectionsWeWant);
 	});
 
 	it("#lowercases productType keys", () => {});

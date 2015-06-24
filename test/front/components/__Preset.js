@@ -3,7 +3,7 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import Preset from "../../../src/js/components/common/Preset";
+import Preset from "../../../src/js/components/filter/Preset";
 
 describe("Preset", () => {
 	let testValue1 = false;

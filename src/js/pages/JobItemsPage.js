@@ -1,8 +1,8 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import Table from "../components/common/Table";
+import Table from "../components/table/Table";
+import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
-import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
 import connectToStores from "../utils/connectToStores";

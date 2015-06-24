@@ -1,8 +1,8 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
-import Table from "../components/common/Table";
+import Table from "../components/table/Table";
+import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
-import Filter from "../components/common/Filter";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
 import connectToStores from "../utils/connectToStores";
@@ -117,7 +117,8 @@ export default connectToStores([
 // Code too wide
 ProductPage.defaultProps = {
 	tableScheme: [
-
+		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",
+				onClick: ModalActionCreators.modifyPendingAction.bind(null, ProductActionCreators.deleteSingleProduct), inputClassName: "btn-left" },
 		{ key: "type",        display: "Type", className: "", type: "select", onChange: ProductActionCreators.changeProduct },
 
 		{ key: "name",       display: "Name", className: "u-flex-grow2",

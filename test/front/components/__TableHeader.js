@@ -4,7 +4,7 @@ import assert from "assert";
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import TableHeader from "../../../src/js/components/common/TableHeader";
+import TableHeader from "../../../src/js/components/table/TableHeader";
 
 describe("TableHeader", () => {
 

@@ -123,6 +123,12 @@ export function saveProduct(productId, immutUpdateObj) {
 					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
+export function deleteSingleProduct(productId) {
+	SharedActionCreators.startLoading();
+	request.del(`${products}/${productId}`)
+					.end(onReply(ServerActionCreators.deleteSingleProduct, productId));
+}
+
 export function getAllContacts() {
 	SharedActionCreators.startLoading();
 	request.get(contacts)

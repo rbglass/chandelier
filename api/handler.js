@@ -54,19 +54,19 @@ var handler = {
 
 		var entry = request.payload;
 		var jobData = {
-			client: 						entry.client || "",
-			project: 						entry.project || "",
-			job_status: 				entry.job_status || "TBC",
-			order_type: 				entry.order_type || "Standard",
-			shipping_date: 			entry.shipping_date,
-			shipping_notes:     entry.shipping_notes || "",
-			parts_status: 			entry.parts_status || "",
-			parts_notes:        entry.parts_notes || "",
-			invoice_notes:      entry.invoice_notes || "",
-			payment:            entry.payment || "",
-			notes:              entry.notes || "",
-			createdat: 		new Date(),
-			updatedat: 		new Date()
+			client: 				entry.client || "",
+			project: 				entry.project || "",
+			job_status: 		entry.job_status || "TBC",
+			order_type: 		entry.order_type || "Standard",
+			shipping_date: 	entry.shipping_date,
+			shipping_notes: entry.shipping_notes || "",
+			parts_status: 	entry.parts_status || "Not Started",
+			parts_notes:    entry.parts_notes || "",
+			invoice_notes:  entry.invoice_notes || "",
+			payment:        entry.payment || "",
+			notes:          entry.notes || "",
+			createdat: 		  new Date(),
+			updatedat: 		  new Date()
 		};
 
 		pg.connect(conString, function(err, client, done) {
@@ -112,6 +112,10 @@ var handler = {
 	updateJob : function(request, reply) {
 
 		var data = request.payload;
+
+		delete data.createdat;
+		data.updatedat = new Date();
+
 		var job_id = request.params.id;
 		var fieldsToUpdate = Object.keys(data);
 		pg.connect(conString, function(err, client, done) {
@@ -187,7 +191,7 @@ var handler = {
 				if (errJob) {
 					return reply().code(404);
 				} else {
-					client.query("SELECT * FROM job_items WHERE job_id=($1)", [id], function(errItems, moreInfo) {
+					client.query("SELECT * FROM job_items WHERE job_id=($1) ORDER BY qty_req DESC", [id], function(errItems, moreInfo) {
 						var jobObj = formatter.jobWithItems(info.rows[0], moreInfo && moreInfo.rows);
 						done();
 
@@ -474,7 +478,7 @@ var handler = {
 
 		var data = request.payload;
 		var newProduct = [
-			data.type,
+			data.type || "Other",
 			data.name,
 			data.description || "",
 			data.active || true,
@@ -550,7 +554,7 @@ var handler = {
 
 	deleteProduct : function(request, reply) {
 
-		var id = request.payload.id;
+		var id = request.params.id;
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
