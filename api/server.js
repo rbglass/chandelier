@@ -1,17 +1,18 @@
 "use strict";
 
-var Hapi    = require("hapi");
 var bell    = require("bell");
-var path    = require("path");
-var server  = new Hapi.Server();
-var handler = require("./handler");
+var Server  = require("hapi").Server;
+var cookie  = require("hapi-auth-cookie");
 var config  = require("./config");
+var routes  = require("./routing/routes");
+
+var server  = new Server();
 
 server.connection({
   port : Number(process.env.PORT) || 8080
 });
 
-server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
+server.register([bell, cookie], function(err) {
 
   if (err) {
     throw new Error("Error registering authorization: ", err);
@@ -36,9 +37,8 @@ server.register([require("bell"), require("hapi-auth-cookie")], function(err) {
   });
 
   server.auth.default("session");
-
+	server.route(routes);
 });
 
-server.route(require("./routes.js"));
 
 module.exports = server;
