@@ -220,13 +220,22 @@ select,
 	height: 30px;
 }
 
+
+.date {
+	margin-left: 5px;
+}
+
 .filter {
   font-size: 1rem;
   min-width: 200px;
 }
 
-.date {
-	margin-left: 5px;
+.filter-clear {
+  opacity: 0;
+}
+
+.filter-clear:hover {
+  opacity: 0.5;
 }
 
 /* Presets */
@@ -344,13 +353,15 @@ select[multiple] {
 }
 
 .table-header .table-row-item.asc:after {
-	content: "^";
+	content: "\2191";
+	font-size: 2rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;
 }
 .table-header .table-row-item.desc:after {
-	content: "v";
+	content: "\2193";
+	font-size: 2rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;

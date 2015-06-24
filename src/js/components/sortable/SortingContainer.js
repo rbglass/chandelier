@@ -54,22 +54,22 @@ class SortingContainer extends Component {
 			<div className="sorting-container">
 				<div className="table-header">
 					<div className="table-row-item qty-sm">
-						qty_req
+						Qty Req
 					</div>
 					<div className="table-row-item">
-						product
+						Product
 					</div>
 					<div className="table-row-item">
-						glass
+						Glass
 					</div>
 					<div className="table-row-item">
-						metal
+						Metal
 					</div>
 					<div className="table-row-item">
-						flex
+						Flex
 					</div>
 					<div className="table-row-item">
-						bulb
+						Bulb
 					</div>
 				</div>
 				{rows.map(row => {
