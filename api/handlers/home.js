@@ -1,6 +1,6 @@
 "use strict";
 var path = require("path");
-var index = path.join(__dirname, "/../public/index.html");
+var index = path.join(__dirname, "/../../public/index.html");
 
 module.exports = {
 
@@ -13,7 +13,7 @@ module.exports = {
 
 	statics: {
 		directory : {
-			path  : path.join(__dirname, "/../public"),
+			path  : path.join(__dirname, "/../../public"),
 			index : false
 		}
 	}

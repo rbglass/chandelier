@@ -1,7 +1,7 @@
 "use strict";
 
 var pg = require("pg");
-var config = require("../config.js");
+var config = require("./config.js");
 
 var conString, client;
 
