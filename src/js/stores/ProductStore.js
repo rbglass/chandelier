@@ -66,7 +66,7 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.RECEIVE_SINGLE_PRODUCT:
-				products = products.push(I.fromJS(action.data));
+				products = products.unshift(I.fromJS(action.data));
 				ProductStore.emitChange();
 				break;
 

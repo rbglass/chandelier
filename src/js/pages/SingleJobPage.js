@@ -4,6 +4,7 @@ import Table from "../components/table/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
+import SortingContainer from "../components/sortable/SortingContainer";
 import SingleJobDetails from "../components/details/SingleJobDetails";
 import connectToStores from "../utils/connectToStores";
 import SingleJobStore from "../stores/SingleJobStore";
@@ -30,6 +31,25 @@ class SingleJobPage extends Component {
 	}
 
 	render() {
+		let modalTitle, modalChildren;
+		const pending = this.props.pendingAction;
+
+		if (pending) {
+			if (pending.type === "DELETE") {
+				modalTitle = "Are you sure you want to delete this job item?";
+				modalChildren = (
+					<button className="confirm-delete" autoFocus
+							onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction.action)}>
+						Confirm
+					</button>
+				);
+			} else if (pending.type === "PDF") {
+				modalTitle = "PDF Job Items Ordering";
+				modalChildren = <SortingContainer rows={this.props.items}
+														job_id={this.props.details.get("job_id")} />;
+			}
+		}
+
 		return (
 			<div>
 				<NavBar title={`RB${this.props.params.id}`} >
@@ -45,19 +65,17 @@ class SingleJobPage extends Component {
 						<a href="/logout">Logout</a>
 					</div>
 				</NavBar>
-				{this.props.pendingAction ?
-					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this job item?"}
+				{pending ?
+					<Modal isVisible={!!pending.type} title={modalTitle}
 							hide={ModalActionCreators.clearPendingAction}>
-						<button className="confirm-delete" autoFocus
-								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
-							Confirm
-						</button>
+						{modalChildren}
 					</Modal> :
-					<span />
+					null
 				}
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}
-						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}>
+						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}
+						pdfAction={ModalActionCreators.modifyPendingAction.bind(null, "PDF", () => {})}>
 						<button className="add-button rounded"
 								onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
 							Add Job Item
@@ -105,7 +123,7 @@ export default connectToStores([SingleJobStore, SelectionStore, AlertStore, Moda
 
 SingleJobPage.defaultProps = {
 	tableScheme: [
-		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
+		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, "DELETE", SharedActionCreators.deleteItem), inputClassName: "btn-left" },
 		{ key: "product",     display: "Product",             otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "description", display: "Description",         otherContent: "pdf", className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",       display: "Glass",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },

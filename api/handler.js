@@ -7,6 +7,7 @@ var objectAssign = require("object-assign");
 var pg = require("pg");
 var pdfMaker = require("./utils/pdfMaker");
 var formatter = require("./utils/formatter");
+var objToArray = require("./utils/objToArray");
 var conString = require("./models/database");
 
 var handler = {
@@ -179,6 +180,8 @@ var handler = {
 		var id = request.params.id;
 		var pdf = request.query.pdf;
 
+		var ordering = objToArray(request.query);
+
 		pg.connect(conString, function(err, client, done) {
 
 			if (err) {
@@ -203,7 +206,7 @@ var handler = {
 						}
 
 						if (pdf) {
-							pdfMaker(jobObj, setReplyAsPDF);
+							pdfMaker(jobObj, ordering, setReplyAsPDF);
 						} else {
 							reply(jobObj);
 						}

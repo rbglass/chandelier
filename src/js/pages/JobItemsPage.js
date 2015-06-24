@@ -4,14 +4,11 @@ import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
-import Modal from "../components/common/Modal";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
 import AlertStore from "../stores/AlertStore";
-import ModalStore from "../stores/ModalStore";
 import PaginationStore from "../stores/PaginationStore";
-import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import { ddMMMyyyy } from "../utils/yyyyMMdd";
@@ -49,16 +46,6 @@ class JobItemsPage extends Component {
 						<a href="/logout">Logout</a>
 					</div>
 				</NavBar>
-				{this.props.pendingAction ?
-					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this job item?"}
-							hide={ModalActionCreators.clearPendingAction}>
-						<button className="confirm-delete" autoFocus
-								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
-							Confirm
-						</button>
-					</Modal> :
-					<span />
-				}
 				<div className="container">
 					<Filter filters={this.props.filters} selections={this.props.selections}
 						setFilter={JobItemsActionCreators.setFilter}
@@ -93,7 +80,6 @@ function getState() {
 	const currentPage = PaginationStore.getCurrentPage();
 	const totalPages = Math.ceil(ItemsStore.getNumberOfItems() / PaginationStore.getRowsPerPage());
 	const selections = SelectionStore.getSelections();
-	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -104,7 +90,6 @@ function getState() {
 		filters,
 		currentPage,
 		totalPages,
-		pendingAction,
 		isLoading,
 		isUnsaved,
 		alert
@@ -113,15 +98,12 @@ function getState() {
 
 export default connectToStores([
 	ItemsStore, SelectionStore,
-	AlertStore, ModalStore, PaginationStore
+	AlertStore, PaginationStore
 ], getState)(JobItemsPage);
 
 // Code too wide
 JobItemsPage.defaultProps = {
 	tableScheme: [
-		{ key: "-",             display: "", className: "fixed-col hid",
-					type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, SharedActionCreators.deleteItem), inputClassName: "btn-left" },
-
 		{ key: "job_id",        display: "Job #", otherContent: "pdf", className: "qty-sm link",
 					type: "link",     formattingFunc: rbPrefixer, to: "singlejob"},
 
@@ -165,10 +147,7 @@ JobItemsPage.defaultProps = {
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
 		{ key: "notes",         display: "Notes", className: "u-flex-grow2", maxRows: 3,
-					type: "textarea", onChange: SharedActionCreators.changeItem   },
-
-		{ key: "+", 	          display: "", className: "fixed-col hid",
-					type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right"}
+					type: "textarea", onChange: SharedActionCreators.changeItem   }
 	],
 	presetScheme: [
 		{

@@ -45,10 +45,10 @@ class ProductPage extends Component {
 					</div>
 				</NavBar>
 				{this.props.pendingAction ?
-					<Modal isVisible={!!this.props.pendingAction} title={"Are you sure you want to delete this product?"}
+					<Modal isVisible={!!this.props.pendingAction.type} title={"Are you sure you want to delete this product?"}
 							hide={ModalActionCreators.clearPendingAction}>
 						<button className="confirm-delete" autoFocus
-								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction)}>
+								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction.action)}>
 							Confirm
 						</button>
 					</Modal> :

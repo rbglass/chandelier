@@ -1,9 +1,15 @@
 "use strict";
 
 export default function compose(...fns) {
-	return (arr) => {
-		return fns.reduce((a, b) => {
-			return b.call(null, a);
-		}, arr);
-	};
+	return arr =>
+		fns.reduce((a, b) =>
+			b.call(this, a)
+		, arr);
+}
+
+export function composel(...fns) {
+	return arr =>
+		fns.reverse().reduce((a, b) =>
+			b.call(this, a)
+		, arr);
 }
