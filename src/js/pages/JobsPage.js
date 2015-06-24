@@ -106,15 +106,16 @@ export default connectToStores([
 
 JobsPage.defaultProps = {
 	tableScheme: [
-		{ key: "job_id",        display: "Job #",         "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
-		{ key: "client",        display: "Client",        "className": "u-flex-grow1 lg-font",     type: "text",     onChange: SharedActionCreators.changeDetails },
-		{ key: "project",       display: "Project",       "className": "lg-font",                  type: "text",     onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
-		{ key: "order_type",    display: "Order Type",    "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_date", display: "Shipping Date", "className": "u-flex-grow",              type: "date",     onChange: SharedActionCreators.changeDetails },
-		{ key: "payment",       display: "Payment", 			"className": "u-flex-grow",              type: "select",   onChange: SharedActionCreators.changeDetails },
-		{ key: "parts_status",  display: "Parts Status",  "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
-		{ key: "notes",         display: "Notes",         "className": "u-flex-grow3", maxRows: 3, type: "textarea", onChange: SharedActionCreators.changeDetails }
+		{ key: "job_id",        display: "Job #",               "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
+		{ key: "client",        display: "Client",              "className": "u-flex-grow1 lg-font",     type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "project",       display: "Project",             "className": "lg-font",                  type: "text",     onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",          "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "order_type",    display: "Order Type",          "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "shipping_date", display: "Shipping Date",       "className": "u-flex-grow",              type: "date",     onChange: SharedActionCreators.changeDetails },
+		{ key: "payment",       display: "Payment", 			      "className": "u-flex-grow",              type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "parts_status",  display: "Parts Status",        "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "qty_items",     display: "Qty", line2: "Items", "className": "qty-xs link centered",     type: "link", to: "singlejob" },
+		{ key: "notes",         display: "Notes",               "className": "u-flex-grow3", maxRows: 3, type: "textarea", onChange: SharedActionCreators.changeDetails }
 	],
 	presetScheme: [
 		{
