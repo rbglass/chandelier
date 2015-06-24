@@ -14,4 +14,13 @@ if (process.env.NODE_ENV === "production") {
 client = new pg.Client(conString);
 client.connect();
 
-module.exports = conString;
+module.exports = function(cb) {
+	pg.connect(conString, function(err, cl, done) {
+		if (err) {
+			done();
+			cb(err);
+		} else {
+			cb(null, cl, done);
+		}
+	});
+};
