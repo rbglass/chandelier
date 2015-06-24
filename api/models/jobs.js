@@ -13,7 +13,7 @@ module.exports = {
 		}
 
 		sortDir = opts.asc === "false" ? "DESC" : "ASC";
-		sortString = "ORDER BY" + sortBy + " " + sortDir + " NULLS LAST";
+		sortString = "ORDER BY " + sortBy + " " + sortDir + " NULLS LAST";
 		mainString = "SELECT jobs.*, sum(job_items.qty_req) AS qty_items " +
 									"FROM jobs " +
 									"LEFT JOIN job_items ON (jobs.job_id = job_items.job_id) " +
@@ -23,7 +23,7 @@ module.exports = {
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);
-
+			console.log(queryString);
 			client.query(queryString, function(jobErr, info) {
 				done();
 
