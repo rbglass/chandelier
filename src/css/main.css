@@ -85,7 +85,7 @@ select,
   flex-direction: row;
   min-width: 200px;
   height: 40px;
-  padding-left: 0.5rem;
+  padding-left: 20px;
   padding-right: 0.5rem;
   border-bottom: 2px solid var(--blueborder);
   justify-content: space-between;
@@ -220,13 +220,22 @@ select,
 	height: 30px;
 }
 
+
+.date {
+	margin-left: 5px;
+}
+
 .filter {
   font-size: 1rem;
   min-width: 200px;
 }
 
-.date {
-	margin-left: 5px;
+.filter-clear {
+  opacity: 0;
+}
+
+.filter-clear:hover {
+  opacity: 0.5;
 }
 
 /* Presets */
@@ -314,11 +323,6 @@ select[multiple] {
 
 /* Header */
 
-.link {
-	font-size: 1.5em;
-  min-width: 75px;
-}
-
 .table-header {
 	display: none;
 	align-items: flex-end;
@@ -344,13 +348,15 @@ select[multiple] {
 }
 
 .table-header .table-row-item.asc:after {
-	content: "^";
+	content: "\2191";
+	font-size: 2rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;
 }
 .table-header .table-row-item.desc:after {
-	content: "v";
+	content: "\2193";
+	font-size: 2rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;
@@ -423,6 +429,7 @@ select[multiple] {
 	overflow-wrap: break-word;
 	word-break: break-all;
 	padding-left: 0.3em;
+	padding-right: 0.2em;
 	word-break: break-word;
 }
 
@@ -447,9 +454,16 @@ select[multiple] {
 		border-left: 1px solid #fff;
 		border-right:1px solid #fff;
 		padding-left: 0.4em;
+		padding-right: 0.2em;
+		min-width: 90px;
 	}
 	.table-row-item:before {
 		content: none;
+	}
+	.table-row-item.fixed-col {
+		width: 20px;
+		min-width: 20px;
+		max-width: 20px;
 	}
 }
 
@@ -522,6 +536,27 @@ select[multiple] {
 /* Field specific */
 .lg-font input{
 	font-size: 0.8rem;
+}
+
+.link {
+	font-size: 1.5em;
+}
+
+.link.centered a {
+  font-size: 1.3rem;
+}
+
+.qty-sm.link {
+  min-width: 75px;
+}
+
+.qty-xs.link {
+  max-width: 50px;
+  min-width: 40px;
+}
+
+.table-body .centered {
+	justify-content: center;
 }
 
 /* Date Selector */

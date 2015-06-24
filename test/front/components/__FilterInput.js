@@ -16,6 +16,13 @@ describe("FilterInput", () => {
 
 	const input = TestUtils.findRenderedDOMComponentWithTag(RenderedComponent, "input");
 	const inputNode = React.findDOMNode(input);
+	const button = TestUtils.findRenderedDOMComponentWithTag(RenderedComponent, "button");
+	const buttonNode = React.findDOMNode(button);
+
+	beforeEach(done => {
+		currentKey = undefined;
+		done();
+	});
 
 	it("#should render an input with specified type, value, class and placeholder", () => {
 
@@ -29,5 +36,11 @@ describe("FilterInput", () => {
 		assert.equal(currentKey, undefined);
 		TestUtils.Simulate.change(inputNode, {target: {value: "h"}});
 		assert.equal(currentKey, "h");
+	});
+
+	it("#should call setFilter with empty string if the clear button is clicked", () => {
+		assert.equal(currentKey, undefined);
+		TestUtils.Simulate.click(buttonNode);
+		assert.equal(currentKey, "");
 	});
 });

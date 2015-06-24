@@ -44,7 +44,7 @@ class SingleJobPage extends Component {
 					</button>
 				);
 			} else if (pending.type === "PDF") {
-				modalTitle = "PDF Job Items Ordering";
+				modalTitle = "Display order of PDF Job Items";
 				modalChildren = <SortingContainer rows={this.props.items}
 														job_id={this.props.details.get("job_id")} />;
 			}

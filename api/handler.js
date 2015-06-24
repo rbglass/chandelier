@@ -26,8 +26,16 @@ var handler = {
 	getJobsTable : function(request, reply) {
 
 		var sortBy = request.query.field || "shipping_date";
+
+		if (sortBy !== "qty_items") {
+			sortBy = "jobs." + sortBy;
+		}
+
 		var sortDir = request.query.asc === "false" ? "DESC" : "ASC";
 		var sortString = sortBy + " " + sortDir;
+		var joinString = "SELECT jobs.*, count(job_items.job_id) as qty_items from jobs " +
+											"left join job_items on (jobs.job_id = job_items.job_id) " +
+											"group by jobs.job_id ";
 
 		pg.connect(conString, function(err, client, done) {
 			if (err) {
@@ -36,7 +44,7 @@ var handler = {
 				return reply().code(400);
 			}
 
-			var queryString = "SELECT * FROM jobs ORDER BY " + sortString + " NULLS LAST";
+			var queryString = joinString + "ORDER BY " + sortString + " NULLS LAST";
 
 			var query = client.query(queryString, function(jobErr, info) {
 				done();
@@ -115,6 +123,7 @@ var handler = {
 		var data = request.payload;
 
 		delete data.createdat;
+		delete data.qty_items;
 		data.updatedat = new Date();
 
 		var job_id = request.params.id;

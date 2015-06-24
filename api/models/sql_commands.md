@@ -73,6 +73,22 @@ CREATE SEQUENCE job_items_item_id_seq
 ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT nextval('job_items_item_id_seq'::regclass);
 ALTER TABLE job_items ADD PRIMARY KEY (item_id) NOT NULL;
 
+CREATE OR REPLACE FUNCTION function_stamp() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE jobs
+    		SET updatedat=NOW()
+    			WHERE job_id=OLD.job_id;
+    			RETURN new;
+END;
+$BODY$
+language plpgsql;
+
+CREATE TRIGGER trig_stamp
+     AFTER UPDATE ON job_items
+     FOR EACH ROW
+     EXECUTE PROCEDURE function_stamp();
+
 -------------------------
 
 CREATE TABLE products(

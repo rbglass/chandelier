@@ -81,7 +81,9 @@ export default class TableRow extends Component {
 
 				case "link":
 						cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
-						input = <Link to={cell.to} params={{id: cellValue}}>{cellDisplay}</Link>;
+						input = <Link to={cell.to} params={{id: this.props.cells.get("job_id")}}>
+											{cellDisplay}
+										</Link>;
 						break;
 
 				default:
