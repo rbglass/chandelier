@@ -542,6 +542,10 @@ select[multiple] {
 	font-size: 1.5em;
 }
 
+.link.centered a {
+  font-size: 1.3rem;
+}
+
 .qty-sm.link {
   min-width: 75px;
 }
