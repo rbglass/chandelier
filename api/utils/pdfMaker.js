@@ -213,7 +213,7 @@ function writeDetails(doc, job) {
 			.text(formattedShippingDate);
 }
 
-function writeDoc(job, cb) {
+function writeDoc(job, itemOrdering, cb) {
 	var doc = new PDFDocument({
 		size: "A4",
 		margin: MARGIN,
@@ -244,7 +244,11 @@ function writeDoc(job, cb) {
 
 	var yPos = doc.y;
 
-	job.items.forEach(function(item, i) {
+	itemOrdering.forEach(function(id, i) {
+		var item = job.items.filter(function(el) {
+			return id === el.item_id;
+		}).pop();
+
 		var lineCount, currentY;
 		var itWont = !isSufficientSpace(item, doc.y);
 

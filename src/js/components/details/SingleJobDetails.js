@@ -106,9 +106,7 @@ export default class SingleJobDetails extends Component {
 				}
 				<div className="job-details-column">
 					<div className="job-details-field job-buttons">
-						<a href={`/api/jobs/${details.get("job_id")}?pdf=true`} target="_blank">
-							<input className="pdfButton" type="button" value="PDF"/>
-						</a>
+						<input className="pdfButton" type="button" value="PDF" onClick={this.props.pdfAction}/>
 						{this.props.children || null}
 					</div>
 				</div>
@@ -121,7 +119,9 @@ SingleJobDetails.propTypes = {
 	details: IPropTypes.map,
 	selections: IPropTypes.mapOf(
 		IPropTypes.listOf(
-			PropTypes.string
+			PropTypes.oneOfType([
+				PropTypes.string, IPropTypes.map
+			])
 		)
 	),
 	detailsConfig: PropTypes.arrayOf(PropTypes.shape({

@@ -12,8 +12,11 @@ describe("ModalStore", () => {
 	});
 
 	it("#getPendingAction returns the to-be-confirmed pending action", () => {
-		const pendingAction = function() {
-			return true;
+		const pendingAction = {
+			type: "test",
+			action: function() {
+				return true;
+			}
 		};
 
 		assert.equal(ModalStore.getPendingAction(), null);
@@ -23,8 +26,16 @@ describe("ModalStore", () => {
 	});
 
 	it("#changes pendingAction to action.data upon a PENDING_ACTION action", () => {
-		const pendingAction = function() {
-			return true;
+		const pendingAction = {
+			type: "test",
+			action: function() {
+				return true;
+			}
+		};
+
+		const pendingAction2 = {
+			type: "test2",
+			action: null
 		};
 
 		const testAction1 = {
@@ -34,7 +45,7 @@ describe("ModalStore", () => {
 
 		const testAction2 = {
 			type: "PENDING_ACTION",
-			data: null
+			data: pendingAction2
 		};
 
 		assert.equal(ModalStore.getPendingAction(), null);
@@ -43,7 +54,7 @@ describe("ModalStore", () => {
 		assert.deepEqual(ModalStore.getPendingAction(), pendingAction);
 
 		onReceivingAction(testAction2);
-		assert.equal(ModalStore.getPendingAction(), null);
+		assert.deepEqual(ModalStore.getPendingAction(), pendingAction2);
 
 	});
 

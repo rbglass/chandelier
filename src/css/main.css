@@ -453,6 +453,15 @@ select[multiple] {
 	}
 }
 
+.modal-dialogue .table-row-item {
+  text-align: left;
+  border-left: 1px dashed grey;
+}
+
+.modal-dialogue .table-header {
+	display: flex;
+	padding: 0;
+}
 
 
 /* table inputs */

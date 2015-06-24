@@ -13,16 +13,17 @@ export default {
 	dialogStyles: {
 		width: "50%",
 		position: "fixed",
-		top: "50%",
+		top: "100px",
 		left: "50%",
-		marginTop: "-200px",
 		marginLeft: "-25%",
 		backgroundColor: "#fff",
 		borderRadius: "2px",
 		zIndex: 100000000000,
 		textAlign: "center",
 		padding: "10px",
-		boxShadow: "0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)"
+		boxShadow: "0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)",
+		maxHeight: "75%",
+		overflowY: "auto"
 	},
 	closeButtonStyle: {
 		cursor: "pointer",

@@ -79,11 +79,6 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_SINGLE_ITEM:
-				items = items.unshift(I.fromJS(action.data));
-				ItemsStore.emitChange();
-				break;
-
 		case ActionTypes.CHANGE_SINGLE_JOB_ITEM:
 				let d = action.data;
 				let ind = items.findIndex(item =>
@@ -91,13 +86,6 @@ const onReceivingAction = action => {
 				);
 
 				items = items.setIn([ind, d.key], d.value);
-				ItemsStore.emitChange();
-				break;
-
-		case ActionTypes.RECEIVE_ITEM_DELETION_CONFIRMATION:
-				items = items.filterNot(item =>
-					item.get("item_id") === action.data
-				);
 				ItemsStore.emitChange();
 				break;
 
