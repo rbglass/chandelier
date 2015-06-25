@@ -88,5 +88,9 @@ module.exports = {
 				next();
 			});
 		});
+	},
+
+	start: function(tableName, done) {
+		this.drop(this[tableName].bind(null, done));
 	}
 };

@@ -1,29 +1,29 @@
 "use strict";
-var assign = require("object-assign");
-var connect = require("../db");
+var assign      = require("object-assign");
+var connect     = require("../db");
 var updateQuery = require("./updateQuery");
+var sortQuery   = require("./sortQuery");
 
 module.exports = {
 
 	getAll: function(opts, cb) {
-		var sortBy, sortDir, sortString, mainString, queryString;
+		var sortBy, sortString, mainString, queryString;
 
 		sortBy = opts.sortBy || "shipping_date";
-		sortDir = opts.asc === "false" ? "DESC" : "ASC";
-		sortString = "ORDER BY " + sortBy + " " + sortDir + " NULLS LAST";
+		sortString = sortQuery(sortBy, opts.asc);
+
 		mainString = "SELECT job_items.*, jobs.shipping_date, jobs.job_status, " +
 									"jobs.payment, jobs.client " +
 									"FROM job_items INNER JOIN jobs " +
 									"ON job_items.job_id = jobs.job_id ";
 
-		queryString = sortString + mainString;
+		queryString = mainString + sortString;
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);
 
 			client.query(queryString, function(errGet, info) {
 				done();
-
 				if (errGet) cb(errGet);
 				else        cb(null, info.rows);
 			});
@@ -76,7 +76,6 @@ module.exports = {
 
 			client.query(insertString, item, function(errInsert, info) {
 				done();
-
 				if (errInsert) cb(errInsert);
 				else           cb(null, assign(itemData, info.rows[0]));
 			});
@@ -102,7 +101,6 @@ module.exports = {
 
 			client.query(q.command, q.data, function(updateErr, info) {
 				done();
-
 				if (updateErr) cb(updateErr);
 				else           cb(null, info.rows[0]);
 			});
@@ -118,9 +116,8 @@ module.exports = {
 
 			client.query(deleteString, [id], function(errDelete, info) {
 				done();
-
 				if (errDelete) cb(errDelete);
-				else           cb(id);
+				else           cb(null id);
 			});
 		});
 	}

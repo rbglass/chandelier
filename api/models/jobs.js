@@ -1,11 +1,12 @@
 "use strict";
 var connect = require("../db");
 var updateQuery = require("./updateQuery");
+var sortQuery   = require("./sortQuery");
 
 module.exports = {
 
 	getAll: function(opts, cb) {
-		var sortBy, sortDir, sortString, mainString, queryString;
+		var sortBy, sortString, mainString, queryString;
 
 		if (opts.sortBy === "qty_items") {
 			sortBy = opts.sortBy;
@@ -13,8 +14,8 @@ module.exports = {
 			sortBy = "jobs." + (opts.sortBy || "shipping_date");
 		}
 
-		sortDir = opts.asc === "false" ? "DESC" : "ASC";
-		sortString = "ORDER BY " + sortBy + " " + sortDir + " NULLS LAST";
+		sortString = sortQuery(sortBy, opts.asc);
+
 		mainString = "SELECT jobs.*, sum(job_items.qty_req) AS qty_items " +
 									"FROM jobs " +
 									"LEFT JOIN job_items ON (jobs.job_id = job_items.job_id) " +

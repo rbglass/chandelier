@@ -1,4 +1,6 @@
 "use strict";
+var path = require("path");
+var csvPath = path.join(__dirname, "/csv");
 
 // TODO: change to just create - copy - edit;
 module.exports = {
@@ -12,7 +14,7 @@ module.exports = {
 							"parts_status text DEFAULT 'Not Started', " +
 							"parts_notes text DEFAULT '', invoice_notes text DEFAULT '', " +
 							"payment text DEFAULT '', notes text DEFAULT '');",
-		copy:  "COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/jobs.csv' CSV HEADER;",
+		copy:  "COPY jobs FROM '" + csvPath + "/jobs.csv' CSV HEADER;",
 		seq:   "CREATE SEQUENCE jobs_job_id_seq " +
 							"INCREMENT 1 " +
 							"MINVALUE 4000 " +
@@ -40,7 +42,7 @@ module.exports = {
 						"ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id) " +
 							"REFERENCES jobs (job_id) MATCH SIMPLE " +
 							"ON UPDATE NO ACTION ON DELETE NO ACTION;",
-		copy: "COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/job_items.csv' CSV HEADER;",
+		copy: "COPY jobs FROM '" + csvPath + "/job_items.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE job_items_item_id_seq " +
 						"INCREMENT 1 " +
 						"MINVALUE 1 " +
@@ -54,12 +56,12 @@ module.exports = {
 	products: {
 		create: "CREATE TABLE products(" +
 							"SKU text DEFAULT '', " +
-							"type text DEFAULT '', " +
+							"type text DEFAULT 'Other', " +
 							"name text DEFAULT '', " +
 							"description text DEFAULT '', " +
 							"active boolean DEFAULT true, " +
 							"saleable boolean DEFAULT true);",
-		copy: "COPY products FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/products.csv' CSV HEADER;",
+		copy: "COPY products FROM '" + csvPath + "/products.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE products_id_seq " +
 						"INCREMENT 1 " +
 						"MINVALUE 1 " +
@@ -68,18 +70,20 @@ module.exports = {
 						"CACHE 1;",
 		pkeyseq: "ALTER TABLE products ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('products_id_seq'::regclass);",
 		pkey: "ALTER TABLE products ADD PRIMARY KEY (id);",
-		clean: "UPDATE products " +
-						"SET name = DEFAULT " +
-						"WHERE name IS NULL;"
+		clean: "UPDATE products SET name = DEFAULT WHERE name IS NULL;" +
+						"UPDATE products SET sku = DEFAULT WHERE sku IS NULL;" +
+						"UPDATE products SET description = DEFAULT WHERE description IS NULL;" +
+						"UPDATE products SET active = DEFAULT WHERE active IS NULL;" +
+						"UPDATE products SET saleable = DEFAULT WHERE saleable IS NULL;"
 	},
 	selections: {
 		create: "CREATE TABLE selections(" +
-							"type text DEFAULT 'Other', " +
+							"type text DEFAULT '', " +
 							"label text DEFAULT '', " +
 							"rank int DEFAULT 0, " +
 							"active boolean DEFAULT true, " +
 							"default_selected boolean DEFAULT false);",
-		copy: "COPY selections FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/selections.csv' CSV HEADER;",
+		copy: "COPY selections FROM '" + csvPath + "/selections.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE selections_id_seq " +
 					"INCREMENT 1 " +
 					"MINVALUE 1 " +

@@ -93,7 +93,7 @@ CREATE TRIGGER trig_stamp
 
 CREATE TABLE products(
 	SKU text DEFAULT '',
-	type text DEFAULT '',
+	type text DEFAULT 'Other',
 	name text DEFAULT '',
 	description text DEFAULT '',
 	active boolean DEFAULT true,
@@ -120,7 +120,7 @@ WHERE
 -----------------------
 
 CREATE TABLE selections(
-	type text DEFAULT 'Other',
+	type text DEFAULT '',
 	label text DEFAULT '',
 	rank int DEFAULT 0,
 	active boolean DEFAULT true,
