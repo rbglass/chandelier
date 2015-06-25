@@ -17,7 +17,7 @@ module.exports = {
 				if(errC) throw (errC);
 				client.query(jobs.copy, function(errP) {
 					if(errP) throw (errP);
-					client.query(jobs.seq + jobs.pkeyseq + jobs.defaultdate, function(errS) {
+					client.query(jobs.seq + jobs.pkeyseq + jobs.defaultdate + jobs.clean, function(errS) {
 						if(errS) throw (errS);
 						done();
 						next();
