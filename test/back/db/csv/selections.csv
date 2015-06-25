@@ -1,0 +1,23 @@
+type,label,rank,active,default_selected
+job_status,TBC,1,Y,Y
+job_status,Non-Starter,2,Y,
+job_status,Confirmed,3,Y,
+job_status,Packaged,4,Y,
+job_status,Dispatched,5,Y,
+job_status,Done,6,Y,
+order_type,Standard,1,Y,Y
+order_type,Bespoke,2,Y,
+order_type,RB Parts,3,Y,
+order_type,Loan or Press,4,Y,
+parts_status,Not Started,1,Y,Y
+parts_status,Started,2,Y,
+parts_status,Done,3,Y,
+payment,,1,Y,Y
+payment,Awaiting Payment,2,Y,
+payment,Deposit,3,Y,
+payment,Paid Card,4,Y,
+payment,Paid BACS,5,Y,
+payment,Paid Other,6,Y,
+payment,Non-Starter,7,N,
+contact_type,Customer,1,Y,Y
+contact_type,Supplier,2,Y,

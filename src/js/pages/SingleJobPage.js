@@ -74,8 +74,7 @@ class SingleJobPage extends Component {
 				}
 				<div className="container">
 					<SingleJobDetails details={this.props.details} selections={this.props.selections}
-						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}
-						pdfAction={ModalActionCreators.modifyPendingAction.bind(null, "PDF", () => {})}>
+						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails} >
 						<button className="add-button rounded"
 								onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
 							Add Job Item
@@ -124,6 +123,7 @@ export default connectToStores([SingleJobStore, SelectionStore, AlertStore, Moda
 SingleJobPage.defaultProps = {
 	tableScheme: [
 		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, "DELETE", SharedActionCreators.deleteItem), inputClassName: "btn-left" },
+		{ key: "pdf_rank",    display: "PDF", line2: "Order",                      className: "qty-xs",                  type: "number",   onChange: SharedActionCreators.changeItem },
 		{ key: "product",     display: "Product",             otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "description", display: "Description",         otherContent: "pdf", className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",       display: "Glass",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },

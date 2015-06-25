@@ -36,6 +36,7 @@ var MARGIN = 28,
 
 var PDFDocument = require("pdfkit");
 var LineBreaker = require("linebreak");
+var assign = require("object-assign");
 
 var fieldsWeCareAbout = {
 	product: true,
@@ -95,23 +96,25 @@ function isSufficientSpace(obj, position) {
 	return articleEndPosition < dangerZoneStartsAt;
 }
 
-function indentLineBreaker(description, lineLimit) {
+function indentLineBreaker(description, lineLimit, startingIndent, nextIndent) {
 
 	var breaker = new LineBreaker(description);
 	var last = 0;
 	var lastSlice = 0;
 	var bk = breaker.nextBreak();
 	var lines = "";
-	var prep = "\n   ";
+	var prep = startingIndent || "";
 
 	if (description.length < lineLimit) {
 		return prep.concat(description);
 	}
 	while (bk) {
 		if ((bk.position - last) > lineLimit) {
-			lines += prep.concat(description.slice(last, bk.position - 1));
+			if (last === 0) lineLimit -= nextIndent.length;
+
+			lines += prep.concat(description.slice(last, bk.position));
 			last = bk.position;
-			prep = "\n        ";
+			prep = "\n" + (nextIndent || "");
 		}
 
 		bk = breaker.nextBreak();
@@ -123,11 +126,11 @@ function indentLineBreaker(description, lineLimit) {
 	return lines;
 }
 
-function formatDescription(description, lineLimit) {
+function formatDescription(description, lineLimit, startingIndent, nextIndent) {
 		var initialIndented = description.split("\n");
 
 		var properlyWrapped = initialIndented.map(function(oneLine) {
-				return indentLineBreaker(oneLine, lineLimit);
+				return indentLineBreaker(oneLine, lineLimit, startingIndent, nextIndent);
 		});
     return properlyWrapped.join("");
 }
@@ -156,7 +159,7 @@ function writeAddress(doc) {
 	var FROM_EDGE = RIGHT_EDGE - MARGIN - ADDRESS_WIDTH;
 
 	doc.fontSize(ADDRESS_FONT_SIZE)
-		.text("Unit 7 Great Nothern Works", FROM_EDGE, ADDRESS_LINE)
+		.text("Unit 7 Great Northern Works", FROM_EDGE, ADDRESS_LINE)
 		.text("Hartham Lane")
 		.text("Hertford, Herts")
 		.text("SG14 1QN");
@@ -180,40 +183,59 @@ function drawImage(doc) {
 	doc.image("public/img/logo.jpg", FROM_EDGE, MARGIN, {width: IMAGE_WIDTH});
 }
 
+function wrapDetails(doc, tuple) {
+	var y = doc.y;
+
+	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
+				.font("Bold")
+				.text(tuple[0], MARGIN, y, labelConfig);
+
+	doc.fontSize(INPUT_FONT_SIZE)
+				.font("Helvetica")
+				.text(
+					formatDescription(tuple[1], 17, null, "   ") || " ",
+					MARGIN + 90, y
+				);
+}
+
 function writeDetails(doc, job) {
 	var dateStr = formatDate(new Date());
+	var d = job.details;
 	var formattedShippingDate;
+	var tuples;
 
 	try {
-		formattedShippingDate = formatDate(job.details.shipping_date);
+		formattedShippingDate = formatDate(d.shipping_date);
 	} catch(e) {
 		formattedShippingDate = "TBC";
 	}
 
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
-			.font("Bold")
-			.text("Date: ", MARGIN, DETAILS_LINE)
-			.moveDown()
-			.text("Job #:", labelConfig)
-			.text("Client:", labelConfig)
-			.text("Project:", labelConfig)
-			.text("Client Ref:", labelConfig)
-			.text("Job Status:", labelConfig)
-			.text("Shipping Date:", labelConfig);
+				.font("Bold")
+				.text("Date: ", MARGIN, DETAILS_LINE)
+			.fontSize(INPUT_FONT_SIZE)
+				.font("Helvetica")
+				.text(dateStr, MARGIN + 90, DETAILS_LINE)
+			.moveDown();
 
-	doc.fontSize(INPUT_FONT_SIZE)
-			.font("Helvetica")
-			.text(dateStr, MARGIN + 102, DETAILS_LINE)
-			.moveDown()
-			.text("RB" + job.job_id)
-			.text(job.details.client || " ")
-			.text(job.details.project || " ")
-			.text(job.details.client_ref || " ")
-			.text(job.details.job_status)
-			.text(formattedShippingDate);
+	tuples = [
+		["Job #:", "RB" + job.job_id],
+		["Client:", d.client],
+		["Project:", d.project],
+		["Client Ref:", d.client_ref],
+		["Job Status:", d.job_status],
+		["Shipping Date:", formattedShippingDate]
+	];
+
+	tuples.forEach(function(pair) {
+		wrapDetails(doc, pair);
+	});
+	doc.moveDown();
+
+	return doc.y;
 }
 
-function writeDoc(job, itemOrdering, cb) {
+function writeDoc(job, cb) {
 	var doc = new PDFDocument({
 		size: "A4",
 		margin: MARGIN,
@@ -228,12 +250,12 @@ function writeDoc(job, itemOrdering, cb) {
 	doc.fontSize(TITLE_FONT_SIZE)
 			.text("Specification", MARGIN, TITLE_LINE);
 
-	writeDetails(doc, job);
+	var detailsEndedAt = writeDetails(doc, job);
 	writeAddress(doc);
 
-	var detailsLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
-	var detailsHeight = detailsLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
-	var beginItemHeaders = Math.max(doc.y, ITEM_HEADER_LINE);
+	var deliveryLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
+	var deliveryHeight = deliveryLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
+	var beginItemHeaders = Math.max(doc.y, detailsEndedAt, ITEM_HEADER_LINE);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
@@ -244,11 +266,11 @@ function writeDoc(job, itemOrdering, cb) {
 
 	var yPos = doc.y;
 
-	itemOrdering.forEach(function(id, i) {
-		var item = job.items.filter(function(el) {
-			return id === el.item_id;
-		}).pop();
+	job.items.sort(function(a, b) {
+		return +a.pdf_rank - +b.pdf_rank;
+	});
 
+	job.items.forEach(function(item, i) {
 		var lineCount, currentY;
 		var itWont = !isSufficientSpace(item, doc.y);
 
@@ -268,7 +290,9 @@ function writeDoc(job, itemOrdering, cb) {
 				.text(item.qty_req, MARGIN + 14, currentY)
 				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, currentY)
 				.text(item.description && "- Description: " +
-					formatDescription(item.description, DESCRIPTION_LINE_WRAP) || "")
+					formatDescription(
+						item.description, DESCRIPTION_LINE_WRAP, "\n   ", "        "
+					) || "")
 				.text(item.glass && "- Glass: " + item.glass || "")
 				.text(item.metal && "- Metal: " + item.metal || "")
 				.text(item.flex && "- Flex: " + item.flex || "")

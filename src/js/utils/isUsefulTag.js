@@ -21,6 +21,10 @@ export default function isUsefulTag(tag) {
 			isItUseful = true;
 			break;
 
+		case "button":
+			isItUseful = true;
+			break;
+
 		default:
 			isItUseful = false;
 			break;

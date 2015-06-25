@@ -10,22 +10,20 @@ export default class Select extends Component {
 	}
 
 	render() {
+		const currentValueIfExists = this.props.selections &&
+			this.props.selections.find(opt => this.props.value === opt);
+
 		return (
 			<select value={this.props.value}>
-				<option></option>
+				{ currentValueIfExists === undefined ?
+						<option disabled={true}>{this.props.value}</option> :
+						null
+				}
 				{ this.props.selections ?
 					this.props.selections.map((opt, n) => {
-						let disabled = false;
-						let val = opt;
-
-						if (typeof opt !== "string") {
-							disabled = !opt.get("active");
-							val = opt.get("name");
-						}
-
 					return (
-						<option key={n} disabled={disabled} >
-							{val}
+						<option key={n} >
+							{opt}
 						</option>
 					);
 				}, this) : "No opts" }
@@ -37,11 +35,6 @@ export default class Select extends Component {
 Select.propTypes = {
 	value: PropTypes.string,
 	selections: IPropTypes.listOf(
-		PropTypes.oneOfType([
-			PropTypes.string, IPropTypes.map
-		])
+		PropTypes.string
 	)
 };
-
-// Somewhat hacky solution (temp) to problem of 'inactive'
-// but need-to-be-there options

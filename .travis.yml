@@ -6,3 +6,7 @@ node_js:
   - "0.12"
 script:
   - npm run deploy
+addons:
+  postgresql: "9.3"
+before_script:
+  - cp config/database.yml.travis config/database.yml

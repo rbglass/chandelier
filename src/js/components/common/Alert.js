@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from "react";
 export default class Alert extends Component {
 	render() {
 		const loadStatus = this.props.isLoading ? "loading" : "";
-		const className = `alert-box ${this.props.alert && this.props.alert.type || ""} ${loadStatus}`;
+		const className = `alert-box ${loadStatus}`;
 		var content;
 
 		if (this.props.isLoading) {
@@ -12,7 +12,7 @@ export default class Alert extends Component {
 		} else if (this.props.isUnsaved) {
 			content = "Unsaved changes";
 		} else if (this.props.alert) {
-			content = `${ this.props.alert.message || "" }`;
+			content = `Unsaved changes: ${this.props.alert.details || "" }`;
 		} else {
 			content = <span />;
 		}

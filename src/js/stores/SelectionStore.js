@@ -34,16 +34,16 @@ const onReceivingAction = action => {
 
 				// Can be better functionally done
 				typesOfProduct.forEach(productType => {
-					let batch = products.get(productType);
+					let batch = products.get(productType).filter(e => e.get("active"));
 					let saleable = batch.filter(e => e.get("saleable"));
 
 					selections = selections.updateIn(["product"], list =>
-						list.concat(saleable)
+						list.concat(saleable.map(p => p.get("name")))
 					);
 
 					selections = selections.set(
 						productType.toLowerCase(),
-						I.List(batch)
+						I.List(batch.map(p => p.get("name")))
 					);
 				});
 

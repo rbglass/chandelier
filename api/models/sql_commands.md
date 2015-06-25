@@ -9,7 +9,7 @@ CREATE TABLE jobs(
 	client text DEFAULT '',
 	project text DEFAULT '',
 	client_ref text DEFAULT '',
-	job_status text DEFAULT '',
+	job_status text DEFAULT 'TBC',
 	order_type text DEFAULT '',
 	updatedat date DEFAULT CURRENT_DATE,
 	shipping_date date,
@@ -71,7 +71,11 @@ CREATE SEQUENCE job_items_item_id_seq
 	CACHE 1;
 
 ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT nextval('job_items_item_id_seq'::regclass);
-ALTER TABLE job_items ADD PRIMARY KEY (item_id) NOT NULL;
+ALTER TABLE job_items ADD PRIMARY KEY (item_id);
+ALTER TABLE job_items ADD COLUMN createdat DATE DEFAULT CURRENT_DATE;
+ALTER TABLE job_items ADD COLUMN updatedat DATE DEFAULT CURRENT_DATE;
+ALTER TABLE job_items ADD COLUMN pdf_rank INT DEFAULT 0;
+
 
 CREATE OR REPLACE FUNCTION function_stamp() RETURNS TRIGGER AS
 $BODY$
@@ -93,14 +97,14 @@ CREATE TRIGGER trig_stamp
 
 CREATE TABLE products(
 	SKU text DEFAULT '',
-	type text DEFAULT '',
+	type text DEFAULT 'Other',
 	name text DEFAULT '',
 	description text DEFAULT '',
 	active boolean DEFAULT true,
 	saleable boolean DEFAULT true
 );
 
-COPY products FROM '~/Downloads/rnb/products.csv' CSV HEADER;
+COPY products FROM '/home/james/Downloads/rnb/1000/products.csv' CSV HEADER;
 
 CREATE SEQUENCE products_id_seq
 	INCREMENT 1
@@ -120,14 +124,14 @@ WHERE
 -----------------------
 
 CREATE TABLE selections(
-	type text DEFAULT 'Other',
+	type text DEFAULT '',
 	label text DEFAULT '',
 	rank int DEFAULT 0,
 	active boolean DEFAULT true,
 	default_selected boolean DEFAULT false
 );
 
-COPY selections FROM '~/Downloads/rnb/selections.csv' CSV HEADER;
+COPY selections FROM '/home/james/Downloads/rnb/1000/selections.csv' CSV HEADER;
 
 CREATE SEQUENCE selections_id_seq
 	INCREMENT 1

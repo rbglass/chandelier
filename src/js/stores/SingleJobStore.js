@@ -8,8 +8,8 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
 const defaultFilters = I.Map({
-	sortTerm: "item_id",
-	isAsc: false
+	sortTerm: "pdf_rank",
+	isAsc: true
 });
 
 var job = I.Map({

@@ -1,0 +1,380 @@
+[
+  {
+    "sku":"",
+    "type":"Pendant",
+    "name":"Black Nouveau Bell",
+    "description":"- http://www.rothschildbickers.com/products/black-nouveau/\n- Black glass only\n- Height: 270mm\n- Diameter: 180mm \n- ¬£310.00 RRP",
+    "active":true,
+    "saleable":true,
+    "id":1
+  },
+  {
+    "sku":"",
+    "type":"Pendant",
+    "name":"Flora Pendant Small",
+    "description":"- http://www.rothschildbickers.com/products/flora/\n- Height: 220mm\n- Diameter: 180mm\n- ¬£320.00 RRP",
+    "active":true,
+    "saleable":true,
+    "id":2
+  },
+  {
+    "sku":"",
+    "type":"Pendant",
+    "name":"Heal's Tassel",
+    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "active":true,
+    "saleable":true,
+    "id":3
+  },
+  {
+    "sku":"",
+    "type":"Pendant",
+    "name":"Tiered Light",
+    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "active":true,
+    "saleable":true,
+    "id":4
+  },
+  {
+    "sku":"",
+    "type":"Pendant",
+    "name":"Vintage Light",
+    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "active":true,
+    "saleable":true,
+    "id":5
+  },
+  {
+    "sku":"",
+    "type":"Ceiling Plate",
+    "name":"1-drop Standard Lilleys",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":6
+  },
+  {
+    "sku":"",
+    "type":"Ceiling Plate",
+    "name":"1-Drop Empire",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":7
+  },
+  {
+    "sku":"",
+    "type":"Ceiling Plate",
+    "name":"3-Drop D265mm",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":8
+  },
+  {
+    "sku":"",
+    "type":"Ceiling Plate",
+    "name":"4-Drop D265mm",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":9
+  },
+  {
+    "sku":"",
+    "type":"Ceiling Plate",
+    "name":"Bespoke multi-drop",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":10
+  },
+  {
+    "sku":"",
+    "type":"Flex",
+    "name":"B&W Herringbone ~ 3-Core Round",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":11
+  },
+  {
+    "sku":"",
+    "type":"Flex",
+    "name":"Silver & White Herringbone ~ 3-Core Round",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":12
+  },
+  {
+    "sku":"",
+    "type":"Flex",
+    "name":"Silver ~ 3-Core Round",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":13
+  },
+  {
+    "sku":"",
+    "type":"Flex",
+    "name":"Yellow ~ 3-Core Round",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":14
+  },
+  {
+    "sku":"",
+    "type":"Flex",
+    "name":"Yellow ~ 3-Core Twisted",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":15
+  },
+  {
+    "sku":"",
+    "type":"Bulb",
+    "name":"Incandescent Golfball ~ E14 (SES)",
+    "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
+    "active":true,
+    "saleable":false,
+    "id":16
+  },
+  {
+    "sku":"",
+    "type":"Bulb",
+    "name":"Incandescent Lantern ~ E27 (ES)",
+    "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
+    "active":true,
+    "saleable":false,
+    "id":17
+  },
+  {
+    "sku":"",
+    "type":"Bulb",
+    "name":"Compact Fluorescent ~ E14 (SES)",
+    "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
+    "active":true,
+    "saleable":false,
+    "id":18
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Amber ~ Bubble",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":19
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Amber ~ Diamond",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":20
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Amber ~ Optic",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":21
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Bronze ~ Optic",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":22
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Bronze ~ Plain",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":23
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Cherry ~ Bubble",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":24
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Cherry ~ Diamond",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":25
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Cherry ~ Optic",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":26
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Cherry ~ Plain",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":27
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Clear ~ Bubble",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":28
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Eel ~ Bubble",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":29
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Eel ~ Diamond",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":30
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Eel ~ Optic",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":31
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Eel ~ Plain",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":32
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Steel ~ Plain",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":33
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Tea ~ Bubble",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":34
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Tea ~ Diamond",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":35
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Tea ~ Optic",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":36
+  },
+  {
+    "sku":"",
+    "type":"Glass",
+    "name":"Tea ~ Plain",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":37
+  },
+  {
+    "sku":"",
+    "type":"Metal",
+    "name":"Antique Brass",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":38
+  },
+  {
+    "sku":"",
+    "type":"Metal",
+    "name":"Zinc",
+    "description":"",
+    "active":true,
+    "saleable":false,
+    "id":39
+  },
+  {
+    "sku":"",
+    "type":"Other",
+    "name":"Flex",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":40
+  },
+  {
+    "sku":"",
+    "type":"Other",
+    "name":"Bulb",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":41
+  },
+  {
+    "sku":"",
+    "type":"Other",
+    "name":"Bespoke",
+    "description":"",
+    "active":true,
+    "saleable":true,
+    "id":42
+  }
+]

@@ -1,6 +1,5 @@
 "use strict";
-var pg         = require("pg");
-var conStr     = require("../db");
+var users   = require("../models/users");
 
 module.exports = {
 
@@ -12,30 +11,14 @@ module.exports = {
 			email       : creds.profile.raw.email
 		};
 
-		pg.connect(conStr, function(err, client, done) {
-			var results = [];
-
+		users.getSingle(profile.email, function(err, user) {
 			if (err) {
-				done();
-				console.log("login error: ", err);
+				reply(err);
+			} else {
+				req.auth.session.clear();
+				req.auth.session.set(profile);
+				reply.redirect("/");
 			}
-
-			var query = client.query("SELECT * FROM users WHERE email=($1)", [profile.email]);
-
-			query.on("row", function(row){
-				results.push(row);
-			});
-
-			query.on("end", function() {
-				done();
-				if (results.length > 0) {
-					req.auth.session.clear();
-					req.auth.session.set(profile);
-					return reply.redirect("/");
-				} else if (results.length <= 0) {
-					return reply("You must be an authenticated user to use this application.");
-				}
-			});
 		});
 	},
 

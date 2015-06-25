@@ -118,7 +118,7 @@ export default connectToStores([
 ProductPage.defaultProps = {
 	tableScheme: [
 		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",
-				onClick: ModalActionCreators.modifyPendingAction.bind(null, ProductActionCreators.deleteSingleProduct), inputClassName: "btn-left" },
+				onClick: ModalActionCreators.modifyPendingAction.bind(null, "DELETE", ProductActionCreators.deleteSingleProduct), inputClassName: "btn-left" },
 		{ key: "type",        display: "Type", className: "", type: "select", onChange: ProductActionCreators.changeProduct },
 
 		{ key: "name",       display: "Name", className: "u-flex-grow2",
