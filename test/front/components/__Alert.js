@@ -64,28 +64,10 @@ describe("Alert", () => {
 		assert.notEqual(renderedOutput1.props.children, renderedOutput2.props.children);
 	});
 
-	it("#has a different class depending on the alert type", () => {
-		const ShallowRenderer = TestUtils.createRenderer();
-		ShallowRenderer.render(
-			<Alert isLoading={false} alert={{type: "error"}}/>
-		);
-		const renderedOutput = ShallowRenderer.getRenderOutput();
-
-		const class1 = renderedOutput.props.className;
-
-		ShallowRenderer.render(
-			<Alert isLoading={false} alert={{type: "success"}}/>
-		);
-
-		const class2 = ShallowRenderer.getRenderOutput().props.className;
-
-		assert.notEqual(class1, class2);
-	});
-
 	it("#displays error text if the alert type is 'error'", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
 		ShallowRenderer.render(
-			<Alert isLoading={false} alert={{type: "error", message:"whoops!"}}/>
+			<Alert isLoading={false} alert={{type: "error", details:"whoops!"}}/>
 		);
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 

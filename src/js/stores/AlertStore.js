@@ -36,7 +36,7 @@ const onReceivingAction = action => {
 	if (action.type === ActionTypes.RECEIVE_ALERT) {
 		alert = action.data;
 	} else {
-		alert = {};
+		alert = null;
 	}
 	AlertStore.emitChange();
 };

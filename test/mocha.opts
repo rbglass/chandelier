@@ -2,3 +2,5 @@
 --reporter spec
 --recursive
 --compilers js:babel/register
+--require test/before.js
+--require test/front/setup/setup.js

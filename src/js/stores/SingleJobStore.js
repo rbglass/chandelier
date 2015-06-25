@@ -8,7 +8,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 import SelectionStore from "./SelectionStore";
 
 const defaultFilters = I.Map({
-	sortTerm: "item_id",
+	sortTerm: "qty_req",
 	isAsc: false
 });
 

@@ -15,10 +15,10 @@
     "lint": "eslint **/*.js",
     "live-reload": "live-reload public/ --port 9082",
     "devserve": "NODE_ENV=development nodemon app.js --watch api",
-    "test": "npm run test:back & npm run test:front",
+    "test": "mocha test/**/*.js",
     "test:back": "mocha test/back/**/*.js",
-    "test:front": "mocha test/front/**/*.js --compilers js:babel/register --require test/front/setup/setup.js",
-    "test:fwatch": "mocha test/front/**/*.js --compilers js:babel/register -w src/js/**/*.js --loglevel silent",
+    "test:front": "mocha test/front/**/*.js",
+    "test:fwatch": "mocha test/front/**/*.js -w src/js/**/*.js --loglevel silent",
     "mk": "mkdir public/js & mkdir public/css"
   },
   "repository": {

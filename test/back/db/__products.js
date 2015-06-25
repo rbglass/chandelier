@@ -81,12 +81,12 @@ describe("model - products", () => {
 
 			const theOneToBeInvigorated = {
 				id: theChosenOne,
-				SKU: "a wha me say wagwan rudebwoi"
+				sku: "a wha me say wagwan rudebwoi"
 			};
 
 			products.update(theChosenOne, theOneToBeInvigorated, (err, row) => {
 				assert.equal(err, null);
-				assert.deepEqual(row.sku, theOneToBeInvigorated.SKU);
+				assert.deepEqual(row.sku, theOneToBeInvigorated.sku);
 			done();
 			});
 		});

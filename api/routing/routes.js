@@ -40,8 +40,8 @@ module.exports = ([
 
 	{	path: "/api/items",         method: "GET",           handler: items.getAll      },
 	{	path: "/api/items",         method: "POST",          handler: items.create      },
-	{	path: "/api/items/{item}",  method: "PUT",           handler: items.update      },
-	{	path: "/api/items/{item}",  method: "DELETE",        handler: items.delete      },
+	{	path: "/api/items/{id}",    method: "PUT",           handler: items.update      },
+	{	path: "/api/items/{id}",    method: "DELETE",        handler: items.delete      },
 
 	{	path: "/api/selections",    method: "GET",           handler: selections.getAll },
 

@@ -78,9 +78,13 @@ module.exports = {
 
 	update: function(id, data, cb) {
 
+		if (!data.shipping_date) {
+			return cb("Shipping date cannot be blank");
+		}
+
 		delete data.createdat;
 		delete data.qty_items;
-		data.updatedAt = new Date();
+		data.updatedat = new Date();
 
 		var q = updateQuery("jobs", id, "job_id", data);
 

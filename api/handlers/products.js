@@ -37,7 +37,7 @@ module.exports = {
 	delete: function(req, reply) {
 		var id = req.params.id;
 
-		products.delete(function(err, deletedId) {
+		products.delete(id, function(err, deletedId) {
 			if (err) reply(err).code(400);
 			else     reply(id).code(204);
 		});

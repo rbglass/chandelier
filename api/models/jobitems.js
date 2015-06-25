@@ -24,6 +24,7 @@ module.exports = {
 
 			client.query(queryString, function(errGet, info) {
 				done();
+
 				if (errGet) cb(errGet);
 				else        cb(null, info.rows);
 			});
@@ -76,6 +77,7 @@ module.exports = {
 
 			client.query(insertString, item, function(errInsert, info) {
 				done();
+				console.log(insertString, errInsert);
 				if (errInsert) cb(errInsert);
 				else           cb(null, assign(itemData, info.rows[0]));
 			});
@@ -117,7 +119,7 @@ module.exports = {
 			client.query(deleteString, [id], function(errDelete, info) {
 				done();
 				if (errDelete) cb(errDelete);
-				else           cb(null id);
+				else           cb(null, id);
 			});
 		});
 	}
