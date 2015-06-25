@@ -1,6 +1,7 @@
 "use strict";
 var assign = require("object-assign");
 var connect = require("../db");
+var updateQuery = require("./updateQuery");
 
 module.exports = {
 
@@ -84,7 +85,6 @@ module.exports = {
 	},
 
 	update: function(id, data, cb) {
-		var fieldsToUpdate, stuff, updateString;
 
 		delete data.job_id;
 		delete data.item_id;
@@ -95,23 +95,12 @@ module.exports = {
 		delete data.payment;
 		delete data.client;
 
-		fieldsToUpdate = Object.keys(data);
-		updateString = "UPDATE jobs SET ";
-
-		stuff = fieldsToUpdate.map(function(cell, i) {
-			updateString += cell + "=($" + (i + 2) + ") ";
-			if (i < fieldsToUpdate.length - 1) {
-				updateString += ", ";
-			} else {
-				updateString += "WHERE item_id=($1) RETURNING *";
-			}
-			return data[cell];
-		});
+		var q = updateQuery("job_items", id, "item_id", data);
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);
 
-			client.query(updateString, [id].concat(stuff), function(updateErr, info) {
+			client.query(q.command, q.data, function(updateErr, info) {
 				done();
 
 				if (updateErr) cb(updateErr);
