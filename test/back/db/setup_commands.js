@@ -12,7 +12,7 @@ module.exports = {
 							"parts_status text DEFAULT 'Not Started', " +
 							"parts_notes text DEFAULT '', invoice_notes text DEFAULT '', " +
 							"payment text DEFAULT '', notes text DEFAULT '');",
-		copy:  "\COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/jobs.csv' CSV HEADER;",
+		copy:  "COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/jobs.csv' CSV HEADER;",
 		seq:   "CREATE SEQUENCE jobs_job_id_seq " +
 							"INCREMENT 1 " +
 							"MINVALUE 4000 " +
@@ -40,7 +40,7 @@ module.exports = {
 						"ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id) " +
 							"REFERENCES jobs (job_id) MATCH SIMPLE " +
 							"ON UPDATE NO ACTION ON DELETE NO ACTION;",
-		copy: "\COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/job_items.csv' CSV HEADER;",
+		copy: "COPY jobs FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/job_items.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE job_items_item_id_seq " +
 						"INCREMENT 1 " +
 						"MINVALUE 1 " +
@@ -59,7 +59,7 @@ module.exports = {
 							"description text DEFAULT '', " +
 							"active boolean DEFAULT true, " +
 							"saleable boolean DEFAULT true);",
-		copy: "\COPY products FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/products.csv' CSV HEADER;",
+		copy: "COPY products FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/products.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE products_id_seq " +
 						"INCREMENT 1 " +
 						"MINVALUE 1 " +
@@ -79,7 +79,7 @@ module.exports = {
 							"rank int DEFAULT 0, " +
 							"active boolean DEFAULT true, " +
 							"default_selected boolean DEFAULT false);",
-		copy: "\COPY selections FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/selections.csv' CSV HEADER;",
+		copy: "COPY selections FROM '/home/james/Coding/wesort/chandelier/test/back/db/csv/selections.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE selections_id_seq " +
 					"INCREMENT 1 " +
 					"MINVALUE 1 " +
@@ -94,9 +94,6 @@ module.exports = {
 						"WHERE label IS NULL;"
 	},
 	drop: {
-		all: "DROP TABLE IF EXISTS jobs CASCADE;" +
-					"DROP TABLE IF EXISTS job_items CASCADE;" +
-					"DROP TABLE IF EXISTS products CASCADE;" +
-					"DROP TABLE IF EXISTS selections CASCADE;"
+		all: "DROP OWNED BY test CASCADE"
 	}
 };
