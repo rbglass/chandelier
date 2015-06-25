@@ -43,7 +43,7 @@ module.exports = {
 		}
 
 		jobString  = select("jobs");
-		itemString = select("job_items") + "ORDER BY qty_req DESC";
+		itemString = select("job_items") + "ORDER BY pdf_rank ASC, qty_req DESC";
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);

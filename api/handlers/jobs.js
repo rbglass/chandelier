@@ -32,10 +32,9 @@ module.exports = {
 			}
 
 			var wantsPDF  = req.query.pdf;
-			var ordering  = objToArray(req.query);
 			var prettyJob = formatter.jobWithItems(singleJob, items);
 
-			if (wantsPDF) toPDF(prettyJob, ordering, replyWithPDF);
+			if (wantsPDF) toPDF(prettyJob, replyWithPDF);
 			else          reply(prettyJob);
 		});
 	},

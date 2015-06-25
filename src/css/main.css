@@ -705,6 +705,11 @@ select[multiple] {
 }
 
 /* Flex Utility classes */
+.qty-xs {
+	min-width: 50px;
+	flex-grow: 0.3;
+}
+
 
 .qty-sm {
 	flex-grow: 0.5;

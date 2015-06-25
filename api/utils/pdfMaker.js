@@ -235,7 +235,7 @@ function writeDetails(doc, job) {
 	return doc.y;
 }
 
-function writeDoc(job, itemOrdering, cb) {
+function writeDoc(job, cb) {
 	var doc = new PDFDocument({
 		size: "A4",
 		margin: MARGIN,
@@ -266,11 +266,11 @@ function writeDoc(job, itemOrdering, cb) {
 
 	var yPos = doc.y;
 
-	itemOrdering.forEach(function(id, i) {
-		var item = job.items.filter(function(el) {
-			return id === el.item_id;
-		}).pop();
+	job.items.sort(function(a, b) {
+		return +a.pdf_rank - +b.pdf_rank;
+	});
 
+	job.items.forEach(function(item, i) {
 		var lineCount, currentY;
 		var itWont = !isSufficientSpace(item, doc.y);
 
