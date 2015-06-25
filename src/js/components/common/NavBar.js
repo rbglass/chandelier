@@ -22,17 +22,17 @@ export default class NavBar extends Component {
 				{ this.props.title ?
 					<div className="nav nav-title">
 						{this.props.title}
-					</div> : <span style={{display: "none"}}/>
+					</div> : null
 				}
 				{	this.props.routeConfig ?
 					<div className="nav nav-links">
 						{ this.props.routeConfig.map((linkConfig, i) =>
-								<div key={i} className="nav nav-item">
+								<div key={i} className={`nav nav-item ${linkConfig.display}`}>
 									<Link to={linkConfig.to}>{linkConfig.display}</Link>
 								</div>
 							)
 						} </div>
-					: <span />
+					: null
 				}
 			{children}
 			</div>

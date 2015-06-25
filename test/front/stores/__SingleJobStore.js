@@ -185,9 +185,48 @@ describe("SingleJobStore", () => {
 
 		sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
 		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
-		// sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.sort((a, b) =>
-		// 	b[sortTerm] - a[sortTerm]
-		// )));
 	});
+
+	// it("#rearranges the items List upon a MOVE_ITEM action", () => {
+	// 	const sortTerm = "job_status";
+	// 	const sortTerm2 = "shipping_date";
+	// 	let filters;
+
+	// 	onReceivingAction({
+	// 		type: "MOVE_ITEM",
+	// 		data: sortTerm
+	// 	});
+
+	// 	const filtersWeGotBack = SingleJobStore.getFilters();
+
+	// 	sameVal(filtersWeGotBack.get("sortTerm"), sortTerm);
+	// 	sameVal(filtersWeGotBack.get("isAsc"), false);
+	// 	sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.slice(0).sort((a, b) =>
+	// 		b[sortTerm].localeCompare(a[sortTerm])
+	// 	)));
+
+	// 	onReceivingAction({
+	// 		type: "MOVE_ITEM",
+	// 		data: sortTerm
+	// 	});
+
+	// 	const moreFiltersWeGotBack = SingleJobStore.getFilters();
+
+	// 	sameVal(moreFiltersWeGotBack.get("sortTerm"), sortTerm);
+	// 	sameVal(moreFiltersWeGotBack.get("isAsc"), true);
+	// 	sameVal(SingleJobStore.getSortedItems(), I.fromJS(samplejob.items.slice(0).sort((a, b) =>
+	// 		a[sortTerm].localeCompare(b[sortTerm])
+	// 	)));
+
+	// 	onReceivingAction({
+	// 		type: "MOVE_ITEM",
+	// 		data: sortTerm2
+	// 	});
+
+	// 	const evenMoreFiltersWeGotback = SingleJobStore.getFilters();
+
+	// 	sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
+	// 	sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
+	// });
 
 });

@@ -16,7 +16,7 @@ describe("NavBar", () => {
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
 		const numTitleNodes = renderedOutput.props.children.filter(el => {
-			return el.props && el.props.children === "testing";
+			return el && el.props && el.props.children === "testing";
 		}).length;
 
 		assert.equal(numTitleNodes, 1);
@@ -34,7 +34,7 @@ describe("NavBar", () => {
 		const renderedOutput = ShallowRenderer.getRenderOutput();
 
 		const linkNodes = renderedOutput.props.children.filter(el =>
-			el.props.className === "nav nav-links"
+			el && el.props && el.props.className === "nav nav-links"
 		).pop().props.children[0];
 
 		assert.equal(linkNodes.length, routeConfig.length);
