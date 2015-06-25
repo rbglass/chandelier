@@ -9,4 +9,4 @@ script:
 addons:
   postgresql: "9.3"
 before_script:
-  - cp database.yml.travis config/database.yml
+  - cp config/database.yml.travis config/database.yml
