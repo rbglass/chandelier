@@ -1,8 +1,17 @@
 "use strict";
 import assert from "assert";
 import updateQuery from "../../../api/models/updateQuery";
+import helpers from "./helpers";
 
 describe("#updateQuery", () => {
+
+	before(done => {
+		helpers.drop(helpers.jobs.bind(null, done));
+	});
+
+	after(done => {
+		helpers.drop(done);
+	});
 
 	it("#takes a tablename, id, idField, and data object", () => {
 		assert.equal(updateQuery.length, 4);

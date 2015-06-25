@@ -1,0 +1,15 @@
+type,name,active
+Customer,Ted Baker,Y
+Customer,Ed Bondsman,Y
+Customer,Phil Tester,N
+Customer,Acme Incorporated Limited Company PLC,Y
+Customer,We Sort,Y
+Customer,The Modern House,Y
+Customer,Heals,Y
+Customer,Woolworths,N
+Customer,Walmart,N
+Customer,Starbucks,N
+"Supplier, Customer",Optime Lighting,Y
+Supplier,Birch Engineering,Y
+Supplier,Lilleys,Y
+Supplier,Rovelli,Y
