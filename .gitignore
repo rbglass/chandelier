@@ -36,3 +36,5 @@ public/**/*.js
 
 # built css
 public/**/*.css
+
+npm-debug.log

@@ -257,22 +257,6 @@
   },
   {
 	"job_id":3003,
-	"product":"Opulent Optic w/ burgundy fringe",
-	"description":"Pellentesque at nulla.",
-	"glass":"Forest Green ~ Bubble",
-	"metal":"Nickel - Brushed",
-	"flex":"Pea Green ~ 3-Core Twisted",
-	"bulb":"Incandescent Candle ~ E14 (SES)",
-	"qty_req":14,
-	"qty_hot":15,
-	"qty_cold":12,
-	"qty_assem":10,
-	"notes":"Maecenas ut massa quis augue luctus tincidunt.",
-	"item_id":17,
-	"pdf_rank": 0
-  },
-  {
-	"job_id":3003,
 	"product":"Heal's Vintage",
 	"description":"Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
 	"glass":"Black ~ Optic",
@@ -284,7 +268,7 @@
 	"qty_cold":1,
 	"qty_assem":13,
 	"notes":"Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
-	"item_id":18,
+	"item_id":17,
 	"pdf_rank": 0
   },
   {
@@ -300,7 +284,7 @@
 	"qty_cold":2,
 	"qty_assem":0,
 	"notes":"Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
-	"item_id":19,
+	"item_id":18,
 	"pdf_rank": 0
   },
   {
@@ -316,7 +300,7 @@
 	"qty_cold":6,
 	"qty_assem":9,
 	"notes":"Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis.",
-	"item_id":20,
+	"item_id":19,
 	"pdf_rank": 0
   },
   {
@@ -332,7 +316,7 @@
 	"qty_cold":3,
 	"qty_assem":2,
 	"notes":"Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum.",
-	"item_id":21,
+	"item_id":20,
 	"pdf_rank": 0
   },
   {
@@ -348,7 +332,7 @@
 	"qty_cold":11,
 	"qty_assem":3,
 	"notes":"Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.",
-	"item_id":22,
+	"item_id":21,
 	"pdf_rank": 0
   },
   {
@@ -364,7 +348,7 @@
 	"qty_cold":20,
 	"qty_assem":4,
 	"notes":"Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna.",
-	"item_id":23,
+	"item_id":22,
 	"pdf_rank": 0
   },
   {
@@ -380,7 +364,7 @@
 	"qty_cold":12,
 	"qty_assem":19,
 	"notes":"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
-	"item_id":24,
+	"item_id":23,
 	"pdf_rank": 0
   },
   {
@@ -396,39 +380,7 @@
 	"qty_cold":8,
 	"qty_assem":8,
 	"notes":"Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.",
-	"item_id":25,
-	"pdf_rank": 0
-  },
-  {
-	"job_id":3004,
-	"product":"Opulent Optic w/ burgundy fringe",
-	"description":"Duis ac nibh.",
-	"glass":"Cherry ~ Plain",
-	"metal":"Black",
-	"flex":"Elephant Grey ~ 3-Core Round",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":16,
-	"qty_hot":3,
-	"qty_cold":18,
-	"qty_assem":8,
-	"notes":"Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-	"item_id":26,
-	"pdf_rank": 0
-  },
-  {
-	"job_id":3004,
-	"product":"Open Optic",
-	"description":"",
-	"glass":"Eel ~ Optic",
-	"metal":"White",
-	"flex":"Light Purple ~ 3-Core Twisted",
-	"bulb":"Incandescent Golfball ~ E14 (SES)",
-	"qty_req":16,
-	"qty_hot":0,
-	"qty_cold":17,
-	"qty_assem":7,
-	"notes":"Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.",
-	"item_id":27,
+	"item_id":24,
 	"pdf_rank": 0
   }
 ]

@@ -79,12 +79,11 @@ module.exports = {
 
 	update: function(id, data, cb) {
 		var before = {
-			createdat: data.createdat,
 			qty_items: data.qty_items
 		};
 
 		if (!data.shipping_date) {
-			return cb("Shipping date cannot be blank");
+			data.shipping_date = null;
 		}
 
 		delete data.createdat;
