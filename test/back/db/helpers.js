@@ -35,7 +35,7 @@ module.exports = {
 				if(errC) throw (errC);
 				client.query(job_items.fkey + job_items.copy, function(errP) {
 					if(errP) throw (errP);
-					client.query(job_items.seq + job_items.pkeyseq + job_items.pkey, function(errS) {
+					client.query(job_items.seq + job_items.pkeyseq + job_items.pkey + job_items.clean, function(errS) {
 						if(errS) throw (errS);
 						done();
 						next();

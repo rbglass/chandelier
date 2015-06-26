@@ -64,7 +64,8 @@ module.exports = {
 		pkeyseq: "ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT " +
 							"nextval('job_items_item_id_seq'::regclass);",
 		pkey: "ALTER TABLE job_items ADD PRIMARY KEY (item_id);",
-		clean: "UPDATE job_items SET description = DEFAULT WHERE description IS NULL;" +
+		clean: "ALTER TABLE job_items ADD COLUMN pdf_rank INT DEFAULT 0;" +
+						"UPDATE job_items SET description = DEFAULT WHERE description IS NULL;" +
 						"UPDATE job_items SET glass = DEFAULT WHERE glass IS NULL;" +
 						"UPDATE job_items SET metal = DEFAULT WHERE metal IS NULL;" +
 						"UPDATE job_items SET flex = DEFAULT WHERE flex IS NULL;" +

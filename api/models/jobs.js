@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	getSingle: function(id, opts, cb) {
-		var sortBy, sortDir, sortString, mainString, jobString, itemString, selectString;
+		var jobString, itemString;
 
 		function select(table) {
 			return "SELECT * FROM " + table + " WHERE job_id=($1) ";
