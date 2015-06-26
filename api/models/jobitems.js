@@ -36,17 +36,17 @@ module.exports = {
 
 		var itemData = {
 			job_id : 			data.job_id,
-			product: 			data.product 		|| "",
+			product: 			data.product 		 || "",
 			description: 	data.description || "",
-			glass: 				data.glass 			|| "",
-			metal: 				data.metal 			|| "",
-			flex: 				data.flex 				|| "",
-			bulb: 				data.bulb 				|| "",
-			qty_req: 			data.qty_req 		|| 0,
-			qty_hot: 			data.qty_hot 		|| 0,
-			qty_cold: 		data.qty_cold 		|| 0,
-			qty_assem: 		data.qty_assem 	|| 0,
-			notes: 				data.notes 			|| "",
+			glass: 				data.glass 			 || "",
+			metal: 				data.metal 			 || "",
+			flex: 				data.flex 			 || "",
+			bulb: 				data.bulb 			 || "",
+			qty_req: 			data.qty_req 		 || 0,
+			qty_hot: 			data.qty_hot 		 || 0,
+			qty_cold: 		data.qty_cold 	 || 0,
+			qty_assem: 		data.qty_assem 	 || 0,
+			notes: 				data.notes 			 || "",
 			createdat: 		new Date(),
 			updatedat: 		new Date()
 		};
@@ -77,7 +77,6 @@ module.exports = {
 
 			client.query(insertString, item, function(errInsert, info) {
 				done();
-				console.log(insertString, errInsert);
 				if (errInsert) cb(errInsert);
 				else           cb(null, assign(itemData, info.rows[0]));
 			});

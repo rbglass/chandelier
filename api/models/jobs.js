@@ -1,5 +1,6 @@
 "use strict";
-var connect = require("../db");
+var connect     = require("../db");
+var assign      = require("object-assign");
 var updateQuery = require("./updateQuery");
 var sortQuery   = require("./sortQuery");
 
@@ -77,6 +78,10 @@ module.exports = {
 	},
 
 	update: function(id, data, cb) {
+		var before = {
+			createdat: data.createdat,
+			qty_items: data.qty_items
+		};
 
 		if (!data.shipping_date) {
 			return cb("Shipping date cannot be blank");
@@ -95,7 +100,7 @@ module.exports = {
 				done();
 
 				if (updateErr) cb(updateErr);
-				else           cb(null, info.rows[0]);
+				else           cb(null, assign(before, info.rows[0]));
 			});
 
 		});
