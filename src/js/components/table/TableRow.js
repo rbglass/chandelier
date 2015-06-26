@@ -42,7 +42,7 @@ export default class TableRow extends Component {
 			switch (cell.type) {
 
 				case "textarea":
-						input = <TextArea value={cellValue} useCacheForDOMMeasurements={true}
+						input = <TextArea value={cellValue} useCacheForDOMMeasurements={false}
 											minRows={2} maxRows={cell.maxRows}/>;
 						break;
 

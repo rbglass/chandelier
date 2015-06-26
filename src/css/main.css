@@ -97,6 +97,7 @@ select,
 
 .nav.nav-links {
 	display:flex;
+	flex-grow: 1;
 }
 
 .nav-links .nav.nav-item {
@@ -147,8 +148,8 @@ select,
 	margin-right: 15px
 }
 
-.nav.nav-item.logout {
-	margin-left: 15px;
+.nav.nav-item.Products {
+	margin-left: auto;
 }
 
 /* Alert */
@@ -348,14 +349,14 @@ select[multiple] {
 
 .table-header .table-row-item.asc:after {
 	content: "\2191";
-	font-size: 2rem;
+	font-size: 1.75rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;
 }
 .table-header .table-row-item.desc:after {
 	content: "\2193";
-	font-size: 2rem;
+	font-size: 1.75rem;
 	position: absolute;
 	right: 5px;
 	bottom: 0px;
@@ -454,7 +455,6 @@ select[multiple] {
 		border-right:1px solid #fff;
 		padding-left: 0.4em;
 		padding-right: 0.2em;
-		min-width: 90px;
 	}
 	.table-row-item:before {
 		content: none;
@@ -563,7 +563,7 @@ select[multiple] {
 .date-selector {
 	display: flex;
 	flex-direction: column;
-	min-width: 125px;
+	/*min-width: 125px;*/
 }
 
 .date-selector-input::-webkit-inner-spin-button,

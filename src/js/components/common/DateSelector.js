@@ -22,6 +22,7 @@ export default class DateSelector extends Component {
 			bottom: "2px",
 			fontSize: "0.9rem",
 			lineHeight: "24px",
+			maxHeight: "34px",
 			cursor: "initial",
 			pointerEvents: "none",
 			width: "100%"

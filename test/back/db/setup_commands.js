@@ -28,6 +28,7 @@ module.exports = {
 						"UPDATE jobs SET client_ref = DEFAULT WHERE client_ref IS NULL;" +
 						"UPDATE jobs SET job_status = '' WHERE job_status IS NULL;" +
 						"UPDATE jobs SET order_type = DEFAULT WHERE order_type IS NULL;" +
+						"UPDATE jobs SET updatedat = DEFAULT WHERE updatedat IS NULL;" +
 						"UPDATE jobs SET shipping_notes = DEFAULT WHERE shipping_notes IS NULL;" +
 						"UPDATE jobs SET parts_status = '' WHERE parts_status IS NULL;" +
 						"UPDATE jobs SET parts_notes = DEFAULT WHERE parts_notes IS NULL;" +
@@ -53,7 +54,7 @@ module.exports = {
 						"ADD CONSTRAINT job_items_job_id_fkey FOREIGN KEY (job_id) " +
 							"REFERENCES jobs (job_id) MATCH SIMPLE " +
 							"ON UPDATE NO ACTION ON DELETE NO ACTION;",
-		copy: "COPY jobs FROM '" + csvPath + "/job_items.csv' CSV HEADER;",
+		copy: "COPY job_items FROM '" + csvPath + "/job_items.csv' CSV HEADER;",
 		seq: "CREATE SEQUENCE job_items_item_id_seq " +
 						"INCREMENT 1 " +
 						"MINVALUE 1 " +
@@ -62,7 +63,7 @@ module.exports = {
 						"CACHE 1;",
 		pkeyseq: "ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT " +
 							"nextval('job_items_item_id_seq'::regclass);",
-		pkey: "ALTER TABLE job_items ADD PRIMARY KEY (item_id) NOT NULL;",
+		pkey: "ALTER TABLE job_items ADD PRIMARY KEY (item_id);",
 		clean: "UPDATE job_items SET description = DEFAULT WHERE description IS NULL;" +
 						"UPDATE job_items SET glass = DEFAULT WHERE glass IS NULL;" +
 						"UPDATE job_items SET metal = DEFAULT WHERE metal IS NULL;" +

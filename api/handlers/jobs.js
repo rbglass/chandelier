@@ -2,7 +2,6 @@
 var jobs       = require("../models/jobs");
 var toPDF      = require("../utils/pdfMaker");
 var formatter  = require("../utils/formatter");
-var objToArray = require("../utils/objToArray");
 
 module.exports = {
 
