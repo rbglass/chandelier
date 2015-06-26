@@ -13,7 +13,7 @@ module.exports = {
 				if (errGet) {
 					cb(errGet);
 				} else if (info.rows.length < 1) {
-					cb(new Error("Authentication needed"));
+					cb("Authentication needed");
 				} else {
 					cb(null, info.rows[0]);
 				}
