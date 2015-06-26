@@ -122,18 +122,6 @@ JobItemsPage.defaultProps = {
 		{ key: "shipping_date", display: "Shipping Date", otherContent: "pdf", className: "",
 					type: "",         formattingFunc: ddMMMyyyy  },
 
-		{ key: "glass",         display: "Glass", otherContent: "pdf", className: "u-flex-grow2",
-					type: "select",   onChange: SharedActionCreators.changeItem                },
-
-		{ key: "metal",         display: "Metal", otherContent: "pdf", className: "u-flex-grow2",
-					type: "select",   onChange: SharedActionCreators.changeItem                },
-
-		{ key: "flex",          display: "Flex", otherContent: "pdf", className: "u-flex-grow2",
-					type: "select",   onChange: SharedActionCreators.changeItem                },
-
-		{ key: "bulb",          display: "Bulb", otherContent: "pdf", className: "u-flex-grow2",
-					type: "select",   onChange: SharedActionCreators.changeItem                },
-
 		{ key: "qty_req",       display: "Qty", line2: "Req", otherContent: "pdf", className: "qty-sm",
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
@@ -145,6 +133,18 @@ JobItemsPage.defaultProps = {
 
 		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm",
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
+
+		{ key: "glass",         display: "Glass", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "metal",         display: "Metal", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "flex",          display: "Flex", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
+
+		{ key: "bulb",          display: "Bulb", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem                },
 
 		{ key: "notes",         display: "Notes", className: "u-flex-grow2", maxRows: 3,
 					type: "textarea", onChange: SharedActionCreators.changeItem   }
