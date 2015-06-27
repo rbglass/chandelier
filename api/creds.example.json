@@ -1,0 +1,16 @@
+{
+	"cookie" : {
+		"password" : "COOKIE_PASSWORD"
+	},
+	"bell" : {
+		"password"     : "BELL_PASSWORD",
+		"clientID"     : "GOOGLE_CID",
+		"clientSecret" : "GOOGLE_CS"
+	},
+	"database": {
+		"dburl": "REMOTE_DB_URL",
+	},
+	"localdb": {
+		"localdburl": "LOCAL_DB_URL"
+	}
+}

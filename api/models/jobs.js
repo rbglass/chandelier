@@ -1,8 +1,9 @@
 "use strict";
-var connect     = require("../db");
 var assign      = require("object-assign");
+var connect     = require("../db");
 var updateQuery = require("./updateQuery");
 var sortQuery   = require("./sortQuery");
+var formatter   = require("../utils/formatter");
 
 module.exports = {
 
@@ -31,13 +32,13 @@ module.exports = {
 				done();
 
 				if (errGet) cb(errGet);
-				else        cb(null, info.rows);
+				else        cb(null, info.rows.map(formatter.job));
 			});
 		});
 	},
 
 	getSingle: function(id, opts, cb) {
-		var sortBy, sortDir, sortString, mainString, jobString, itemString, selectString;
+		var jobString, itemString;
 
 		function select(table) {
 			return "SELECT * FROM " + table + " WHERE job_id=($1) ";
@@ -56,13 +57,13 @@ module.exports = {
 					done();
 
 					if (itemErr) cb(itemErr);
-					else         cb(null, jobInfo.rows[0], itemInfo && itemInfo.rows);
+					else         cb(null, formatter.jobWithItems(jobInfo.rows[0], itemInfo.rows));
 				});
 			});
 		});
 	},
 
-	create: function(cb) {
+	create: function(data, cb) {
 		var insertString = "INSERT INTO jobs DEFAULT VALUES RETURNING job_id";
 
 		connect(function(err, client, done) {
@@ -72,19 +73,18 @@ module.exports = {
 				done();
 
 				if (createErr) cb(createErr);
-				else           cb(null, jobInfo.rows[0]);
+				else           cb(null, formatter.job(jobInfo.rows[0]));
 			});
 		});
 	},
 
 	update: function(id, data, cb) {
 		var before = {
-			createdat: data.createdat,
 			qty_items: data.qty_items
 		};
 
 		if (!data.shipping_date) {
-			return cb("Shipping date cannot be blank");
+			data.shipping_date = null;
 		}
 
 		delete data.createdat;
@@ -100,7 +100,7 @@ module.exports = {
 				done();
 
 				if (updateErr) cb(updateErr);
-				else           cb(null, assign(before, info.rows[0]));
+				else           cb(null, formatter.job(assign(before, info.rows[0])));
 			});
 
 		});

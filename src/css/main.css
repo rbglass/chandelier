@@ -86,7 +86,7 @@ select,
   min-width: 200px;
   height: 40px;
   padding-left: 20px;
-  padding-right: 0.5rem;
+  padding-right: 40px;
   border-bottom: 2px solid var(--blueborder);
   justify-content: space-between;
 }
@@ -150,6 +150,10 @@ select,
 
 .nav.nav-item.Products {
 	margin-left: auto;
+}
+
+.nav.nav-item.logout a {
+	padding-right: 0px;
 }
 
 /* Alert */
@@ -269,7 +273,7 @@ select,
 /* MultiSelect */
 
 select[multiple] {
-	height: 8em;
+	height: 9.1em;
 }
 
 .multiselect-holder {

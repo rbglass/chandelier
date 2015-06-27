@@ -12,7 +12,8 @@
 	"qty_cold":5,
 	"qty_assem":4,
 	"notes":"Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum.",
-	"item_id":1
+	"item_id":1,
+	"pdf_rank": 0
   },
   {
 	"job_id":3000,
@@ -27,7 +28,8 @@
 	"qty_cold":21,
 	"qty_assem":20,
 	"notes":"Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.",
-	"item_id":2
+	"item_id":2,
+	"pdf_rank": 0
   },
   {
 	"job_id":3000,
@@ -42,7 +44,8 @@
 	"qty_cold":6,
 	"qty_assem":8,
 	"notes":"Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.",
-	"item_id":3
+	"item_id":3,
+	"pdf_rank": 0
   },
   {
 	"job_id":3000,
@@ -57,7 +60,8 @@
 	"qty_cold":5,
 	"qty_assem":12,
 	"notes":"Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
-	"item_id":4
+	"item_id":4,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -72,7 +76,8 @@
 	"qty_cold":12,
 	"qty_assem":17,
 	"notes":"Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
-	"item_id":5
+	"item_id":5,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -87,7 +92,8 @@
 	"qty_cold":17,
 	"qty_assem":13,
 	"notes":"Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui.",
-	"item_id":6
+	"item_id":6,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -102,7 +108,8 @@
 	"qty_cold":18,
 	"qty_assem":18,
 	"notes":"In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy.",
-	"item_id":7
+	"item_id":7,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -117,7 +124,8 @@
 	"qty_cold":23,
 	"qty_assem":3,
 	"notes":"Nullam molestie nibh in lectus.",
-	"item_id":8
+	"item_id":8,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -132,7 +140,8 @@
 	"qty_cold":24,
 	"qty_assem":4,
 	"notes":"Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.",
-	"item_id":9
+	"item_id":9,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -147,7 +156,8 @@
 	"qty_cold":6,
 	"qty_assem":1,
 	"notes":"Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum.",
-	"item_id":10
+	"item_id":10,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -162,7 +172,8 @@
 	"qty_cold":10,
 	"qty_assem":3,
 	"notes":"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.",
-	"item_id":11
+	"item_id":11,
+	"pdf_rank": 0
   },
   {
 	"job_id":3001,
@@ -177,7 +188,8 @@
 	"qty_cold":23,
 	"qty_assem":15,
 	"notes":"Maecenas pulvinar lobortis est.",
-	"item_id":12
+	"item_id":12,
+	"pdf_rank": 0
   },
   {
 	"job_id":3002,
@@ -192,7 +204,8 @@
 	"qty_cold":0,
 	"qty_assem":13,
 	"notes":"Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus.",
-	"item_id":13
+	"item_id":13,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -207,7 +220,8 @@
 	"qty_cold":0,
 	"qty_assem":0,
 	"notes":"Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
-	"item_id":14
+	"item_id":14,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -222,7 +236,8 @@
 	"qty_cold":13,
 	"qty_assem":20,
 	"notes":"Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue.",
-	"item_id":15
+	"item_id":15,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -237,22 +252,8 @@
 	"qty_cold":22,
 	"qty_assem":18,
 	"notes":"Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.",
-	"item_id":16
-  },
-  {
-	"job_id":3003,
-	"product":"Opulent Optic w/ burgundy fringe",
-	"description":"Pellentesque at nulla.",
-	"glass":"Forest Green ~ Bubble",
-	"metal":"Nickel - Brushed",
-	"flex":"Pea Green ~ 3-Core Twisted",
-	"bulb":"Incandescent Candle ~ E14 (SES)",
-	"qty_req":14,
-	"qty_hot":15,
-	"qty_cold":12,
-	"qty_assem":10,
-	"notes":"Maecenas ut massa quis augue luctus tincidunt.",
-	"item_id":17
+	"item_id":16,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -267,7 +268,8 @@
 	"qty_cold":1,
 	"qty_assem":13,
 	"notes":"Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.",
-	"item_id":18
+	"item_id":17,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -282,7 +284,8 @@
 	"qty_cold":2,
 	"qty_assem":0,
 	"notes":"Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
-	"item_id":19
+	"item_id":18,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -297,7 +300,8 @@
 	"qty_cold":6,
 	"qty_assem":9,
 	"notes":"Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis.",
-	"item_id":20
+	"item_id":19,
+	"pdf_rank": 0
   },
   {
 	"job_id":3003,
@@ -312,7 +316,8 @@
 	"qty_cold":3,
 	"qty_assem":2,
 	"notes":"Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum.",
-	"item_id":21
+	"item_id":20,
+	"pdf_rank": 0
   },
   {
 	"job_id":3004,
@@ -327,7 +332,8 @@
 	"qty_cold":11,
 	"qty_assem":3,
 	"notes":"Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.",
-	"item_id":22
+	"item_id":21,
+	"pdf_rank": 0
   },
   {
 	"job_id":3004,
@@ -342,7 +348,8 @@
 	"qty_cold":20,
 	"qty_assem":4,
 	"notes":"Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna.",
-	"item_id":23
+	"item_id":22,
+	"pdf_rank": 0
   },
   {
 	"job_id":3004,
@@ -357,7 +364,8 @@
 	"qty_cold":12,
 	"qty_assem":19,
 	"notes":"Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.",
-	"item_id":24
+	"item_id":23,
+	"pdf_rank": 0
   },
   {
 	"job_id":3004,
@@ -372,561 +380,7 @@
 	"qty_cold":8,
 	"qty_assem":8,
 	"notes":"Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.",
-	"item_id":25
-  },
-  {
-	"job_id":3004,
-	"product":"Opulent Optic w/ burgundy fringe",
-	"description":"Duis ac nibh.",
-	"glass":"Cherry ~ Plain",
-	"metal":"Black",
-	"flex":"Elephant Grey ~ 3-Core Round",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":16,
-	"qty_hot":3,
-	"qty_cold":18,
-	"qty_assem":8,
-	"notes":"Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-	"item_id":26
-  },
-  {
-	"job_id":3004,
-	"product":"Open Optic",
-	"description":"",
-	"glass":"Eel ~ Optic",
-	"metal":"White",
-	"flex":"Light Purple ~ 3-Core Twisted",
-	"bulb":"Incandescent Golfball ~ E14 (SES)",
-	"qty_req":16,
-	"qty_hot":0,
-	"qty_cold":17,
-	"qty_assem":7,
-	"notes":"Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.",
-	"item_id":27
-  },
-  {
-	"job_id":3005,
-	"product":"Black Nouveau Open",
-	"description":"",
-	"glass":"Sargasso ~ Plain",
-	"metal":"Brass - Matte",
-	"flex":"Silver ~ 3-Core Twisted",
-	"bulb":"LED Candle ~ E14 (SES)",
-	"qty_req":2,
-	"qty_hot":2,
-	"qty_cold":6,
-	"qty_assem":1,
-	"notes":"Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.",
-	"item_id":28
-  },
-  {
-	"job_id":3005,
-	"product":"Open Optic",
-	"description":"Pellentesque eget nunc.",
-	"glass":"Aubergine ~ Plain",
-	"metal":"Brass - Polished",
-	"flex":"Brown ~ 3-Core Twisted",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":9,
-	"qty_hot":19,
-	"qty_cold":24,
-	"qty_assem":17,
-	"notes":"Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.",
-	"item_id":29
-  },
-  {
-	"job_id":3005,
-	"product":"Retro Light",
-	"description":"",
-	"glass":"Purple ~ Plain",
-	"metal":"Antique Brass",
-	"flex":"Black ~ 3-Core Round",
-	"bulb":"",
-	"qty_req":10,
-	"qty_hot":11,
-	"qty_cold":21,
-	"qty_assem":5,
-	"notes":"Etiam justo. Etiam pretium iaculis justo.",
-	"item_id":30
-  },
-  {
-	"job_id":3005,
-	"product":"Spindle Shade",
-	"description":"",
-	"glass":"Copper Blue ~ Optic",
-	"metal":"",
-	"flex":"Copper Metal Braid ~ 3-Core Round",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":12,
-	"qty_hot":7,
-	"qty_cold":7,
-	"qty_assem":22,
-	"notes":"Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.",
-	"item_id":31
-  },
-  {
-	"job_id":3006,
-	"product":"Black Nouveau Open",
-	"description":"",
-	"glass":"Tea ~ Optic",
-	"metal":"Brass - Polished",
-	"flex":"Poppy Red ~ 3-Core Twisted",
-	"bulb":"",
-	"qty_req":5,
-	"qty_hot":5,
-	"qty_cold":2,
-	"qty_assem":9,
-	"notes":"Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.",
-	"item_id":32
-  },
-  {
-	"job_id":3006,
-	"product":"Spindle Pendant 4-Bubble",
-	"description":"Mauris sit amet eros.",
-	"glass":"Ochre ~ Optic",
-	"metal":"White",
-	"flex":"Rose ~ 3-Core Twisted",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":10,
-	"qty_hot":12,
-	"qty_cold":10,
-	"qty_assem":6,
-	"notes":"Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.",
-	"item_id":33
-  },
-  {
-	"job_id":3006,
-	"product":"Pick-n-Mix Ball",
-	"description":"",
-	"glass":"Peach ~ Bubble",
-	"metal":"Bronze - Polished",
-	"flex":"Silver ~ 3-Core Twisted",
-	"bulb":"LED Golfball ~ E14 (SES)",
-	"qty_req":17,
-	"qty_hot":15,
-	"qty_cold":6,
-	"qty_assem":14,
-	"notes":"Etiam vel augue. Vestibulum rutrum rutrum neque.",
-	"item_id":34
-  },
-  {
-	"job_id":3006,
-	"product":"Opulent Optic w/ grey fringe",
-	"description":"Nullam varius.",
-	"glass":"Eel ~ Diamond",
-	"metal":"Brass - Matte",
-	"flex":"Old Gold ~ 3-Core Round",
-	"bulb":"Incandescent Candle ~ E14 (SES)",
-	"qty_req":19,
-	"qty_hot":13,
-	"qty_cold":21,
-	"qty_assem":7,
-	"notes":"Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.",
-	"item_id":35
-  },
-  {
-	"job_id":3006,
-	"product":"Pick-n-Mix Large Pot",
-	"description":"Sed vel enim sit amet nunc viverra dapibus.",
-	"glass":"Peach ~ Optic",
-	"metal":"Nickel - Brushed",
-	"flex":"Tisane ~ 3-Core Twisted",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":23,
-	"qty_hot":4,
-	"qty_cold":1,
-	"qty_assem":21,
-	"notes":"Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
-	"item_id":36
-  },
-  {
-	"job_id":3006,
-	"product":"Opulent Optic w/ gold fringe",
-	"description":"",
-	"glass":"Black ~ Bubble",
-	"metal":"Brass - Raw",
-	"flex":"",
-	"bulb":"LED Candle ~ E14 (SES)",
-	"qty_req":24,
-	"qty_hot":23,
-	"qty_cold":22,
-	"qty_assem":17,
-	"notes":"In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy.",
-	"item_id":37
-  },
-  {
-	"job_id":3007,
-	"product":"Spindle Pendant 4-Bubble",
-	"description":"",
-	"glass":"Purple ~ Diamond",
-	"metal":"White",
-	"flex":"Navy Blue ~ 3-Core Round",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":2,
-	"qty_hot":11,
-	"qty_cold":14,
-	"qty_assem":17,
-	"notes":"Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
-	"item_id":38
-  },
-  {
-	"job_id":3007,
-	"product":"Opulent Optic w/ gold fringe",
-	"description":"",
-	"glass":"",
-	"metal":"",
-	"flex":"Silver ~ 3-Core Twisted",
-	"bulb":"LED Candle ~ E14 (SES)",
-	"qty_req":9,
-	"qty_hot":4,
-	"qty_cold":9,
-	"qty_assem":4,
-	"notes":"Sed accumsan felis. Ut at dolor quis odio consequat varius.",
-	"item_id":39
-  },
-  {
-	"job_id":3007,
-	"product":"Spindle Shade",
-	"description":"Aliquam sit amet diam in magna bibendum imperdiet.",
-	"glass":"Tea ~ Bubble",
-	"metal":"Copper",
-	"flex":"Black ~ 3-Core Twisted",
-	"bulb":"",
-	"qty_req":16,
-	"qty_hot":9,
-	"qty_cold":11,
-	"qty_assem":20,
-	"notes":"Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc.",
-	"item_id":40
-  },
-  {
-	"job_id":3007,
-	"product":"Opulent Optic w/ burgundy fringe",
-	"description":"Praesent lectus.",
-	"glass":"Jade ~ Diamond",
-	"metal":"Nickel",
-	"flex":"",
-	"bulb":"Incandescent Golfball ~ E14 (SES)",
-	"qty_req":17,
-	"qty_hot":8,
-	"qty_cold":5,
-	"qty_assem":8,
-	"notes":"Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
-	"item_id":41
-  },
-  {
-	"job_id":3007,
-	"product":"Pick-n-Mix Large Bowl",
-	"description":"Sed accumsan felis.",
-	"glass":"Aubergine ~ Optic",
-	"metal":"Copper",
-	"flex":"Neon Green ~ 3-Core Twisted",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":17,
-	"qty_hot":2,
-	"qty_cold":23,
-	"qty_assem":5,
-	"notes":"Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla.",
-	"item_id":42
-  },
-  {
-	"job_id":3007,
-	"product":"Opulent Optic w/ grey fringe",
-	"description":"",
-	"glass":"Sargasso ~ Diamond",
-	"metal":"Bronze - Polished",
-	"flex":"Royal Blue ~ 3-Core Twisted",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":24,
-	"qty_hot":14,
-	"qty_cold":4,
-	"qty_assem":10,
-	"notes":"Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
-	"item_id":43
-  },
-  {
-	"job_id":3008,
-	"product":"Pick-n-Mix Bowl",
-	"description":"Vivamus vestibulum sagittis sapien.",
-	"glass":"Copper Blue ~ Optic",
-	"metal":"",
-	"flex":"",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":5,
-	"qty_hot":0,
-	"qty_cold":21,
-	"qty_assem":2,
-	"notes":"Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
-	"item_id":44
-  },
-  {
-	"job_id":3008,
-	"product":"Retro Light",
-	"description":"Vestibulum ac est lacinia nisi venenatis tristique.",
-	"glass":"Tea ~ Bubble",
-	"metal":"Zinc",
-	"flex":"Purple ~ 3-Core Twisted",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":11,
-	"qty_hot":25,
-	"qty_cold":24,
-	"qty_assem":21,
-	"notes":"Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.",
-	"item_id":45
-  },
-  {
-	"job_id":3008,
-	"product":"Pick-n-Mix Large Pot",
-	"description":"Donec ut mauris eget massa tempor convallis.",
-	"glass":"",
-	"metal":"Brass - Matte",
-	"flex":"Light Grey ~ 3-Core Round",
-	"bulb":"LED Golfball ~ E14 (SES)",
-	"qty_req":13,
-	"qty_hot":20,
-	"qty_cold":14,
-	"qty_assem":19,
-	"notes":"Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.",
-	"item_id":46
-  },
-  {
-	"job_id":3008,
-	"product":"Tassel Light",
-	"description":"",
-	"glass":"Grey ~ Plain",
-	"metal":"Bronze - Matte",
-	"flex":"Copper Metal Braid ~ 3-Core Round",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":13,
-	"qty_hot":8,
-	"qty_cold":17,
-	"qty_assem":25,
-	"notes":"Etiam vel augue. Vestibulum rutrum rutrum neque.",
-	"item_id":47
-  },
-  {
-	"job_id":3008,
-	"product":"Pick-n-Mix Large Bowl",
-	"description":"",
-	"glass":"Grey ~ Diamond",
-	"metal":"",
-	"flex":"Silver ~ 3-Core Round",
-	"bulb":"",
-	"qty_req":15,
-	"qty_hot":14,
-	"qty_cold":7,
-	"qty_assem":8,
-	"notes":"In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.",
-	"item_id":48
-  },
-  {
-	"job_id":3008,
-	"product":"Pick-n-Mix Ball",
-	"description":"",
-	"glass":"Eel ~ Diamond",
-	"metal":"Brass - Matte",
-	"flex":"White ~ 3-Core Twisted",
-	"bulb":"LED Golfball ~ E14 (SES)",
-	"qty_req":19,
-	"qty_hot":15,
-	"qty_cold":15,
-	"qty_assem":25,
-	"notes":"Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.",
-	"item_id":49
-  },
-  {
-	"job_id":3008,
-	"product":"Pick-n-Mix Bowl",
-	"description":"",
-	"glass":"Jade ~ Diamond",
-	"metal":"Nickel - Brushed",
-	"flex":"",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":21,
-	"qty_hot":6,
-	"qty_cold":16,
-	"qty_assem":17,
-	"notes":"Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna.",
-	"item_id":50
-  },
-  {
-	"job_id":3008,
-	"product":"Empire Tall",
-	"description":"",
-	"glass":"Cherry ~ Plain",
-	"metal":"Copper",
-	"flex":"Red & W Herringbone ~ 3-Core Twisted",
-	"bulb":"LED Candle ~ E14 (SES)",
-	"qty_req":22,
-	"qty_hot":0,
-	"qty_cold":7,
-	"qty_assem":8,
-	"notes":"In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.",
-	"item_id":51
-  },
-  {
-	"job_id":3008,
-	"product":"Opulent Optic w/ gold fringe",
-	"description":"Quisque ut erat.",
-	"glass":"Eel ~ Plain",
-	"metal":"Brass - Raw",
-	"flex":"Orange ~ 3-Core Twisted",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":25,
-	"qty_hot":20,
-	"qty_cold":20,
-	"qty_assem":7,
-	"notes":"Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh.",
-	"item_id":52
-  },
-  {
-	"job_id":3008,
-	"product":"Flora Pendant Small",
-	"description":"",
-	"glass":"Cherry ~ Optic",
-	"metal":"",
-	"flex":"Purple ~ 3-Core Round",
-	"bulb":"Incandescent Golfball ~ E14 (SES)",
-	"qty_req":25,
-	"qty_hot":18,
-	"qty_cold":2,
-	"qty_assem":1,
-	"notes":"In hac habitasse platea dictumst. Etiam faucibus cursus urna.",
-	"item_id":53
-  },
-  {
-	"job_id":3009,
-	"product":"Pick-n-Mix Cylinder",
-	"description":"",
-	"glass":"Peach ~ Optic",
-	"metal":"Brass - Polished",
-	"flex":"",
-	"bulb":"LED Golfball ~ E14 (SES)",
-	"qty_req":6,
-	"qty_hot":6,
-	"qty_cold":7,
-	"qty_assem":25,
-	"notes":"Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi.",
-	"item_id":54
-  },
-  {
-	"job_id":3009,
-	"product":"Flora Pendant Large",
-	"description":"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
-	"glass":"Black ~ Bubble",
-	"metal":"Brass - Matte",
-	"flex":"Pea Green ~ 3-Core Round",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":7,
-	"qty_hot":9,
-	"qty_cold":9,
-	"qty_assem":22,
-	"notes":"Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.",
-	"item_id":55
-  },
-  {
-	"job_id":3010,
-	"product":"Pick-n-Mix Large Cylinder",
-	"description":"",
-	"glass":"Amber ~ Diamond",
-	"metal":"White",
-	"flex":"Pea Green ~ 3-Core Twisted",
-	"bulb":"LED Candle ~ E14 (SES)",
-	"qty_req":7,
-	"qty_hot":22,
-	"qty_cold":13,
-	"qty_assem":0,
-	"notes":"In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum.",
-	"item_id":56
-  },
-  {
-	"job_id":3010,
-	"product":"Spindle Shade",
-	"description":"Praesent id massa id nisl venenatis lacinia.",
-	"glass":"Tea ~ Optic",
-	"metal":"",
-	"flex":"Bright Blue ~ 3-Core Round",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":7,
-	"qty_hot":19,
-	"qty_cold":24,
-	"qty_assem":1,
-	"notes":"Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis. Donec semper sapien a libero.",
-	"item_id":57
-  },
-  {
-	"job_id":3010,
-	"product":"Heal's Tassel",
-	"description":"",
-	"glass":"Eel ~ Plain",
-	"metal":"",
-	"flex":"Khaki ~ 3-Core Round",
-	"bulb":"",
-	"qty_req":14,
-	"qty_hot":20,
-	"qty_cold":2,
-	"qty_assem":10,
-	"notes":"Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus.",
-	"item_id":58
-  },
-  {
-	"job_id":3010,
-	"product":"Flora Pendant Small",
-	"description":"",
-	"glass":"",
-	"metal":"Bronze - Polished",
-	"flex":"",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":15,
-	"qty_hot":10,
-	"qty_cold":17,
-	"qty_assem":25,
-	"notes":"Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-	"item_id":59
-  },
-  {
-	"job_id":3010,
-	"product":"Flora Pendant Large",
-	"description":"",
-	"glass":"Amber ~ Plain",
-	"metal":"Brass - Polished",
-	"flex":"",
-	"bulb":"Incandescent Golfball ~ E14 (SES)",
-	"qty_req":19,
-	"qty_hot":5,
-	"qty_cold":16,
-	"qty_assem":24,
-	"notes":"In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.",
-	"item_id":60
-  },
-  {
-	"job_id":3010,
-	"product":"Pick-n-Mix Large Bowl",
-	"description":"",
-	"glass":"Copper Blue ~ Plain",
-	"metal":"Brass - Matte",
-	"flex":"Light Grey ~ 3-Core Twisted",
-	"bulb":"Halogen Golfball ~ E27 (ES)",
-	"qty_req":24,
-	"qty_hot":21,
-	"qty_cold":20,
-	"qty_assem":1,
-	"notes":"Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl.",
-	"item_id":61
-  },
-  {
-	"job_id":3010,
-	"product":"Pick-n-Mix Large Bowl",
-	"description":"Maecenas tincidunt lacus at velit.",
-	"glass":"Eel ~ Plain",
-	"metal":"",
-	"flex":"Elephant Grey ~ 3-Core Round",
-	"bulb":"LED Golfball ~ E27 (ES)",
-	"qty_req":25,
-	"qty_hot":5,
-	"qty_cold":17,
-	"qty_assem":18,
-	"notes":"Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.",
-	"item_id":62
+	"item_id":24,
+	"pdf_rank": 0
   }
 ]

@@ -1,57 +1,28 @@
 "use strict";
 var jobs       = require("../models/jobs");
+var crud       = require("./crud");
 var toPDF      = require("../utils/pdfMaker");
-var formatter  = require("../utils/formatter");
 
-module.exports = {
+var jobsHandler = crud(jobs);
 
-	getAll: function(req, reply) {
-		var opts = {
-			sortBy: req.query.field,
-			asc   : req.query.asc
-		};
+jobsHandler.getSingle = function(req, reply) {
+	var id = req.params.id;
 
-		jobs.getAll(opts, function(err, allJobs) {
-			if (err) reply(err).code(400);
-			else     reply(allJobs.map(formatter.job));
-		});
-	},
+	jobs.getSingle(id, null, function(err, jobWithItems) {
+		if (err) return reply(err).code(400);
 
-	getSingle: function(req, reply) {
-		var id = req.params.id;
+		function replyWithPDF(doc) {
+			reply(doc)
+				.type("application/pdf")
+				.header("Content-Disposition", "inline; filename=" +
+							"RB" + id + "_specification.pdf");
+		}
 
-		jobs.getSingle(id, null, function(err, singleJob, items) {
-			if (err) return reply(err).code(400);
+		var wantsPDF  = req.query.pdf;
 
-			function replyWithPDF(doc) {
-				reply(doc)
-					.type("application/pdf")
-					.header("Content-Disposition", "inline; filename=" +
-								"RB" + id + "_specification.pdf");
-			}
-
-			var wantsPDF  = req.query.pdf;
-			var prettyJob = formatter.jobWithItems(singleJob, items);
-
-			if (wantsPDF) toPDF(prettyJob, replyWithPDF);
-			else          reply(prettyJob);
-		});
-	},
-
-	create: function(req, reply) {
-		jobs.create(function(err, singleJob) {
-			if (err) reply(err).code(400);
-			else     reply(formatter.job(singleJob));
-		});
-	},
-
-	update: function(req, reply) {
-		var id = req.params.id;
-		var data = req.payload;
-
-		jobs.update(id, data, function(err, newJob) {
-			if (err) reply(err).code(400);
-			else     reply(formatter.job(newJob));
-		});
-	}
+		if (wantsPDF) toPDF(jobWithItems, replyWithPDF);
+		else          reply(jobWithItems);
+	});
 };
+
+module.exports = jobsHandler;

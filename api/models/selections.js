@@ -2,6 +2,7 @@
 var connect     = require("../db");
 var updateQuery = require("./updateQuery");
 var sortQuery   = require("./sortQuery");
+var formatter   = require("../utils/formatter");
 
 module.exports = {
 
@@ -15,7 +16,7 @@ module.exports = {
 				done();
 
 				if (errGet) cb(errGet);
-				else        cb(null, info.rows);
+				else        cb(null, formatter.products(info.rows));
 			});
 		});
 	}
