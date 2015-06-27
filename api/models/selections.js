@@ -1,23 +1,11 @@
 "use strict";
-var connect     = require("../db");
-var updateQuery = require("./updateQuery");
-var sortQuery   = require("./sortQuery");
-var formatter   = require("../utils/formatter");
+var formatter = require("../utils/formatter");
+var crud      = require("./crud");
 
-module.exports = {
+var selectionsModel = crud({
+	tableName: "selections",
+	defaultSort: "rank",
+	formatterM: formatter.products
+});
 
-	getAll: function(opts, cb) {
-		var queryString = "SELECT * FROM selections ";
-
-		connect(function(err, client, done) {
-			if (err) return cb(err);
-
-			client.query(queryString, function(errGet, info) {
-				done();
-
-				if (errGet) cb(errGet);
-				else        cb(null, formatter.products(info.rows));
-			});
-		});
-	}
-};
+module.exports = selectionsModel;

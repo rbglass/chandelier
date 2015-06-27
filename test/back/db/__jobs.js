@@ -1,7 +1,7 @@
 "use strict";
 import assert from "assert";
 import assign from "object-assign";
-import helpers from "./helpers";
+import helpers, { coerceToNum } from "./helpers";
 
 import jobs from "../../../api/models/jobs";
 
@@ -19,13 +19,6 @@ describe("jobs", () => {
 			rows.forEach(row => row ? delete row[datefield] : null);
 		});
 		return rows[0];
-	}
-
-	function coerceToNum(fields, row1) {
-		fields.forEach(field => {
-			row1[field] = +row1[field];
-		});
-		return row1;
 	}
 
 	const dCleanse = cleanseOfDates.bind(null, datesWeDontWant);

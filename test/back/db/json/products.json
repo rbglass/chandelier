@@ -3,46 +3,46 @@
     "sku":"",
     "type":"Pendant",
     "name":"Black Nouveau Bell",
-    "description":"- http://www.rothschildbickers.com/products/black-nouveau/\n- Black glass only\n- Height: 270mm\n- Diameter: 180mm \n- ¬£310.00 RRP",
+    "description":"- http://www.rothschildbickers.com/products/black-nouveau/\n- Black glass only\n- Height: 270mm\n- Diameter: 180mm \n- £310.00 RRP",
     "active":true,
     "saleable":true,
-    "id":1
+    "id": 1
   },
   {
     "sku":"",
     "type":"Pendant",
     "name":"Flora Pendant Small",
-    "description":"- http://www.rothschildbickers.com/products/flora/\n- Height: 220mm\n- Diameter: 180mm\n- ¬£320.00 RRP",
+    "description":"- http://www.rothschildbickers.com/products/flora/\n- Height: 220mm\n- Diameter: 180mm\n- £320.00 RRP",
     "active":true,
     "saleable":true,
-    "id":2
+    "id": 2
   },
   {
     "sku":"",
     "type":"Pendant",
     "name":"Heal's Tassel",
-    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "description":"- \n- Height: \n- Diameter: \n- £ RRP",
     "active":true,
     "saleable":true,
-    "id":3
+    "id": 3
   },
   {
     "sku":"",
     "type":"Pendant",
     "name":"Tiered Light",
-    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "description":"- \n- Height: \n- Diameter: \n- £ RRP",
     "active":true,
     "saleable":true,
-    "id":4
+    "id": 4
   },
   {
     "sku":"",
     "type":"Pendant",
     "name":"Vintage Light",
-    "description":"- \n- Height: \n- Diameter: \n- ¬£ RRP",
+    "description":"- \n- Height: \n- Diameter: \n- £ RRP",
     "active":true,
     "saleable":true,
-    "id":5
+    "id": 5
   },
   {
     "sku":"",
@@ -51,7 +51,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":6
+    "id": 6
   },
   {
     "sku":"",
@@ -60,7 +60,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":7
+    "id": 7
   },
   {
     "sku":"",
@@ -69,7 +69,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":8
+    "id": 8
   },
   {
     "sku":"",
@@ -78,7 +78,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":9
+    "id": 9
   },
   {
     "sku":"",
@@ -87,25 +87,16 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":10
+    "id": 10
   },
   {
     "sku":"",
     "type":"Flex",
-    "name":"B&W Herringbone ~ 3-Core Round",
+    "name":"Doggy",
     "description":"",
     "active":true,
     "saleable":false,
-    "id":11
-  },
-  {
-    "sku":"",
-    "type":"Flex",
-    "name":"Silver & White Herringbone ~ 3-Core Round",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":12
+    "id": 11
   },
   {
     "sku":"",
@@ -114,16 +105,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":13
-  },
-  {
-    "sku":"",
-    "type":"Flex",
-    "name":"Yellow ~ 3-Core Round",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":14
+    "id": 12
   },
   {
     "sku":"",
@@ -132,7 +114,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":15
+    "id": 13
   },
   {
     "sku":"",
@@ -141,7 +123,7 @@
     "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
     "active":true,
     "saleable":false,
-    "id":16
+    "id": 14
   },
   {
     "sku":"",
@@ -150,7 +132,7 @@
     "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
     "active":true,
     "saleable":false,
-    "id":17
+    "id": 15
   },
   {
     "sku":"",
@@ -159,7 +141,7 @@
     "description":"- Wattage:\n- Height: \n- Diameter: \n- Brands / Suppliers: ",
     "active":true,
     "saleable":false,
-    "id":18
+    "id": 16
   },
   {
     "sku":"",
@@ -168,16 +150,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":19
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Amber ~ Diamond",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":20
+    "id": 17
   },
   {
     "sku":"",
@@ -186,16 +159,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":21
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Bronze ~ Optic",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":22
+    "id": 18
   },
   {
     "sku":"",
@@ -204,16 +168,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":23
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Cherry ~ Bubble",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":24
+    "id": 19
   },
   {
     "sku":"",
@@ -222,16 +177,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":25
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Cherry ~ Optic",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":26
+    "id": 20
   },
   {
     "sku":"",
@@ -240,7 +186,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":27
+    "id": 21
   },
   {
     "sku":"",
@@ -249,7 +195,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":28
+    "id": 22
   },
   {
     "sku":"",
@@ -258,34 +204,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":29
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Eel ~ Diamond",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":30
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Eel ~ Optic",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":31
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Eel ~ Plain",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":32
+    "id": 23
   },
   {
     "sku":"",
@@ -294,7 +213,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":33
+    "id": 24
   },
   {
     "sku":"",
@@ -303,25 +222,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":34
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Tea ~ Diamond",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":35
-  },
-  {
-    "sku":"",
-    "type":"Glass",
-    "name":"Tea ~ Optic",
-    "description":"",
-    "active":true,
-    "saleable":false,
-    "id":36
+    "id": 25
   },
   {
     "sku":"",
@@ -330,7 +231,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":37
+    "id": 26
   },
   {
     "sku":"",
@@ -339,7 +240,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":38
+    "id": 27
   },
   {
     "sku":"",
@@ -348,7 +249,7 @@
     "description":"",
     "active":true,
     "saleable":false,
-    "id":39
+    "id": 28
   },
   {
     "sku":"",
@@ -357,7 +258,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":40
+    "id": 29
   },
   {
     "sku":"",
@@ -366,7 +267,7 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":41
+    "id": 30
   },
   {
     "sku":"",
@@ -375,6 +276,6 @@
     "description":"",
     "active":true,
     "saleable":true,
-    "id":42
+    "id": 31
   }
 ]

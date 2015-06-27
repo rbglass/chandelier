@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(table, id, idField, data) {
-	if(!table || !id || !idField || !data) {
+	if (!table || !id || !idField || !data) {
 		throw new Error("Missing arg");
 	}
 

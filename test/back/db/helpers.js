@@ -1,6 +1,6 @@
 "use strict";
 var commands = require("./setup_commands");
-var connect = require("../../../api/db");
+var connect  = require("../../../api/db");
 
 var jobs       = commands.jobs;
 var job_items  = commands.job_items;
@@ -116,9 +116,16 @@ module.exports = {
 				)
 			)
 		);
+	},
+
+	coerceToNum: function(fields, row) {
+		fields.forEach(function(field) {
+			row[field] = +row[field];
+		});
+		return row;
 	}
 };
 
-if (process.env.WHY === "TRYING_IT_OUT") {
-	module.exports.populate();
-}
+// if (process.env.WHY === "TRYING_IT_OUT") {
+// 	module.exports.populate();
+// }
