@@ -21,17 +21,14 @@ CREATE TABLE jobs(
 	notes text DEFAULT ''
 );
 
-ALTER TABLE jobs ADD PRIMARY KEY (job_id);
-ALTER TABLE jobs ALTER COLUMN job_id SET NOT NULL;
-
-COPY jobs FROM '~/Downloads/rnb/jobs.csv' CSV HEADER;
+\COPY jobs FROM '/home/james/Downloads/rnb/legit/jobs.csv' CSV HEADER;
 SELECT MAX(job_id) FROM jobs;
 
 CREATE SEQUENCE jobs_job_id_seq
 	INCREMENT 1
-	MINVALUE 4000
+	MINVALUE 2500
 	MAXVALUE 9223372036854775807
-	START 4000
+	START 2500
 	CACHE 1;
 
 ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
@@ -61,7 +58,7 @@ ALTER TABLE job_items
 			ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 
-COPY jobs FROM '~/Downloads/rnb/job_items.csv' CSV HEADER;
+\COPY job_items FROM '/home/james/Downloads/rnb/legit/job_items.csv' CSV HEADER;
 
 CREATE SEQUENCE job_items_item_id_seq
 	INCREMENT 1
@@ -96,7 +93,7 @@ CREATE TRIGGER trig_stamp
 -------------------------
 
 CREATE TABLE products(
-	SKU text DEFAULT '',
+	sku text DEFAULT '',
 	type text DEFAULT 'Other',
 	name text DEFAULT '',
 	description text DEFAULT '',
@@ -104,7 +101,7 @@ CREATE TABLE products(
 	saleable boolean DEFAULT true
 );
 
-COPY products FROM '/home/james/Downloads/rnb/1000/products.csv' CSV HEADER;
+\COPY products FROM '/home/james/Downloads/rnb/1000/products.csv' CSV HEADER;
 
 CREATE SEQUENCE products_id_seq
 	INCREMENT 1
@@ -131,7 +128,7 @@ CREATE TABLE selections(
 	default_selected boolean DEFAULT false
 );
 
-COPY selections FROM '/home/james/Downloads/rnb/1000/selections.csv' CSV HEADER;
+\COPY selections FROM '/home/james/Downloads/rnb/1000/selections.csv' CSV HEADER;
 
 CREATE SEQUENCE selections_id_seq
 	INCREMENT 1
@@ -155,7 +152,7 @@ CREATE TABLE contacts(
 	name text,
 	active boolean
 );
-COPY contacts FROM '~/Downloads/rnb/contacts.csv' CSV HEADER;
+\COPY contacts FROM '/home/james/Downloads/rnb/legit/contacts.csv' CSV HEADER;
 
 CREATE SEQUENCE contacts_id_seq
 	INCREMENT 1
@@ -168,3 +165,19 @@ ALTER TABLE contacts ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('contacts_id_se
 ALTER TABLE contacts ADD PRIMARY KEY (id);
 
 -------------------------
+
+CREATE TABLE users(
+	email text
+);
+
+\COPY users FROM '/home/james/Downloads/rnb/legit/users.csv' CSV HEADER;
+
+CREATE SEQUENCE users_id_seq
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+ALTER TABLE users ADD COLUMN id BIGINT UNIQUE DEFAULT nextval('users_id_seq'::regclass);
+ALTER TABLE users ADD PRIMARY KEY (id);

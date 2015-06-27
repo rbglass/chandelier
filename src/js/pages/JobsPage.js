@@ -125,15 +125,42 @@ JobsPage.defaultProps = {
 			]
 		},
 		{
-			description: "Within 2 weeks & job conf/packaged",
+			description: "Within 3 weeks & confirmed",
 			onSelect: [
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				JobsActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+				JobsActionCreators.clearJobsFilters,
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
+				JobsActionCreators.setStartDate.bind(null, new Date()),
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
+			]
+		},
+		{
+			description: "Packaged",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters,
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"])
+			]
+		},
+		{
+			description: "Shipping today",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters,
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
+				JobsActionCreators.setStartDate.bind(null, new Date()),
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24))
+			]
+		},
+		{
+			description: "Confirmed/Not paid",
+			onSelect: [
+				JobsActionCreators.clearJobsFilters,
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
+				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"])
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
+				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
 			]
 		}

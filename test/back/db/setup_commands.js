@@ -78,7 +78,7 @@ module.exports = {
 	},
 	products: {
 		create: "CREATE TABLE products(" +
-							"SKU text DEFAULT '', " +
+							"sku text DEFAULT '', " +
 							"type text DEFAULT 'Other', " +
 							"name text DEFAULT '', " +
 							"description text DEFAULT '', " +
@@ -117,7 +117,7 @@ module.exports = {
 		pkey: "ALTER TABLE selections ADD PRIMARY KEY (id);",
 
 		clean: "UPDATE selections SET label = DEFAULT WHERE label IS NULL;" +
-						"UPDATE products SET default_selected = DEFAULT WHERE default_selected IS NULL;"
+						"UPDATE selections SET default_selected = DEFAULT WHERE default_selected IS NULL;"
 
 	},
 	drop: {

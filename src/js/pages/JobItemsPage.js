@@ -157,12 +157,23 @@ JobItemsPage.defaultProps = {
 			]
 		},
 		{
-			description: "Within 2 weeks & job conf/packaged",
+			description: "Within 3 weeks & confirmed",
 			onSelect: [
-				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				JobItemsActionCreators.setStartDate.bind(null, new Date(Date.now() - 1000 * 60 * 60 * 24 * 7 * 2))
+				JobItemsActionCreators.clearItemsFilters,
+				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
+				JobItemsActionCreators.setStartDate.bind(null, new Date()),
+				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			]
 		}
+		// {
+		// 	description: "Borosilicate",
+		// 	onSelect: [
+		// 		JobItemsActionCreators.clearItemsFilters,
+		// 		JobItemsActionCreators.restrictTo.bind(null, "product",
+		// 			["Spindle Pendant 3-Bubble", "Spindle Pendant 4-Bubble", "Tiered Light", "Spindle Shade"]
+		// 		)
+		// 	]
+		// }
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },
