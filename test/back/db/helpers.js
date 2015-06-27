@@ -2,10 +2,11 @@
 var commands = require("./setup_commands");
 var connect = require("../../../api/db");
 
-var jobs = commands.jobs;
-var job_items = commands.job_items;
-var products = commands.products;
+var jobs       = commands.jobs;
+var job_items  = commands.job_items;
+var products   = commands.products;
 var selections = commands.selections;
+var users      = commands.users;
 
 module.exports = {
 
@@ -79,6 +80,17 @@ module.exports = {
 		});
 	},
 
+	users: function(next) {
+		connect(function(err, client, done) {
+			if(err) throw (err);
+			client.query(users.create + "INSERT INTO users email=" + process.env.EMAIL, function(errI) {
+				if(errI) throw (errI);
+				done();
+				next();
+			});
+		});
+	},
+
 	drop: function(next) {
 		connect(function(err, client, done) {
 			if(err) throw (err);
@@ -92,5 +104,21 @@ module.exports = {
 
 	start: function(tableName, done) {
 		this.drop(this[tableName].bind(null, done));
+	},
+
+	populate: function() {
+		this.users(
+			this.selections.bind(null,
+				this.products.bind(null,
+					this.job_items.bind(null,
+						this.jobs
+					)
+				)
+			)
+		);
 	}
 };
+
+if (process.env.WHY === "TRYING_IT_OUT") {
+	module.exports.populate();
+}

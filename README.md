@@ -5,7 +5,7 @@ production management for people who produce
 [![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
 
 ## Run
-You will need a credentials file of the format outlined in credentials.example.json.
+You will need a creds file of the format outlined in creds.example.json. You will also need postgres installed, and use the url for that local postgres db in the creds file.
 
 ```
 git clone https://github.com/foundersandcoders/chandelier.git
@@ -15,25 +15,33 @@ npm run build
 npm start
 ```
 
+If you wish to populate the db with dummy data and be able to log in, run the following:
+```
+EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/back/db/helpers.js
+```
+
 ## Test
 ```
 // all
 npm test
 // frontend
 npm test:front
+// backend
+npm test:back
 ```
 
-## Scripts
+## Dev Scripts
 ```
-npm build
-npm run build:watch
 npm run lint
-npm run serve
+npm run build:watch
+npm run live-reload
+npm run devserve
 ```
 
 ## Build tools
 [__babel__](https://babeljs.io/) -  In our case, transpiles ES6 and JSX code to JS.
-							`babel srcFile
+
+							`babel srcFile`
 
 [__browserify__](http://browserify.org/) - lets you use the CommonJS `require` pattern in your frontend JS.
 Trundles recursively through your 'requires', starting from an entry point, and outputs a single bundle of js containing all your code. Ask for that file in your HTML page, and you'll be good to go.

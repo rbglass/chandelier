@@ -120,6 +120,9 @@ module.exports = {
 						"UPDATE selections SET default_selected = DEFAULT WHERE default_selected IS NULL;"
 
 	},
+	users: {
+		create: "CREATE TABLE users(email text)"
+	},
 	drop: {
 		all: "DROP OWNED BY test CASCADE"
 	}
