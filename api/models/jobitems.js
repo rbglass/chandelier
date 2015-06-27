@@ -2,6 +2,7 @@
 var assign      = require("object-assign");
 var connect     = require("../db");
 var updateQuery = require("./updateQuery");
+var deleteQuery = require("./deleteQuery");
 var sortQuery   = require("./sortQuery");
 
 module.exports = {
@@ -33,6 +34,9 @@ module.exports = {
 
 	create: function(data, cb) {
 		var insertString;
+
+		console.log(typeof data.job_id, "ID:", data.job_id);
+		// sometimes string, sometimes number, joi time
 
 		var itemData = {
 			job_id : 			data.job_id,
@@ -110,7 +114,7 @@ module.exports = {
 	},
 
 	delete: function(id, cb) {
-		var deleteString = "DELETE FROM job_items WHERE item_id=($1)";
+		var deleteString = deleteQuery("job_items", "item_id");
 
 		connect(function(err, client, done) {
 			if (err) return cb(err);

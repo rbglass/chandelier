@@ -4,7 +4,6 @@ var Joi = require("joi");
 module.exports = {
 
 	jobs: Joi.object().keys({
-		job_id        : Joi.number().strip(),
 		client        : Joi.string(),
 		project       : Joi.string(),
 		client_ref    : Joi.string(),
@@ -16,11 +15,7 @@ module.exports = {
 		parts_notes   : Joi.string(),
 		invoice_notes : Joi.string(),
 		payment       : Joi.string(),
-		notes         : Joi.string(),
-		createdat     : Joi.date().strip(),
-		updatedat     : Joi.any().strip(),
-		// from our left join
-		qty_items     : Joi.number().strip()
+		notes         : Joi.string()
 	}),
 
 	job_items: Joi.object().keys({
@@ -37,14 +32,7 @@ module.exports = {
 		qty_cold   : Joi.number(),
 		qty_assem  : Joi.number(),
 		notes      : Joi.string(),
-		pdf_rank   : Joi.number(),
-		createdat  : Joi.date().strip(),
-		updatedat  : Joi.date().strip(),
-		// from our inner join
-		shipping_date: Joi.date().strip(),
-		job_status   : Joi.string().strip(),
-		payment      : Joi.string().strip(),
-		client       : Joi.string().strip()
+		pdf_rank   : Joi.number()
 	}),
 
 	products: Joi.object().keys({
