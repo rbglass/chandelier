@@ -1,7 +1,7 @@
 "use strict";
 var users = require("../models/users");
 
-module.exports = {
+var log = {
 
 	in: function(req, reply) {
 		var creds = req.auth.credentials;
@@ -29,3 +29,5 @@ module.exports = {
 		reply("Succesfully logged out");
 	}
 };
+
+module.exports = log;

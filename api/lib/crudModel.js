@@ -7,26 +7,29 @@ var updateQuery = require("./updateQuery");
 var deleteQuery = require("./deleteQuery");
 var sortQuery   = require("./sortQuery");
 
-// TODO - schema for update and create
-
 module.exports = function(config) {
-	var table = config.tableName;
-	var sort  = config.defaultSort;
-	var pkey  = config.primaryKey;
-
+	var table        = config.tableName;
+	var sort         = config.defaultSort;
+	var pkey         = config.primaryKey;
 	var customSelect = config.customSelect;
+	var formatterM   = config.formatterM;
+	var formatterS   = config.formatterS;
 
-	var formatterM = config.formatterM;
-	var formatterS = config.formatterS;
-	var schema   = config.schema;
+	function validate(data) {
+		if (!config.schema) return data;
+
+		var result = Joi.validate(data, config.schema, {stripUnknown: true});
+		if (result.error) return false;
+		else              return result.value;
+	}
 
 	return {
 		getAll: function(opts, cb) {
 			var sortBy, sortString, mainString, queryString;
 
-			sortBy = opts && opts.sortBy || sort;
-			sortString = sortQuery(sortBy, opts && opts.asc);
-			mainString = customSelect || "SELECT * FROM " + table + " ";
+			sortBy      = opts && opts.sortBy || sort;
+			sortString  = sortQuery(sortBy, opts && opts.asc);
+			mainString  = customSelect || "SELECT * FROM " + table + " ";
 			queryString = mainString + sortString;
 
 			connect(function(err, client, done) {
@@ -44,22 +47,16 @@ module.exports = function(config) {
 
 		create: function(data, cb) {
 			var before = data || {};
-			var newData = data;
-			var result;
+			var result = validate(data);
 
-			if (schema) {
-				result = Joi.validate(data, schema, {stripUnknown: true});
-				if (result.error) return cb(result.error);
-				else newData = result.value;
-			}
+			if (result === false) return cb("Validation failure");
 
-			var q = insertQuery(table, newData);
+			var q = insertQuery(table, result);
 
 			connect(function(err, client, done) {
 				if(err) return cb(err);
 
 				client.query(q.command, q.data, function(errInsert, info) {
-					console.log(errInsert);
 					done();
 					if (errInsert) cb(errInsert);
 					else           cb(null, (formatterS && formatterS(assign(before, info.rows[0]))) ||
@@ -70,27 +67,21 @@ module.exports = function(config) {
 
 		update: function(id, data, cb) {
 			var before = data;
-			var newData = data;
-			var result;
+			var result = validate(data);
 
-			if (schema) {
-				result = Joi.validate(data, schema, {stripUnknown: true});
-				if (result.error) return cb(result.error);
-				else newData = result.value;
-			}
+			if (result === false) return cb("Validation failure");
 
-			var q = updateQuery(table, id, pkey, newData);
-
+			var q = updateQuery(table, id, pkey, result);
 
 			connect(function(err, client, done) {
 				if (err) return cb(err);
 
 				client.query(q.command, q.data, function(updateErr, info) {
 					done();
-					console.log(updateErr);
 					if (updateErr) cb(updateErr);
 					else           cb(null, formatterS && formatterS(assign(before, info.rows[0])) ||
 																	assign(before, info.rows[0]));
+						// vile, split that shit up
 				});
 
 			});

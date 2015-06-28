@@ -1,6 +1,6 @@
 "use strict";
 var selections = require("../models/selections");
-var crud       = require("./crud");
+var crud       = require("../lib/crudHandlers");
 
 var selectionsHandler = crud(selections);
 

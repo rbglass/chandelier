@@ -5,7 +5,7 @@ var schema      = require("./schema");
 var formatter   = require("../utils/formatter");
 var updateQuery = require("../lib/updateQuery");
 var sortQuery   = require("../lib/sortQuery");
-var crud        = require("../lib/crud");
+var crud        = require("../lib/crudModel");
 
 var jobsModel = crud({
 	tableName : "jobs",

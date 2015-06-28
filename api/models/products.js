@@ -1,6 +1,6 @@
 "use strict";
 var schema = require("./schema");
-var crud   = require("../lib/crud");
+var crud   = require("../lib/crudModel");
 
 var productsModel = crud({
 	tableName: "products",

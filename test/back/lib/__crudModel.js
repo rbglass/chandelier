@@ -4,7 +4,7 @@ import assign from "object-assign";
 import Joi from "joi";
 import helpers, { coerceToNum } from "../helpers/helpers";
 
-import crud from "../../../api/lib/crud";
+import crud from "../../../api/lib/crudModel";
 
 describe("model - crud", () => {
 	let data, model, dataWeGotBack;
