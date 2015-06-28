@@ -17,7 +17,7 @@ module.exports = function(config) {
 
 			sortBy = opts && opts.sortBy || sort;
 			sortString = sortQuery(sortBy, opts && opts.asc);
-			mainString = "SELECT * FROM " + config.tableName + " ";
+			mainString = "SELECT * FROM " + table + " ";
 			queryString = mainString + sortString;
 
 			connect(function(err, client, done) {
