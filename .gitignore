@@ -38,3 +38,5 @@ public/**/*.js
 public/**/*.css
 
 npm-debug.log
+
+coverage

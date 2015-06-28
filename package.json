@@ -15,10 +15,11 @@
     "lint": "eslint **/*.js",
     "live-reload": "live-reload public/ --port 9082",
     "devserve": "NODE_ENV=development nodemon app.js --watch api",
-    "test": "mocha test/**/**/*.js",
-    "test:back": "mocha test/back/**/**/*.js",
-    "test:front": "mocha test/front/**/*.js",
-    "test:fwatch": "mocha test/front/**/*.js -w src/js/**/*.js --loglevel silent",
+    "test": "mocha test",
+    "test:back": "mocha test/back",
+    "test:front": "mocha test/front",
+    "test:fwatch": "mocha test/front -w src/js/**/*.js --loglevel silent",
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/**/**/__*.js",
     "mk": "mkdir public/js & mkdir public/css"
   },
   "repository": {
@@ -62,9 +63,10 @@
   "devDependencies": {
     "babel-eslint": "^3.1.10",
     "eslint": "^0.22.1",
+    "istanbul": "^0.3.17",
     "watchify": "^3.2.1"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": "^0.12.0"
   }
 }

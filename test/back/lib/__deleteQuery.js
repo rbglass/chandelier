@@ -13,9 +13,9 @@ describe("#deleteQuery", () => {
 		assert.equal(deleteQuery("test", "chicken"), commandWeWant);
 	});
 
-	it("#throws if either argument is missing", () => {
-		assert.throws(() => deleteQuery());
-		assert.throws(() => deleteQuery("timmy"));
+	it("#throws if either argument is missing or falsy", () => {
+		assert.throws(() => deleteQuery(undefined, undefined));
+		assert.throws(() => deleteQuery("timmy", undefined));
 		assert.throws(() => deleteQuery(null, "timmy"));
 	});
 });

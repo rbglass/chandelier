@@ -88,9 +88,10 @@ describe("log", () => {
 
 	describe(".out", () => {
 		it("#clears the users session", () => {
-			log.in(req, reply);
+			log.out(req, reply);
 
 			assert.equal(cleared, true);
+			assert(result.data);
 		});
 	});
 });

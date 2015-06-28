@@ -8,10 +8,10 @@ const error = "ERROR";
 
 function model(withErr) {
 	return {
-		getAll(opts, cb)     { cb(withErr || opts); },
-		create(data, cb)     { cb(withErr || data); },
-		update(id, data, cb) { cb(withErr || {id, data}); },
-		delete(id, cb)       { cb(withErr || id); }
+		getAll(opts, cb)     { cb(withErr, opts); },
+		create(data, cb)     { cb(withErr, data); },
+		update(id, data, cb) { cb(withErr, {id, data}); },
+		delete(id, cb)       { cb(withErr, id); }
 	};
 }
 
@@ -50,6 +50,7 @@ describe("crud", () => {
 		it("#calls the getAll method of the model passed in, with sortBy and asc from req.query", () => {
 			handlers.getAll(req, reply);
 
+			assert(result.data);
 			assert.equal(result.data.sortBy, req.query.field);
 			assert.equal(result.data.asc, req.query.asc);
 		});

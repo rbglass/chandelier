@@ -164,6 +164,28 @@ describe("model - crud", () => {
 				done();
 			});
 		});
+
+		it("#calls the cb with a validation error if validation fails", done => {
+			const theOneToBeInvigorated = {
+				sku: "hello12345"
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.create(theOneToBeInvigorated, (err, row) => {
+				assert(err);
+				done();
+			});
+		});
 	});
 
 	describe(".update", () => {
@@ -219,6 +241,30 @@ describe("model - crud", () => {
 				assert.equal(err, null);
 				assert.deepEqual(row.sku, theOneToBeInvigorated.sku);
 				assert.deepEqual(row.qty_items, theOneToBeInvigorated.qty_items);
+				done();
+			});
+		});
+
+		it("#calls the cb with a validation error if validation fails", done => {
+			const theChosenOne = data[5].id;
+			const theOneToBeInvigorated = {
+				id: theChosenOne,
+				sku: "hello12345"
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.update(theChosenOne, theOneToBeInvigorated, (err, row) => {
+				assert(err);
 				done();
 			});
 		});
