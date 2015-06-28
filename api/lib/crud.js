@@ -1,15 +1,24 @@
 "use strict";
+var Joi         = require("joi");
+var assign      = require("object-assign");
 var connect     = require("../db");
+var insertQuery = require("./insertQuery");
 var updateQuery = require("./updateQuery");
 var deleteQuery = require("./deleteQuery");
 var sortQuery   = require("./sortQuery");
 
+// TODO - schema for update and create
+
 module.exports = function(config) {
 	var table = config.tableName;
-	var sort = config.defaultSort;
-	var pkey = config.primaryKey;
+	var sort  = config.defaultSort;
+	var pkey  = config.primaryKey;
+
+	var customSelect = config.customSelect;
+
 	var formatterM = config.formatterM;
 	var formatterS = config.formatterS;
+	var schema   = config.schema;
 
 	return {
 		getAll: function(opts, cb) {
@@ -17,7 +26,7 @@ module.exports = function(config) {
 
 			sortBy = opts && opts.sortBy || sort;
 			sortString = sortQuery(sortBy, opts && opts.asc);
-			mainString = "SELECT * FROM " + table + " ";
+			mainString = customSelect || "SELECT * FROM " + table + " ";
 			queryString = mainString + sortString;
 
 			connect(function(err, client, done) {
@@ -34,30 +43,55 @@ module.exports = function(config) {
 		},
 
 		create: function(data, cb) {
-			var queryString = "INSERT INTO " + table + " DEFAULT VALUES RETURNING *";
+			var before = data || {};
+			var newData = data;
+			var result;
+
+			if (schema) {
+				result = Joi.validate(data, schema, {stripUnknown: true});
+				if (result.error) return cb(result.error);
+				else newData = result.value;
+			}
+
+			var q = insertQuery(table, newData);
 
 			connect(function(err, client, done) {
 				if(err) return cb(err);
 
-				client.query(queryString, function(errInsert, info) {
+				client.query(q.command, q.data, function(errInsert, info) {
+					console.log(errInsert);
 					done();
 					if (errInsert) cb(errInsert);
-					else           cb(null, info.rows[0]);
+					else           cb(null, (formatterS && formatterS(assign(before, info.rows[0]))) ||
+																		assign(before, info.rows[0]));
 				});
 			});
 		},
 
 		update: function(id, data, cb) {
-			delete data.id;
-			var q = updateQuery(table, id, pkey, data);
+			var before = data;
+			var newData = data;
+			var result;
+
+			if (schema) {
+				result = Joi.validate(data, schema, {stripUnknown: true});
+				console.log(result.error, result.value)
+				if (result.error) return cb(result.error);
+				else newData = result.value;
+			}
+
+			var q = updateQuery(table, id, pkey, newData);
+
 
 			connect(function(err, client, done) {
 				if (err) return cb(err);
 
 				client.query(q.command, q.data, function(updateErr, info) {
 					done();
+					console.log(updateErr);
 					if (updateErr) cb(updateErr);
-					else           cb(null, info.rows[0]);
+					else           cb(null, formatterS && formatterS(assign(before, info.rows[0])) ||
+																	assign(before, info.rows[0]));
 				});
 
 			});

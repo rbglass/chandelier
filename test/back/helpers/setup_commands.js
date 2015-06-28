@@ -1,6 +1,6 @@
 "use strict";
 var path = require("path");
-var csvPath = path.join(__dirname, "/csv");
+var csvPath = path.join(__dirname, "../db/csv");
 
 // TODO: change to just create - copy - edit;
 module.exports = {
@@ -23,6 +23,16 @@ module.exports = {
 							"CACHE 1;",
 		pkeyseq: "ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);",
 		defaultdate: "ALTER TABLE jobs ADD COLUMN createdat DATE DEFAULT CURRENT_DATE;",
+		updatedat: "CREATE OR REPLACE FUNCTION update_updatedat_column() " +
+								"RETURNS TRIGGER AS $BODY$ " +
+								"BEGIN NEW.updatedat = now();" +
+								"RETURN NEW;" +
+								"END;" +
+								"$BODY$ language plpgsql;" +
+								"CREATE TRIGGER update_job_updatetime " +
+								"BEFORE UPDATE ON jobs " +
+								"FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();",
+
 		clean: "UPDATE jobs SET client = DEFAULT WHERE client IS NULL;" +
 						"UPDATE jobs SET project = DEFAULT WHERE project IS NULL;" +
 						"UPDATE jobs SET client_ref = DEFAULT WHERE client_ref IS NULL;" +
@@ -64,6 +74,9 @@ module.exports = {
 		pkeyseq: "ALTER TABLE job_items ADD COLUMN item_id BIGINT UNIQUE DEFAULT " +
 							"nextval('job_items_item_id_seq'::regclass);",
 		pkey: "ALTER TABLE job_items ADD PRIMARY KEY (item_id);",
+		updatedat: "CREATE TRIGGER update_jobitem_updatetime " +
+								"BEFORE UPDATE ON job_items " +
+								"FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();",
 		clean: "ALTER TABLE job_items ADD COLUMN pdf_rank INT DEFAULT 0;" +
 						"UPDATE job_items SET description = DEFAULT WHERE description IS NULL;" +
 						"UPDATE job_items SET glass = DEFAULT WHERE glass IS NULL;" +

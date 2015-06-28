@@ -34,6 +34,17 @@ CREATE SEQUENCE jobs_job_id_seq
 ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
 ALTER TABLE jobs ADD COLUMN createdat DATE DEFAULT CURRENT_DATE;
 
+CREATE OR REPLACE FUNCTION update_updatedat_column()
+	RETURNS TRIGGER AS $BODY$
+	BEGIN
+		NEW.updatedat = now();
+			RETURN NEW;
+	END;
+	$BODY$ language plpgsql;
+
+CREATE TRIGGER update_job_updatetime
+	BEFORE UPDATE ON jobs
+	FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();
 
 -------------------------
 
@@ -82,13 +93,16 @@ BEGIN
     			WHERE job_id=OLD.job_id;
     			RETURN new;
 END;
-$BODY$
-language plpgsql;
+$BODY$ language plpgsql;
 
 CREATE TRIGGER trig_stamp
-     AFTER UPDATE ON job_items
+     BEFORE UPDATE ON job_items
      FOR EACH ROW
      EXECUTE PROCEDURE function_stamp();
+
+CREATE TRIGGER update_jobitem_updatetime
+	AFTER UPDATE ON job_items
+	FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();
 
 -------------------------
 

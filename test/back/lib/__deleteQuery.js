@@ -1,6 +1,6 @@
 "use strict";
 import assert from "assert";
-import deleteQuery from "../../../api/models/deleteQuery";
+import deleteQuery from "../../../api/lib/deleteQuery";
 
 describe("#deleteQuery", () => {
 

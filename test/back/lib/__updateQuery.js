@@ -1,6 +1,6 @@
 "use strict";
 import assert from "assert";
-import updateQuery from "../../../api/models/updateQuery";
+import updateQuery from "../../../api/lib/updateQuery";
 
 describe("#updateQuery", () => {
 
@@ -16,7 +16,7 @@ describe("#updateQuery", () => {
 		assert(objWeGotBack.data instanceof Array);
 	});
 
-	it("#constructs a psql command string & argument array from the inputs 1", () => {
+	it("#constructs a psql command string & data array from the inputs 1", () => {
 		const stringWeWant =
 			"UPDATE jobs SET first=($2) " +
 			"WHERE test_id=($1) RETURNING *";
@@ -28,7 +28,7 @@ describe("#updateQuery", () => {
 		assert.deepEqual(result.data, [123, "1"]);
 	});
 
-	it("#constructs command string & argument array 2", () => {
+	it("#constructs command string & data array 2", () => {
 		const stringWeWant =
 			"UPDATE jobs SET first=($2), second=($3) " +
 			"WHERE test_id=($1) RETURNING *";
