@@ -134,7 +134,7 @@ module.exports = {
 
 	},
 	users: {
-		create: "CREATE TABLE users(email text)"
+		create: "CREATE TABLE users(email text);"
 	},
 	drop: {
 		all: "DROP OWNED BY test CASCADE"

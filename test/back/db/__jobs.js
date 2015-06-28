@@ -25,7 +25,7 @@ describe("jobs", () => {
 	const dCoerce = coerceToNum.bind(null, thingsWeWantAsNum);
 
 
-	describe("#getAll", () => {
+	describe(".getAll", () => {
 
 		beforeEach(done => {
 			itemdata = JSON.parse(JSON.stringify(require("./json/job_items.json")));
@@ -86,7 +86,7 @@ describe("jobs", () => {
 		});
 	});
 
-	describe("#getSingle", () => {
+	describe(".getSingle", () => {
 
 		beforeEach(done => {
 			itemdata = JSON.parse(JSON.stringify(require("./json/job_items.json")));

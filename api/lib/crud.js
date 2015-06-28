@@ -75,7 +75,6 @@ module.exports = function(config) {
 
 			if (schema) {
 				result = Joi.validate(data, schema, {stripUnknown: true});
-				console.log(result.error, result.value)
 				if (result.error) return cb(result.error);
 				else newData = result.value;
 			}

@@ -83,10 +83,13 @@ module.exports = {
 	users: function(next) {
 		connect(function(err, client, done) {
 			if(err) throw (err);
-			client.query(users.create + "INSERT INTO users email=" + process.env.EMAIL, function(errI) {
-				if(errI) throw (errI);
-				done();
-				next();
+			client.query(users.create, function(errC) {
+				if(errC) throw (errC);
+				client.query("INSERT INTO users (email) VALUES ($1)", [process.env.EMAIL], function(errI) {
+					if(errI) throw (errI);
+					done();
+					next();
+				});
 			});
 		});
 	},
