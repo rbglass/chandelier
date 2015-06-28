@@ -1,6 +1,6 @@
 "use strict";
 var formatter = require("../utils/formatter");
-var crud      = require("./crud");
+var crud      = require("../lib/crudModel");
 
 var selectionsModel = crud({
 	tableName: "selections",

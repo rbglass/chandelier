@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
 
 client = new pg.Client(conString);
 client.connect();
-console.log(conString);
+console.log("Connected to ", conString);
 
 module.exports = function(cb) {
 	pg.connect(conString, function(err, cl, done) {

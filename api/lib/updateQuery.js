@@ -1,4 +1,5 @@
 "use strict";
+var DELIMITER = ", ";
 
 module.exports = function(table, id, idField, data) {
 	if (!table || !id || !idField || !data) {
@@ -11,9 +12,11 @@ module.exports = function(table, id, idField, data) {
 	updateString = "UPDATE " + table + " SET ";
 
 	stuff = fieldsToUpdate.map(function(cell, i) {
+
 		updateString += cell + "=($" + (i + 2) + ")";
+
 		if (i < fieldsToUpdate.length - 1) {
-			updateString += ", ";
+			updateString += DELIMITER;
 		} else {
 			updateString += " WHERE " + idField + "=($1) RETURNING *";
 		}

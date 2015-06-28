@@ -1,7 +1,7 @@
 "use strict";
-var jobs       = require("../models/jobs");
-var crud       = require("./crud");
-var toPDF      = require("../utils/pdfMaker");
+var jobs  = require("../models/jobs");
+var crud  = require("../lib/crudHandlers");
+var toPDF = require("../utils/pdfMaker");
 
 var jobsHandler = crud(jobs);
 

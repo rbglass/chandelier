@@ -1,7 +1,7 @@
 "use strict";
-var users   = require("../models/users");
+var users = require("../models/users");
 
-module.exports = {
+var log = {
 
 	in: function(req, reply) {
 		var creds = req.auth.credentials;
@@ -14,6 +14,8 @@ module.exports = {
 		users.getSingle(profile.email, function(err, user) {
 			if (err) {
 				reply(err);
+			} else if (!user) {
+				reply("User not found").code(404);
 			} else {
 				req.auth.session.clear();
 				req.auth.session.set(profile);
@@ -27,3 +29,5 @@ module.exports = {
 		reply("Succesfully logged out");
 	}
 };
+
+module.exports = log;

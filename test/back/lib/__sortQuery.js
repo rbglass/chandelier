@@ -1,6 +1,6 @@
 "use strict";
 import assert from "assert";
-import sortQuery from "../../../api/models/sortQuery";
+import sortQuery from "../../../api/lib/sortQuery";
 
 describe("sortQuery", () => {
 

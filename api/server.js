@@ -1,5 +1,4 @@
 "use strict";
-
 var bell    = require("bell");
 var Server  = require("hapi").Server;
 var cookie  = require("hapi-auth-cookie");

@@ -12,8 +12,6 @@ module.exports = {
 			client.query(queryString, [email], function(errGet, info) {
 				if (errGet) {
 					cb(errGet);
-				} else if (info.rows.length < 1) {
-					cb("Authentication needed");
 				} else {
 					cb(null, info.rows[0]);
 				}

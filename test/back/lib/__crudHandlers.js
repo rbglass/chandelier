@@ -1,7 +1,8 @@
 "use strict";
 import assert from "assert";
+import { replyDouble } from "../helpers/doubles";
 
-import crud from "../../../api/handlers/crud";
+import crud from "../../../api/lib/crudHandlers";
 
 const error = "ERROR";
 
@@ -15,23 +16,14 @@ function model(withErr) {
 }
 
 describe("crud", () => {
-	let handlers, handlersWithErr, dataWeGotBack, codeWeGotBack;
+	let handlers, handlersWithErr, reply, result;
 
 	beforeEach(() => {
 		handlers = crud(model());
 		handlersWithErr = crud(model(error));
-		dataWeGotBack = null;
-		codeWeGotBack = null;
+		result = {};
+		reply = replyDouble(result);
 	});
-
-	function reply(data) {
-		dataWeGotBack = data;
-		return {
-			code(num) {
-				codeWeGotBack = num;
-			}
-		};
-	}
 
 	it("#takes a model as an argument", () => {
 		const caraDelevingne = {};
@@ -58,15 +50,15 @@ describe("crud", () => {
 		it("#calls the getAll method of the model passed in, with sortBy and asc from req.query", () => {
 			handlers.getAll(req, reply);
 
-			assert.equal(dataWeGotBack.sortBy, req.query.field);
-			assert.equal(dataWeGotBack.asc, req.query.asc);
+			assert.equal(result.data.sortBy, req.query.field);
+			assert.equal(result.data.asc, req.query.asc);
 		});
 
 		it("#handles errors", () => {
 			handlersWithErr.getAll(req, reply);
 
-			assert.equal(dataWeGotBack, error);
-			assert.equal(codeWeGotBack, 400);
+			assert.equal(result.data, error);
+			assert.equal(result.code, 400);
 		});
 	});
 
@@ -81,14 +73,14 @@ describe("crud", () => {
 		it("#calls the create method of the model passed in, with req.payload", () => {
 			handlers.create(req, reply);
 
-			assert.deepEqual(dataWeGotBack, req.payload);
+			assert.deepEqual(result.data, req.payload);
 		});
 
 		it("#handles errors", () => {
 			handlersWithErr.create(req, reply);
 
-			assert.equal(dataWeGotBack, error);
-			assert.equal(codeWeGotBack, 400);
+			assert.equal(result.data, error);
+			assert.equal(result.code, 400);
 		});
 	});
 
@@ -106,15 +98,15 @@ describe("crud", () => {
 		it("#calls the update method of the model passed in, with the id param and req.payload", () => {
 			handlers.update(req, reply);
 
-			assert.equal(dataWeGotBack.id, req.params.id);
-			assert.equal(dataWeGotBack.data, req.payload);
+			assert.equal(result.data.id, req.params.id);
+			assert.equal(result.data.data, req.payload);
 		});
 
 		it("#handles errors", () => {
 			handlersWithErr.update(req, reply);
 
-			assert.equal(dataWeGotBack, error);
-			assert.equal(codeWeGotBack, 400);
+			assert.equal(result.data, error);
+			assert.equal(result.code, 400);
 		});
 	});
 
@@ -128,14 +120,14 @@ describe("crud", () => {
 		it("#calls the delete method of the model passed in, with the id param ", () => {
 			handlers.delete(req, reply);
 
-			assert.equal(dataWeGotBack, req.params.id);
+			assert.equal(result.data, req.params.id);
 		});
 
 		it("#handles errors", () => {
 			handlersWithErr.delete(req, reply);
 
-			assert.equal(dataWeGotBack, error);
-			assert.equal(codeWeGotBack, 400);
+			assert.equal(result.data, error);
+			assert.equal(result.code, 400);
 		});
 	});
 
