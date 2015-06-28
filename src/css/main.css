@@ -70,7 +70,7 @@ select,
 	margin: 5px 24px;
 	box-sizing: border-box;
   display: flex;
-  height: 90%;
+  height: 88%;
   align-items: stretch;
   flex-direction: column;
 }
