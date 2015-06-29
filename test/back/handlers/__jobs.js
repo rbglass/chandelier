@@ -8,7 +8,7 @@ import { replyDouble, pgStub } from "../helpers/doubles";
 describe("jobs", () => {
 	let result, reply, testPG, jobsModel, modelStub;
 
-	before(() => {
+	before(done => {
 		testPG = pgStub();
 		var db = require("../../../api/db");
 
@@ -17,6 +17,7 @@ describe("jobs", () => {
 			if (id === "ERROR") cb("ERROR");
 			else                cb(null, id);
 		});
+		done();
 	});
 
 	var jobs = rewire("../../../api/handlers/jobs");

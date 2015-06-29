@@ -1,6 +1,6 @@
 "use strict";
 var path = require("path");
-var csvPath = path.join(__dirname, "../db/csv");
+var csvPath = path.join(__dirname, "../models/csv");
 
 // TODO: change to just create - copy - edit;
 module.exports = {
