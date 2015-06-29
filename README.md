@@ -5,7 +5,7 @@ production management for people who produce
 [![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
 
 ## Run
-You will need a creds file of the format outlined in creds.example.json. You will also need postgres installed, and use the url for that local postgres db in the creds file.
+You will need a creds file of the format outlined in creds.example.json. You will also need postgres installed, a db called 'test' with a user called 'test' and a password of 'test' (if you want to populate it with dummy data) and use the url for that local postgres db in the creds file.
 
 ```
 git clone https://github.com/foundersandcoders/chandelier.git
