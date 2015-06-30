@@ -21,7 +21,7 @@ describe("model - crud", () => {
 	after(done => helpers.drop(done));
 	beforeEach(done => {
 		model = crud(conf);
-		data = JSON.parse(JSON.stringify(require("../db/json/products.json")));
+		data = JSON.parse(JSON.stringify(require("../models/json/products.json")));
 		done();
 	});
 

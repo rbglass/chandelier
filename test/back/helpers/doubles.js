@@ -41,7 +41,7 @@ export default {
 		return sinon.stub(pg, "Client", str => {
 			return {
 				connect() {
-					return true;
+					return str;
 				}
 			};
 		});
