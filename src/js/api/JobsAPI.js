@@ -38,6 +38,7 @@ export function getSortedThings(endpoint, field, isAsc) {
 					.end(onReply(action));
 }
 
+// We can get rid of this and call getSortedThings instead
 export function getAllJobs() {
 	SharedActionCreators.startLoading();
 	request.get(jobs)
@@ -127,10 +128,4 @@ export function deleteSingleProduct(productId) {
 	SharedActionCreators.startLoading();
 	request.del(`${products}/${productId}`)
 					.end(onReply(ServerActionCreators.deleteSingleProduct, productId));
-}
-
-export function getAllContacts() {
-	SharedActionCreators.startLoading();
-	request.get(contacts)
-					.end(onReply());
 }
