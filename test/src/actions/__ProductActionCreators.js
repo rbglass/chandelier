@@ -8,6 +8,14 @@ import * as ProductActionCreators from "../../../src/js/actions/ProductActionCre
 const toTest = [
 
 	{
+		fn: "changeProduct",
+		type: "CHANGE_SINGLE_PRODUCT",
+		give: [{ting: "dummy"}],
+		want: {ting: "dummy"},
+		desc: "a new product object"
+	},
+
+	{
 		fn: "sortBy",
 		type: "SORT_PRODUCTS",
 		give: ["doctor"],

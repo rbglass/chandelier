@@ -1,12 +1,55 @@
 "use strict";
 import assert from "assert";
 import sinon from "sinon";
+import testPlease from "../helpers/testPlease";
+import { genericDouble } from "../helpers/doubles";
 import * as JobsActionCreators from "../../../src/js/actions/JobsActionCreators";
 import * as JobItemsActionCreators from "../../../src/js/actions/JobItemsActionCreators";
 import * as ProductActionCreators from "../../../src/js/actions/ProductActionCreators";
 import * as SharedActionCreators from "../../../src/js/actions/SharedActionCreators";
 import * as JobsAPI from "../../../src/js/api/JobsAPI";
 
+const toTest = [
+
+	{
+		fn: "startLoading",
+		type: "IS_LOADING",
+		give: [],
+		desc: "no data"
+	},
+
+	{
+		fn: "changeItem",
+		type: "CHANGE_SINGLE_JOB_ITEM",
+		give: [{item: "newItem"}],
+		want: {item: "newItem"},
+		desc: "a new job item"
+	},
+
+	{
+		fn: "changeDetails",
+		type: "CHANGE_SINGLE_JOB_DETAILS",
+		give: [{details: "newDetails"}],
+		want: {details: "newDetails"},
+		desc: "a new job details"
+	},
+
+	{
+		fn: "sortBy",
+		type: "SORT_ONE",
+		give: ["doctor"],
+		want: "doctor",
+		desc: "a sort string"
+	},
+
+	{
+		fn: "changePageNumber",
+		type: "SWITCH_PAGE_NUMBER",
+		give: [3],
+		want: 3,
+		desc: "a new page number"
+	}
+];
 
 describe("SharedActionCreators", () => {
 
@@ -53,4 +96,48 @@ describe("SharedActionCreators", () => {
 
 		});
 	});
+
+	describe("API callers", () => {
+		let dubbel;
+		let result = {};
+
+		before(() => {
+			dubbel = genericDouble(JobsAPI, result);
+		});
+
+		after(() => dubbel());
+
+		it(".getSelections calls JobsAPI.getSelections", () => {
+			SharedActionCreators.getSelections();
+			assert.equal(result.getSelections, "calledWithNoArgs");
+		});
+
+		it(".getAllProducts calls JobsAPI.getAllProducts", () => {
+			SharedActionCreators.getAllProducts();
+			assert.equal(result.getAllProducts, "calledWithNoArgs");
+		});
+
+		it(".saveDetails calls JobsAPI.saveDetails with an id and details", () => {
+			SharedActionCreators.saveDetails(123, "hello hi");
+			assert.deepEqual(result.saveDetails, [123, "hello hi"]);
+		});
+
+		it(".saveItem calls JobsAPI.saveItem with an id and item", () => {
+			SharedActionCreators.saveItem(123, "hello hi");
+			assert.deepEqual(result.saveItem, [123, "hello hi"]);
+		});
+
+		it(".createItem calls JobsAPI.createItem with an id and blueprint", () => {
+			SharedActionCreators.createItem(123, {name: "hello hi"});
+			assert.deepEqual(result.createSingleJobItem, [123, {name: "hello hi"}]);
+		});
+
+		it(".deleteItem calls JobsAPI.deleteItem with any arg and an immutable object", () => {
+			SharedActionCreators.deleteItem(null, { get(thing) { return thing; } });
+			assert.deepEqual(result.deleteSingleItem, "item_id");
+		});
+
+	});
+
+	testPlease(toTest, SharedActionCreators);
 });

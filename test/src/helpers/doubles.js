@@ -8,7 +8,7 @@ import * as ServerActionCreators from "../../../src/js/actions/ServerActionCreat
 
 function stubFn(ref, toReturn, method) {
 	return (...args) => {
-		ref[method] = args.length > 1 ? args : args[0];
+		ref[method] = args.length > 1 ? args : args[0] || "calledWithNoArgs";
 		return toReturn;
 	};
 }
