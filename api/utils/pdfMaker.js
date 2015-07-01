@@ -159,10 +159,10 @@ function writeAddress(doc) {
 	var FROM_EDGE = RIGHT_EDGE - MARGIN - ADDRESS_WIDTH;
 
 	doc.fontSize(ADDRESS_FONT_SIZE)
-		.text("Unit 7 Great Northern Works", FROM_EDGE, ADDRESS_LINE)
-		.text("Hartham Lane")
-		.text("Hertford, Herts")
-		.text("SG14 1QN");
+			.text("Unit 7 Great Northern Works", FROM_EDGE, ADDRESS_LINE)
+			.text("Hartham Lane")
+			.text("Hertford, Herts")
+			.text("SG14 1QN");
 }
 
 function writeDeliveryDetails(doc, address) {
@@ -183,17 +183,17 @@ function drawImage(doc) {
 	doc.image("public/img/logo.jpg", FROM_EDGE, MARGIN, {width: IMAGE_WIDTH});
 }
 
-function wrapDetails(doc, tuple) {
+function wrapDetails(doc, pair) {
 	var y = doc.y;
 
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 				.font("Bold")
-				.text(tuple[0], MARGIN, y, labelConfig);
+				.text(pair[0], MARGIN, y, labelConfig);
 
 	doc.fontSize(INPUT_FONT_SIZE)
 				.font("Helvetica")
 				.text(
-					formatDescription(tuple[1], 17, null, "   ") || " ",
+					formatDescription(pair[1], 17, null, "   ") || " ",
 					MARGIN + 90, y
 				);
 }

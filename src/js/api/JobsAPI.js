@@ -38,63 +38,17 @@ export function getSortedThings(endpoint, field, isAsc) {
 					.end(onReply(action));
 }
 
-// We can get rid of this and call getSortedThings instead
+// We can get rid of these and call getSortedThings instead
 export function getAllJobs() {
 	SharedActionCreators.startLoading();
 	request.get(jobs)
 					.end(onReply(ServerActionCreators.receiveAllJobs));
 }
 
-export function getSingleJob(jobId) {
-	SharedActionCreators.startLoading();
-	request.get(`${jobs}/${jobId}`)
-					.end(onReply(ServerActionCreators.receiveSingleJob));
-}
-
-export function createSingleJob() {
-	SharedActionCreators.startLoading();
-	request.post(jobs)
-					.end(onReply(ServerActionCreators.receiveNewJob));
-}
-
-export function saveDetails(jobId, immutUpdateObj) {
-	const updateObj = immutUpdateObj.toJS();
-
-	SharedActionCreators.startLoading();
-	request.put(`${jobs}/${jobId}`)
-					.send(updateObj)
-					.end(onReply(ServerActionCreators.receiveUpdatedJob));
-}
-
 export function getAllItems() {
 	SharedActionCreators.startLoading();
 	request.get(items)
 					.end(onReply(ServerActionCreators.receiveAllItems));
-}
-
-export function createSingleJobItem(jobId, immutBlueprint) {
-	const blueprint = immutBlueprint.toJS && immutBlueprint.toJS() || {};
-	blueprint.job_id = jobId;
-
-	SharedActionCreators.startLoading();
-	request.post(items)
-					.send(blueprint)
-					.end(onReply(ServerActionCreators.receiveSingleItem));
-}
-
-export function saveItem(itemId, immutUpdateObj) {
-	const updateObj = immutUpdateObj.toJS();
-
-	SharedActionCreators.startLoading();
-	request.put(`${items}/${itemId}`)
-					.send(updateObj)
-					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
-}
-
-export function deleteSingleItem(itemId) {
-	SharedActionCreators.startLoading();
-	request.del(`${items}/${itemId}`)
-					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
 export function getSelections() {
@@ -109,10 +63,50 @@ export function getAllProducts() {
 					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
+export function getSingleJob(jobId) {
+	SharedActionCreators.startLoading();
+	request.get(`${jobs}/${jobId}`)
+					.end(onReply(ServerActionCreators.receiveSingleJob));
+}
+
+export function createSingleJob() {
+	SharedActionCreators.startLoading();
+	request.post(jobs)
+					.end(onReply(ServerActionCreators.receiveNewJob));
+}
+
+export function createSingleJobItem(jobId, immutBlueprint) {
+	const blueprint = immutBlueprint.toJS && immutBlueprint.toJS() || {};
+	blueprint.job_id = jobId;
+
+	SharedActionCreators.startLoading();
+	request.post(items)
+					.send(blueprint)
+					.end(onReply(ServerActionCreators.receiveSingleItem));
+}
+
 export function createSingleProduct() {
 	SharedActionCreators.startLoading();
 	request.post(products)
 					.end(onReply(ServerActionCreators.receiveSingleProduct));
+}
+
+export function saveDetails(jobId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
+	SharedActionCreators.startLoading();
+	request.put(`${jobs}/${jobId}`)
+					.send(updateObj)
+					.end(onReply(ServerActionCreators.receiveUpdatedJob));
+}
+
+export function saveItem(itemId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
+	SharedActionCreators.startLoading();
+	request.put(`${items}/${itemId}`)
+					.send(updateObj)
+					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
 export function saveProduct(productId, immutUpdateObj) {
@@ -122,6 +116,12 @@ export function saveProduct(productId, immutUpdateObj) {
 	request.put(`${products}/${productId}`)
 					.send(updateObj)
 					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
+}
+
+export function deleteSingleItem(itemId) {
+	SharedActionCreators.startLoading();
+	request.del(`${items}/${itemId}`)
+					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
 }
 
 export function deleteSingleProduct(productId) {

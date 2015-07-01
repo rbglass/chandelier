@@ -138,6 +138,26 @@ describe("ProductStore", () => {
 		assert.equal(productWeGotBack.get(updatedInfo.data.key), updatedInfo.data.value);
 	});
 
+	it("#deletes an item from the products List upon a RECEIVE_PRODUCt_DELETION_CONFIRMATION action", () => {
+		const productToDelete = {
+			id: uglyProducts[0].id
+		};
+		const oldLen = ProductStore.getFilteredProducts().size;
+
+		onReceivingAction({
+			type: "RECEIVE_PRODUCT_DELETION_CONFIRMATION",
+			data: productToDelete.id
+		});
+
+		const productsWeGotBack = ProductStore.getFilteredProducts();
+		const productWeGotBack = productsWeGotBack.filter(item =>
+			item.id === productToDelete.id
+		).last();
+
+		sameVal(productWeGotBack, undefined);
+		sameVal(productsWeGotBack.size, oldLen - 1);
+	});
+
 	it("#updates the filterBy filter upon a FILTER_PRODUCTS_BY action", () => {
 		const filterTerm = "JIM";
 		assert.notEqual(ProductStore.getFilters().get("filterBy"), filterTerm);
@@ -184,6 +204,20 @@ describe("ProductStore", () => {
 
 		sameVal(evenMoreFiltersWeGotback.get("sortTerm"), sortTerm2);
 		sameVal(evenMoreFiltersWeGotback.get("isAsc"), false);
+	});
+
+	it("#updates the restrictions object upon a RESTRICT_PRODUCTS_TO action", () => {
+		const newRestrictions = {
+			key: "type",
+			options: ["Pendant", "Bulb"]
+		};
+		onReceivingAction({
+			type: "RESTRICT_PRODUCTS_TO",
+			data: newRestrictions
+		});
+		const filtersWeGotBack = ProductStore.getFilters().getIn(["restrictions", newRestrictions.key]);
+
+		sameVal(filtersWeGotBack, I.fromJS(newRestrictions));
 	});
 
 	it("#resets the filters Map upon a CLEAR_PRODUCTS_FILTERS action", () => {

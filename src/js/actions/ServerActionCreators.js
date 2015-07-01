@@ -3,8 +3,6 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as RouterContainer from "../routing/RouterContainer";
 
-
-
 export function receiveSelections(selections) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_SELECTIONS,
