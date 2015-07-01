@@ -4,7 +4,6 @@ import Table from "../components/table/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
-import SortingContainer from "../components/sortable/SortingContainer";
 import SingleJobDetails from "../components/details/SingleJobDetails";
 import connectToStores from "../utils/connectToStores";
 import SingleJobStore from "../stores/SingleJobStore";
@@ -43,10 +42,6 @@ class SingleJobPage extends Component {
 						Confirm
 					</button>
 				);
-			} else if (pending.type === "PDF") {
-				modalTitle = "Display order of PDF Job Items";
-				modalChildren = <SortingContainer rows={this.props.items}
-														job_id={this.props.details.get("job_id")} />;
 			}
 		}
 

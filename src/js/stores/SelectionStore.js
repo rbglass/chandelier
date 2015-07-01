@@ -17,7 +17,7 @@ const SelectionStore = createStore({
 const onReceivingAction = action => {
 	switch (action.type) {
 
-		case ActionTypes.RECEIVE_SELECTIONS:
+		case ActionTypes.RECEIVE_ALL_SELECTIONS:
 
 				Object.keys(action.data).forEach(type => {
 					let batch = flop(action.data[type], "label");

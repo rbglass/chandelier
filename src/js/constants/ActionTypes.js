@@ -3,7 +3,7 @@ import keyMirror from "react/lib/keyMirror";
 
 export default keyMirror({
 	// SERVER JS -> LOCAL IMMUTABLE
-	"RECEIVE_SELECTIONS": null,
+	"RECEIVE_ALL_SELECTIONS": null,
 
 	"RECEIVE_ALL_JOBS": null,
 	"RECEIVE_SINGLE_JOB": null,

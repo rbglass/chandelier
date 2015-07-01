@@ -38,10 +38,29 @@ export function getSortedThings(endpoint, field, isAsc) {
 					.end(onReply(action));
 }
 
+// We can get rid of these and call getSortedThings instead
 export function getAllJobs() {
 	SharedActionCreators.startLoading();
 	request.get(jobs)
 					.end(onReply(ServerActionCreators.receiveAllJobs));
+}
+
+export function getAllItems() {
+	SharedActionCreators.startLoading();
+	request.get(items)
+					.end(onReply(ServerActionCreators.receiveAllItems));
+}
+
+export function getSelections() {
+	SharedActionCreators.startLoading();
+	request.get(selections)
+					.end(onReply(ServerActionCreators.receiveAllSelections));
+}
+
+export function getAllProducts() {
+	SharedActionCreators.startLoading();
+	request.get(products)
+					.end(onReply(ServerActionCreators.receiveAllProducts));
 }
 
 export function getSingleJob(jobId) {
@@ -56,21 +75,6 @@ export function createSingleJob() {
 					.end(onReply(ServerActionCreators.receiveNewJob));
 }
 
-export function saveDetails(jobId, immutUpdateObj) {
-	const updateObj = immutUpdateObj.toJS();
-
-	SharedActionCreators.startLoading();
-	request.put(`${jobs}/${jobId}`)
-					.send(updateObj)
-					.end(onReply(ServerActionCreators.receiveUpdatedJob));
-}
-
-export function getAllItems() {
-	SharedActionCreators.startLoading();
-	request.get(items)
-					.end(onReply(ServerActionCreators.receiveAllItems));
-}
-
 export function createSingleJobItem(jobId, immutBlueprint) {
 	const blueprint = immutBlueprint.toJS && immutBlueprint.toJS() || {};
 	blueprint.job_id = jobId;
@@ -79,6 +83,21 @@ export function createSingleJobItem(jobId, immutBlueprint) {
 	request.post(items)
 					.send(blueprint)
 					.end(onReply(ServerActionCreators.receiveSingleItem));
+}
+
+export function createSingleProduct() {
+	SharedActionCreators.startLoading();
+	request.post(products)
+					.end(onReply(ServerActionCreators.receiveSingleProduct));
+}
+
+export function saveDetails(jobId, immutUpdateObj) {
+	const updateObj = immutUpdateObj.toJS();
+
+	SharedActionCreators.startLoading();
+	request.put(`${jobs}/${jobId}`)
+					.send(updateObj)
+					.end(onReply(ServerActionCreators.receiveUpdatedJob));
 }
 
 export function saveItem(itemId, immutUpdateObj) {
@@ -90,30 +109,6 @@ export function saveItem(itemId, immutUpdateObj) {
 					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
-export function deleteSingleItem(itemId) {
-	SharedActionCreators.startLoading();
-	request.del(`${items}/${itemId}`)
-					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
-}
-
-export function getSelections() {
-	SharedActionCreators.startLoading();
-	request.get(selections)
-					.end(onReply(ServerActionCreators.receiveSelections));
-}
-
-export function getAllProducts() {
-	SharedActionCreators.startLoading();
-	request.get(products)
-					.end(onReply(ServerActionCreators.receiveAllProducts));
-}
-
-export function createSingleProduct() {
-	SharedActionCreators.startLoading();
-	request.post(products)
-					.end(onReply(ServerActionCreators.receiveSingleProduct));
-}
-
 export function saveProduct(productId, immutUpdateObj) {
 	const updateObj = immutUpdateObj.toJS();
 
@@ -123,14 +118,14 @@ export function saveProduct(productId, immutUpdateObj) {
 					.end(onReply(ServerActionCreators.receiveUpdateConfirmation));
 }
 
+export function deleteSingleItem(itemId) {
+	SharedActionCreators.startLoading();
+	request.del(`${items}/${itemId}`)
+					.end(onReply(ServerActionCreators.deleteSingleItem, itemId));
+}
+
 export function deleteSingleProduct(productId) {
 	SharedActionCreators.startLoading();
 	request.del(`${products}/${productId}`)
 					.end(onReply(ServerActionCreators.deleteSingleProduct, productId));
-}
-
-export function getAllContacts() {
-	SharedActionCreators.startLoading();
-	request.get(contacts)
-					.end(onReply());
 }

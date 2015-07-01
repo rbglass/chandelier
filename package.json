@@ -16,10 +16,10 @@
     "live-reload": "live-reload public/ --port 9082",
     "devserve": "NODE_ENV=development nodemon app.js --watch api",
     "test": "mocha test",
-    "test:back": "mocha test/back",
-    "test:front": "mocha test/front",
-    "test:fwatch": "mocha test/front -w src/js/**/*.js --loglevel silent",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/**/**/__*.js",
+    "test:back": "mocha test/api",
+    "test:front": "mocha test/src",
+    "test:fwatch": "mocha test/src -w src/js/**/*.js --loglevel silent",
+    "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive ./test",
     "mk": "mkdir public/js & mkdir public/css"
   },
   "repository": {

@@ -138,7 +138,7 @@ const onReceivingAction = action => {
 				JobsStore.emitChange();
 				break;
 
-		case ActionTypes.RECEIVE_SELECTIONS:
+		case ActionTypes.RECEIVE_ALL_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);
 				const selections = SelectionStore.getSelections();
 				const rIterable = filters.get("restrictions").keySeq();

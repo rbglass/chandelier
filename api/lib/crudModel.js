@@ -88,12 +88,12 @@ module.exports = function(config) {
 		},
 
 		delete: function(id, cb) {
-			var deleteString = deleteQuery(table, pkey);
+			var q = deleteQuery(table, id, pkey);
 
 			connect(function(err, client, done) {
 				if (err) return cb(err);
 
-				client.query(deleteString, [id], function(errDelete, info) {
+				client.query(q.command, q.data, function(errDelete, info) {
 					done();
 					if (errDelete) cb(errDelete);
 					else           cb(null, id);

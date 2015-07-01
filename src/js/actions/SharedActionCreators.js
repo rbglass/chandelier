@@ -17,25 +17,25 @@ export function getSelections() {
 	JobsAPI.getSelections();
 }
 
-export function saveDetails(jobId, details) {
-	JobsAPI.saveDetails(jobId, details);
+export function getAllProducts() {
+	JobsAPI.getAllProducts();
 }
 
-export function createItem(jobId, blueprint) {
-	JobsAPI.createSingleJobItem(jobId, blueprint);
+export function saveDetails(jobId, details) {
+	JobsAPI.saveDetails(jobId, details);
 }
 
 export function saveItem(itemId, item) {
 	JobsAPI.saveItem(itemId, item);
 }
 
+export function createItem(jobId, blueprint) {
+	JobsAPI.createSingleJobItem(jobId, blueprint);
+}
+
 export function deleteItem(_, cells) {
 	const itemId = cells.get("item_id");
 	JobsAPI.deleteSingleItem(itemId);
-}
-
-export function getAllProducts() {
-	JobsAPI.getAllProducts();
 }
 
 export function changeItem(updateObj) {
