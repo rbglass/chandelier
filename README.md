@@ -14,9 +14,9 @@ npm run build
 npm start
 ```
 
-If you wish to populate the db with dummy data and be able to log in, go to `test/back/helpers/helpers`, comment in the 3 lines at the bottom, and run the following:
+If you wish to populate the db with dummy data and be able to log in, go to `test/api/helpers/helpers`, comment in the 3 lines at the bottom, and run the following:
 ```
-EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/back/helpers/helpers.js
+EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/api/helpers/helpers.js
 ```
 
 ## Test
