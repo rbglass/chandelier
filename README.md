@@ -81,5 +81,8 @@ code.
 [__sinon__]() - mocking, stubbing and spying tools for testing
 
 ---
+[__istanbul__]() - test coverage
+
+---
 
 
