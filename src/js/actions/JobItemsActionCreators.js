@@ -7,6 +7,7 @@ import * as JobsAPI from "../api/JobsAPI";
 export function getAllItems() {
 	JobsAPI.getAllItems();
 }
+
 export function sortBy(field) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.SORT_ITEMS,

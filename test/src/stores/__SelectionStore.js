@@ -25,13 +25,13 @@ describe("SelectionStore", function() {
 		assert.equal(SelectionStore.getSelections(), dummy);
 	});
 
-	it("#updates its internal state if the actiontype is RECEIVE SELECTIONS", function() {
+	it("#updates its internal state if the actiontype is RECEIVE_ALL_SELECTIONS", function() {
 		var testData = {
 			testitems: [{label: "hello mum!"}, {label: ":)"}]
 		};
 
 		onReceivingAction({
-			type: "RECEIVE_SELECTIONS",
+			type: "RECEIVE_ALL_SELECTIONS",
 			data: testData
 		});
 

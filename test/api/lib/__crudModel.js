@@ -1,13 +1,13 @@
 "use strict";
 import assert from "assert";
+import rewire from "rewire";
 import assign from "object-assign";
 import Joi from "joi";
 import helpers, { coerceToNum } from "../helpers/helpers";
-
-import crud from "../../../api/lib/crudModel";
+import { connectDouble } from "../helpers/doubles";
 
 describe("model - crud", () => {
-	let data, model, dataWeGotBack;
+	let crud, data, model, dataWeGotBack;
 
 	const conf = {
 		tableName: "products",
@@ -20,6 +20,7 @@ describe("model - crud", () => {
 	before(done => helpers.start("products", done));
 	after(done => helpers.drop(done));
 	beforeEach(done => {
+		crud = rewire("../../../api/lib/crudModel");
 		model = crud(conf);
 		data = JSON.parse(JSON.stringify(require("../models/json/products.json")));
 		done();
@@ -125,6 +126,43 @@ describe("model - crud", () => {
 				done();
 			});
 		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			crud.__set__("connect", connectDouble("connect"));
+
+			const opts = {};
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id"
+			};
+
+			model = crud(config);
+
+			model.getAll(opts, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error", done => {
+			crud.__set__("connect", connectDouble("query"));
+
+			const opts = {};
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id"
+			};
+
+			model = crud(config);
+
+			model.getAll(opts, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
 	});
 
 	describe(".create", () => {
@@ -186,6 +224,40 @@ describe("model - crud", () => {
 				done();
 			});
 		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			crud.__set__("connect", connectDouble("connect"));
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id"
+			};
+
+			model = crud(config);
+
+			model.create(null, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error", done => {
+			crud.__set__("connect", connectDouble("query"));
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id"
+			};
+
+			model = crud(config);
+
+			model.create(null, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
 	});
 
 	describe(".update", () => {
@@ -268,6 +340,56 @@ describe("model - crud", () => {
 				done();
 			});
 		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			crud.__set__("connect", connectDouble("connect"));
+
+			const theChosenOne = data[5].id;
+			const theOneToBeInvigorated = {
+				sku: 12345
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.update(theChosenOne, theOneToBeInvigorated, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error", done => {
+			crud.__set__("connect", connectDouble("query"));
+
+			const theChosenOne = data[5].id;
+			const theOneToBeInvigorated = {
+				sku: 12345
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.update(theChosenOne, theOneToBeInvigorated, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
 	});
 
 	describe(".delete", () => {
@@ -291,6 +413,56 @@ describe("model - crud", () => {
 						done();
 					});
 				});
+			});
+		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			crud.__set__("connect", connectDouble("connect"));
+
+			const theChosenOne = data[5].id;
+			const theOneToBeInvigorated = {
+				sku: "hello12345"
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.delete(theChosenOne, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error", done => {
+			crud.__set__("connect", connectDouble("query"));
+
+			const theChosenOne = data[5].id;
+			const theOneToBeInvigorated = {
+				sku: "hello12345"
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				})
+			};
+
+			model = crud(config);
+
+			model.delete(theChosenOne, (err, rows) => {
+				assert(err);
+				done();
 			});
 		});
 	});

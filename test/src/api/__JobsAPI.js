@@ -3,7 +3,7 @@ import I from "immutable";
 import sinon from "sinon";
 import assert from "assert";
 import rewire from "rewire";
-import { requestDouble, ServerActionCreatorsDouble } from "../helpers/doubles";
+import { requestDouble, genericDouble } from "../helpers/doubles";
 
 import * as ServerActionCreators from "../../../src/js/actions/ServerActionCreators";
 import * as SharedActionCreators from "../../../src/js/actions/SharedActionCreators";
@@ -17,7 +17,7 @@ describe("JobsAPI", () => {
 		startLoadingStub = sinon.stub(SharedActionCreators, "startLoading", () => {
 			loading = true;
 		});
-		SAC = ServerActionCreatorsDouble(result);
+		SAC = genericDouble(ServerActionCreators, result);
 		request = requestDouble(result);
 	});
 
@@ -324,11 +324,11 @@ describe("JobsAPI", () => {
 			done();
 		});
 
-		it("#sends a request to the selections endpoint, continuing to .receiveSelections", () => {
+		it("#sends a request to the selections endpoint, continuing to .receiveAllSelections", () => {
 			JobsAPI.getSelections();
 
 			assert.equal(result.get, "/api/selections");
-			assert.deepEqual(result.end, ServerActionCreators.receiveSelections);
+			assert.deepEqual(result.end, ServerActionCreators.receiveAllSelections);
 		});
 	});
 

@@ -1,17 +1,22 @@
 "use strict";
 import assert from "assert";
+import rewire from "rewire";
 import assign from "object-assign";
 import helpers, { coerceToNum } from "../helpers/helpers";
-
-import jobs from "../../../api/models/jobs";
+import { connectDouble } from "../helpers/doubles";
 
 describe("jobs", () => {
 	const datesWeDontWant = ["updatedat", "shipping_date", "createdat"];
 	const thingsWeWantAsNum = ["job_id", "qty_items"];
-	let data, itemdata;
+	let jobs, data, itemdata;
 
 	before(done => helpers.start("jobs", helpers.job_items.bind(null, done)));
 	after(done => helpers.drop(done));
+
+	beforeEach(done => {
+		jobs = rewire("../../../api/models/jobs");
+		done();
+	});
 
 
 	function cleanseOfDates(dates, ...rows) {
@@ -84,6 +89,34 @@ describe("jobs", () => {
 				done();
 			});
 		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			jobs.__set__("connect", connectDouble("connect"));
+
+			const opts = {
+				sortBy: "qty_items",
+				asc: "anything"
+			};
+
+			jobs.getAll(opts, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error", done => {
+			jobs.__set__("connect", connectDouble("query"));
+
+			const opts = {
+				sortBy: "qty_items",
+				asc: "anything"
+			};
+
+			jobs.getAll(opts, (err, rows) => {
+				assert(err);
+				done();
+			});
+		});
 	});
 
 	describe(".getSingle", () => {
@@ -117,6 +150,33 @@ describe("jobs", () => {
 
 				assert.deepEqual(cleansed, theChosenOne);
 				assert.deepEqual(jobWithItems.items, extracted);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a connection error", done => {
+			jobs.__set__("connect", connectDouble("connect"));
+
+			jobs.getSingle(data[3], {}, (err, jobWithitems) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error - job", done => {
+			jobs.__set__("connect", connectDouble("query"));
+
+			jobs.getSingle(data[3], {}, (err, jobWithitems) => {
+				assert(err);
+				done();
+			});
+		});
+
+		it("#calls the cb with an error if there is a query error - item", done => {
+			jobs.__set__("connect", connectDouble("query", 2));
+
+			jobs.getSingle(data[3], {}, (err, jobWithitems) => {
+				assert(err);
 				done();
 			});
 		});

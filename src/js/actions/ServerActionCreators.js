@@ -3,32 +3,32 @@ import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 import * as RouterContainer from "../routing/RouterContainer";
 
-export function receiveSelections(selections) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_SELECTIONS,
-		data: selections
-	});
+function receive(singleOrAll, type) {
+	return function(data) {
+		AppDispatcher.dispatch({
+			type: ActionTypes[`RECEIVE_${singleOrAll.toUpperCase()}_${type.toUpperCase()}`],
+			data: data
+		});
+	};
 }
 
-export function receiveAllJobs(jobsArray) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_ALL_JOBS,
-		data: jobsArray
-	});
-}
+const ra = receive.bind(null, "all");
+const rs = receive.bind(null, "single");
+
+export const receiveAllSelections = ra("selections");
+export const receiveAllJobs       = ra("jobs");
+export const receiveAllItems      = ra("items");
+export const receiveAllProducts   = ra("products");
+
+export const receiveSingleJob     = rs("job");
+export const receiveSingleItem    = rs("item");
+export const receiveSingleProduct = rs("product");
 
 export function receiveNewJob(job) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_JOB_CREATION_CONFIRMATION
 	});
 	RouterContainer.get().transitionTo("singlejob", {id: job.job_id});
-}
-
-export function receiveSingleJob(jobObject) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_SINGLE_JOB,
-		data: jobObject
-	});
 }
 
 export function receiveUpdatedJob(jobObject) {
@@ -38,38 +38,10 @@ export function receiveUpdatedJob(jobObject) {
 	});
 }
 
-export function receiveSingleItem(itemObject) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_SINGLE_ITEM,
-		data: itemObject
-	});
-}
-
 export function deleteSingleItem(res, itemId) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_ITEM_DELETION_CONFIRMATION,
 		data: itemId
-	});
-}
-
-export function receiveAllItems(itemsArr) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_ALL_ITEMS,
-		data: itemsArr
-	});
-}
-
-export function receiveAllProducts(productObj) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_ALL_PRODUCTS,
-		data: productObj
-	});
-}
-
-export function receiveSingleProduct(product) {
-	AppDispatcher.dispatch({
-		type: ActionTypes.RECEIVE_SINGLE_PRODUCT,
-		data: product
 	});
 }
 

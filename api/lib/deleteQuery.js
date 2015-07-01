@@ -1,9 +1,12 @@
 "use strict";
 
-module.exports = function(table, idField) {
-	if (!table || !idField) {
+module.exports = function(table, id, idField) {
+	if (!table || !id || !idField) {
 		throw new Error("Missing arg");
 	}
 
-	return "DELETE FROM " + table +  " WHERE " + idField + "=($1)";
+	return {
+		command: "DELETE FROM " + table +  " WHERE " + idField + "=($1)",
+		data: [id]
+	};
 };

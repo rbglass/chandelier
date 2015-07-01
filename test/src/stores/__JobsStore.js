@@ -235,7 +235,7 @@ describe("JobsStore", () => {
 		sameVal(filtersWeGotBack, emptyFilters);
 	});
 
-	it("#populates each restriction's options upon a RECEIVE_SELECTIONS action", () => {
+	it("#populates each restriction's options upon a RECEIVE_ALL_SELECTIONS action", () => {
 		const selections = I.fromJS({
 			job_status: ["hi", "mate"],
 			order_type: ["nice", "one"]
@@ -250,7 +250,7 @@ describe("JobsStore", () => {
 		let filters;
 
 		onReceivingAction({
-			type: "RECEIVE_SELECTIONS"
+			type: "RECEIVE_ALL_SELECTIONS"
 		});
 
 		filters = JobsStore.getFilters();

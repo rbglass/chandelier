@@ -3,4 +3,4 @@
 --recursive
 --compilers js:babel/register
 --require test/before.js
---require test/front/setup/setup.js
+--require test/src/setup/setup.js

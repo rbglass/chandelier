@@ -54,7 +54,7 @@ export function getAllItems() {
 export function getSelections() {
 	SharedActionCreators.startLoading();
 	request.get(selections)
-					.end(onReply(ServerActionCreators.receiveSelections));
+					.end(onReply(ServerActionCreators.receiveAllSelections));
 }
 
 export function getAllProducts() {

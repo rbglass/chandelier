@@ -15,7 +15,7 @@ function model(withErr) {
 	};
 }
 
-describe("crud", () => {
+describe("handlers - crud", () => {
 	let handlers, handlersWithErr, reply, result;
 
 	beforeEach(() => {

@@ -104,13 +104,14 @@ function indentLineBreaker(description, lineLimit, startingIndent, nextIndent) {
 	var bk = breaker.nextBreak();
 	var lines = "";
 	var prep = startingIndent || "";
+	var nextLen = nextIndent && nextIndent.length || 0;
 
 	if (description.length < lineLimit) {
 		return prep.concat(description);
 	}
 	while (bk) {
 		if ((bk.position - last) > lineLimit) {
-			if (last === 0) lineLimit -= nextIndent.length;
+			if (last === 0) lineLimit -= nextLen;
 
 			lines += prep.concat(description.slice(last, bk.position));
 			last = bk.position;
@@ -133,6 +134,10 @@ function formatDescription(description, lineLimit, startingIndent, nextIndent) {
 				return indentLineBreaker(oneLine, lineLimit, startingIndent, nextIndent);
 		});
     return properlyWrapped.join("");
+}
+
+function propChecker(prefix, prop) {
+	return (prop && prefix + ": " + prop) || "";
 }
 
 function writeFooter(doc, num) {
@@ -293,10 +298,10 @@ function writeDoc(job, cb) {
 					formatDescription(
 						item.description, DESCRIPTION_LINE_WRAP, "\n   ", "        "
 					) || "")
-				.text(item.glass && "- Glass: " + item.glass || "")
-				.text(item.metal && "- Metal: " + item.metal || "")
-				.text(item.flex && "- Flex: " + item.flex || "")
-				.text(item.bulb && "- Bulb: " + item.bulb || "")
+				.text(propChecker("- Glass", item.glass))
+				.text(propChecker("- Glass", item.metal))
+				.text(propChecker("- Glass", item.flex ))
+				.text(propChecker("- Glass", item.bulb ))
 				.moveDown(1.5);
 
 

@@ -1,6 +1,9 @@
 "use strict";
+import assert from "assert";
 import sinon from "sinon";
 import request from "superagent";
+import ActionTypes from "../../../src/js/constants/ActionTypes";
+import AppDispatcher from "../../../src/js/dispatchers/AppDispatcher";
 import * as ServerActionCreators from "../../../src/js/actions/ServerActionCreators";
 
 function stubFn(ref, toReturn, method) {
@@ -42,16 +45,27 @@ export default {
 		};
 	},
 
-	ServerActionCreatorsDouble(ref) {
-		const sStub = stubFn.bind(null, ref, ref);
-		const serverMethodsToStub = Object.keys(ServerActionCreators);
+	genericDouble(file, ref) {
+		const gStub = stubFn.bind(null, ref, ref);
+		const methodsToStub = Object.keys(file);
 
-		serverMethodsToStub.map(method =>
-			sinon.stub(ServerActionCreators, method, sStub(method))
-		);
+		let stubbed = methodsToStub.map(m => sinon.stub(file, m, gStub(m)));
 
-		return () => {
-			serverMethodsToStub.forEach(method => method.restore());
-		};
+		return () => stubbed.forEach(m => m.restore());
+	},
+
+	dispyDouble(type, data) {
+		try {
+			AppDispatcher.dispatch.restore();
+		} catch (e) {
+			void 0;
+		}
+
+		const st = sinon.stub(AppDispatcher, "dispatch", (action) => {
+			assert.equal(action.type, ActionTypes[type]);
+			assert.deepEqual(action.data, data);
+		});
+
+		return st;
 	}
 };
