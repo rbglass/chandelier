@@ -23,6 +23,25 @@ module.exports = function(config) {
 		else              return result.value;
 	}
 
+	function createOrUpdate(cb, command, data, before) {
+		connect(function(err, cl, done) {
+			if(err) return cb(err);
+
+			cl.query(command, data, function(errC, info) {
+				var formatted, combined;
+
+				done();
+				if (errC) {
+					cb(errC);
+				} else {
+					combined = assign(before, info.rows[0]);
+					formatted = formatterS ? formatterS(combined) : combined;
+					cb(null, formatted);
+				}
+			});
+		});
+	}
+
 	return {
 		getAll: function(opts, cb) {
 			var sortBy, sortString, mainString, queryString;
@@ -53,16 +72,7 @@ module.exports = function(config) {
 
 			var q = insertQuery(table, result);
 
-			connect(function(err, client, done) {
-				if(err) return cb(err);
-
-				client.query(q.command, q.data, function(errInsert, info) {
-					done();
-					if (errInsert) cb(errInsert);
-					else           cb(null, (formatterS && formatterS(assign(before, info.rows[0]))) ||
-																		assign(before, info.rows[0]));
-				});
-			});
+			createOrUpdate(cb, q.command, q.data, before);
 		},
 
 		update: function(id, data, cb) {
@@ -73,18 +83,7 @@ module.exports = function(config) {
 
 			var q = updateQuery(table, id, pkey, result);
 
-			connect(function(err, client, done) {
-				if (err) return cb(err);
-
-				client.query(q.command, q.data, function(updateErr, info) {
-					done();
-					if (updateErr) cb(updateErr);
-					else           cb(null, formatterS && formatterS(assign(before, info.rows[0])) ||
-																	assign(before, info.rows[0]));
-						// vile, split that shit up
-				});
-
-			});
+			createOrUpdate(cb, q.command, q.data, before);
 		},
 
 		delete: function(id, cb) {

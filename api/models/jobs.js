@@ -1,9 +1,7 @@
 "use strict";
-var assign      = require("object-assign");
 var connect     = require("../db");
 var schema      = require("./schema");
 var formatter   = require("../utils/formatter");
-var updateQuery = require("../lib/updateQuery");
 var sortQuery   = require("../lib/sortQuery");
 var crud        = require("../lib/crudModel");
 
