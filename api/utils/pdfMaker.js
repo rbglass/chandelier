@@ -5,7 +5,6 @@ var MARGIN = 28,
 		BOTTOM_EDGE = 841.89,
 
 		ADDRESS_WIDTH = 200,
-		DETAILS_WIDTH = 200,
 		IMAGE_WIDTH = 200,
 		IMAGE_HEIGHT = 30,
 		LABEL_WORD_SPACING = -2,
@@ -36,7 +35,6 @@ var MARGIN = 28,
 
 var PDFDocument = require("pdfkit");
 var LineBreaker = require("linebreak");
-var assign = require("object-assign");
 
 var fieldsWeCareAbout = {
 	product: true,
@@ -100,7 +98,6 @@ function indentLineBreaker(description, lineLimit, startingIndent, nextIndent) {
 
 	var breaker = new LineBreaker(description);
 	var last = 0;
-	var lastSlice = 0;
 	var bk = breaker.nextBreak();
 	var lines = "";
 	var prep = startingIndent || "";
@@ -259,7 +256,6 @@ function writeDoc(job, cb) {
 	writeAddress(doc);
 
 	var deliveryLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
-	var deliveryHeight = deliveryLineCount * ADDRESS_FONT_SIZE + DETAIL_HEADER_FONT_SIZE;
 	var beginItemHeaders = Math.max(doc.y, detailsEndedAt, ITEM_HEADER_LINE);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
@@ -268,8 +264,6 @@ function writeDoc(job, cb) {
 			.text("Description", MARGIN + BETWEEN_QTY_AND_DESCRIPTION - 6)
 			.text(" ", MARGIN)
 			.moveDown(0.5);
-
-	var yPos = doc.y;
 
 	job.items.sort(function(a, b) {
 		return +a.pdf_rank - +b.pdf_rank;
