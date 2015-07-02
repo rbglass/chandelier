@@ -1,8 +1,7 @@
 # chandelier
 production management for people who produce
 
-[![Code Climate](https://codeclimate.com/github/foundersandcoders/chandelier/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/chandelier)
-[![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
+[![Code Climate](https://codeclimate.com/github/foundersandcoders/chandelier/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/chandelier) [![Test Coverage](https://codeclimate.com/repos/559478e1e30ba0765b000d9e/badges/837db3f95f63ec25a2d9/coverage.svg)](https://codeclimate.com/repos/559478e1e30ba0765b000d9e/coverage) [![Build Status](https://travis-ci.org/foundersandcoders/chandelier.svg?branch=dev)](https://travis-ci.org/foundersandcoders/chandelier)
 
 ## Run
 You will need a creds file of the format outlined in creds.example.json. You will also need postgres installed, a db called 'test' with a user called 'test' and a password of 'test' (if you want to populate it with dummy data) and use the url for that local postgres db in the creds file.
@@ -15,9 +14,9 @@ npm run build
 npm start
 ```
 
-If you wish to populate the db with dummy data and be able to log in, go to `test/back/helpers/helpers`, comment in the 3 lines at the bottom, and run the following:
+If you wish to populate the db with dummy data and be able to log in, go to `test/api/helpers/helpers`, comment in the 3 lines at the bottom, and run the following:
 ```
-EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/back/helpers/helpers.js
+EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/api/helpers/helpers.js
 ```
 
 ## Test
@@ -80,6 +79,9 @@ code.
 
 ---
 [__sinon__]() - mocking, stubbing and spying tools for testing
+
+---
+[__istanbul__]() - test coverage
 
 ---
 
