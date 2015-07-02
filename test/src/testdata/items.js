@@ -15,12 +15,13 @@ export const items = [
 		qty_assem: 3,
 		qty_packed: 3,
 		notes: "hello",
-		shipping_date: "2015-01-01"
+		shipping_date: "2015-01-01",
+		payment: "Paid Card"
 	},
 	{
 		job_id: "1234",
 		item_id: "2244",
-		job_status: "Complete",
+		job_status: "Confirmed",
 		product: "hello",
 		description: "hello",
 		glass: "hello",
@@ -33,7 +34,8 @@ export const items = [
 		qty_assem: 2,
 		qty_packed: 2,
 		notes: "hello",
-		shipping_date: "2014-12-12"
+		shipping_date: "2014-12-12",
+		payment: "Paid BACS"
 	},
 	{
 		job_id: "1235",
@@ -51,7 +53,8 @@ export const items = [
 		qty_assem: 3,
 		qty_packed: 3,
 		notes: "hello",
-		shipping_date: "2015-08-03"
+		shipping_date: "2015-08-03",
+		payment: "Deposit"
 	},
 	{
 		job_id: "1235",
@@ -69,6 +72,7 @@ export const items = [
 		qty_assem: 2,
 		qty_packed: 2,
 		notes: "hello",
-		shipping_date: "2016-09-12"
+		shipping_date: "2016-09-12",
+		payment: "Paid Card"
 	}
 ];

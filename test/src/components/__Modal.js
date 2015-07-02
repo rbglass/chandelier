@@ -56,4 +56,27 @@ describe("Modal", () => {
 
 		assert(dialogueContents.filter(el => el.className === "testing"));
 	});
+
+	it("#calls this.props.hide() upon hitting escape", () => {
+		let result = false;
+
+		const RenderedComponent = TestUtils.renderIntoDocument(
+			<Modal isVisible={true} hide={() => result = true}/>
+		);
+
+		const section = TestUtils.findRenderedDOMComponentWithTag(
+			RenderedComponent,
+			"section"
+		);
+
+		const node = React.findDOMNode(section);
+
+		assert.equal(result, false);
+
+		TestUtils.Simulate.keyDown(node, {keyCode: 12});
+		assert.equal(result, false);
+
+		TestUtils.Simulate.keyDown(node, {keyCode: 27});
+		assert.equal(result, true);
+	});
 });

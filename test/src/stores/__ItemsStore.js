@@ -84,6 +84,26 @@ describe("ItemsStore", () => {
 		)));
 	});
 
+	it("#updates the items List upon a CHANGE_SINGLE_JOB_ITEM action", () => {
+		const itemToChange = {
+			id: sampleitems[1].item_id,
+			key: "changedStuff",
+			value: "what is life"
+		};
+
+		onReceivingAction({
+			type: "CHANGE_SINGLE_JOB_ITEM",
+			data: itemToChange
+		});
+
+		const itemsWeGotBack = ItemsStore.getFilteredItems();
+		const itemWeGotBack = itemsWeGotBack.filter(item =>
+			item.get("item_id") === itemToChange.id
+		).last();
+
+		sameVal(itemWeGotBack.get(itemToChange.key), itemToChange.value);
+	});
+
 	it("#updates the filterBy filter upon a FILTER_ITEMS_BY action", () => {
 		const filterTerm = "JIM";
 		assert.notEqual(ItemsStore.getFilters().get("filterBy"), filterTerm);

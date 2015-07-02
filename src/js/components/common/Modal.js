@@ -18,26 +18,6 @@ export default class Modal extends Component {
 		}
 	}
 
-	componentWillUpdate(nextProps) {
-		if (nextProps.isVisible && this.props.beforeOpen) {
-				this.props.beforeOpen();
-		}
-
-		if (!nextProps.isVisible && this.props.beforeClose) {
-				this.props.beforeClose();
-		}
-	}
-
-	componentDidUpdate(prevProps) {
-			if (!prevProps.isVisible && this.props.afterOpen) {
-					this.props.afterOpen();
-			}
-
-			if (prevProps.isVisible && this.props.afterClose) {
-					this.props.afterClose();
-			}
-	}
-
 	render() {
 
 			let overlay;

@@ -45,4 +45,43 @@ describe("NavBar", () => {
 			assert.deepEqual(link.props.children.type, Link);
 		});
 	});
+
+	it("#should render children in a nav nav-item div", () => {
+
+		const ShallowRenderer = TestUtils.createRenderer();
+		ShallowRenderer.render(
+			<NavBar>
+				<button className="test1" />
+			</NavBar>
+		);
+
+		const renderedOutput = ShallowRenderer.getRenderOutput();
+
+		const kid1 = renderedOutput.props.children.filter(el =>
+			el && el.props && el.props.className === "nav nav-item"
+		).pop().props.children;
+
+		assert.equal(kid1.props.className, "test1");
+
+		ShallowRenderer.render(
+			<NavBar>
+				<button className="test1" />
+				<button className="test2" />
+			</NavBar>
+		);
+
+		const renderedOutput2 = ShallowRenderer.getRenderOutput();
+
+		const kids = renderedOutput2.props.children.filter(el =>
+			el instanceof Array
+		).pop();
+
+		assert.equal(kids.length, 2);
+
+		kids.forEach((kid, i) => {
+			assert.equal(kid.props.className, "nav nav-item");
+			assert.equal(kid.props.children.props.className, `test${i + 1}`);
+		});
+
+	});
 });
