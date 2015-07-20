@@ -58,7 +58,6 @@ export default class SingleJobDetails extends Component {
 				case "select":
 						input = (
 							<select value={cellValue} className="job-text-input">
-								<option></option>
 								{ this.props.selections.has(cell.key) ?
 									this.props.selections.get(cell.key).map((opt, j) => {
 									return <option key={opt + " " + j}>{opt}</option>;

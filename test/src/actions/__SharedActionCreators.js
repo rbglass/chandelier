@@ -48,6 +48,14 @@ const toTest = [
 		give: [3],
 		want: 3,
 		desc: "a new page number"
+	},
+
+	{
+		fn: "setRowsPerPage",
+		type: "SET_ROWS_PER_PAGE",
+		give: [Infinity],
+		want: Infinity,
+		desc: "a new number of rows per page"
 	}
 ];
 

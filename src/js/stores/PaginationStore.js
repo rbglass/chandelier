@@ -19,15 +19,30 @@ const PaginationStore = createStore({
 });
 
 const onReceivingAction = action => {
+	const shouldResetTo0 = /FILTER/.test(action.type) ||
+													/RESTRICT/.test(action.type);
 
-	switch (action.type) {
+	if (shouldResetTo0) {
+		currentPage = 0;
+		PaginationStore.emitChange();
+	} else {
 
-		case ActionTypes.SWITCH_PAGE_NUMBER:
-				currentPage = action.data;
-				PaginationStore.emitChange();
-				break;
+		switch (action.type) {
+
+			case ActionTypes.SWITCH_PAGE_NUMBER:
+					currentPage = action.data;
+					PaginationStore.emitChange();
+					break;
+
+			case ActionTypes.SET_ROWS_PER_PAGE:
+					rowsPerPage = action.data;
+					PaginationStore.emitChange();
+					break;
+
+		}
 
 	}
+
 };
 
 export default PaginationStore;

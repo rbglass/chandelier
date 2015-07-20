@@ -14,7 +14,8 @@ export default class Filter extends Component {
 		return 	nextProps.selections !== this.props.selections ||
 							nextProps.filters !== this.props.filters ||
 							nextProps.currentPage !== this.props.currentPage ||
-							nextProps.totalPages !== this.props.totalPages;
+							nextProps.rowsPerPage !== this.props.rowsPerPage ||
+							nextProps.numberOfRows !== this.props.numberOfRows;
 	}
 
 	render() {
