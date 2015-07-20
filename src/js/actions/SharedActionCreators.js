@@ -87,3 +87,10 @@ export function changePageNumber(n) {
 		data: n
 	});
 }
+
+export function setRowsPerPage(n) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.SET_ROWS_PER_PAGE,
+		data: n
+	});
+}

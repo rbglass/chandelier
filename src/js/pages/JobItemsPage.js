@@ -28,6 +28,7 @@ class JobItemsPage extends Component {
 
 	componentWillUnmount() {
 		SharedActionCreators.changePageNumber(0);
+		SharedActionCreators.setRowsPerPage(50);
 	}
 
 	render() {
@@ -53,7 +54,9 @@ class JobItemsPage extends Component {
 						setEndDate={JobItemsActionCreators.setEndDate}
 						restrictTo={JobItemsActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
-						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
+						currentPage={this.props.currentPage}
+						rowsPerPage={this.props.rowsPerPage}
+						numberOfRows={this.props.numberOfItems}
 						changePage={SharedActionCreators.changePageNumber}
 					/>
 					<div className="table-container">
@@ -78,7 +81,8 @@ function getState() {
 	const items = ItemsStore.getFilteredItems(start, end);
 	const filters = ItemsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
-	const totalPages = Math.ceil(ItemsStore.getNumberOfItems() / PaginationStore.getRowsPerPage());
+	const numberOfItems = ItemsStore.getNumberOfItems();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
 	const selections = SelectionStore.getSelections();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
@@ -89,7 +93,8 @@ function getState() {
 		items,
 		filters,
 		currentPage,
-		totalPages,
+		numberOfItems,
+		rowsPerPage,
 		isLoading,
 		isUnsaved,
 		alert

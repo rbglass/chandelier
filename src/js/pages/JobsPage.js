@@ -26,6 +26,7 @@ class JobsPage extends Component {
 
 	componentWillUnmount() {
 		SharedActionCreators.changePageNumber(0);
+		SharedActionCreators.setRowsPerPage(50);
 	}
 
 	render() {
@@ -53,7 +54,9 @@ class JobsPage extends Component {
 						setEndDate={JobsActionCreators.setEndDate}
 						restrictTo={JobsActionCreators.restrictTo}
 						presetConfig={this.props.presetScheme}
-						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
+						currentPage={this.props.currentPage}
+						rowsPerPage={this.props.rowsPerPage}
+						numberOfRows={this.props.numberOfJobs}
 						changePage={SharedActionCreators.changePageNumber} >
 						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
 							New Job
@@ -81,7 +84,8 @@ function getState() {
 	const jobs = JobsStore.getFilteredJobs(start, end);
 	const filters = JobsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
-	const totalPages = Math.ceil(JobsStore.getNumberOfJobs() / PaginationStore.getRowsPerPage());
+	const numberOfJobs = JobsStore.getNumberOfJobs();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
 	const selections = SelectionStore.getSelections();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
@@ -92,7 +96,8 @@ function getState() {
 		jobs,
 		filters,
 		currentPage,
-		totalPages,
+		numberOfJobs,
+		rowsPerPage,
 		isLoading,
 		isUnsaved,
 		alert
