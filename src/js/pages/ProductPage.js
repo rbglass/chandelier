@@ -62,6 +62,7 @@ class ProductPage extends Component {
 						currentPage={this.props.currentPage}
 						rowsPerPage={this.props.rowsPerPage}
 						numberOfRows={this.props.numberOfProducts}
+						setRowsPerPage={SharedActionCreators.setRowsPerPage}
 						changePage={SharedActionCreators.changePageNumber}
 					>
 						<button className="add-button rounded"
@@ -86,14 +87,14 @@ class ProductPage extends Component {
 
 function getState() {
 	const start = PaginationStore.getOffset();
-	const end = start + PaginationStore.getRowsPerPage();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
+	const end = start + rowsPerPage;
 
 	const products = ProductStore.getFilteredProducts(start, end);
 	const filters = ProductStore.getFilters();
 	const selections = ProductStore.getSelections();
 	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfProducts = ProductStore.getNumberOfProducts();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
 	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();

@@ -32,12 +32,17 @@ class JobItemsPage extends Component {
 	}
 
 	render() {
+		const shouldDisplayAlert = this.props.isLoading ||
+																this.props.isUnsaved ||
+																this.props.hasChanged ||
+																this.props.alert;
+
 		return (
 			<div>
 				<NavBar title={"All Items"} >
-					{(this.props.isLoading || this.props.alert) ?
+					{(shouldDisplayAlert) ?
 						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
+							hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
 						<span />
 					}
 					<img src="/img/transparent.gif" className="logo" />
@@ -57,6 +62,7 @@ class JobItemsPage extends Component {
 						currentPage={this.props.currentPage}
 						rowsPerPage={this.props.rowsPerPage}
 						numberOfRows={this.props.numberOfItems}
+						setRowsPerPage={SharedActionCreators.setRowsPerPage}
 						changePage={SharedActionCreators.changePageNumber}
 					/>
 					<div className="table-container">
@@ -76,14 +82,16 @@ class JobItemsPage extends Component {
 
 function getState() {
 	const start = PaginationStore.getOffset();
-	const end = start + PaginationStore.getRowsPerPage();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
+	const end = start + rowsPerPage;
 
 	const items = ItemsStore.getFilteredItems(start, end);
 	const filters = ItemsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfItems = ItemsStore.getNumberOfItems();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
 	const selections = SelectionStore.getSelections();
+
+	const hasChanged = AlertStore.getChangedStatus();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -95,6 +103,7 @@ function getState() {
 		currentPage,
 		numberOfItems,
 		rowsPerPage,
+		hasChanged,
 		isLoading,
 		isUnsaved,
 		alert

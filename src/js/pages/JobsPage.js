@@ -30,14 +30,18 @@ class JobsPage extends Component {
 	}
 
 	render() {
-		let items = this.props.jobs.map(item => item.get("details"));
+		const items = this.props.jobs.map(item => item.get("details"));
+		const shouldDisplayAlert = this.props.isLoading ||
+																this.props.isUnsaved ||
+																this.props.hasChanged ||
+																this.props.alert;
 
 		return (
 			<div>
 				<NavBar title={"All Jobs"} >
-					{(this.props.isLoading || this.props.alert) ?
+					{(shouldDisplayAlert) ?
 						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
+							hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
 						<span />
 					}
 					<img src="/img/transparent.gif" className="logo" />
@@ -57,6 +61,7 @@ class JobsPage extends Component {
 						currentPage={this.props.currentPage}
 						rowsPerPage={this.props.rowsPerPage}
 						numberOfRows={this.props.numberOfJobs}
+						setRowsPerPage={SharedActionCreators.setRowsPerPage}
 						changePage={SharedActionCreators.changePageNumber} >
 						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
 							New Job
@@ -79,14 +84,16 @@ class JobsPage extends Component {
 
 function getState() {
 	const start = PaginationStore.getOffset();
-	const end = start + PaginationStore.getRowsPerPage();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
+	const end = start + rowsPerPage;
 
 	const jobs = JobsStore.getFilteredJobs(start, end);
 	const filters = JobsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfJobs = JobsStore.getNumberOfJobs();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
 	const selections = SelectionStore.getSelections();
+
+	const hasChanged = AlertStore.getChangedStatus();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -98,6 +105,7 @@ function getState() {
 		currentPage,
 		numberOfJobs,
 		rowsPerPage,
+		hasChanged,
 		isLoading,
 		isUnsaved,
 		alert
@@ -155,7 +163,7 @@ JobsPage.defaultProps = {
 			]
 		},
 		{
-			description: "Confirmed/Not paid",
+			description: "Awaiting Payment",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),

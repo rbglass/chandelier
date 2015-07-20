@@ -32,6 +32,10 @@ class SingleJobPage extends Component {
 	render() {
 		let modalTitle, modalChildren;
 		const pending = this.props.pendingAction;
+		const shouldDisplayAlert = this.props.isLoading ||
+																this.props.isUnsaved ||
+																this.props.hasChanged ||
+																this.props.alert;
 
 		if (pending) {
 			if (pending.type === "DELETE") {
@@ -48,9 +52,9 @@ class SingleJobPage extends Component {
 		return (
 			<div>
 				<NavBar title={`RB${this.props.params.id}`} >
-					{(this.props.isLoading || this.props.alert) ?
+					{(shouldDisplayAlert) ?
 						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
+							hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
 						<span />
 					}
 					<img src="/img/transparent.gif" className="logo" />
@@ -97,6 +101,8 @@ function getState() {
 	const filters = SingleJobStore.getFilters();
 	const selections = SelectionStore.getSelections();
 	const pendingAction = ModalStore.getPendingAction();
+
+	const hasChanged = AlertStore.getChangedStatus();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -107,6 +113,7 @@ function getState() {
 		details,
 		filters,
 		pendingAction,
+		hasChanged,
 		isLoading,
 		isUnsaved,
 		alert

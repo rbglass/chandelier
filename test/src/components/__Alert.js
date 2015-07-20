@@ -64,6 +64,21 @@ describe("Alert", () => {
 		assert.notEqual(renderedOutput1.props.children, renderedOutput2.props.children);
 	});
 
+	it("#renders different content depending on the hasChanged prop", () => {
+		const ShallowRenderer = TestUtils.createRenderer();
+		ShallowRenderer.render(
+			<Alert hasChanged={true} />
+		);
+		const renderedOutput1 = ShallowRenderer.getRenderOutput();
+
+		ShallowRenderer.render(
+			<Alert hasChanged={false} />
+		);
+		const renderedOutput2 = ShallowRenderer.getRenderOutput();
+
+		assert.notEqual(renderedOutput1.props.children, renderedOutput2.props.children);
+	});
+
 	it("#displays error text if the alert type is 'error'", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
 		ShallowRenderer.render(
