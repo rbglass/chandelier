@@ -86,6 +86,7 @@ class SingleJobPage extends Component {
 								tableScheme={this.props.tableScheme}
 								onBlur={SharedActionCreators.saveItem}
 								sortFunc={SharedActionCreators.sortBy}
+								focusOnEntry={true}
 						/>
 					</div>
 				</div>

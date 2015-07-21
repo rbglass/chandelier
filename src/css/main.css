@@ -7,6 +7,8 @@
 	--red: rgba(224, 45, 45, 1);
 	--blue: rgba(39, 92, 152, 1);
 	--blueborder: rgba(1,1,1,0.5);
+	--entry-yellow: rgba(255, 235, 142, 1);
+	--entry-yellow-done: rgba(255, 235, 142, 0);
 	--hover: 0.8;
 }
 
@@ -323,6 +325,23 @@ select[multiple] {
 	font-size: 0.7rem;
 	line-height: 1.5;
 	margin-top: 0.5rem;
+}
+
+/* Table animation */
+.flash-enter {
+	background-color: var(--entry-yellow);
+	opacity: 1;
+}
+.flash-enter.flash-enter-active {
+	background-color: var(--entry-yellow-done);
+	transition: opacity .5s ease-in;
+}
+.flash-exit {
+	opacity: 1;
+}
+.flash-exit.flash-exit-active {
+	opacity: 0.01;
+	transition: opacity .5s ease-in;
 }
 
 /* Header */
