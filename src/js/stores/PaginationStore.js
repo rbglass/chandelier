@@ -25,7 +25,6 @@ const onReceivingAction = action => {
 	if (shouldResetTo0) {
 		currentPage = 0;
 		rowsPerPage = 50;
-		console.log(rowsPerPage);
 		PaginationStore.emitChange();
 	} else {
 
