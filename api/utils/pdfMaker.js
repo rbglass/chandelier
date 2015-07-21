@@ -9,11 +9,11 @@ var MARGIN = 28,
 		IMAGE_HEIGHT = 30,
 		LABEL_WORD_SPACING = -2,
 
-		TITLE_FONT_SIZE = 25,
-		ADDRESS_FONT_SIZE = 10,
-		DETAIL_HEADER_FONT_SIZE = 11,
-		ITEM_HEADER_FONT_SIZE = 12,
-		INPUT_FONT_SIZE = 10,
+		TITLE_FONT_SIZE = 24,
+		ADDRESS_FONT_SIZE = 9,
+		DETAIL_HEADER_FONT_SIZE = 10,
+		ITEM_HEADER_FONT_SIZE = 11,
+		INPUT_FONT_SIZE = 9,
 		FOOTER_FONT_SIZE = 8,
 
 		LINE_GAP = 1.2,
@@ -32,6 +32,8 @@ var MARGIN = 28,
 		ADDRESS_LINE = IMAGE_HEIGHT + BETWEEN_IMAGE_AND_ADDRESS,
 		ITEM_HEADER_LINE = DETAILS_LINE + BETWEEN_DETAILS_AND_ITEMS,
 		FOOTER_LINE = BOTTOM_EDGE - MARGIN - (LINES_IN_FOOTER * FOOTER_FONT_SIZE);
+
+var FONT = "Helvetica";
 
 var PDFDocument = require("pdfkit");
 var LineBreaker = require("linebreak");
@@ -137,14 +139,14 @@ function propChecker(prefix, prop) {
 	return (prop && prefix + ": " + prop) || "";
 }
 
-function writeFooter(doc, num) {
+function writeFooter(doc, num, total) {
 	doc.fontSize(FOOTER_FONT_SIZE)
-			.font("Helvetica")
+			.font(FONT)
 			.text("Rothschild & Bickers Ltd.", MARGIN, FOOTER_LINE)
 			.text("Registered Office & Studio: Unit 7, Great Northern Works, Hartham Lane, Hertford SG14 1QN UK")
 			.text("+44 (0) 1992 677 292 - info@rothschildbickers.com - www.rothschildbickers.com - UK Company No.8413128")
 			.moveDown()
-			.text("Page " + num, {align: "center"});
+			.text("Specification — Page " + num + " of " + total);
 }
 
 function writeAllFooters(doc) {
@@ -153,7 +155,7 @@ function writeAllFooters(doc) {
 
 	for (currentPage; currentPage < range.count; currentPage += 1) {
 		doc.switchToPage(currentPage);
-		writeFooter(doc, currentPage + 1);
+		writeFooter(doc, currentPage + 1, range.count);
 	}
 }
 
@@ -173,7 +175,7 @@ function writeDeliveryDetails(doc, address) {
 			.font("Bold")
 			.text("Delivery Details:", HORIZ_CENTER, DETAILS_LINE, labelConfig)
 			.fontSize(ADDRESS_FONT_SIZE)
-			.font("Helvetica")
+			.font(FONT)
 			.text(address);
 
 	return lineCounter(address, 60);
@@ -193,16 +195,17 @@ function wrapDetails(doc, pair) {
 				.text(pair[0], MARGIN, y, labelConfig);
 
 	doc.fontSize(INPUT_FONT_SIZE)
-				.font("Helvetica")
+				.font(FONT)
 				.text(
 					formatDescription(pair[1], 17, null, "   ") || " ",
 					MARGIN + 90, y
 				);
 }
 
-function writeDetails(doc, job) {
+function writeDetails(doc, job, wantFullVersion) {
 	var dateStr = formatDate(new Date());
 	var d = job.details;
+	var startDetailsAt = wantFullVersion ? DETAILS_LINE : doc.y;
 	var formattedShippingDate;
 	var tuples;
 
@@ -214,20 +217,25 @@ function writeDetails(doc, job) {
 
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 				.font("Bold")
-				.text("Date: ", MARGIN, DETAILS_LINE)
+				.text("Date: ", MARGIN, startDetailsAt)
 			.fontSize(INPUT_FONT_SIZE)
-				.font("Helvetica")
-				.text(dateStr, MARGIN + 90, DETAILS_LINE)
-			.moveDown();
+				.font(FONT)
+				.text(dateStr, MARGIN + 90, startDetailsAt);
 
 	tuples = [
 		["Job #:", "RB" + job.job_id],
-		["Client:", d.client],
-		["Project:", d.project],
-		["Client Ref:", d.client_ref],
-		["Job Status:", d.job_status],
-		["Shipping Date:", formattedShippingDate]
+		["Client:", d.client]
 	];
+
+	if (wantFullVersion) {
+		tuples = tuples.concat([
+			["Project:", d.project],
+			["Client Ref:", d.client_ref],
+			["Job Status:", d.job_status],
+			["Shipping Date:", formattedShippingDate]
+		]);
+		doc.moveDown();
+	}
 
 	tuples.forEach(function(pair) {
 		wrapDetails(doc, pair);
@@ -245,14 +253,14 @@ function writeDoc(job, cb) {
 	});
 
 	doc.registerFont("Bold", "public/fonts/Helvetica-Bold.ttf");
-	doc.font("Helvetica");
+	doc.font(FONT);
 
 	drawImage(doc);
 
 	doc.fontSize(TITLE_FONT_SIZE)
 			.text("Specification", MARGIN, TITLE_LINE);
 
-	var detailsEndedAt = writeDetails(doc, job);
+	var detailsEndedAt = writeDetails(doc, job, true);
 	writeAddress(doc);
 
 	var deliveryLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
@@ -260,7 +268,7 @@ function writeDoc(job, cb) {
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
 			.font("Bold")
-			.text("Qty", MARGIN + 4, beginItemHeaders, {continued: true})
+			.text("Qty", MARGIN, beginItemHeaders, {continued: true})
 			.text("Description", MARGIN + BETWEEN_QTY_AND_DESCRIPTION - 6)
 			.text(" ", MARGIN)
 			.moveDown(0.5);
@@ -276,6 +284,9 @@ function writeDoc(job, cb) {
 		if (itWont) {
 			doc.addPage();
 			doc.moveDown();
+			drawImage(doc);
+			writeDetails(doc, job, false);
+			doc.moveDown();
 		}
 
 		doc.moveTo(MARGIN, doc.y - INPUT_FONT_SIZE)
@@ -285,17 +296,17 @@ function writeDoc(job, cb) {
 		currentY = doc.y;
 
 		doc.fontSize(INPUT_FONT_SIZE)
-				.font("Helvetica")
-				.text(item.qty_req, MARGIN + 14, currentY)
+				.font(FONT)
+				.text(item.qty_req, MARGIN + 2, currentY)
 				.text(item.product, MARGIN + 14 + BETWEEN_QTY_AND_DESCRIPTION, currentY)
 				.text(item.description && "- Description: " +
 					formatDescription(
 						item.description, DESCRIPTION_LINE_WRAP, "\n   ", "        "
 					) || "")
 				.text(propChecker("- Glass", item.glass))
-				.text(propChecker("- Glass", item.metal))
-				.text(propChecker("- Glass", item.flex ))
-				.text(propChecker("- Glass", item.bulb ))
+				.text(propChecker("- Metal", item.metal))
+				.text(propChecker("- Flex", item.flex ))
+				.text(propChecker("- Bulb", item.bulb ))
 				.moveDown(1.5);
 
 
