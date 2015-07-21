@@ -14,7 +14,7 @@ const PaginationStore = createStore({
 		return rowsPerPage;
 	},
 	getOffset() {
-		return currentPage * rowsPerPage;
+		return currentPage * rowsPerPage || 0;
 	}
 });
 

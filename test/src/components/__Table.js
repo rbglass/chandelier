@@ -2,7 +2,7 @@
 import I from "immutable";
 import assert from "assert";
 import React from "react/addons";
-let { TestUtils } = React.addons;
+let { TestUtils, CSSTransitionGroup } = React.addons;
 
 import Table from "../../../src/js/components/table/Table";
 import TableHeader from "../../../src/js/components/table/TableHeader";
@@ -35,7 +35,7 @@ describe("Table", () => {
 
 	it("#renders a TableHeader component at the top of the table, and a table body div under it", () => {
 		assert.equal(header.type, TableHeader);
-		assert.equal(tableBody.type, "div");
+		assert.equal(tableBody.type, CSSTransitionGroup);
 	});
 
 	it("#passes TableHeader filters, headers and sortFunc props", () => {

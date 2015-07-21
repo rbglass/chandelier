@@ -14,6 +14,11 @@ export default class Table extends Component {
 
 		return shouldIt;
 	}
+
+	componentWillMount() {
+		this.shouldFlash = false;
+	}
+
 	componentDidUpdate(prevProps) {
 		if (!this.props.focusOnEntry) return;
 
@@ -21,12 +26,20 @@ export default class Table extends Component {
 		const oldItems = prevProps.items;
 
 		if (items.size === oldItems.size + 1) {
-			let tableNode = React.findDOMNode(this.refs.body);
-			tableNode.scrollTop = tableNode.scrollHeight;
+			this.shouldFlash = true;
+			this.scrollToBottom();
+		} else if (items.size === oldItems.size - 1) {
+			this.shouldFlash = true;
 		}
 	}
+
+	scrollToBottom() {
+		let tableNode = React.findDOMNode(this.refs.body);
+		tableNode.scrollTop = tableNode.scrollHeight;
+	}
+
 	render() {
-		const flashOrEmpty = this.props.focusOnEntry ? "flash" : "";
+		const shouldFlash = this.shouldFlash;
 		const rows = this.props.items.map((row, i) => {
 			return <TableRow key={i} cells={row} cellConfig={this.props.tableScheme}
 								selections={this.props.selections} primaryKey={this.props.primaryKey}
@@ -39,7 +52,8 @@ export default class Table extends Component {
 						sortFunc={this.props.sortFunc}
 				/>
 				<CSSTransitionGroup className="table-body" ref="body"
-						component="div" transitionName={flashOrEmpty} >
+						component="div" transitionName="flash" transitionEnter={shouldFlash}
+						transitionLeave >
 					{rows}
 				</CSSTransitionGroup>
 			</div>
