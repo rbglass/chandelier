@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import DocumentTitle from "react-document-title";
 import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
@@ -26,61 +27,64 @@ class ProductPage extends Component {
 
 	componentWillUnmount() {
 		SharedActionCreators.changePageNumber(0);
+		SharedActionCreators.setRowsPerPage(50);
 	}
 
 	render() {
 		return (
-			<div>
-				<NavBar title={"Products"} >
-					{(this.props.isLoading || this.props.alert) ?
-						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
+			<DocumentTitle title="Products — R&B">
+				<div>
+					<NavBar title={"Products"} >
+						{(this.props.isLoading || this.props.alert) ?
+							<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+								alert={this.props.alert} /> :
+							<span />
+						}
+						<img src="/img/transparent.gif" className="logo" />
+					</NavBar>
+					<NavBar routeConfig={this.props.routeScheme}>
+						<div className="nav nav-item logout">
+							<a href="/logout">Logout</a>
+						</div>
+					</NavBar>
+					{this.props.pendingAction ?
+						<Modal isVisible={!!this.props.pendingAction.type} title={"Are you sure you want to delete this product?"}
+								hide={ModalActionCreators.clearPendingAction}>
+							<button className="confirm-delete" autoFocus
+									onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction.action)}>
+								Confirm
+							</button>
+						</Modal> :
 						<span />
 					}
-					<img src="/img/transparent.gif" className="logo" />
-				</NavBar>
-				<NavBar routeConfig={this.props.routeScheme}>
-					<div className="nav nav-item logout">
-						<a href="/logout">Logout</a>
-					</div>
-				</NavBar>
-				{this.props.pendingAction ?
-					<Modal isVisible={!!this.props.pendingAction.type} title={"Are you sure you want to delete this product?"}
-							hide={ModalActionCreators.clearPendingAction}>
-						<button className="confirm-delete" autoFocus
-								onClick={ModalActionCreators.executePendingAction.bind(null, this.props.pendingAction.action)}>
-							Confirm
-						</button>
-					</Modal> :
-					<span />
-				}
-				<div className="container">
-					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={ProductActionCreators.setFilter}
-						restrictTo={ProductActionCreators.restrictTo}
-						presetConfig={this.props.presetScheme}
-						currentPage={this.props.currentPage}
-						rowsPerPage={this.props.rowsPerPage}
-						numberOfRows={this.props.numberOfProducts}
-						setRowsPerPage={SharedActionCreators.setRowsPerPage}
-						changePage={SharedActionCreators.changePageNumber}
-					>
-						<button className="add-button rounded"
-								onClick={ProductActionCreators.createSingleProduct}>
-							Add Product
-						</button>
-					</Filter>
-					<div className="table-container">
-						<Table selections={this.props.selections}
-							filters={this.props.filters}
-							items={this.props.products} primaryKey={"id"}
-							tableScheme={this.props.tableScheme}
-							onBlur={ProductActionCreators.saveProduct}
-							sortFunc={SharedActionCreators.externalSortBy.bind(null, "products")}
-						/>
+					<div className="container">
+						<Filter filters={this.props.filters} selections={this.props.selections}
+							setFilter={ProductActionCreators.setFilter}
+							restrictTo={ProductActionCreators.restrictTo}
+							presetConfig={this.props.presetScheme}
+							currentPage={this.props.currentPage}
+							rowsPerPage={this.props.rowsPerPage}
+							numberOfRows={this.props.numberOfProducts}
+							setRowsPerPage={SharedActionCreators.setRowsPerPage}
+							changePage={SharedActionCreators.changePageNumber}
+						>
+							<button className="add-button rounded"
+									onClick={ProductActionCreators.createSingleProduct}>
+								Add Product
+							</button>
+						</Filter>
+						<div className="table-container">
+							<Table selections={this.props.selections}
+								filters={this.props.filters}
+								items={this.props.products} primaryKey={"id"}
+								tableScheme={this.props.tableScheme}
+								onBlur={ProductActionCreators.saveProduct}
+								sortFunc={SharedActionCreators.externalSortBy.bind(null, "products")}
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
+			</DocumentTitle>
 		);
 	}
 }
@@ -145,7 +149,8 @@ ProductPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				ProductActionCreators.clearProductsFilters
+				ProductActionCreators.clearProductsFilters,
+				SharedActionCreators.setRowsPerPage.bind(null, 50)
 			]
 		}
 	],

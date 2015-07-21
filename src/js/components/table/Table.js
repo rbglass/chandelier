@@ -19,6 +19,13 @@ export default class Table extends Component {
 		this.shouldFlash = false;
 	}
 
+	componentWillUpdate(nextProps) {
+		if (!this.props.focusOnEntry) return;
+		if (this.props.items.size === 0) return;
+
+		this.shouldFlash = true;
+	}
+
 	componentDidUpdate(prevProps) {
 		if (!this.props.focusOnEntry) return;
 
@@ -26,10 +33,7 @@ export default class Table extends Component {
 		const oldItems = prevProps.items;
 
 		if (items.size === oldItems.size + 1) {
-			this.shouldFlash = true;
 			this.scrollToBottom();
-		} else if (items.size === oldItems.size - 1) {
-			this.shouldFlash = true;
 		}
 	}
 

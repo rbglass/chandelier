@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import DocumentTitle from "react-document-title";
 import Table from "../components/table/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
@@ -32,6 +33,10 @@ class SingleJobPage extends Component {
 	render() {
 		let modalTitle, modalChildren;
 		const pending = this.props.pendingAction;
+		const id = this.props.params.id;
+		const client = this.props.details.get("client") || "";
+		const title = `RB${id} ${client}`;
+
 		const shouldDisplayAlert = this.props.isLoading ||
 																this.props.isUnsaved ||
 																this.props.hasChanged ||
@@ -50,47 +55,49 @@ class SingleJobPage extends Component {
 		}
 
 		return (
-			<div>
-				<NavBar title={`RB${this.props.params.id}`} >
-					{(shouldDisplayAlert) ?
-						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
-						<span />
+			<DocumentTitle title={`${title}  — R&B`}>
+				<div>
+					<NavBar title={title} >
+						{(shouldDisplayAlert) ?
+							<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+								hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
+							<span />
+						}
+						<img src="/img/transparent.gif" className="logo" />
+					</NavBar>
+					<NavBar routeConfig={this.props.routeScheme}>
+						<div className="nav nav-item logout">
+							<a href="/logout">Logout</a>
+						</div>
+					</NavBar>
+					{pending ?
+						<Modal isVisible={!!pending.type} title={modalTitle}
+								hide={ModalActionCreators.clearPendingAction}>
+							{modalChildren}
+						</Modal> :
+						null
 					}
-					<img src="/img/transparent.gif" className="logo" />
-				</NavBar>
-				<NavBar routeConfig={this.props.routeScheme}>
-					<div className="nav nav-item logout">
-						<a href="/logout">Logout</a>
-					</div>
-				</NavBar>
-				{pending ?
-					<Modal isVisible={!!pending.type} title={modalTitle}
-							hide={ModalActionCreators.clearPendingAction}>
-						{modalChildren}
-					</Modal> :
-					null
-				}
-				<div className="container">
-					<SingleJobDetails details={this.props.details} selections={this.props.selections}
-						detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails} >
-						<button className="add-button rounded"
-								onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
-							Add Job Item
-						</button>
-					</SingleJobDetails>
-					<div className="table-container">
-						<Table selections={this.props.selections}
-								filters={this.props.filters}
-								items={this.props.items} primaryKey={"item_id"}
-								tableScheme={this.props.tableScheme}
-								onBlur={SharedActionCreators.saveItem}
-								sortFunc={SharedActionCreators.sortBy}
-								focusOnEntry={true}
-						/>
+					<div className="container">
+						<SingleJobDetails details={this.props.details} selections={this.props.selections}
+							detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails} >
+							<button className="add-button rounded"
+									onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
+								Add Job Item
+							</button>
+						</SingleJobDetails>
+						<div className="table-container">
+							<Table selections={this.props.selections}
+									filters={this.props.filters}
+									items={this.props.items} primaryKey={"item_id"}
+									tableScheme={this.props.tableScheme}
+									onBlur={SharedActionCreators.saveItem}
+									sortFunc={SharedActionCreators.sortBy}
+									focusOnEntry={true}
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
+			</DocumentTitle>
 		);
 	}
 }
