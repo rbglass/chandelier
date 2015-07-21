@@ -52,7 +52,7 @@ describe("pdfMaker", () => {
 				"wedontcare" : "\n\n\n\n\n\n\n\n\n\n\n\n"
 			});
 
-			assert.equal(isSufficientSpace(nineLines, 630), false);
+			assert.equal(isSufficientSpace(nineLines, 650), false);
 			assert.equal(isSufficientSpace(nineLines, 610), true);
 		});
 
