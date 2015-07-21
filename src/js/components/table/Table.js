@@ -21,6 +21,7 @@ export default class Table extends Component {
 
 	componentWillUpdate(nextProps) {
 		if (!this.props.focusOnEntry) return;
+
 		if (this.props.items.size === 0) return;
 
 		this.shouldFlash = true;

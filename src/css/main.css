@@ -418,8 +418,8 @@ select[multiple] {
 	opacity: 1;
 }
 .table-row.flash-leave.flash-leave-active {
-	opacity: 0.01;
-	transition: opacity .5s ease-in;
+	opacity: 1;
+	transition: opacity .001s ease-in;
 }
 
 /* Row */
