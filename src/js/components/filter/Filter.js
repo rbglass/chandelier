@@ -6,6 +6,7 @@ import Pager from "react-pager";
 import Preset from "./Preset";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
+import PaginationInfo from "./PaginationInfo";
 import DateSelector from "../common/DateSelector";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
@@ -14,7 +15,8 @@ export default class Filter extends Component {
 		return 	nextProps.selections !== this.props.selections ||
 							nextProps.filters !== this.props.filters ||
 							nextProps.currentPage !== this.props.currentPage ||
-							nextProps.totalPages !== this.props.totalPages;
+							nextProps.rowsPerPage !== this.props.rowsPerPage ||
+							nextProps.numberOfRows !== this.props.numberOfRows;
 	}
 
 	render() {
@@ -40,6 +42,8 @@ export default class Filter extends Component {
 			return <Preset key={key} description={preset.description} onSelect={preset.onSelect} />;
 		});
 
+		const totalPages = this.props.numberOfRows / this.props.rowsPerPage;
+
 		return (
 			<div className="table-manip">
 				<div className="table-manip-presets">
@@ -54,16 +58,23 @@ export default class Filter extends Component {
 						{ this.props.filters.has("startDate") ?
 								<DateSelector value={this.props.filters.get("startDate")}
 									onChange={this.props.setStartDate} className={dateFilterClassName}
-									inputClass={"clearable"} label="Earliest shipping date"/> : null
+									inputClass={"clearable"} label="Earliest shipping date"
+								/> : null
 							}
 						{ this.props.filters.has("endDate") ?
 							<DateSelector value={this.props.filters.get("endDate")}
 								onChange={this.props.setEndDate} className={dateFilterClassName}
-								inputClass={"clearable"} label="Latest shipping date"/> : null
+								inputClass={"clearable"} label="Latest shipping date"
+							/> : null
 						}
 					</div>
-					<Pager total={this.props.totalPages} current={this.props.currentPage}
-							visiblePages={5} onPageChanged={this.props.changePage}/>
+					<PaginationInfo numberOfRows={this.props.numberOfRows}
+						rowsPerPage={this.props.rowsPerPage}
+						setRowsPerPage={this.props.setRowsPerPage}
+					/>
+					<Pager total={totalPages} current={this.props.currentPage}
+						visiblePages={5} onPageChanged={this.props.changePage}
+					/>
 				</div>
 				<div className="table-manip-col">
 					{selects}
@@ -103,12 +114,14 @@ Filter.propTypes = {
 		onSelect: PropTypes.arrayOf(PropTypes.func)
 	})),
 
-	setFilter   : PropTypes.func,
-	setStartDate: PropTypes.func,
-	setEndDate  : PropTypes.func,
-	restrictTo  : PropTypes.func,
+	setFilter      : PropTypes.func,
+	setNumberOfRows: PropTypes.func,
+	setStartDate   : PropTypes.func,
+	setEndDate     : PropTypes.func,
+	restrictTo     : PropTypes.func,
 
 	currentPage: PropTypes.number,
-	totalPages: PropTypes.number,
+	numberOfRows: PropTypes.number,
+	rowsPerpage: PropTypes.number,
 	changePage : PropTypes.func
 };

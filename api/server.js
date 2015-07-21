@@ -32,7 +32,8 @@ server.register([bell, cookie], function(err) {
     password   : config.cookie.password,
     cookie     : "sid",
     redirectTo : "/",
-    isSecure   : "false"
+    isSecure   : "false",
+    isHttpOnly : false
   });
 
   server.auth.default("session");

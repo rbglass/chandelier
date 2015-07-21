@@ -34,7 +34,7 @@ const defaultFilters = emptyFilters.setIn(
 );
 
 const keysToSearch = [
-	"client", "product", "description",
+	"job_id", "client", "product", "description",
 	"glass", "metal", "flex", "bulb", "notes"
 ];
 

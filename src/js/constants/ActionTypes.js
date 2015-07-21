@@ -35,6 +35,7 @@ export default keyMirror({
 	"PENDING_ACTION": null,
 	"IS_LOADING": null,
 
+	"SET_ROWS_PER_PAGE": null,
 	"SWITCH_PAGE_NUMBER": null,
 
 	// LOCAL IMMUTABLE -> LOCAL IMMUTABLE

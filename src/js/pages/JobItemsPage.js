@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import DocumentTitle from "react-document-title";
 import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
@@ -28,58 +29,72 @@ class JobItemsPage extends Component {
 
 	componentWillUnmount() {
 		SharedActionCreators.changePageNumber(0);
+		SharedActionCreators.setRowsPerPage(50);
 	}
 
 	render() {
+		const shouldDisplayAlert = this.props.isLoading ||
+																this.props.isUnsaved ||
+																this.props.hasChanged ||
+																this.props.alert;
+
 		return (
-			<div>
-				<NavBar title={"All Items"} >
-					{(this.props.isLoading || this.props.alert) ?
-						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
-						<span />
-					}
-					<img src="/img/transparent.gif" className="logo" />
-				</NavBar>
-				<NavBar routeConfig={this.props.routeScheme}>
-					<div className="nav nav-item logout">
-						<a href="/logout">Logout</a>
-					</div>
-				</NavBar>
-				<div className="container">
-					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={JobItemsActionCreators.setFilter}
-						setStartDate={JobItemsActionCreators.setStartDate}
-						setEndDate={JobItemsActionCreators.setEndDate}
-						restrictTo={JobItemsActionCreators.restrictTo}
-						presetConfig={this.props.presetScheme}
-						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
-						changePage={SharedActionCreators.changePageNumber}
-					/>
-					<div className="table-container">
-						<Table selections={this.props.selections}
-							filters={this.props.filters}
-							items={this.props.items} primaryKey={"item_id"}
-							tableScheme={this.props.tableScheme}
-							onBlur={SharedActionCreators.saveItem}
-							sortFunc={SharedActionCreators.externalSortBy.bind(null, "items")}
+			<DocumentTitle title="Job Items — R&B">
+				<div>
+					<NavBar title={"All Items"} >
+						{(shouldDisplayAlert) ?
+							<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+								hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
+							<span />
+						}
+						<img src="/img/transparent.gif" className="logo" />
+					</NavBar>
+					<NavBar routeConfig={this.props.routeScheme}>
+						<div className="nav nav-item logout">
+							<a href="/logout">Logout</a>
+						</div>
+					</NavBar>
+					<div className="container">
+						<Filter filters={this.props.filters} selections={this.props.selections}
+							setFilter={JobItemsActionCreators.setFilter}
+							setStartDate={JobItemsActionCreators.setStartDate}
+							setEndDate={JobItemsActionCreators.setEndDate}
+							restrictTo={JobItemsActionCreators.restrictTo}
+							presetConfig={this.props.presetScheme}
+							currentPage={this.props.currentPage}
+							rowsPerPage={this.props.rowsPerPage}
+							numberOfRows={this.props.numberOfItems}
+							setRowsPerPage={SharedActionCreators.setRowsPerPage}
+							changePage={SharedActionCreators.changePageNumber}
 						/>
+						<div className="table-container">
+							<Table selections={this.props.selections}
+								filters={this.props.filters}
+								items={this.props.items} primaryKey={"item_id"}
+								tableScheme={this.props.tableScheme}
+								onBlur={SharedActionCreators.saveItem}
+								sortFunc={SharedActionCreators.externalSortBy.bind(null, "items")}
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
+			</DocumentTitle>
 		);
 	}
 }
 
 function getState() {
 	const start = PaginationStore.getOffset();
-	const end = start + PaginationStore.getRowsPerPage();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
+	const end = start + rowsPerPage;
 
 	const items = ItemsStore.getFilteredItems(start, end);
 	const filters = ItemsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
-	const totalPages = Math.ceil(ItemsStore.getNumberOfItems() / PaginationStore.getRowsPerPage());
+	const numberOfItems = ItemsStore.getNumberOfItems();
 	const selections = SelectionStore.getSelections();
+
+	const hasChanged = AlertStore.getChangedStatus();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -89,7 +104,9 @@ function getState() {
 		items,
 		filters,
 		currentPage,
-		totalPages,
+		numberOfItems,
+		rowsPerPage,
+		hasChanged,
 		isLoading,
 		isUnsaved,
 		alert
@@ -153,7 +170,8 @@ JobItemsPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				JobItemsActionCreators.clearItemsFilters
+				JobItemsActionCreators.clearItemsFilters,
+				SharedActionCreators.setRowsPerPage.bind(null, 50)
 			]
 		},
 		{
@@ -162,7 +180,8 @@ JobItemsPage.defaultProps = {
 				JobItemsActionCreators.clearItemsFilters,
 				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
 				JobItemsActionCreators.setStartDate.bind(null, new Date()),
-				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
+				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3)),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		}
 		// {

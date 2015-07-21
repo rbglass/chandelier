@@ -7,6 +7,7 @@
 	--red: rgba(224, 45, 45, 1);
 	--blue: rgba(39, 92, 152, 1);
 	--blueborder: rgba(1,1,1,0.5);
+	--entry-yellow: rgba(255, 235, 142, 1);
 	--hover: 0.8;
 }
 
@@ -245,6 +246,7 @@ select,
 /* Presets */
 .table-manip-presets {
   width: 100%;
+  margin-bottom: 0.5rem;
   flex-direction: row;
   display: flex;
   flex-wrap: wrap;
@@ -325,6 +327,7 @@ select[multiple] {
 	margin-top: 0.5rem;
 }
 
+
 /* Header */
 
 .table-header {
@@ -397,6 +400,28 @@ select[multiple] {
   overflow-y: scroll;
 }
 
+/* Table animation */
+/* Important is the devil , only used to override pseudo-selectors below */
+.table-row.flash-enter {
+	background-color: var(--entry-yellow) !important;
+}
+.table-row.flash-enter.flash-enter-active {
+	transition: background-color 1s ease-in;
+}
+.table-row.flash-enter.flash-enter-active:nth-of-type(even) {
+	background-color: var(--even-row) !important;
+}
+.table-row.flash-enter.flash-enter-active:nth-of-type(odd) {
+	background-color: var(--odd-row) !important;
+}
+.table-row.flash-leave {
+	opacity: 1;
+}
+.table-row.flash-leave.flash-leave-active {
+	opacity: 1;
+	transition: opacity .001s ease-in;
+}
+
 /* Row */
 .table-row {
 	width: 100%;
@@ -413,12 +438,6 @@ select[multiple] {
 		display: box;
 		display: flex;
 		flex-flow: row nowrap;
-	}
-	.table-row:nth-of-type(even) {
-		background-color: var(--even-row);
-	}
-	.table-row:nth-of-type(odd) {
-		background-color: var(--odd-row);
 	}
 }
 .table-row-item {
@@ -567,6 +586,7 @@ select[multiple] {
 .date-selector {
 	display: flex;
 	flex-direction: column;
+	transform: translateZ(0);
 	/*min-width: 125px;*/
 }
 
@@ -580,6 +600,20 @@ select[multiple] {
   font-size: larger;
   width: 13px;
   border-radius: 0px 0px 2px 2px;
+
+  color: transparent;
+  opacity: 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.date-selector-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.1;
+  cursor: pointer;
 }
 
 .date-selector-input::-webkit-inner-spin-button {
@@ -604,6 +638,9 @@ select[multiple] {
 
 .date-selector-input.clearable::-webkit-clear-button {
 	display: block;
+	margin-right: 2px;
+	font-size: 20px;
+	z-index: 1000000;
 }
 
 .date-selector-label {

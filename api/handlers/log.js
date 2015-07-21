@@ -8,7 +8,9 @@ var log = {
 
 		var profile = {
 			auth_method : "google",
-			email       : creds.profile.raw.email
+			email       : creds.profile.raw.email,
+			user        : creds.profile.name.first,
+			avatar      : creds.profile.raw.picture
 		};
 
 		users.getSingle(profile.email, function(err, user) {

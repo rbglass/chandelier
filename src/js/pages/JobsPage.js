@@ -1,5 +1,6 @@
 "use strict";
 import React, { Component, PropTypes } from "react";
+import DocumentTitle from "react-document-title";
 import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
@@ -26,63 +27,76 @@ class JobsPage extends Component {
 
 	componentWillUnmount() {
 		SharedActionCreators.changePageNumber(0);
+		SharedActionCreators.setRowsPerPage(50);
 	}
 
 	render() {
-		let items = this.props.jobs.map(item => item.get("details"));
+		const items = this.props.jobs.map(item => item.get("details"));
+		const shouldDisplayAlert = this.props.isLoading ||
+																this.props.isUnsaved ||
+																this.props.hasChanged ||
+																this.props.alert;
 
 		return (
-			<div>
-				<NavBar title={"All Jobs"} >
-					{(this.props.isLoading || this.props.alert) ?
-						<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
-							alert={this.props.alert} /> :
-						<span />
-					}
-					<img src="/img/transparent.gif" className="logo" />
-				</NavBar>
-				<NavBar routeConfig={this.props.routeScheme}>
-					<div className="nav nav-item logout">
-						<a href="/logout">Logout</a>
-					</div>
-				</NavBar>
-				<div className="container">
-					<Filter filters={this.props.filters} selections={this.props.selections}
-						setFilter={JobsActionCreators.setFilter}
-						setStartDate={JobsActionCreators.setStartDate}
-						setEndDate={JobsActionCreators.setEndDate}
-						restrictTo={JobsActionCreators.restrictTo}
-						presetConfig={this.props.presetScheme}
-						currentPage={this.props.currentPage} totalPages={this.props.totalPages}
-						changePage={SharedActionCreators.changePageNumber} >
-						<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
-							New Job
-						</button>
-					</Filter>
-					<div className="table-container">
-						<Table selections={this.props.selections}
-								filters={this.props.filters}
-								items={items} primaryKey={"job_id"}
-								tableScheme={this.props.tableScheme}
-								onBlur={SharedActionCreators.saveDetails}
-								sortFunc={SharedActionCreators.externalSortBy.bind(null, "jobs")}
-						/>
+			<DocumentTitle title="Jobs — R&B">
+				<div>
+					<NavBar title={"All Jobs"} >
+						{(shouldDisplayAlert) ?
+							<Alert isLoading={this.props.isLoading} isUnsaved={this.props.isUnsaved}
+								hasChanged={this.props.hasChanged} alert={this.props.alert} /> :
+							<span />
+						}
+						<img src="/img/transparent.gif" className="logo" />
+					</NavBar>
+					<NavBar routeConfig={this.props.routeScheme}>
+						<div className="nav nav-item logout">
+							<a href="/logout">Logout</a>
+						</div>
+					</NavBar>
+					<div className="container">
+						<Filter filters={this.props.filters} selections={this.props.selections}
+							setFilter={JobsActionCreators.setFilter}
+							setStartDate={JobsActionCreators.setStartDate}
+							setEndDate={JobsActionCreators.setEndDate}
+							restrictTo={JobsActionCreators.restrictTo}
+							presetConfig={this.props.presetScheme}
+							currentPage={this.props.currentPage}
+							rowsPerPage={this.props.rowsPerPage}
+							numberOfRows={this.props.numberOfJobs}
+							setRowsPerPage={SharedActionCreators.setRowsPerPage}
+							changePage={SharedActionCreators.changePageNumber} >
+							<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
+								New Job
+							</button>
+						</Filter>
+						<div className="table-container">
+							<Table selections={this.props.selections}
+									filters={this.props.filters}
+									items={items} primaryKey={"job_id"}
+									tableScheme={this.props.tableScheme}
+									onBlur={SharedActionCreators.saveDetails}
+									sortFunc={SharedActionCreators.externalSortBy.bind(null, "jobs")}
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
+			</DocumentTitle >
 		);
 	}
 }
 
 function getState() {
 	const start = PaginationStore.getOffset();
-	const end = start + PaginationStore.getRowsPerPage();
+	const rowsPerPage = PaginationStore.getRowsPerPage();
+	const end = start + rowsPerPage;
 
 	const jobs = JobsStore.getFilteredJobs(start, end);
 	const filters = JobsStore.getFilters();
 	const currentPage = PaginationStore.getCurrentPage();
-	const totalPages = Math.ceil(JobsStore.getNumberOfJobs() / PaginationStore.getRowsPerPage());
+	const numberOfJobs = JobsStore.getNumberOfJobs();
 	const selections = SelectionStore.getSelections();
+
+	const hasChanged = AlertStore.getChangedStatus();
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
@@ -92,7 +106,9 @@ function getState() {
 		jobs,
 		filters,
 		currentPage,
-		totalPages,
+		numberOfJobs,
+		rowsPerPage,
+		hasChanged,
 		isLoading,
 		isUnsaved,
 		alert
@@ -121,7 +137,8 @@ JobsPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				JobsActionCreators.clearJobsFilters
+				JobsActionCreators.clearJobsFilters,
+				SharedActionCreators.setRowsPerPage.bind(null, 50)
 			]
 		},
 		{
@@ -130,14 +147,16 @@ JobsPage.defaultProps = {
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
-				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3)),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		},
 		{
 			description: "Packaged",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"])
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		},
 		{
@@ -146,22 +165,25 @@ JobsPage.defaultProps = {
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
-				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24))
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24)),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		},
 		{
-			description: "Confirmed/Not paid",
+			description: "Awaiting Payment",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
-				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"])
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
+				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"]),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"]),
+				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
 			]
 		}
 	],

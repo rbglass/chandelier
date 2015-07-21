@@ -36,6 +36,11 @@ describe("AlertStore", () => {
 		assert.equal(AlertStore.getUnsavedStatus(), true);
 	});
 
+	it("#getChangedStatus returns whether changes have been made or not", () => {
+		AlertStore.__set__("hasChanged", true);
+		assert.equal(AlertStore.getChangedStatus(), true);
+	});
+
 	it("#updates the alert upon a RECEIVE_ALERT action", () => {
 		const alertAction = {
 			type: "RECEIVE_ALERT",
@@ -144,13 +149,14 @@ describe("AlertStore", () => {
 		assert.equal(combo3TrackerLength, 1);
 	});
 
-	it("#changes isUnsaved to true upon any CHANGE action", () => {
-		AlertStore.__set__("isUnsaved", false);
+	it("#changes isUnsaved and hasChanged to true upon any CHANGE action", () => {
 		const changeAction = {
 			type: "CHANGE"
 		};
 		onReceivingAction(changeAction);
-		assert(AlertStore.getUnsavedStatus());
+
+		assert.equal(AlertStore.getUnsavedStatus(), true);
+		assert.equal(AlertStore.getChangedStatus(), true);
 	});
 
 	it("#changes isUnsaved to false upon any RECEIVE action", () => {

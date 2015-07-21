@@ -1,6 +1,9 @@
 "use strict";
+import fs from "fs";
+import path from "path";
 import assert from "assert";
 import rewire from "rewire";
+import pdfJob from "./pdf/pdfJob";
 import { docDouble } from "../helpers/doubles";
 
 describe("pdfMaker", () => {
@@ -49,7 +52,7 @@ describe("pdfMaker", () => {
 				"wedontcare" : "\n\n\n\n\n\n\n\n\n\n\n\n"
 			});
 
-			assert.equal(isSufficientSpace(nineLines, 630), false);
+			assert.equal(isSufficientSpace(nineLines, 650), false);
 			assert.equal(isSufficientSpace(nineLines, 610), true);
 		});
 
@@ -109,6 +112,15 @@ describe("pdfMaker", () => {
 			});
 		});
 
+		it("#writeAddress writes the 4 address lines", () => {
+			const writeAddress = getFn("writeAddress");
+			let result = {};
+
+			writeAddress(docDouble(result));
+
+			assert.equal(result.text.length, 4);
+		});
+
 		it("#wrapDetails writes a field and its value at the current doc.y", () => {
 			const wrapDetails = getFn("wrapDetails");
 			const pair = ["Hi mate", "yup"];
@@ -126,4 +138,21 @@ describe("pdfMaker", () => {
 			assert.equal(result.text[1][0], " ");
 		});
 	});
+
+	// describe("pdfMaker", () => {
+
+	// 	it("#calls the cb with the created PDF, job items sorted by the pdf_order prop", done => {
+	// 		pdfMaker(pdfJob, pdf => {
+	// 			const bufs = [];
+	// 			pdf.on("data", (chunk) => bufs.push(chunk));
+	// 			pdf.on("end", () => {
+	// 				const buf = Buffer.concat(bufs);
+	// 				const pdfWeWant = fs.readFileSync(path.join(__dirname, "/pdf/1009PDF.pdf"));
+	// 				assert.deepEqual(buf, pdfWeWant);
+	// 				done();
+	// 			});
+	// 		});
+	// 	});
+
+	// });
 });

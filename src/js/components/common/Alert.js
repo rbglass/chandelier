@@ -13,6 +13,8 @@ export default class Alert extends Component {
 			content = "Unsaved changes";
 		} else if (this.props.alert) {
 			content = `Unsaved changes: ${this.props.alert.details || "" }`;
+		} else if (this.props.hasChanged) {
+			content = "All changes saved";
 		} else {
 			content = <span />;
 		}
@@ -27,6 +29,7 @@ export default class Alert extends Component {
 Alert.propTypes = {
 	isLoading: PropTypes.bool,
 	isUnsaved: PropTypes.bool,
+	hasChanged: PropTypes.bool,
 	alert: PropTypes.shape({
 		type: PropTypes.oneOf(["error", "success"]),
 		message: PropTypes.string

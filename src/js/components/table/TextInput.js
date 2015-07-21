@@ -9,6 +9,7 @@ export default class TextInput extends Component {
 
 	render() {
 		return <input type="text" readOnly={this.props.isDisabled}
+							className={this.props.className}
 							disabled={this.props.disabled} value={this.props.value} />;
 	}
 }

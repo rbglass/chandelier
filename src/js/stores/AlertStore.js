@@ -5,6 +5,7 @@ import AppDispatcher from "../dispatchers/AppDispatcher";
 
 var alert = {},
 		loadingTracker = [],
+		hasChanged = false,
 		isUnsaved = false;
 
 const AlertStore = createStore({
@@ -16,6 +17,9 @@ const AlertStore = createStore({
 	},
 	getUnsavedStatus() {
 		return isUnsaved;
+	},
+	getChangedStatus() {
+		return hasChanged;
 	}
 });
 
@@ -27,6 +31,7 @@ const onReceivingAction = action => {
 		isUnsaved = false;
 		loadingTracker.pop();
 	} else if (isClientAction) {
+		hasChanged = true;
 		isUnsaved = true;
 	} else if (action.type === ActionTypes.IS_LOADING) {
 		isUnsaved = false;

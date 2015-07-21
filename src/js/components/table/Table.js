@@ -1,8 +1,10 @@
 "use strict";
 import IPropTypes from "react-immutable-proptypes";
-import React, { Component, PropTypes } from "react";
+import React, { Component, PropTypes } from "react/addons";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
+
+let { CSSTransitionGroup } = React.addons;
 
 export default class Table extends Component {
 	shouldComponentUpdate(nextProps) {
@@ -12,7 +14,37 @@ export default class Table extends Component {
 
 		return shouldIt;
 	}
+
+	componentWillMount() {
+		this.shouldFlash = false;
+	}
+
+	componentWillUpdate(nextProps) {
+		if (!this.props.focusOnEntry) return;
+
+		if (this.props.items.size === 0) return;
+
+		this.shouldFlash = true;
+	}
+
+	componentDidUpdate(prevProps) {
+		if (!this.props.focusOnEntry) return;
+
+		const { items } = this.props;
+		const oldItems = prevProps.items;
+
+		if (items.size === oldItems.size + 1) {
+			this.scrollToBottom();
+		}
+	}
+
+	scrollToBottom() {
+		let tableNode = React.findDOMNode(this.refs.body);
+		tableNode.scrollTop = tableNode.scrollHeight;
+	}
+
 	render() {
+		const shouldFlash = this.shouldFlash;
 		const rows = this.props.items.map((row, i) => {
 			return <TableRow key={i} cells={row} cellConfig={this.props.tableScheme}
 								selections={this.props.selections} primaryKey={this.props.primaryKey}
@@ -24,9 +56,11 @@ export default class Table extends Component {
 				<TableHeader filters={this.props.filters} headers={this.props.tableScheme}
 						sortFunc={this.props.sortFunc}
 				/>
-				<div className="table-body">
+				<CSSTransitionGroup className="table-body" ref="body"
+						component="div" transitionName="flash" transitionEnter={shouldFlash}
+						transitionLeave >
 					{rows}
-				</div>
+				</CSSTransitionGroup>
 			</div>
 		);
 	}
@@ -39,5 +73,6 @@ Table.PropTypes = {
 	filters: IPropTypes.map,
 	primaryKey: PropTypes.string,
 	onBlur: PropTypes.func,
-	sortFunc: PropTypes.func
+	sortFunc: PropTypes.func,
+	focusOnEntry: PropTypes.bool
 };
