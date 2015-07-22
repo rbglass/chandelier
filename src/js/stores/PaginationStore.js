@@ -3,6 +3,9 @@ import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
+const BUFFER_ROWS = 2;
+const ROW_HEIGHT = 51;
+
 var currentPage = 0;
 var rowsPerPage = 50;
 
