@@ -8,7 +8,7 @@ import Table from "../../../src/js/components/table/Table";
 import TableHeader from "../../../src/js/components/table/TableHeader";
 import TableRow from "../../../src/js/components/table/TableRow";
 
-describe("Table", () => {
+describe("Table - no options", () => {
 
 	const ShallowRenderer = TestUtils.createRenderer();
 
@@ -31,7 +31,7 @@ describe("Table", () => {
 	const renderedOutput = ShallowRenderer.getRenderOutput();
 	const header = renderedOutput.props.children[0];
 	const tableBody = renderedOutput.props.children[1];
-	const rows = tableBody.props.children;
+	const rows = tableBody.props.children.filter((e) => e !== null).pop();
 
 	it("#renders a TableHeader component at the top of the table, and a table body div under it", () => {
 		assert.equal(header.type, TableHeader);
@@ -60,5 +60,13 @@ describe("Table", () => {
 			assert.equal(row.props.onBlur, onBlur);
 		});
 	});
+
+});
+
+describe("Table - with isInfinite", () => {
+
+});
+
+describe("Table - with focusOnEntry", () => {
 
 });

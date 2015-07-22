@@ -35,8 +35,8 @@ export default keyMirror({
 	"PENDING_ACTION": null,
 	"IS_LOADING": null,
 
-	"SET_ROWS_PER_PAGE": null,
-	"SWITCH_PAGE_NUMBER": null,
+	"SET_CURRENT_Y": null,
+	"SET_TABLE_HEIGHT": null,
 
 	// LOCAL IMMUTABLE -> LOCAL IMMUTABLE
 	"SORT_ONE": null,

@@ -26,8 +26,7 @@ class ProductPage extends Component {
 	}
 
 	componentWillUnmount() {
-		SharedActionCreators.changePageNumber(0);
-		SharedActionCreators.setRowsPerPage(50);
+		SharedActionCreators.setCurrentY(0);
 	}
 
 	render() {
@@ -62,11 +61,7 @@ class ProductPage extends Component {
 							setFilter={ProductActionCreators.setFilter}
 							restrictTo={ProductActionCreators.restrictTo}
 							presetConfig={this.props.presetScheme}
-							currentPage={this.props.currentPage}
-							rowsPerPage={this.props.rowsPerPage}
 							numberOfRows={this.props.numberOfProducts}
-							setRowsPerPage={SharedActionCreators.setRowsPerPage}
-							changePage={SharedActionCreators.changePageNumber}
 						>
 							<button className="add-button rounded"
 									onClick={ProductActionCreators.createSingleProduct}>
@@ -80,6 +75,14 @@ class ProductPage extends Component {
 								tableScheme={this.props.tableScheme}
 								onBlur={ProductActionCreators.saveProduct}
 								sortFunc={SharedActionCreators.externalSortBy.bind(null, "products")}
+								start={this.props.start}
+								end={this.props.end}
+								total={this.props.numberOfProducts}
+								currentY={this.props.currentY}
+								rowHeight={this.props.rowHeight}
+								onResize={SharedActionCreators.setTableHeight}
+								onScroll={SharedActionCreators.setCurrentY}
+								isInfinite
 							/>
 						</div>
 					</div>
@@ -90,14 +93,14 @@ class ProductPage extends Component {
 }
 
 function getState() {
-	const start = PaginationStore.getOffset();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
-	const end = start + rowsPerPage;
+	const start = Math.max(0, PaginationStore.getDisplayStart() || 0);
+	const end = PaginationStore.getDisplayEnd();
+	const rowHeight = PaginationStore.getRowHeight();
+	const currentY = PaginationStore.getCurrentY();
 
 	const products = ProductStore.getFilteredProducts(start, end);
 	const filters = ProductStore.getFilters();
 	const selections = ProductStore.getSelections();
-	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfProducts = ProductStore.getNumberOfProducts();
 	const pendingAction = ModalStore.getPendingAction();
 	const isLoading = AlertStore.getLoadStatus();
@@ -105,12 +108,14 @@ function getState() {
 	const alert = AlertStore.getAlert();
 
 	return {
+		start,
+		end,
+		rowHeight,
+		currentY,
 		products,
 		selections,
 		filters,
-		currentPage,
 		numberOfProducts,
-		rowsPerPage,
 		pendingAction,
 		isLoading,
 		isUnsaved,
@@ -149,8 +154,7 @@ ProductPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				ProductActionCreators.clearProductsFilters,
-				SharedActionCreators.setRowsPerPage.bind(null, 50)
+				ProductActionCreators.clearProductsFilters
 			]
 		}
 	],

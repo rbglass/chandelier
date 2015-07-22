@@ -28,8 +28,7 @@ class JobItemsPage extends Component {
 	}
 
 	componentWillUnmount() {
-		SharedActionCreators.changePageNumber(0);
-		SharedActionCreators.setRowsPerPage(50);
+		SharedActionCreators.setCurrentY(0);
 	}
 
 	render() {
@@ -61,11 +60,7 @@ class JobItemsPage extends Component {
 							setEndDate={JobItemsActionCreators.setEndDate}
 							restrictTo={JobItemsActionCreators.restrictTo}
 							presetConfig={this.props.presetScheme}
-							currentPage={this.props.currentPage}
-							rowsPerPage={this.props.rowsPerPage}
 							numberOfRows={this.props.numberOfItems}
-							setRowsPerPage={SharedActionCreators.setRowsPerPage}
-							changePage={SharedActionCreators.changePageNumber}
 						/>
 						<div className="table-container">
 							<Table selections={this.props.selections}
@@ -74,6 +69,14 @@ class JobItemsPage extends Component {
 								tableScheme={this.props.tableScheme}
 								onBlur={SharedActionCreators.saveItem}
 								sortFunc={SharedActionCreators.externalSortBy.bind(null, "items")}
+								start={this.props.start}
+								end={this.props.end}
+								total={this.props.numberOfItems}
+								currentY={this.props.currentY}
+								rowHeight={this.props.rowHeight}
+								onResize={SharedActionCreators.setTableHeight}
+								onScroll={SharedActionCreators.setCurrentY}
+								isInfinite
 							/>
 						</div>
 					</div>
@@ -84,13 +87,13 @@ class JobItemsPage extends Component {
 }
 
 function getState() {
-	const start = PaginationStore.getOffset();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
-	const end = start + rowsPerPage;
+	const start = Math.max(0, PaginationStore.getDisplayStart() || 0);
+	const end = PaginationStore.getDisplayEnd();
+	const rowHeight = PaginationStore.getRowHeight();
+	const currentY = PaginationStore.getCurrentY();
 
 	const items = ItemsStore.getFilteredItems(start, end);
 	const filters = ItemsStore.getFilters();
-	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfItems = ItemsStore.getNumberOfItems();
 	const selections = SelectionStore.getSelections();
 
@@ -100,12 +103,14 @@ function getState() {
 	const alert = AlertStore.getAlert();
 
 	return {
+		start,
+		end,
+		rowHeight,
 		selections,
+		currentY,
 		items,
 		filters,
-		currentPage,
 		numberOfItems,
-		rowsPerPage,
 		hasChanged,
 		isLoading,
 		isUnsaved,
@@ -170,8 +175,7 @@ JobItemsPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				JobItemsActionCreators.clearItemsFilters,
-				SharedActionCreators.setRowsPerPage.bind(null, 50)
+				JobItemsActionCreators.clearItemsFilters
 			]
 		},
 		{
@@ -180,8 +184,7 @@ JobItemsPage.defaultProps = {
 				JobItemsActionCreators.clearItemsFilters,
 				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
 				JobItemsActionCreators.setStartDate.bind(null, new Date()),
-				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3)),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			]
 		}
 		// {

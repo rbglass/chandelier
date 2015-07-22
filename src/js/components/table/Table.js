@@ -7,6 +7,9 @@ import bindToInstance from "../../utils/bindToInstance";
 
 let { CSSTransitionGroup } = React.addons;
 
+// NOTE: The isInfinite and focusOnEntry functionality would do better if they
+// were extracted into decorators rather than defined directly on the table class
+
 export default class Table extends Component {
 	constructor(props) {
 		super(props);
@@ -21,8 +24,7 @@ export default class Table extends Component {
 		if (!this.props.isInfinite) return;
 
 		window.addEventListener("resize", this.handleResize);
-		const bodyHeight = React.findDOMNode(this.refs.body).clientHeight;
-		// this.setRowsPerBody(bodyHeight)
+		this.handleResize();
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -41,14 +43,17 @@ export default class Table extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!this.props.focusOnEntry) return;
+		if (this.props.focusOnEntry) {
+			const { items } = this.props;
+			const oldItems = prevProps.items;
 
-		const { items } = this.props;
-		const oldItems = prevProps.items;
-
-		if (items.size === oldItems.size + 1) {
-			this._scrollToBottom();
+			if (items.size === oldItems.size + 1) {
+				this._scrollToBottom();
+			}
+		} else if (this.props.isInfinite) {
+			this._scrollToPosition(this.props.currentY);
 		}
+
 	}
 
 	componentWillUnmount() {
@@ -61,14 +66,14 @@ export default class Table extends Component {
 		if (!this.props.isInfinite) return;
 
 		let tableNode = React.findDOMNode(this.refs.body);
-		// this.doSomethingWithNewHeight(tableNode.clientHeight);
+		this.props.onResize(tableNode.clientHeight);
 	}
 
 	handleScroll() {
 		if (!this.props.isInfinite) return;
 
 		let tableNode = React.findDOMNode(this.refs.body);
-		// this.doSomething(tableNode.scrollTop);
+		this.props.onScroll(tableNode.scrollTop);
 	}
 
 	render() {
@@ -98,8 +103,8 @@ export default class Table extends Component {
 	}
 
 	_createDummyElements() {
-		const dummyTopHeight = this.props.renderStart * this.props.rowHeight;
-		const dummyBottomHeight = (this.props.total - this.props.displayEnd) * this.props.rowHeight;
+		const dummyTopHeight = this.props.start * this.props.rowHeight;
+		const dummyBottomHeight = Math.max(0, (this.props.total - this.props.end) * this.props.rowHeight);
 
 		const dummyTop = <div style={{height: dummyTopHeight, width: "100%"}} />;
 		const dummyBottom = <div style={{height: dummyBottomHeight, width: "100%"}} />;
@@ -109,7 +114,12 @@ export default class Table extends Component {
 
 	_scrollToBottom() {
 		let tableNode = React.findDOMNode(this.refs.body);
-		tableNode.scrollTop = tableNode.scrollHeight;
+		this._scrollToPosition(tableNode.scrollHeight);
+	}
+
+	_scrollToPosition(yPos) {
+		let tableNode = React.findDOMNode(this.refs.body);
+		tableNode.scrollTop = yPos;
 	}
 
 }

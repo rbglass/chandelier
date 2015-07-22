@@ -2,7 +2,6 @@
 import I from "immutable";
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
-import Pager from "react-pager";
 import Preset from "./Preset";
 import FilterInput from "./FilterInput";
 import MultiSelect from "./MultiSelect";
@@ -14,8 +13,6 @@ export default class Filter extends Component {
 	shouldComponentUpdate(nextProps) {
 		return 	nextProps.selections !== this.props.selections ||
 							nextProps.filters !== this.props.filters ||
-							nextProps.currentPage !== this.props.currentPage ||
-							nextProps.rowsPerPage !== this.props.rowsPerPage ||
 							nextProps.numberOfRows !== this.props.numberOfRows;
 	}
 
@@ -42,8 +39,6 @@ export default class Filter extends Component {
 			return <Preset key={key} description={preset.description} onSelect={preset.onSelect} />;
 		});
 
-		const totalPages = this.props.numberOfRows / this.props.rowsPerPage;
-
 		return (
 			<div className="table-manip">
 				<div className="table-manip-presets">
@@ -68,13 +63,7 @@ export default class Filter extends Component {
 							/> : null
 						}
 					</div>
-					<PaginationInfo numberOfRows={this.props.numberOfRows}
-						rowsPerPage={this.props.rowsPerPage}
-						setRowsPerPage={this.props.setRowsPerPage}
-					/>
-					<Pager total={totalPages} current={this.props.currentPage}
-						visiblePages={5} onPageChanged={this.props.changePage}
-					/>
+					<PaginationInfo numberOfRows={this.props.numberOfRows} />
 				</div>
 				<div className="table-manip-col">
 					{selects}
@@ -115,13 +104,9 @@ Filter.propTypes = {
 	})),
 
 	setFilter      : PropTypes.func,
-	setNumberOfRows: PropTypes.func,
 	setStartDate   : PropTypes.func,
 	setEndDate     : PropTypes.func,
 	restrictTo     : PropTypes.func,
 
-	currentPage: PropTypes.number,
-	numberOfRows: PropTypes.number,
-	rowsPerpage: PropTypes.number,
-	changePage : PropTypes.func
+	numberOfRows: PropTypes.number
 };

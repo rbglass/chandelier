@@ -81,16 +81,16 @@ export function externalSortBy(resource, field, currentlyIsAsc) {
 	JobsAPI.getSortedThings(resource, field, thenWeWantAsc);
 }
 
-export function changePageNumber(n) {
+export function setCurrentY(yPosInPx) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.SWITCH_PAGE_NUMBER,
-		data: n
+		type: ActionTypes.SET_CURRENT_Y,
+		data: yPosInPx
 	});
 }
 
-export function setRowsPerPage(n) {
+export function setTableHeight(heightInPx) {
 	AppDispatcher.dispatch({
-		type: ActionTypes.SET_ROWS_PER_PAGE,
-		data: n
+		type: ActionTypes.SET_TABLE_HEIGHT,
+		data: heightInPx
 	});
 }
