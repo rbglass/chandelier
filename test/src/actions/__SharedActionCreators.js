@@ -43,19 +43,19 @@ const toTest = [
 	},
 
 	{
-		fn: "changePageNumber",
-		type: "SWITCH_PAGE_NUMBER",
-		give: [3],
-		want: 3,
-		desc: "a new page number"
+		fn: "setCurrentY",
+		type: "SET_CURRENT_Y",
+		give: [158],
+		want: 158,
+		desc: "a new y position"
 	},
 
 	{
-		fn: "setRowsPerPage",
-		type: "SET_ROWS_PER_PAGE",
-		give: [Infinity],
-		want: Infinity,
-		desc: "a new number of rows per page"
+		fn: "setTableHeight",
+		type: "SET_TABLE_HEIGHT",
+		give: [450],
+		want: 450,
+		desc: "a new table height"
 	}
 ];
 

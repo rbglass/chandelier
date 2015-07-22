@@ -3,18 +3,24 @@ import { createStore } from "../utils/StoreUtils";
 import ActionTypes from "../constants/ActionTypes";
 import AppDispatcher from "../dispatchers/AppDispatcher";
 
-var currentPage = 0;
-var rowsPerPage = 50;
+const BUFFER_ROWS = 3;
+const ROW_HEIGHT = 51;
+
+var tableHeight = 500;
+var currentY = 0;
 
 const PaginationStore = createStore({
-	getCurrentPage() {
-		return currentPage;
+	getDisplayStart() {
+		return Math.floor((currentY / ROW_HEIGHT)) - BUFFER_ROWS;
 	},
-	getRowsPerPage() {
-		return rowsPerPage;
+	getDisplayEnd() {
+		return Math.floor((currentY + tableHeight) / ROW_HEIGHT) + BUFFER_ROWS;
 	},
-	getOffset() {
-		return currentPage * rowsPerPage || 0;
+	getCurrentY() {
+		return currentY;
+	},
+	getRowHeight() {
+		return ROW_HEIGHT;
 	}
 });
 
@@ -23,20 +29,19 @@ const onReceivingAction = action => {
 													/RESTRICT/.test(action.type);
 
 	if (shouldResetTo0) {
-		currentPage = 0;
-		rowsPerPage = 50;
+		currentY = 0;
 		PaginationStore.emitChange();
 	} else {
 
 		switch (action.type) {
 
-			case ActionTypes.SWITCH_PAGE_NUMBER:
-					currentPage = action.data;
+			case ActionTypes.SET_CURRENT_Y:
+					currentY = action.data;
 					PaginationStore.emitChange();
 					break;
 
-			case ActionTypes.SET_ROWS_PER_PAGE:
-					rowsPerPage = action.data;
+			case ActionTypes.SET_TABLE_HEIGHT:
+					tableHeight = action.data;
 					PaginationStore.emitChange();
 					break;
 

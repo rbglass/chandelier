@@ -11,76 +11,87 @@ describe("PaginationStore", () => {
 		done();
 	});
 
-	it("#getCurrentPage returns the current page", () => {
-		assert.equal(PaginationStore.getCurrentPage(), 0);
 
-		PaginationStore.__set__("currentPage", 5);
-		assert.equal(PaginationStore.getCurrentPage(), 5);
+	it("#getDisplayStart returns the index of the first element to be rendered given the current Y", () => {
+		PaginationStore.__set__("currentY", 70);
+		const bufs = PaginationStore.__get__("BUFFER_ROWS");
+		const rows = PaginationStore.__get__("ROW_HEIGHT");
+
+		assert.equal(PaginationStore.getDisplayStart(), Math.floor((70 / rows)) - bufs);
+
+		PaginationStore.__set__("currentY", 140);
+		assert.equal(PaginationStore.getDisplayStart(), Math.floor((140 / rows)) - bufs);
 	});
 
+	it("#getDisplayEnd returns the index of the last element to be rendered given the current Y", () => {
+		PaginationStore.__set__("currentY", 70);
+		PaginationStore.__set__("tableHeight", 210);
+		const bufs = PaginationStore.__get__("BUFFER_ROWS");
+		const rows = PaginationStore.__get__("ROW_HEIGHT");
 
-	it("#getRowsPerPage returns the number of rows per page", () => {
-		PaginationStore.__set__("rowsPerPage", 30);
-		assert.equal(PaginationStore.getRowsPerPage(), 30);
+		assert.equal(PaginationStore.getDisplayEnd(), Math.floor((70 + 210) / rows) + bufs);
 
-		PaginationStore.__set__("rowsPerPage", 100);
-		assert.equal(PaginationStore.getRowsPerPage(), 100);
+		PaginationStore.__set__("currentY", 140);
+		assert.equal(PaginationStore.getDisplayEnd(), Math.floor((140 + 210) / rows) + bufs);
 	});
 
-	it("#getOffset returns the current offset", () => {
-		assert.equal(PaginationStore.getOffset(), 0);
-
-		PaginationStore.__set__("rowsPerPage", 100);
-		assert.equal(PaginationStore.getOffset(), 0);
-
-		PaginationStore.__set__("currentPage", 3);
-		assert.equal(PaginationStore.getOffset(), 300);
-	});
-
-	it("#changes the number of rows per page to action.data upon a SET_ROWS_PER_PAGE action", () => {
-		const MoreRowAction = {
-			type: "SET_ROWS_PER_PAGE",
+	it("#changes the table height to action.data upon a SET_TABLE_HEIGHT action", () => {
+		const heightAction = {
+			type: "SET_TABLE_HEIGHT",
 			data: 45
 		};
 
-		onReceivingAction(MoreRowAction);
-		assert.equal(PaginationStore.getRowsPerPage(), 45);
+		onReceivingAction(heightAction);
+		assert.equal(PaginationStore.__get__("tableHeight"), 45);
 	});
 
-	it("#changes the current page to action.data upon a SWITCH_PAGE_NUMBER action", () => {
+	it("#getCurrentY returns the current y pos", () => {
+		assert.equal(PaginationStore.getCurrentY(), 0);
+
+		PaginationStore.__set__("currentY", 5);
+		assert.equal(PaginationStore.getCurrentY(), 5);
+	});
+
+	it("#getRowHeight returns the current row height", () => {
+		PaginationStore.__set__("ROW_HEIGHT", 100);
+		assert.equal(PaginationStore.getRowHeight(), 100);
+	});
+
+
+	it("#changes the current y to action.data upon a SET_CURRENT_Y action", () => {
 		const nextPageAction = {
-			type: "SWITCH_PAGE_NUMBER",
+			type: "SET_CURRENT_Y",
 			data: 4
 		};
 
-		assert.equal(PaginationStore.getCurrentPage(), 0);
+		assert.equal(PaginationStore.__get__("currentY"), 0);
 
 		onReceivingAction(nextPageAction);
-		assert.equal(PaginationStore.getCurrentPage(), 4);
+		assert.equal(PaginationStore.__get__("currentY"), 4);
 	});
 
-	it("#changes the current page to 0 upon a FILTER action", () => {
+	it("#changes the current y to 0 upon a FILTER action", () => {
 		const filterAction = {
 			type: "FILTER_JOBS_BY"
 		};
 
-		PaginationStore.__set__("currentPage", 5);
-		assert.equal(PaginationStore.getCurrentPage(), 5);
+		PaginationStore.__set__("currentY", 5);
+		assert.equal(PaginationStore.__get__("currentY"), 5);
 
 		onReceivingAction(filterAction);
-		assert.equal(PaginationStore.getCurrentPage(), 0);
+		assert.equal(PaginationStore.__get__("currentY"), 0);
 	});
 
-	it("#changes the current page to 0 upon a RESTRICT action", () => {
+	it("#changes the current y to 0 upon a RESTRICT action", () => {
 		const filterAction = {
 			type: "RESTRICT_TINGS_TO"
 		};
 
-		PaginationStore.__set__("currentPage", 5);
-		assert.equal(PaginationStore.getCurrentPage(), 5);
+		PaginationStore.__set__("currentY", 5);
+		assert.equal(PaginationStore.__get__("currentY"), 5);
 
 		onReceivingAction(filterAction);
-		assert.equal(PaginationStore.getCurrentPage(), 0);
+		assert.equal(PaginationStore.__get__("currentY"), 0);
 	});
 
 

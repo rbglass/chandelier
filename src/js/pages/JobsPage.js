@@ -26,8 +26,7 @@ class JobsPage extends Component {
 	}
 
 	componentWillUnmount() {
-		SharedActionCreators.changePageNumber(0);
-		SharedActionCreators.setRowsPerPage(50);
+		SharedActionCreators.setCurrentY(0);
 	}
 
 	render() {
@@ -60,11 +59,8 @@ class JobsPage extends Component {
 							setEndDate={JobsActionCreators.setEndDate}
 							restrictTo={JobsActionCreators.restrictTo}
 							presetConfig={this.props.presetScheme}
-							currentPage={this.props.currentPage}
-							rowsPerPage={this.props.rowsPerPage}
 							numberOfRows={this.props.numberOfJobs}
-							setRowsPerPage={SharedActionCreators.setRowsPerPage}
-							changePage={SharedActionCreators.changePageNumber} >
+						>
 							<button className="add-button rounded" onClick={JobsActionCreators.createSingleJob}>
 								New Job
 							</button>
@@ -76,6 +72,14 @@ class JobsPage extends Component {
 									tableScheme={this.props.tableScheme}
 									onBlur={SharedActionCreators.saveDetails}
 									sortFunc={SharedActionCreators.externalSortBy.bind(null, "jobs")}
+									start={this.props.start}
+									end={this.props.end}
+									total={this.props.numberOfJobs}
+									currentY={this.props.currentY}
+									rowHeight={this.props.rowHeight}
+									onResize={SharedActionCreators.setTableHeight}
+									onScroll={SharedActionCreators.setCurrentY}
+									isInfinite
 							/>
 						</div>
 					</div>
@@ -86,13 +90,13 @@ class JobsPage extends Component {
 }
 
 function getState() {
-	const start = PaginationStore.getOffset();
-	const rowsPerPage = PaginationStore.getRowsPerPage();
-	const end = start + rowsPerPage;
+	const start = Math.max(0, PaginationStore.getDisplayStart() || 0);
+	const end = PaginationStore.getDisplayEnd();
+	const rowHeight = PaginationStore.getRowHeight();
+	const currentY = PaginationStore.getCurrentY();
 
 	const jobs = JobsStore.getFilteredJobs(start, end);
 	const filters = JobsStore.getFilters();
-	const currentPage = PaginationStore.getCurrentPage();
 	const numberOfJobs = JobsStore.getNumberOfJobs();
 	const selections = SelectionStore.getSelections();
 
@@ -102,12 +106,14 @@ function getState() {
 	const alert = AlertStore.getAlert();
 
 	return {
-		selections,
+		start,
+		end,
+		rowHeight,
+		currentY,
 		jobs,
 		filters,
-		currentPage,
+		selections,
 		numberOfJobs,
-		rowsPerPage,
 		hasChanged,
 		isLoading,
 		isUnsaved,
@@ -137,8 +143,7 @@ JobsPage.defaultProps = {
 		{
 			description: "Clear All Filters",
 			onSelect: [
-				JobsActionCreators.clearJobsFilters,
-				SharedActionCreators.setRowsPerPage.bind(null, 50)
+				JobsActionCreators.clearJobsFilters
 			]
 		},
 		{
@@ -147,16 +152,14 @@ JobsPage.defaultProps = {
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
-				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3)),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			]
 		},
 		{
 			description: "Packaged",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"])
 			]
 		},
 		{
@@ -165,8 +168,7 @@ JobsPage.defaultProps = {
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
-				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24)),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24))
 			]
 		},
 		{
@@ -174,16 +176,14 @@ JobsPage.defaultProps = {
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"]),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"])
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"]),
-				SharedActionCreators.setRowsPerPage.bind(null, Infinity)
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
 			]
 		}
 	],
