@@ -189,6 +189,12 @@ JobItemsPage.defaultProps = {
 			]
 		},
 		{
+			description: "Live Items",
+			onSelect: [
+				JobItemsActionCreators.defaultItemsFilters
+			]
+		},
+		{
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
 				JobItemsActionCreators.clearItemsFilters,

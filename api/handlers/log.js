@@ -1,5 +1,9 @@
 "use strict";
+var path  = require("path");
+var fs    = require("fs");
+var page  = path.join(__dirname, "/../../public/logout.html");
 var users = require("../models/users");
+var render = require("../utils/render");
 
 var log = {
 
@@ -27,8 +31,17 @@ var log = {
 	},
 
 	out: function(req, reply) {
+		var user = req.auth.credentials.user;
+
 		req.auth.session.clear();
-		reply("Succesfully logged out");
+
+		fs.readFile(page, "UTF-8", function(err, contents) {
+			if (err) {
+				reply(err);
+			} else {
+				reply(render({user: user}, contents));
+			}
+		});
 	}
 };
 

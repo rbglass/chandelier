@@ -53,3 +53,9 @@ export function clearItemsFilters() {
 		type: ActionTypes.CLEAR_ITEMS_FILTERS
 	});
 }
+
+export function defaultItemsFilters() {
+	AppDispatcher.dispatch({
+		type: ActionTypes.DEFAULT_ITEMS_FILTERS
+	});
+}

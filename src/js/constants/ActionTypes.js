@@ -49,6 +49,7 @@ export default keyMirror({
 	"FILTER_JOBS_BY": null,
 	"RESTRICT_JOBS_TO": null,
 	"CLEAR_JOBS_FILTERS": null,
+	"DEFAULT_JOBS_FILTERS": null,
 
 	"SORT_ITEMS": null,
 	"SET_ITEMS_START_DATE": null,
@@ -56,6 +57,7 @@ export default keyMirror({
 	"FILTER_ITEMS_BY": null,
 	"RESTRICT_ITEMS_TO": null,
 	"CLEAR_ITEMS_FILTERS": null,
+	"DEFAULT_ITEMS_FILTERS": null,
 
 	"SORT_PRODUCTS": null,
 	"FILTER_PRODUCTS_BY": null,
