@@ -104,7 +104,7 @@ export default class Table extends Component {
 
 	_createDummyElements() {
 		const dummyTopHeight = this.props.start * this.props.rowHeight;
-		const dummyBottomHeight = Math.max(0, (this.props.total - this.props.end) * this.props.rowHeight);
+		const dummyBottomHeight = Math.max(51, (this.props.total - this.props.end) * this.props.rowHeight);
 
 		const dummyTop = <div style={{height: dummyTopHeight, width: "100%"}} />;
 		const dummyBottom = <div style={{height: dummyBottomHeight, width: "100%"}} />;
