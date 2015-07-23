@@ -275,7 +275,7 @@ select,
 /* MultiSelect */
 
 select[multiple] {
-	height: 9.1em;
+	height: 10.4em;
 }
 
 .multiselect-holder {
@@ -587,7 +587,7 @@ select[multiple] {
 	display: flex;
 	flex-direction: column;
 	transform: translateZ(0);
-	/*min-width: 125px;*/
+	min-width: 88px;
 }
 
 .date-selector-input::-webkit-inner-spin-button,
