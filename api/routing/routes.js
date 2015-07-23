@@ -22,6 +22,7 @@ var session = {
 
 var home       = require("../handlers/home");
 var log        = require("../handlers/log");
+var profile    = require("../handlers/profile");
 var jobs       = require("../handlers/jobs");
 var items      = require("../handlers/items");
 var products   = require("../handlers/products");
@@ -31,6 +32,7 @@ module.exports = ([
 	{ path: "/",                  method: "GET",           handler: home.sweethome,   config: noRedirect },
 	{	path: "/login",             method: ["GET", "POST"], handler: log.in,           config: google     },
 	{	path: "/logout",            method: "GET",           handler: log.out,          config: session    },
+	{ path: "/profile",           method: "GET",           handler: profile.get       },
 	{	path: "/{param*}",          method: "GET",           handler: home.statics      },
 
 	{	path: "/api/jobs",          method: "GET",           handler: jobs.getAll       },

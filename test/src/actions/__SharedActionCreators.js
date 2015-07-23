@@ -125,6 +125,11 @@ describe("SharedActionCreators", () => {
 			assert.equal(result.getAllProducts, "calledWithNoArgs");
 		});
 
+		it(".getUserProfile calls JobsAPI.getUserProfile", () => {
+			SharedActionCreators.getUserProfile();
+			assert.equal(result.getUserProfile, "calledWithNoArgs");
+		});
+
 		it(".saveDetails calls JobsAPI.saveDetails with an id and details", () => {
 			SharedActionCreators.saveDetails(123, "hello hi");
 			assert.deepEqual(result.saveDetails, [123, "hello hi"]);

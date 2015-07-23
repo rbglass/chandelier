@@ -5,16 +5,19 @@ import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
+import UserProfile from "../components/common/UserProfile";
 import connectToStores from "../utils/connectToStores";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import AlertStore from "../stores/AlertStore";
+import UserStore from "../stores/UserStore";
 import PaginationStore from "../stores/PaginationStore";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
+	SharedActionCreators.getUserProfile();
 	SharedActionCreators.getSelections();
 	JobsActionCreators.getAllJobs();
 }
@@ -51,6 +54,10 @@ class JobsPage extends Component {
 						<div className="nav nav-item logout">
 							<a href="/logout">Logout</a>
 						</div>
+						<UserProfile
+							user={this.props.profile.get("user")}
+							avatar={this.props.profile.get("avatar")}
+						/>
 					</NavBar>
 					<div className="container">
 						<Filter filters={this.props.filters} selections={this.props.selections}
@@ -104,6 +111,7 @@ function getState() {
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
+	const profile = UserStore.getProfile();
 
 	return {
 		start,
@@ -117,13 +125,15 @@ function getState() {
 		hasChanged,
 		isLoading,
 		isUnsaved,
-		alert
+		alert,
+		profile
 	};
 }
 
 export default connectToStores([
 	JobsStore, SelectionStore,
-	AlertStore, PaginationStore
+	AlertStore, PaginationStore,
+	UserStore
 ], getState)(JobsPage);
 
 JobsPage.defaultProps = {
@@ -175,15 +185,19 @@ JobsPage.defaultProps = {
 			description: "Awaiting Payment",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"])
+				JobsActionCreators.restrictTo.bind(null, "job_status",
+					["Proforma", "Confirmed", "Packaged", "Dispatched"]
+				),
+				JobsActionCreators.restrictTo.bind(null, "payment",
+					["Awaiting Payment", "Partial Payment"]
+				)
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Ordered"])
 			]
 		}
 	],

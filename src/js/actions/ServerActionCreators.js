@@ -24,6 +24,8 @@ export const receiveSingleJob     = rs("job");
 export const receiveSingleItem    = rs("item");
 export const receiveSingleProduct = rs("product");
 
+export const receiveUserProfile = receive("user", "profile");
+
 export function receiveNewJob(job) {
 	AppDispatcher.dispatch({
 		type: ActionTypes.RECEIVE_JOB_CREATION_CONFIRMATION

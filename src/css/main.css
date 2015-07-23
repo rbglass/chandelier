@@ -745,12 +745,30 @@ select[multiple] {
 	cursor: pointer;
 }
 
+/* Profile */
+.profile {
+	flex-direction: row;
+	height: 35px;
+	padding-left: 1rem;
+	padding-bottom: 5px;
+}
+
+.profile-user {
+	display: flex;
+	padding-left: 0.5rem;
+}
+
+.profile-avatar {
+	display: flex;
+	height: 30px;
+	width: 30px;
+}
+
 /* Flex Utility classes */
 .qty-xs {
 	min-width: 50px;
 	flex-grow: 0.3;
 }
-
 
 .qty-sm {
 	flex-grow: 0.5;
