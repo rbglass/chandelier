@@ -5,6 +5,7 @@ import Table from "../components/table/Table";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
+import UserProfile from "../components/common/UserProfile";
 import SingleJobDetails from "../components/details/SingleJobDetails";
 import connectToStores from "../utils/connectToStores";
 import SingleJobStore from "../stores/SingleJobStore";
@@ -71,6 +72,10 @@ class SingleJobPage extends Component {
 						<div className="nav nav-item logout">
 							<a href="/logout">Logout</a>
 						</div>
+						<UserProfile
+							user={this.props.profile.get("user")}
+							avatar={this.props.profile.get("avatar")}
+						/>
 					</NavBar>
 					{pending ?
 						<Modal isVisible={!!pending.type} title={modalTitle}
@@ -132,7 +137,11 @@ function getState() {
 	};
 }
 
-export default connectToStores([SingleJobStore, SelectionStore, AlertStore, ModalStore], getState)(SingleJobPage);
+export default connectToStores([
+	SingleJobStore, SelectionStore,
+	AlertStore, ModalStore,
+	UserStore
+	], getState)(SingleJobPage);
 
 SingleJobPage.defaultProps = {
 	tableScheme: [

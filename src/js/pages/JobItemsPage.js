@@ -5,6 +5,7 @@ import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
+import UserProfile from "../components/common/UserProfile";
 import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
@@ -54,6 +55,10 @@ class JobItemsPage extends Component {
 						<div className="nav nav-item logout">
 							<a href="/logout">Logout</a>
 						</div>
+						<UserProfile
+							user={this.props.profile.get("user")}
+							avatar={this.props.profile.get("avatar")}
+						/>
 					</NavBar>
 					<div className="container">
 						<Filter filters={this.props.filters} selections={this.props.selections}
@@ -124,7 +129,8 @@ function getState() {
 
 export default connectToStores([
 	ItemsStore, SelectionStore,
-	AlertStore, PaginationStore
+	AlertStore, PaginationStore,
+	UserStore
 ], getState)(JobItemsPage);
 
 // Code too wide

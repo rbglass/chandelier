@@ -133,5 +133,5 @@ export function deleteSingleProduct(productId) {
 export function getUserProfile() {
 	SharedActionCreators.startLoading();
 	request.get("/profile")
-					.end(onReply(ServerActionCreators.receiveProfile));
+					.end(onReply(ServerActionCreators.receiveUserProfile));
 }

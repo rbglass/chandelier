@@ -5,6 +5,7 @@ import Table from "../components/table/Table";
 import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
+import UserProfile from "../components/common/UserProfile";
 import connectToStores from "../utils/connectToStores";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
@@ -53,6 +54,10 @@ class JobsPage extends Component {
 						<div className="nav nav-item logout">
 							<a href="/logout">Logout</a>
 						</div>
+						<UserProfile
+							user={this.props.profile.get("user")}
+							avatar={this.props.profile.get("avatar")}
+						/>
 					</NavBar>
 					<div className="container">
 						<Filter filters={this.props.filters} selections={this.props.selections}
@@ -127,7 +132,8 @@ function getState() {
 
 export default connectToStores([
 	JobsStore, SelectionStore,
-	AlertStore, PaginationStore
+	AlertStore, PaginationStore,
+	UserStore
 ], getState)(JobsPage);
 
 JobsPage.defaultProps = {

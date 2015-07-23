@@ -6,6 +6,7 @@ import Filter from "../components/filter/Filter";
 import NavBar from "../components/common/NavBar";
 import Alert from "../components/common/Alert";
 import Modal from "../components/common/Modal";
+import UserProfile from "../components/common/UserProfile";
 import connectToStores from "../utils/connectToStores";
 import ProductStore from "../stores/ProductStore";
 import AlertStore from "../stores/AlertStore";
@@ -47,6 +48,10 @@ class ProductPage extends Component {
 						<div className="nav nav-item logout">
 							<a href="/logout">Logout</a>
 						</div>
+						<UserProfile
+							user={this.props.profile.get("user")}
+							avatar={this.props.profile.get("avatar")}
+						/>
 					</NavBar>
 					{this.props.pendingAction ?
 						<Modal isVisible={!!this.props.pendingAction.type} title={"Are you sure you want to delete this product?"}
@@ -129,7 +134,8 @@ function getState() {
 
 export default connectToStores([
 	ProductStore, AlertStore,
-	ModalStore, PaginationStore
+	ModalStore, PaginationStore,
+	UserStore
 ], getState)(ProductPage);
 
 // Code too wide

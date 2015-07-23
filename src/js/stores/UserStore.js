@@ -21,3 +21,5 @@ const onReceivingAction = action => {
 };
 
 export default UserStore;
+
+AppDispatcher.register(onReceivingAction);
