@@ -126,6 +126,11 @@ const onReceivingAction = action => {
 				ItemsStore.emitChange();
 				break;
 
+		case ActionTypes.DEFAULT_ITEMS_FILTERS:
+				filters = defaultFilters;
+				ItemsStore.emitChange();
+				break;
+
 		case ActionTypes.RECEIVE_ALL_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);
 				const selections = SelectionStore.getSelections();

@@ -157,6 +157,12 @@ JobsPage.defaultProps = {
 			]
 		},
 		{
+			description: "Live Jobs",
+			onSelect: [
+				JobsActionCreators.defaultJobsFilters
+			]
+		},
+		{
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,

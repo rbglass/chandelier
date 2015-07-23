@@ -18,7 +18,11 @@ describe("log", () => {
 			credentials: {
 				profile: {
 					raw: {
-						email: email
+						email: email,
+						picture: "abc"
+					},
+					name: {
+						first: "tim"
 					}
 				}
 			},
@@ -67,7 +71,8 @@ describe("log", () => {
 
 		it("#replies with a 404 if their email isn't found in the database", () => {
 			const dodgyReq = {
-				auth: { credentials: { profile: {raw: { email: null }}}}
+				auth: { credentials: { profile: {raw: { email: null, picture: "none" },
+				name: {first: "tim"}}}}
 			};
 			log.in(dodgyReq, reply);
 
@@ -77,7 +82,8 @@ describe("log", () => {
 
 		it("#replies with an error if there is one", () => {
 			const dodgyReq = {
-				auth: { credentials: { profile: {raw: { email: "ERROR" }}}}
+				auth: { credentials: { profile: {raw: { email: "ERROR", picture: "none" },
+				name: {first: "tim"}}}}
 			};
 			log.in(dodgyReq, reply);
 
@@ -91,7 +97,6 @@ describe("log", () => {
 			log.out(req, reply);
 
 			assert.equal(cleared, true);
-			assert(result.data);
 		});
 	});
 });

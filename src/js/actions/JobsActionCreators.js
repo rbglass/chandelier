@@ -57,3 +57,10 @@ export function clearJobsFilters() {
 		type: ActionTypes.CLEAR_JOBS_FILTERS
 	});
 }
+
+export function defaultJobsFilters() {
+	AppDispatcher.dispatch({
+		type: ActionTypes.DEFAULT_JOBS_FILTERS
+	});
+}
+

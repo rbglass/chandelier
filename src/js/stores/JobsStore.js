@@ -138,6 +138,11 @@ const onReceivingAction = action => {
 				JobsStore.emitChange();
 				break;
 
+		case ActionTypes.DEFAULT_JOBS_FILTERS:
+				filters = defaultFilters;
+				JobsStore.emitChange();
+				break;
+
 		case ActionTypes.RECEIVE_ALL_SELECTIONS:
 				AppDispatcher.waitFor([SelectionStore.dispatchToken]);
 				const selections = SelectionStore.getSelections();
