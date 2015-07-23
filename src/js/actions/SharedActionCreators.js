@@ -21,6 +21,10 @@ export function getAllProducts() {
 	JobsAPI.getAllProducts();
 }
 
+export function getUserProfile() {
+	JobsAPI.getUserProfile();
+}
+
 export function saveDetails(jobId, details) {
 	JobsAPI.saveDetails(jobId, details);
 }

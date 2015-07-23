@@ -11,6 +11,7 @@ import SingleJobStore from "../stores/SingleJobStore";
 import SelectionStore from "../stores/SelectionStore";
 import AlertStore from "../stores/AlertStore";
 import ModalStore from "../stores/ModalStore";
+import UserStore from "../stores/UserStore";
 import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as SingleJobActionCreators from "../actions/SingleJobActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -19,6 +20,7 @@ import yyyyMMdd from "../utils/yyyyMMdd";
 
 
 function requestDataFromServer(id) {
+	SharedActionCreators.getUserProfile();
 	SharedActionCreators.getSelections();
 	SharedActionCreators.getAllProducts();
 	SingleJobActionCreators.getSingleJob(id);
@@ -114,6 +116,7 @@ function getState() {
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
+	const profile = UserStore.getProfile();
 
 	return {
 		selections,
@@ -124,7 +127,8 @@ function getState() {
 		hasChanged,
 		isLoading,
 		isUnsaved,
-		alert
+		alert,
+		profile
 	};
 }
 

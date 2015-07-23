@@ -9,6 +9,7 @@ import connectToStores from "../utils/connectToStores";
 import SelectionStore from "../stores/SelectionStore";
 import ItemsStore from "../stores/ItemsStore";
 import AlertStore from "../stores/AlertStore";
+import UserStore from "../stores/UserStore";
 import PaginationStore from "../stores/PaginationStore";
 import * as JobItemsActionCreators from "../actions/JobItemsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
@@ -16,6 +17,7 @@ import { ddMMMyyyy } from "../utils/yyyyMMdd";
 import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
+	SharedActionCreators.getUserProfile();
 	SharedActionCreators.getSelections();
 	SharedActionCreators.getAllProducts();
 	JobItemsActionCreators.getAllItems();
@@ -101,6 +103,7 @@ function getState() {
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
+	const profile = UserStore.getProfile();
 
 	return {
 		start,
@@ -114,7 +117,8 @@ function getState() {
 		hasChanged,
 		isLoading,
 		isUnsaved,
-		alert
+		alert,
+		profile
 	};
 }
 

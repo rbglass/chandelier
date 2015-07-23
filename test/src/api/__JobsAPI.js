@@ -415,4 +415,21 @@ describe("JobsAPI", () => {
 			assert.equal(result.end[1], endpoint);
 		});
 	});
+
+	describe(".getUserProfile", () => {
+		let getUserProfile;
+
+		beforeEach(done => {
+			JobsAPI = rewire("../../../src/js/api/JobsAPI");
+			getUserProfile = JobsAPI.__get__("getUserProfile");
+			done();
+		});
+
+		it("#sends a get request to the correct endpoint, continuing to .receiveProfile", () => {
+			JobsAPI.getUser();
+
+			assert.equal(result.get, "/profile");
+			assert.deepEqual(result.end, ServerActionCreators.receiveProfile);
+		});
+	});
 });

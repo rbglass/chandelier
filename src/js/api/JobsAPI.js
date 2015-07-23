@@ -129,3 +129,9 @@ export function deleteSingleProduct(productId) {
 	request.del(`${products}/${productId}`)
 					.end(onReply(ServerActionCreators.deleteSingleProduct, productId));
 }
+
+export function getUserProfile() {
+	SharedActionCreators.startLoading();
+	request.get("/profile")
+					.end(onReply(ServerActionCreators.receiveProfile));
+}

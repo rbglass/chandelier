@@ -9,12 +9,14 @@ import connectToStores from "../utils/connectToStores";
 import JobsStore from "../stores/JobsStore";
 import SelectionStore from "../stores/SelectionStore";
 import AlertStore from "../stores/AlertStore";
+import UserStore from "../stores/UserStore";
 import PaginationStore from "../stores/PaginationStore";
 import * as JobsActionCreators from "../actions/JobsActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 import rbPrefixer from "../utils/rbPrefixer";
 
 function requestDataFromServer() {
+	SharedActionCreators.getUserProfile();
 	SharedActionCreators.getSelections();
 	JobsActionCreators.getAllJobs();
 }
@@ -104,6 +106,7 @@ function getState() {
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
+	const profile = UserStore.getProfile();
 
 	return {
 		start,
@@ -117,7 +120,8 @@ function getState() {
 		hasChanged,
 		isLoading,
 		isUnsaved,
-		alert
+		alert,
+		profile
 	};
 }
 
@@ -175,15 +179,19 @@ JobsPage.defaultProps = {
 			description: "Awaiting Payment",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged"]),
-				JobsActionCreators.restrictTo.bind(null, "payment", ["Awaiting Payment", "Deposit"])
+				JobsActionCreators.restrictTo.bind(null, "job_status",
+					["Proforma", "Confirmed", "Packaged", "Dispatched"]
+				),
+				JobsActionCreators.restrictTo.bind(null, "payment",
+					["Awaiting Payment", "Partial Payment"]
+				)
 			]
 		},
 		{
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Ordered"])
 			]
 		}
 	],

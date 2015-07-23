@@ -10,12 +10,14 @@ import connectToStores from "../utils/connectToStores";
 import ProductStore from "../stores/ProductStore";
 import AlertStore from "../stores/AlertStore";
 import ModalStore from "../stores/ModalStore";
+import UserStore from "../stores/UserStore";
 import PaginationStore from "../stores/PaginationStore";
 import * as ModalActionCreators from "../actions/ModalActionCreators";
 import * as ProductActionCreators from "../actions/ProductActionCreators";
 import * as SharedActionCreators from "../actions/SharedActionCreators";
 
 function requestDataFromServer() {
+	SharedActionCreators.getUserProfile();
 	SharedActionCreators.getAllProducts();
 }
 
@@ -106,6 +108,7 @@ function getState() {
 	const isLoading = AlertStore.getLoadStatus();
 	const isUnsaved = AlertStore.getUnsavedStatus();
 	const alert = AlertStore.getAlert();
+	const profile = UserStore.getProfile();
 
 	return {
 		start,
@@ -119,7 +122,8 @@ function getState() {
 		pendingAction,
 		isLoading,
 		isUnsaved,
-		alert
+		alert,
+		profile
 	};
 }
 
