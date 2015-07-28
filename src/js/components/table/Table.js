@@ -66,7 +66,7 @@ export default class Table extends Component {
 	componentWillUnmount() {
 		if (!this.props.isInfinite) return;
 
-		this.hasRenderedItems = false;
+		this.shouldFlash = false;
 		window.removeEventListener("resize", this.handleResize);
 	}
 
