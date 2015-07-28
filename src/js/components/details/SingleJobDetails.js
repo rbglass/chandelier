@@ -52,7 +52,7 @@ export default class SingleJobDetails extends Component {
 				case "date":
 						isDisabled = !cell.onChange;
 						input = <DateSelector value={cellValue} readOnly={isDisabled} disabled={isDisabled}
-											id={cellValue} className="job-text-input" />;
+											id={cellValue} className="job-text-input" inputClass="clearable"/>;
 						break;
 
 				case "select":

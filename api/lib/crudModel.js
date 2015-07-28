@@ -18,6 +18,10 @@ module.exports = function(config) {
 	function validate(data) {
 		if (!config.schema) return data;
 
+		if (config.preValidate) {
+			data = config.preValidate(data);
+		}
+
 		var result = Joi.validate(data, config.schema, {stripUnknown: true});
 		if (result.error) return false;
 		else              return result.value;

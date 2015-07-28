@@ -27,10 +27,10 @@ describe("model - crud", () => {
 	});
 
 	it("#takes a config object as an argument", () => {
-		const caraDelevingne = {};
+		const francoisHollande = {};
 
 		assert.equal(crud.length, 1);
-		assert(crud(caraDelevingne));
+		assert(crud(francoisHollande));
 	});
 
 	it("#returns an object with getAll, create, update and delete methods", () => {
@@ -286,6 +286,42 @@ describe("model - crud", () => {
 			model.update(theChosenOne, theOneToBeInvigorated, (err, row) => {
 				assert.equal(err, null);
 				assert.deepEqual(row[0].sku, theOneToBeInvigorated.sku);
+				done();
+			});
+		});
+
+		it("#calls config.preValidate if present before validation", done => {
+			const theChosenOne = data[4].id;
+			const theOneToBeInvigorated = {
+				id: theChosenOne,
+				sku: "12345",
+				qty_items: 25
+			};
+
+			const config = {
+				tableName: "products",
+				defaultSort: "name",
+				primaryKey: "id",
+				schema: Joi.object().keys({
+					sku: Joi.number()
+				}),
+				preValidate(item) {
+					let dealtWith = {};
+
+					if (item.sku === "12345") {
+						dealtWith.sku = "1234567";
+					}
+
+					return assign(item, dealtWith);
+				}
+			};
+
+			model = crud(config);
+
+			model.update(theChosenOne, theOneToBeInvigorated, (err, row) => {
+				assert.equal(err, null);
+				assert.deepEqual(row.sku, "1234567");
+				assert.deepEqual(row.qty_items, theOneToBeInvigorated.qty_items);
 				done();
 			});
 		});

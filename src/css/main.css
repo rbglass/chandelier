@@ -275,7 +275,7 @@ select,
 /* MultiSelect */
 
 select[multiple] {
-	height: 10.4em;
+	height: 11.6em;
 }
 
 .multiselect-holder {

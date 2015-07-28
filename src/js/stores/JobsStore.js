@@ -35,7 +35,7 @@ const defaultFilters = emptyFilters.setIn(
 );
 
 const keysToSearch = [
-	"job_id", "client", "project"
+	"job_id", "client", "project", "notes"
 ];
 
 var jobs = I.List(),
