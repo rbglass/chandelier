@@ -26,9 +26,9 @@ SELECT MAX(job_id) FROM jobs;
 
 CREATE SEQUENCE jobs_job_id_seq
 	INCREMENT 1
-	MINVALUE 2500
+	MINVALUE 2601
 	MAXVALUE 9223372036854775807
-	START 2500
+	START 2602
 	CACHE 1;
 
 ALTER TABLE jobs ALTER COLUMN job_id SET DEFAULT nextval('jobs_job_id_seq'::regclass);
@@ -45,6 +45,8 @@ CREATE OR REPLACE FUNCTION update_updatedat_column()
 CREATE TRIGGER update_job_updatetime
 	BEFORE UPDATE ON jobs
 	FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();
+
+UPDATE jobs SET client = DEFAULT WHERE client IS NULL;UPDATE jobs SET project = DEFAULT WHERE project IS NULL;UPDATE jobs SET client_ref = DEFAULT WHERE client_ref IS NULL;UPDATE jobs SET job_status = '' WHERE job_status IS NULL;UPDATE jobs SET order_type = DEFAULT WHERE order_type IS NULL;UPDATE jobs SET updatedat = DEFAULT WHERE updatedat IS NULL;UPDATE jobs SET shipping_notes = DEFAULT WHERE shipping_notes IS NULL;UPDATE jobs SET parts_status = '' WHERE parts_status IS NULL;UPDATE jobs SET parts_notes = DEFAULT WHERE parts_notes IS NULL;UPDATE jobs SET invoice_notes = DEFAULT WHERE invoice_notes IS NULL;UPDATE jobs SET payment = DEFAULT WHERE payment IS NULL;UPDATE jobs SET notes = DEFAULT WHERE notes IS NULL;
 
 -------------------------
 
@@ -103,6 +105,8 @@ CREATE TRIGGER trig_stamp
 CREATE TRIGGER update_jobitem_updatetime
 	AFTER UPDATE ON job_items
 	FOR EACH ROW EXECUTE PROCEDURE update_updatedat_column();
+
+UPDATE job_items SET description = DEFAULT WHERE description IS NULL;UPDATE job_items SET glass = DEFAULT WHERE glass IS NULL;UPDATE job_items SET metal = DEFAULT WHERE metal IS NULL;UPDATE job_items SET flex = DEFAULT WHERE flex IS NULL;UPDATE job_items SET bulb = DEFAULT WHERE bulb IS NULL;UPDATE job_items SET qty_req = DEFAULT WHERE qty_req IS NULL;UPDATE job_items SET qty_hot = DEFAULT WHERE qty_hot IS NULL;UPDATE job_items SET qty_cold = DEFAULT WHERE qty_cold IS NULL;UPDATE job_items SET qty_assem = DEFAULT WHERE qty_assem IS NULL;UPDATE job_items SET notes = DEFAULT WHERE notes IS NULL;
 
 -------------------------
 
