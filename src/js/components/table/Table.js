@@ -39,7 +39,14 @@ export default class Table extends Component {
 		if (!this.props.focusOnEntry) return;
 		if (this.props.items.size === 0) return;
 
-		this.shouldFlash = true;
+		const { items } = this.props;
+		const newItems = nextProps.items;
+
+		if (items.isSubset(newItems) || items.isSuperset(newItems)) {
+			this.shouldFlash = true;
+		} else {
+			this.shouldFlash = false;
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -59,6 +66,7 @@ export default class Table extends Component {
 	componentWillUnmount() {
 		if (!this.props.isInfinite) return;
 
+		this.shouldFlash = false;
 		window.removeEventListener("resize", this.handleResize);
 	}
 

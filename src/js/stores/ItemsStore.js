@@ -30,7 +30,7 @@ const defaultFilters = emptyFilters.setIn(
 	I.List(["Confirmed", "Packaged"])
 ).setIn(
 	["restrictions", "payment", "options"],
-	I.List(["Partial Payment", "Full Payment"])
+	I.List(["", "Awaiting Payment", "Partial Payment", "Full Payment"])
 );
 
 const keysToSearch = [

@@ -184,7 +184,7 @@ JobsPage.defaultProps = {
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
-				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24))
+				JobsActionCreators.setEndDate.bind(null, new Date())
 			]
 		},
 		{
@@ -203,7 +203,10 @@ JobsPage.defaultProps = {
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Ordered"])
+				JobsActionCreators.restrictTo.bind(null, "job_status",
+					["Proforma", "Done"]
+				),
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started", "Ordered"])
 			]
 		}
 	],
