@@ -198,7 +198,7 @@ JobItemsPage.defaultProps = {
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
 				JobItemsActionCreators.clearItemsFilters,
-				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
+				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged", "Dispatched"]),
 				JobItemsActionCreators.setStartDate.bind(null, new Date()),
 				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			]
