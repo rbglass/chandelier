@@ -203,7 +203,7 @@ JobsPage.defaultProps = {
 			description: "Parts started",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Ordered"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started"])
 			]
 		}
 	],
