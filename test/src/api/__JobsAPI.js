@@ -417,19 +417,19 @@ describe("JobsAPI", () => {
 	});
 
 	describe(".getUserProfile", () => {
-		let getUserProfile;
+		let onReply;
 
 		beforeEach(done => {
 			JobsAPI = rewire("../../../src/js/api/JobsAPI");
-			getUserProfile = JobsAPI.__get__("getUserProfile");
+			onReply = JobsAPI.__set__("onReply", fn => fn);
 			done();
 		});
 
 		it("#sends a get request to the correct endpoint, continuing to .receiveProfile", () => {
-			JobsAPI.getUser();
+			JobsAPI.getUserProfile();
 
 			assert.equal(result.get, "/profile");
-			assert.deepEqual(result.end, ServerActionCreators.receiveProfile);
+			assert.deepEqual(result.end, ServerActionCreators.receiveUserProfile);
 		});
 	});
 });

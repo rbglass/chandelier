@@ -5,12 +5,26 @@ import sortQuery from "../../../api/lib/sortQuery";
 describe("sortQuery", () => {
 
 	it("#takes a field and asc string", () => {
-		assert.equal(sortQuery.length, 2);
+		assert.equal(sortQuery.length, 3);
 	});
 
 	it("#constructs a psql sorting string from the inputs", () => {
 		const stringWeWant = "ORDER BY name DESC NULLS LAST";
 		const q = sortQuery("name", "false");
+
+		assert.equal(q, stringWeWant);
+	});
+
+	it("#constructs a psql sorting string from the inputs - with an extra sort field", () => {
+		const stringWeWant = "ORDER BY name DESC NULLS LAST, job_id ASC NULLS LAST";
+		const q = sortQuery("name", "false", "job_id");
+
+		assert.equal(q, stringWeWant);
+	});
+
+	it("#constructs a psql sorting string from the inputs - with an extra sort field the same as field", () => {
+		const stringWeWant = "ORDER BY job_id DESC NULLS LAST";
+		const q = sortQuery("job_id", "false", "job_id");
 
 		assert.equal(q, stringWeWant);
 	});

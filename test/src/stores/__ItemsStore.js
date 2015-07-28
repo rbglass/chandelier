@@ -73,18 +73,20 @@ describe("ItemsStore", () => {
 	});
 
 	it("#updates the items List upon a RECEIVE_ALL_ITEMS action", () => {
+		ItemsStore.__set__("filters", ItemsStore.__get__("emptyFilters"));
+
 		const itemAction = {
 			type: "RECEIVE_ALL_ITEMS",
 			data: sampleitems
 		};
 
 		onReceivingAction(itemAction);
-		sameVal(ItemsStore.getFilteredItems(), I.fromJS(itemAction.data.filter(e =>
-			["Confirmed", "Packaged"].indexOf(e.job_status) !== -1
-		)));
+		sameVal(ItemsStore.getFilteredItems(), I.fromJS(itemAction.data));
 	});
 
 	it("#updates the items List upon a CHANGE_SINGLE_JOB_ITEM action", () => {
+		ItemsStore.__set__("filters", ItemsStore.__get__("emptyFilters"));
+
 		const itemToChange = {
 			id: sampleitems[1].item_id,
 			key: "changedStuff",
