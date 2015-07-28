@@ -166,7 +166,7 @@ JobsPage.defaultProps = {
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
-				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed"]),
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged", "Dispatched"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
 				JobsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			]
@@ -204,7 +204,7 @@ JobsPage.defaultProps = {
 			onSelect: [
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status",
-					["Proforma", "Done"]
+					["Confirmed", "Packaged"]
 				),
 				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started", "Ordered"])
 			]

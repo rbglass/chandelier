@@ -27,7 +27,7 @@ const emptyFilters = I.fromJS({
 
 const defaultFilters = emptyFilters.setIn(
 	["restrictions", "job_status", "options"],
-	I.List(["Confirmed", "Packaged"])
+	I.List(["Confirmed", "Packaged", "Dispatched"])
 ).setIn(
 	["restrictions", "payment", "options"],
 	I.List(["", "Awaiting Payment", "Partial Payment", "Full Payment"])
