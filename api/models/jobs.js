@@ -6,10 +6,16 @@ var sortQuery   = require("../lib/sortQuery");
 var crud        = require("../lib/crudModel");
 
 var jobsModel = crud({
-	tableName : "jobs",
-	primaryKey: "job_id",
-	formatterS: formatter.job,
-	schema    : schema.jobs
+	tableName  : "jobs",
+	primaryKey : "job_id",
+	formatterS : formatter.job,
+	schema     : schema.jobs,
+	preValidate: function(data) {
+		if (data.shipping_date === "") {
+			data.shipping_date = null;
+		}
+		return data;
+	}
 });
 
 jobsModel.getAll = function(opts, cb) {
