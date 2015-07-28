@@ -14,6 +14,7 @@ module.exports = function(config) {
 	var customSelect = config.customSelect;
 	var formatterM   = config.formatterM;
 	var formatterS   = config.formatterS;
+	var secondSort   = config.secondSort;
 
 	function validate(data) {
 		if (!config.schema) return data;
@@ -51,7 +52,7 @@ module.exports = function(config) {
 			var sortBy, sortString, mainString, queryString;
 
 			sortBy      = opts && opts.sortBy || sort;
-			sortString  = sortQuery(sortBy, opts && opts.asc);
+			sortString  = sortQuery(sortBy, opts && opts.asc, secondSort);
 			mainString  = customSelect || "SELECT * FROM " + table + " ";
 			queryString = mainString + sortString;
 

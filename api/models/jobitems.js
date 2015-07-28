@@ -6,6 +6,7 @@ var jobItemsModel = crud({
 	tableName   : "job_items",
 	primaryKey  : "item_id",
 	defaultSort : "shipping_date",
+	secondSort  : "job_id",
 	schema      : schema.job_items,
 	customSelect: "SELECT job_items.*, jobs.shipping_date, jobs.job_status, " +
 										"jobs.payment, jobs.client " +

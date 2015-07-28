@@ -27,7 +27,7 @@ jobsModel.getAll = function(opts, cb) {
 		sortBy = "jobs." + (opts.sortBy || "shipping_date");
 	}
 
-	sortString = sortQuery(sortBy, opts.asc);
+	sortString = sortQuery(sortBy, opts.asc, "job_id");
 
 	mainString = "SELECT jobs.*, sum(job_items.qty_req) AS qty_items " +
 								"FROM jobs " +
