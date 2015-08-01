@@ -72,16 +72,16 @@ code.
 [__Mocha__](http://mochajs.org/) - test framework for front- and back-end.
 
 ---
-[__JSDom__]() - dom simulation for testing
+[__JSDom__](https://github.com/tmpvar/jsdom) - dom simulation for testing
 
 ---
-[__rewire__]() - lets us access/set private variables in modules. Used for testing flux stores
+[__rewire__](https://github.com/jhnns/rewire) - lets us access/set private variables in modules. Used for testing flux stores
 
 ---
-[__sinon__]() - mocking, stubbing and spying tools for testing
+[__sinon__](http://sinonjs.org/) - mocking, stubbing and spying tools for testing
 
 ---
-[__istanbul__]() - test coverage
+[__istanbul__](https://github.com/gotwarlost/istanbul) - test coverage
 
 ---
 
