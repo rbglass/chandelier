@@ -60,7 +60,7 @@ export default class TableRow extends Component {
 
 				case "select":
 						input = <Select value={cellValue}
-											selections={this.props.selections.get(cell.key)} />;
+											selections={this.props.selections.get(cell.key)} colored={!!cell.colored}/>;
 						break;
 
 				case "checkbox":
