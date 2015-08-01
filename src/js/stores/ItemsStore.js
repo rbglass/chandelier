@@ -122,12 +122,14 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.CLEAR_ITEMS_FILTERS:
-				filters = emptyFilters;
+				filters = emptyFilters.set("isAsc", filters.get("isAsc"))
+															.set("sortTerm", filters.get("sortTerm"));
 				ItemsStore.emitChange();
 				break;
 
 		case ActionTypes.DEFAULT_ITEMS_FILTERS:
-				filters = defaultFilters;
+				filters = defaultFilters.set("isAsc", filters.get("isAsc"))
+																	.set("sortTerm", filters.get("sortTerm"));
 				ItemsStore.emitChange();
 				break;
 

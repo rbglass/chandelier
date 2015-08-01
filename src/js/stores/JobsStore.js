@@ -134,12 +134,14 @@ const onReceivingAction = action => {
 				break;
 
 		case ActionTypes.CLEAR_JOBS_FILTERS:
-				filters = emptyFilters;
+				filters = emptyFilters.set("isAsc", filters.get("isAsc"))
+															.set("sortTerm", filters.get("sortTerm"));
 				JobsStore.emitChange();
 				break;
 
 		case ActionTypes.DEFAULT_JOBS_FILTERS:
-				filters = defaultFilters;
+				filters = defaultFilters.set("isAsc", filters.get("isAsc"))
+																.set("sortTerm", filters.get("sortTerm"));
 				JobsStore.emitChange();
 				break;
 
