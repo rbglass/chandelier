@@ -2,7 +2,9 @@
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 
-const colors = ["red", "blue", "green", "yellow", "brown", "purple", "orange"];
+// TODO: pass these down as props rather than hard
+// defining them in this component
+const colors = ["black", "#E8890B", "black", "#D828AE", "#008000", "#FF0000", "#3879B9", "#3879B9"];
 
 export default class Select extends Component {
 	shouldComponentUpdate(nextProps) {

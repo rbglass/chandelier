@@ -206,7 +206,9 @@ JobsPage.defaultProps = {
 				JobsActionCreators.restrictTo.bind(null, "job_status",
 					["Confirmed", "Packaged"]
 				),
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started", "Ordered"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status",
+					["", "Started", "Ordered"]
+				)
 			]
 		}
 	],
