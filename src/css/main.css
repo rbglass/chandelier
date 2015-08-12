@@ -2,8 +2,8 @@
 /* Generals */
 
 :root {
-	--even-row: #f2f2f2;
-	--odd-row: #ffffff;
+	/*--even-row: #f2f2f2;
+	--odd-row: #ffffff;*/
 	--red: rgba(224, 45, 45, 1);
 	--blue: rgba(39, 92, 152, 1);
 	--blueborder: rgba(1,1,1,0.5);
@@ -330,6 +330,10 @@ select[multiple] {
 
 /* Header */
 
+.table-row.table-header {
+	border: none;
+}
+
 .table-header {
 	display: none;
 	align-items: flex-end;
@@ -407,13 +411,14 @@ select[multiple] {
 }
 .table-row.flash-enter.flash-enter-active {
 	transition: background-color 1s ease-in;
+	background-color: white !important;
 }
-.table-row.flash-enter.flash-enter-active:nth-of-type(even) {
+/*.table-row.flash-enter.flash-enter-active:nth-of-type(even) {
 	background-color: var(--even-row) !important;
 }
 .table-row.flash-enter.flash-enter-active:nth-of-type(odd) {
 	background-color: var(--odd-row) !important;
-}
+}*/
 .table-row.flash-leave {
 	opacity: 1;
 }
@@ -426,13 +431,15 @@ select[multiple] {
 .table-row {
 	width: 100%;
 	min-height: 51px;
+	background-color: white;
+	border : 1px solid #999999;
 }
-.table-row:nth-of-type(even) {
+/*.table-row:nth-of-type(even) {
 	background-color: var(--even-row);
 }
 .table-row:nth-of-type(odd) {
 	background-color: var(--odd-row);
-}
+}*/
 @media (min-width: 500px) {
 	.table-row {
 		display: box;
@@ -454,6 +461,7 @@ select[multiple] {
 	padding-left: 0.3em;
 	padding-right: 0.2em;
 	word-break: break-word;
+	border-left: 1px solid #EEEEEE;
 }
 
 .table-row-item:before {
@@ -474,8 +482,8 @@ select[multiple] {
 
 @media (min-width: 500px) {
 	.table-row-item {
-		border-left: 1px solid #fff;
-		border-right:1px solid #fff;
+		border-left: 1px solid #EEEEEE;
+		border-right:1px solid #EEEEEE;
 		padding-left: 0.4em;
 		padding-right: 0.2em;
 	}
