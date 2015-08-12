@@ -12,7 +12,7 @@ var MARGIN = 28,
 		TITLE_FONT_SIZE = 24,
 		ADDRESS_FONT_SIZE = 9,
 		DETAIL_HEADER_FONT_SIZE = 10,
-		ITEM_HEADER_FONT_SIZE = 11,
+		ITEM_HEADER_FONT_SIZE = 10,
 		INPUT_FONT_SIZE = 9,
 		FOOTER_FONT_SIZE = 8,
 
@@ -206,14 +206,7 @@ function writeDetails(doc, job, wantFullVersion) {
 	var dateStr = formatDate(new Date());
 	var d = job.details;
 	var startDetailsAt = wantFullVersion ? DETAILS_LINE : doc.y;
-	var formattedShippingDate;
 	var tuples;
-
-	try {
-		formattedShippingDate = formatDate(d.shipping_date);
-	} catch(e) {
-		formattedShippingDate = "TBC";
-	}
 
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 				.font("Bold")
@@ -231,8 +224,7 @@ function writeDetails(doc, job, wantFullVersion) {
 		tuples = tuples.concat([
 			["Project:", d.project],
 			["Client Ref:", d.client_ref],
-			["Job Status:", d.job_status],
-			["Shipping Date:", formattedShippingDate]
+			["Job Status:", d.job_status]
 		]);
 		doc.moveDown();
 	}
@@ -317,4 +309,3 @@ function writeDoc(job, cb) {
 }
 
 module.exports = writeDoc;
-
