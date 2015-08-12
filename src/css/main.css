@@ -411,7 +411,7 @@ select[multiple] {
 }
 .table-row.flash-enter.flash-enter-active {
 	transition: background-color 1s ease-in;
-	background-color: white;
+	background-color: white !important;
 }
 /*.table-row.flash-enter.flash-enter-active:nth-of-type(even) {
 	background-color: var(--even-row) !important;
