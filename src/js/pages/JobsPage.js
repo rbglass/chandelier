@@ -141,7 +141,7 @@ JobsPage.defaultProps = {
 		{ key: "job_id",        display: "Job #",               "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
 		{ key: "client",        display: "Client",              "className": "u-flex-grow1 lg-font",     type: "text",     onChange: SharedActionCreators.changeDetails },
 		{ key: "project",       display: "Project",             "className": "lg-font",                  type: "text",     onChange: SharedActionCreators.changeDetails },
-		{ key: "job_status",    display: "Job Status",          "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
+		{ key: "job_status",    display: "Job Status",          "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails, colored: true },
 		{ key: "order_type",    display: "Order Type",          "className": "",                         type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date", display: "Shipping Date",       "className": "u-flex-grow",              type: "date",     onChange: SharedActionCreators.changeDetails },
 		{ key: "payment",       display: "Payment", 			      "className": "u-flex-grow",              type: "select",   onChange: SharedActionCreators.changeDetails },
@@ -206,7 +206,9 @@ JobsPage.defaultProps = {
 				JobsActionCreators.restrictTo.bind(null, "job_status",
 					["Confirmed", "Packaged"]
 				),
-				JobsActionCreators.restrictTo.bind(null, "parts_status", ["Started", "Ordered"])
+				JobsActionCreators.restrictTo.bind(null, "parts_status",
+					["", "Started", "Ordered"]
+				)
 			]
 		}
 	],
