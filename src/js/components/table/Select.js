@@ -2,10 +2,6 @@
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 
-// TODO: pass these down as props rather than hard
-// defining them in this component
-const colors = ["black", "#E8890B", "black", "#D828AE", "#008000", "#FF0000", "#3879B9", "#3879B9"];
-
 export default class Select extends Component {
 	shouldComponentUpdate(nextProps) {
 		const shouldIt = nextProps.value !== this.props.value ||
@@ -17,15 +13,8 @@ export default class Select extends Component {
 		const currentValueIfExists = this.props.selections &&
 			this.props.selections.find(opt => this.props.value === opt);
 
-		const currentIndex = this.props.selections &&
-			this.props.selections.indexOf(this.props.value);
-
-		const { colored } = this.props;
-
-		const selectColor = colored ? colors[currentIndex] : "black";
-
 		return (
-			<select value={this.props.value} style={{"color": selectColor}}>
+			<select value={this.props.value} style={this.props.style}>
 				{ currentValueIfExists === undefined ?
 						<option disabled={true}>{this.props.value}</option> :
 						null

@@ -148,7 +148,7 @@ describe("TableRow", () => {
 						break;
 
 				default:
-						assert.equal(babies.type, undefined);
+						assert.equal(babies.type, "span");
 						break;
 			}
 		});

@@ -149,7 +149,7 @@ JobItemsPage.defaultProps = {
 					className: "u-flex-grow2", type: "textarea", onChange: SharedActionCreators.changeItem },
 
 		{ key: "job_status",    display: "Job Status", otherContent: "pdf", className: "",
-					type: ""},
+					type: "", colored: true  },
 
 		{ key: "shipping_date", display: "Shipping Date", otherContent: "pdf", className: "",
 					type: "",         formattingFunc: ddMMMyyyy  },
