@@ -60,7 +60,7 @@ export default class TableRow extends Component {
 
 				case "select":
 						input = <Select value={cellValue}
-											selections={this.props.selections.get(cell.key)} colored={!!cell.colored}/>;
+											selections={this.props.selections.get(cell.key)} />;
 						break;
 
 				case "checkbox":
@@ -88,8 +88,22 @@ export default class TableRow extends Component {
 
 				default:
 						cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
-						input = cellDisplay;
+						input = React.createElement('span', {}, cellDisplay);
 						break;
+			}
+
+			if (!!cell.colored) {
+
+				const colors = ["black", "#E8890B", "black", "#D828AE", "#008000", "#FF0000", "#3879B9", "#3879B9"];
+
+				const currentIndex = this.props.selections.get(cell.key).indexOf(cellValue) &&
+				this.props.selections.get(cell.key).indexOf(cellValue);
+
+				const selectColor = colors[currentIndex];
+
+				input = React.cloneElement(input, {
+					style: {"color": selectColor}
+				});
 			}
 
 			return (
