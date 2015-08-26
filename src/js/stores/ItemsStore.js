@@ -21,6 +21,9 @@ const emptyFilters = I.fromJS({
 		},
 		"payment": {
 			key: "payment"
+		},
+		"parts_status": {
+			key: "parts_status"
 		}
 	}
 });

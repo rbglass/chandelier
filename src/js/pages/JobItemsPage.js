@@ -159,6 +159,9 @@ JobItemsPage.defaultProps = {
 		{ key: "shipping_date", display: "Shipping Date", otherContent: "pdf", className: "",
 					type: "",         formattingFunc: ddMMMyyyy  },
 
+		{ key: "parts_status",  display: "Parts Status",
+					className: "",  type: "select" },
+
 		{ key: "qty_req",       display: "Qty", line2: "Req", otherContent: "pdf", className: "qty-sm",
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
