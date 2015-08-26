@@ -133,6 +133,11 @@ export default connectToStores([
 	UserStore
 ], getState)(JobItemsPage);
 
+const clearPreset = [
+	SharedActionCreators.externalSortBy.bind(null, "items", "shipping_date", false),
+	JobItemsActionCreators.clearItemsFilters
+];
+
 // Code too wide
 JobItemsPage.defaultProps = {
 	tableScheme: [
@@ -149,7 +154,7 @@ JobItemsPage.defaultProps = {
 					className: "u-flex-grow2", type: "textarea", onChange: SharedActionCreators.changeItem },
 
 		{ key: "job_status",    display: "Job Status", otherContent: "pdf", className: "",
-					type: "", colored: true  },
+					type: "select", colored: true  },
 
 		{ key: "shipping_date", display: "Shipping Date", otherContent: "pdf", className: "",
 					type: "",         formattingFunc: ddMMMyyyy  },
@@ -184,24 +189,22 @@ JobItemsPage.defaultProps = {
 	presetScheme: [
 		{
 			description: "Clear All Filters",
-			onSelect: [
-				JobItemsActionCreators.clearItemsFilters
-			]
+			onSelect: clearPreset
 		},
 		{
 			description: "Live Items",
 			onSelect: [
+				SharedActionCreators.externalSortBy.bind(null, "items", "shipping_date", false),
 				JobItemsActionCreators.defaultItemsFilters
 			]
 		},
 		{
 			description: "Within 3 weeks & confirmed",
-			onSelect: [
-				JobItemsActionCreators.clearItemsFilters,
+			onSelect: clearPreset.concat([
 				JobItemsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged", "Dispatched"]),
 				JobItemsActionCreators.setStartDate.bind(null, new Date()),
 				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
-			]
+			])
 		}
 		// {
 		// 	description: "Borosilicate",

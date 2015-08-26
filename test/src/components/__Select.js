@@ -51,24 +51,24 @@ describe("Select", () => {
 		assert.equal(normalPerhaps, undefined);
 	});
 
-	// it("renders the displayed option with a different text color if the 'colored' prop is passed", () => {
-	// 	const ShallowRenderer = TestUtils.createRenderer();
-	// 	const [val1, val2] = selections.slice(1);
-	//
-	// 	ShallowRenderer.render(
-	// 		<Select selections={selections} value={val1} colored />
-	// 	);
-	//
-	// 	const select = ShallowRenderer.getRenderOutput();
-	//
-	// 	assert.equal(select.props.style.color, "blue");
-	//
-	// 	ShallowRenderer.render(
-	// 		<Select selections={selections} value={val2} colored />
-	// 	);
-	//
-	// 	const select2 = ShallowRenderer.getRenderOutput();
-	//
-	// 	assert.equal(select2.props.style.color, "green");
-	// });
+	it("renders the displayed option with a different text color if the 'colored' prop is passed", () => {
+		const ShallowRenderer = TestUtils.createRenderer();
+		const [val1, val2] = selections.slice(1);
+
+		ShallowRenderer.render(
+			<Select selections={selections} value={val1} colored />
+		);
+
+		const select = ShallowRenderer.getRenderOutput();
+
+		assert.equal(select.props.style.color, "blue");
+
+		ShallowRenderer.render(
+			<Select selections={selections} value={val2} colored />
+		);
+
+		const select2 = ShallowRenderer.getRenderOutput();
+
+		assert.equal(select2.props.style.color, "green");
+	});
 });

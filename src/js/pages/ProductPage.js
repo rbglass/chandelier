@@ -138,6 +138,12 @@ export default connectToStores([
 	UserStore
 ], getState)(ProductPage);
 
+const clearPreset = [
+	SharedActionCreators.externalSortBy.bind(null, "products", "name", false),
+	ProductActionCreators.clearProductsFilters
+];
+
+
 // Code too wide
 ProductPage.defaultProps = {
 	tableScheme: [
@@ -163,9 +169,7 @@ ProductPage.defaultProps = {
 	presetScheme: [
 		{
 			description: "Clear All Filters",
-			onSelect: [
-				ProductActionCreators.clearProductsFilters
-			]
+			onSelect: clearPreset
 		}
 	],
 	routeScheme: [
