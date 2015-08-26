@@ -53,7 +53,7 @@ describe("Select", () => {
 
 	it("renders the displayed option with a different text color if the 'colored' prop is passed", () => {
 		const ShallowRenderer = TestUtils.createRenderer();
-		const [val1, val2] = selections.slice(1);
+		const [val1, val2] = selections.slice(3);
 
 		ShallowRenderer.render(
 			<Select selections={selections} value={val1} colored />
@@ -61,7 +61,7 @@ describe("Select", () => {
 
 		const select = ShallowRenderer.getRenderOutput();
 
-		assert.equal(select.props.style.color, "blue");
+		assert.notEqual(select.props.style.color, "black");
 
 		ShallowRenderer.render(
 			<Select selections={selections} value={val2} colored />
@@ -69,6 +69,6 @@ describe("Select", () => {
 
 		const select2 = ShallowRenderer.getRenderOutput();
 
-		assert.equal(select2.props.style.color, "green");
+		assert.notEqual(select2.props.style.color, "black");
 	});
 });
