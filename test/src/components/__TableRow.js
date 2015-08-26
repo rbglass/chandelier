@@ -23,6 +23,9 @@ let counter = 0;
 const cells = I.Map({
 	description  : "desvalue",
 	qty_req      : 123,
+	qty_hot      : 60,
+	qty_cold     : 3,
+	qty_assem    : 60,
 	bulb         : "bulbvalue",
 	offbulb      : "offbulbvalue",
 	shipping_date: "2015-01-01",
@@ -58,6 +61,9 @@ const onClick = function(jobid, rowCells) {
 const cellConfig = [
 	{ key: "description",   display: "Description",   className: "descr",     type: "textarea", onChange: onChange },
 	{ key: "qty_req",       display: "Qty Req",       className: "qty-sm",    type: "number",   onChange: onChange },
+	{ key: "qty_hot",       display: "Qty Hot",       className: "qty-hot",   type: "number",   onChange: onChange, conditional: true},
+	{ key: "qty_cold",      display: "Qty Cold",      className: "qty-cold",  type: "number",   onChange: onChange, conditional: true},
+	{ key: "qty_assem",     display: "Qty Assem",     className: "qty-assem", type: "number",   onChange: onChange, conditional: true},
 	{ key: "bulb",          display: "Bulb",          className: "bulb",			type: "text",     onChange: onChange },
 	{ key: "offbulb",       display: "BulbOff",       className: "off",			  type: "text"                         },
 	{ key: "shipping_date", display: "Shipping Date", className: "shipdate",  type: "date",     onChange: onChange },
@@ -109,9 +115,8 @@ describe("TableRow", () => {
 		let textInputs = inputs.filter(input => React.findDOMNode(input).type === "text");
 
 		assert.equal(kids.length, cellConfig.length);
-		assert.equal(inputs.length, 4);
 
-		assert.equal(numInputs.length, 1);
+		assert.equal(numInputs.length, 4);
 		assert.equal(dateInputs.length, 1);
 		assert.equal(textInputs.length, 2);
 
@@ -189,6 +194,17 @@ describe("TableRow", () => {
 
 		assert.equal(number.props.children.type, NumInput);
 		assert.equal(number.props.children.props.value, cells.get("qty_req"));
+	});
+
+	it("#cell types: number with conditional", () => {
+		const number = TestUtils.findRenderedDOMComponentWithClass(
+			RenderedComponent,
+			"qty-hot"
+		);
+
+		assert.equal(number.props.children.type, NumInput);
+		assert.equal(number.props.children.props.value, cells.get("qty_hot"));
+		assert.equal(number.props.children.props.color, "#FF0000");
 	});
 
 	it("#cell types: text - enabled", () => {

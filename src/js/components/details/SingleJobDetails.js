@@ -3,6 +3,7 @@ import I from "immutable";
 import IPropTypes from "react-immutable-proptypes";
 import React, { Component, PropTypes } from "react";
 import DateSelector from "../common/DateSelector";
+import Select from "../table/Select";
 import keySealer from "../../utils/keySealer";
 import yyyyMMdd from "../../utils/yyyyMMdd";
 
@@ -56,14 +57,8 @@ export default class SingleJobDetails extends Component {
 						break;
 
 				case "select":
-						input = (
-							<select value={cellValue} className="job-text-input">
-								{ this.props.selections.has(cell.key) ?
-									this.props.selections.get(cell.key).map((opt, j) => {
-									return <option key={opt + " " + j}>{opt}</option>;
-								}, this) : "No opts" }
-							</select>
-						);
+						input = <Select value={cellValue} className="job-text-input"
+												selections={this.props.selections.get(cell.key)} colored={cell.colored}/>;
 						break;
 
 				case "textarea":

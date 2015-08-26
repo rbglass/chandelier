@@ -432,7 +432,7 @@ select[multiple] {
 	width: 100%;
 	min-height: 51px;
 	background-color: white;
-	border : 1px solid #999999;
+	border-bottom: 1px solid #999999;
 }
 /*.table-row:nth-of-type(even) {
 	background-color: var(--even-row);

@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from "react";
 
 export default class NumInput extends Component {
 	shouldComponentUpdate(nextProps) {
-		const shouldIt = (nextProps.value !== this.props.value);
+		const shouldIt = nextProps !== this.props;
 		return shouldIt;
 	}
 
@@ -12,11 +12,16 @@ export default class NumInput extends Component {
 	}
 
 	render() {
+		const numStyle = {
+			color: this.props.color
+		};
+
 		return <input type="number" min={0} value={this.props.value}
-							onClick={this.handleNumFocus.bind(this)}/>;
+							onClick={this.handleNumFocus.bind(this)} style={numStyle}/>;
 	}
 }
 
 NumInput.propTypes = {
-	value: PropTypes.number
+	value: PropTypes.number,
+	color: PropTypes.string
 };

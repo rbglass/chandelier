@@ -9,7 +9,7 @@ var jobItemsModel = crud({
 	secondSort  : "job_id",
 	schema      : schema.job_items,
 	customSelect: "SELECT job_items.*, jobs.shipping_date, jobs.job_status, " +
-										"jobs.payment, jobs.client " +
+										"jobs.payment, jobs.client, jobs.parts_status " +
 										"FROM job_items INNER JOIN jobs " +
 										"ON job_items.job_id = jobs.job_id "
 });

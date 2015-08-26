@@ -47,7 +47,18 @@ export default class TableRow extends Component {
 						break;
 
 				case "number":
-						input = <NumInput value={cellValue} />;
+						let conditionColor = "black";
+
+						if (cell.conditional) {
+							const c = this.props.cells;
+
+							conditionColor =
+								c.get("qty_req") > (
+									c.get("qty_hot") + c.get("qty_cold") + c.get("qty_assem")
+								) ? "#FF0000" : "#008000";
+						}
+
+						input = <NumInput value={cellValue} color={conditionColor}/>;
 						break;
 
 				case "text":
@@ -59,8 +70,8 @@ export default class TableRow extends Component {
 						break;
 
 				case "select":
-						input = <Select value={cellValue}
-											selections={this.props.selections.get(cell.key)} />;
+						input = <Select value={cellValue} disabled={isDisabled}
+											selections={this.props.selections.get(cell.key)} colored={cell.colored}/>;
 						break;
 
 				case "checkbox":
@@ -88,22 +99,8 @@ export default class TableRow extends Component {
 
 				default:
 						cellDisplay = cell.formattingFunc ? cell.formattingFunc(cellValue) : cellValue;
-						input = React.createElement('span', {}, cellDisplay);
+						input = <span>{cellDisplay}</span>;
 						break;
-			}
-
-			if (!!cell.colored) {
-
-				const colors = ["black", "#E8890B", "black", "#D828AE", "#008000", "#FF0000", "#3879B9", "#3879B9"];
-
-				const currentIndex = this.props.selections.get(cell.key).indexOf(cellValue) &&
-				this.props.selections.get(cell.key).indexOf(cellValue);
-
-				const selectColor = colors[currentIndex];
-
-				input = React.cloneElement(input, {
-					style: {"color": selectColor}
-				});
 			}
 
 			return (

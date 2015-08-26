@@ -136,6 +136,11 @@ export default connectToStores([
 	UserStore
 ], getState)(JobsPage);
 
+const clearPreset = [
+	SharedActionCreators.externalSortBy.bind(null, "jobs", "shipping_date", false),
+	JobsActionCreators.clearJobsFilters
+];
+
 JobsPage.defaultProps = {
 	tableScheme: [
 		{ key: "job_id",        display: "Job #",               "className": "qty-sm link",              type: "link", to: "singlejob", formattingFunc: rbPrefixer },
@@ -152,19 +157,19 @@ JobsPage.defaultProps = {
 	presetScheme: [
 		{
 			description: "Clear All Filters",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters
-			]
+			onSelect: clearPreset
 		},
 		{
 			description: "Live Jobs",
 			onSelect: [
+				SharedActionCreators.externalSortBy.bind(null, "jobs", "shipping_date", false),
 				JobsActionCreators.defaultJobsFilters
 			]
 		},
 		{
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
+				SharedActionCreators.externalSortBy.bind(null, "jobs", "shipping_date", false),
 				JobsActionCreators.clearJobsFilters,
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged", "Dispatched"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
@@ -173,43 +178,39 @@ JobsPage.defaultProps = {
 		},
 		{
 			description: "Packaged",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters,
+			onSelect: clearPreset.concat([
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"])
-			]
+			])
 		},
 		{
 			description: "Shipping today",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters,
+			onSelect: clearPreset.concat([
 				JobsActionCreators.restrictTo.bind(null, "job_status", ["Packaged"]),
 				JobsActionCreators.setStartDate.bind(null, new Date()),
 				JobsActionCreators.setEndDate.bind(null, new Date())
-			]
+			])
 		},
 		{
 			description: "Awaiting Payment",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters,
+			onSelect: clearPreset.concat([
 				JobsActionCreators.restrictTo.bind(null, "job_status",
 					["Proforma", "Confirmed", "Packaged", "Dispatched"]
 				),
 				JobsActionCreators.restrictTo.bind(null, "payment",
 					["Awaiting Payment", "Partial Payment"]
 				)
-			]
+			])
 		},
 		{
 			description: "Parts started",
-			onSelect: [
-				JobsActionCreators.clearJobsFilters,
+			onSelect: clearPreset.concat([
 				JobsActionCreators.restrictTo.bind(null, "job_status",
 					["Confirmed", "Packaged"]
 				),
 				JobsActionCreators.restrictTo.bind(null, "parts_status",
 					["", "Started", "Ordered"]
 				)
-			]
+			])
 		}
 	],
 	routeScheme: [
