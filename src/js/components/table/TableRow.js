@@ -47,7 +47,18 @@ export default class TableRow extends Component {
 						break;
 
 				case "number":
-						input = <NumInput value={cellValue} />;
+						let conditionColor = "black";
+
+						if (cell.conditional) {
+							const c = this.props.cells;
+
+							conditionColor =
+								c.get("qty_req") > (
+									c.get("qty_hot") + c.get("qty_cold") + c.get("qty_assem")
+								) ? "#FF0000" : "#008000";
+						}
+
+						input = <NumInput value={cellValue} color={conditionColor}/>;
 						break;
 
 				case "text":

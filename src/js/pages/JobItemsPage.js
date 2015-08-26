@@ -165,13 +165,13 @@ JobItemsPage.defaultProps = {
 		{ key: "qty_req",       display: "Qty", line2: "Req", otherContent: "pdf", className: "qty-sm",
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
-		{ key: "qty_hot",       display: "Qty", line2: "Hot", className: "qty-sm",
+		{ key: "qty_hot",       display: "Qty", line2: "Hot", className: "qty-sm", conditional: true,
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
-		{ key: "qty_cold",      display: "Qty", line2: "Cold",  className: "qty-sm",
+		{ key: "qty_cold",      display: "Qty", line2: "Cold",  className: "qty-sm", conditional: true,
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
-		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm",
+		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm", conditional: true,
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 
 		{ key: "glass",         display: "Glass", otherContent: "pdf", className: "u-flex-grow2",
