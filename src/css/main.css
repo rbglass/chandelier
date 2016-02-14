@@ -564,6 +564,10 @@ select[multiple] {
 	cursor: pointer;
 }
 
+.table-row-item select:disabled {
+	-webkit-appearance: none; 
+	cursor: default;
+}
 /* Field specific */
 .lg-font input{
 	font-size: 0.8rem;
