@@ -173,7 +173,8 @@ JobItemsPage.defaultProps = {
 
 		{ key: "qty_assem",     display: "Qty", line2: "Assem", className: "qty-sm", conditional: true,
 					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
-
+		{ key: "qty_packed",     display: "Qty", line2: "Packed", className: "qty-sm", conditional: true,
+					type: "number",   onChange: SharedActionCreators.changeItem,   isNum: true },
 		{ key: "glass",         display: "Glass", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem                },
 

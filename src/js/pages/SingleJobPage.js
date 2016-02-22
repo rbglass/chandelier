@@ -161,7 +161,9 @@ SingleJobPage.defaultProps = {
 				type: "number",   onChange: SharedActionCreators.changeItem, isNum: true, conditional: true },
 		{ key: "qty_assem",   display: "Qty", line2: "Assem",                      className: "qty-sm",
 				type: "number",   onChange: SharedActionCreators.changeItem, isNum: true, conditional: true },
-		{ key: "notes",       display: "Notes",        className: "u-flex-grow3",            type: "textarea", onChange: SharedActionCreators.changeItem },
+{ key: "qty_packed",   display: "Qty", line2: "packed",                      className: "qty-sm",
+		type: "number",   onChange: SharedActionCreators.changeItem, isNum: true, conditional: true },		
+{ key: "notes",       display: "Notes",        className: "u-flex-grow3",            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "+", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right" }
 	],
 	detailsScheme: [
