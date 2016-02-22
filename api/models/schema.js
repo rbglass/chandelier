@@ -33,6 +33,7 @@ module.exports = {
 		qty_hot    : Joi.number().default(0),
 		qty_cold   : Joi.number().default(0),
 		qty_assem  : Joi.number().default(0),
+		qty_packed : Joi.number().default(0),
 		notes      : Joi.string().default("").allow(""),
 		pdf_rank   : Joi.number().default(0)
 	}),
