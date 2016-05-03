@@ -15,10 +15,11 @@ npm run build
 npm start
 ```
 
-If you wish to populate the db with dummy data and be able to log in, go to `test/api/helpers/helpers`, comment in the 3 lines at the bottom, and run the following:
+If you wish to populate the db with dummy data and be able to log in, go to `test/api/helpers/helpers`, comment in the 3 lines at the bottom, and run the following (use @gmail.com rather than @googlemail.com):
 ```
 EMAIL=insert_your_google_email_for_login WHY=TRYING_IT_OUT node test/api/helpers/helpers.js
-```
+```  
+You may have to kill the process after it runs. Now you should be able to run `npm start` and open up `localhost:8080` in your browser and try out the app.
 
 ## Test
 ```
