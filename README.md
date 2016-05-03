@@ -10,6 +10,7 @@ You will need a creds file of the format outlined in creds.example.json. You wil
 git clone https://github.com/foundersandcoders/chandelier.git
 cd chandelier
 npm install
+npm run mk
 npm run build
 npm start
 ```
