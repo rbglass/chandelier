@@ -113,8 +113,8 @@ module.exports = {
 		this.users(
 			this.selections.bind(null,
 				this.products.bind(null,
-					this.job_items.bind(null,
-						this.jobs
+					this.jobs.bind(null,
+						this.job_items.bind(null, function(){})
 					)
 				)
 			)
