@@ -1,6 +1,12 @@
-#Workflow
+#Workflow  
 
-Deployment to Heroku is automatic from the 'development' branch.
+My development workflow for this app goes something like this
+
+Pull from dev -> create new (suitably named) branch -> work on local machine w/ local data, run tests as you go -> push to remote -> review changes and make pull request to dev -> if changes are all good, merge request to dev, which automatically builds and deploys to heroku
+
+Typically I will have 3-4 terminals open: 1. npm run devserve -- this runs nodemon, watching /api 2. npm run build:watch -- this runs the css and js build tools, watching /src 3. tests 4. text editor  
+
+This leads to files building on save.
 
 Services used:  
 Hosting: Heroku  
