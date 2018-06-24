@@ -102,7 +102,11 @@ class SingleJobPage extends Component {
 					<div className="container">
 						<SingleJobDetails details={this.props.details} selections={this.props.selections}
 							detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails} >
-							<button className="add-button rounded"
+							
+						</SingleJobDetails>
+					<div className="buttonRow">
+						
+						<button className="add-button rounded"
 									onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
 								Add Job Item
 							</button>
@@ -110,7 +114,7 @@ class SingleJobPage extends Component {
 									onClick={this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}>
 								Clipboard
 							</button>
-						</SingleJobDetails>
+							</div>
 						<div className="table-container">
 							<Table selections={this.props.selections}
 									filters={this.props.filters}
@@ -171,7 +175,7 @@ SingleJobPage.defaultProps = {
 		{ key: "glass",       display: "Glass",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "metal",       display: "Metal",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "flex",        display: "Flex",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "flex_length", display: "Flex",line2: "Length (m)", otherContent: "pdf", className: "u-flex-grow2",       type: "number",   onChange: SharedActionCreators.changeItem},
+		{ key: "flex_length", display: "Flex",line2: "Length (m)", otherContent: "pdf", className: "qty-sm",       type: "number",   onChange: SharedActionCreators.changeItem},
 		{ key: "bulb",        display: "Bulb",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "ceilingrose", display: "CeilingRose", 		  otherContent: "pdf", className: "u-flex-grow2",			 type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "qty_req",     display: "Qty", line2: "Req", 	otherContent: "pdf", className: "qty-sm",
@@ -200,11 +204,11 @@ SingleJobPage.defaultProps = {
 		{ key: "parts_notes",    display: "Parts Notes:",      className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "payment",        display: "Payment:",          className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date",  display: "Shipping Date:",    className: "",                   type: "date",     onChange: SharedActionCreators.changeDetails },
+		{ key: "delivery_notes", display: "Delivery Notes:",  className: "u-flex-grow2 notes",  type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "contact_name",  display: "Contact Name:",      className: "", type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "delivery_address",  display: "Delivery Address:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "contact_number",  display: "Contact No:",    className: "", type: "text", onChange: SharedActionCreators.changeDetails },
 		{ key: "contact_email",  display: "Contact Email:",    className: "", type: "text", onChange: SharedActionCreators.changeDetails },
-		{ key: "delivery_notes",  display: "Delivery Notes:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }//,
+		{ key: "delivery_address",  display: "Delivery Address:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }
 		//{ key: "shipping_notes",  display: "Shipping Notes:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }
 	],
 	routeScheme: [
