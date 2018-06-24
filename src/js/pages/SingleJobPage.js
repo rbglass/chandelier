@@ -100,21 +100,11 @@ class SingleJobPage extends Component {
 						null
 					}
 					<div className="container">
-						<SingleJobDetails details={this.props.details} selections={this.props.selections}
-							detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails} >
-							
-						</SingleJobDetails>
-					<div className="buttonRow">
-						
-						<button className="add-button rounded"
-									onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
-								Add Job Item
-							</button>
-							<button className="add-button rounded"
-									onClick={this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}>
-								Clipboard
-							</button>
-							</div>
+						<SingleJobDetails details={this.props.details} selections={this.props.selections} detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}></SingleJobDetails>
+						<div className="buttonRow">
+							<button className="add-button rounded" onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>Add Job Item</button>
+							<button className="add-button rounded" onClick={this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}>Clipboard</button>
+						</div>
 						<div className="table-container">
 							<Table selections={this.props.selections}
 									filters={this.props.filters}
