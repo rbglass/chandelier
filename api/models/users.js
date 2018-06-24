@@ -10,6 +10,8 @@ module.exports = {
 			if (err) return cb(err);
 
 			client.query(queryString, [email], function(errGet, info) {
+				console.log(errGet);
+				console.log(info);
 				if (errGet) {
 					cb(errGet);
 				} else {

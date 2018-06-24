@@ -12,9 +12,11 @@ module.exports = {
 
 	jobs: function(next) {
 		connect(function(err, client, done) {
+			console.log(err);
 			if(err) throw (err);
 
 			client.query(jobs.create, function(errC, info) {
+				console.log(errC);
 				if(errC) throw (errC);
 				client.query(jobs.copy, function(errP) {
 					if(errP) throw (errP);
@@ -48,8 +50,10 @@ module.exports = {
 
 	products: function(next) {
 		connect(function(err, client, done) {
+			console.log(err);
 			if(err) throw (err);
 			client.query(products.create, function(errC, info) {
+				console.log(errC);
 				if(errC) throw (errC);
 				client.query(products.copy, function(errP) {
 					if(errP) throw (errP);
@@ -110,7 +114,8 @@ module.exports = {
 	},
 
 	populate: function() {
-		this.users(
+		//this.users(
+			console.log("populate");
 			this.selections.bind(null,
 				this.products.bind(null,
 					this.jobs.bind(null,
@@ -118,7 +123,7 @@ module.exports = {
 					)
 				)
 			)
-		);
+		//);
 	},
 
 	coerceToNum: function(fields, row) {
@@ -129,6 +134,6 @@ module.exports = {
 	}
 };
 
-// if (process.env.WHY === "TRYING_IT_OUT") {
-// 	module.exports.populate();
-// }
+//if (process.env.WHY === "TRYING_IT_OUT") {
+	module.exports.populate();
+//}

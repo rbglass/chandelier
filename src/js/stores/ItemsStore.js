@@ -146,7 +146,10 @@ const onReceivingAction = action => {
 				});
 				ItemsStore.emitChange();
 				break;
-
+		case ActionTypes.FILTER_BY_PREDICATE:
+				items = items.filter(item => item.get("qty_hot") < item.get("qty_req"));
+				ItemsStore.emitChange();
+				break;
 		default:
 				break;
 

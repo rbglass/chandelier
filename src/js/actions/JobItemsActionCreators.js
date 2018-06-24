@@ -59,3 +59,11 @@ export function defaultItemsFilters() {
 		type: ActionTypes.DEFAULT_ITEMS_FILTERS
 	});
 }
+
+export function filterByPredicate(field, predicate) {
+	AppDispatcher.dispatch({
+		type: ActionTypes.FILTER_BY_PREDICATE,
+	 key: field,
+	 fn: predicate
+	});
+}

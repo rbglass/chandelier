@@ -37,6 +37,8 @@
     "babelify": "^6.1.2",
     "bell": "^3.0.0",
     "browserify": "^10.2.3",
+    "cli-engine-command": "^9.0.7",
+    "cli-engine-config": "^3.5.0",
     "flux": "^2.0.3",
     "hapi": "^8.6.0",
     "hapi-auth-cookie": "^2.2.0",

@@ -183,9 +183,13 @@ JobItemsPage.defaultProps = {
 
 		{ key: "flex",          display: "Flex", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "flex_length",   display: "Flex", line2: "Length (m)", otherContent: "pdf", className: "u-flex-grow2",
+					type: "number",   onChange: SharedActionCreators.changeItem},
 
 		{ key: "bulb",          display: "Bulb", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem                },
+		{ key: "ceilingrose",  display: "CeilingRose", otherContent: "pdf", className: "u-flex-grow2",
+					type: "select",   onChange: SharedActionCreators.changeItem},
 
 		{ key: "notes",         display: "Notes", className: "u-flex-grow2", maxRows: 3,
 					type: "textarea", onChange: SharedActionCreators.changeItem   }
@@ -209,15 +213,21 @@ JobItemsPage.defaultProps = {
 				JobItemsActionCreators.setStartDate.bind(null, new Date()),
 				JobItemsActionCreators.setEndDate.bind(null, new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3))
 			])
-		}
+		},
+		{
+			description: "Hot Items",
+			onSelect: [
+				JobItemsActionCreators.filterByPredicate.bind("qty_hot", x => x > 0),
+				JobItemsActionCreators.defaultItemsFilters
+			]
+		}//,
 		// {
 		// 	description: "Borosilicate",
-		// 	onSelect: [
-		// 		JobItemsActionCreators.clearItemsFilters,
+		// 	onSelect: clearPreset.concat([
 		// 		JobItemsActionCreators.restrictTo.bind(null, "product",
 		// 			["Spindle Pendant 3-Bubble", "Spindle Pendant 4-Bubble", "Tiered Light", "Spindle Shade"]
 		// 		)
-		// 	]
+		// 	])
 		// }
 	],
 	routeScheme: [

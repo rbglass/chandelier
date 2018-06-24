@@ -169,17 +169,33 @@ function writeAddress(doc) {
 			.text("SG14 1QN");
 }
 
-function writeDeliveryDetails(doc, address) {
+function writeDeliveryDetails(doc, _name, _address, _phone, _email, _notes) {
 	var HORIZ_CENTER = Math.floor(RIGHT_EDGE / 2) - 50;
 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
 			.font("Bold")
 			.text("Delivery Details:", HORIZ_CENTER, DETAILS_LINE, labelConfig)
 			.fontSize(ADDRESS_FONT_SIZE)
 			.font(FONT)
-			.text(address);
-
-	return lineCounter(address, 60);
+			.text(_name)
+			.text(_address)
+			.moveDown()
+			.text(_phone)
+			.text(_email);
+			//.moveDown()
+			//.text(_notes);
 }
+
+// function writeDeliveryDetails(doc, address) {
+// 	var HORIZ_CENTER = Math.floor(RIGHT_EDGE / 2) - 50;
+// 	doc.fontSize(DETAIL_HEADER_FONT_SIZE)
+// 			.font("Bold")
+// 			.text("Delivery Details:", HORIZ_CENTER, DETAILS_LINE, labelConfig)
+// 			.fontSize(ADDRESS_FONT_SIZE)
+// 			.font(FONT)
+// 			.text(address);
+
+// 	return lineCounter(address, 60);
+// }
 
 function drawImage(doc) {
 	var FROM_EDGE = RIGHT_EDGE - MARGIN - IMAGE_WIDTH;
@@ -255,7 +271,9 @@ function writeDoc(job, cb) {
 	var detailsEndedAt = writeDetails(doc, job, true);
 	writeAddress(doc);
 
-	var deliveryLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
+	//var deliveryLineCount = writeDeliveryDetails(doc, job.details.shipping_notes);
+	writeDeliveryDetails(doc, job.details.contact_name, job.details.delivery_address, job.details.contact_number, job.details.contact_email, job.details.delivery_notes);
+
 	var beginItemHeaders = Math.max(doc.y, detailsEndedAt, ITEM_HEADER_LINE);
 
 	doc.fontSize(ITEM_HEADER_FONT_SIZE)
@@ -297,8 +315,10 @@ function writeDoc(job, cb) {
 					) || "")
 				.text(propChecker("- Glass", item.glass))
 				.text(propChecker("- Metal", item.metal))
-				.text(propChecker("- Flex", item.flex ))
+				.text(propChecker("- Flex", item.flex_length + 'm ' + item.flex ))
 				.text(propChecker("- Bulb", item.bulb ))
+				//.text(propChecker("- Flex Length", item.flex_length ))
+				.text(propChecker("- Ceiling Rose", item.ceilingrose ))
 				.moveDown(1.5);
 
 

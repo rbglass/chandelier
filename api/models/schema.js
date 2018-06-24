@@ -18,7 +18,12 @@ module.exports = {
 		parts_notes   : Joi.string().default("").allow(""),
 		invoice_notes : Joi.string().default("").allow(""),
 		payment       : Joi.string().default("").allow(""),
-		notes         : Joi.string().default("").allow("")
+		notes         : Joi.string().default("").allow(""),
+		contact_name : Joi.string().default("").allow(""),
+		delivery_address : Joi.string().default("").allow(""),
+		contact_number : Joi.string().default("").allow(""),
+		contact_email : Joi.string().default("").allow(""),
+		delivery_notes : Joi.string().default("").allow("")
 	}),
 
 	job_items: Joi.object().keys({
@@ -35,7 +40,9 @@ module.exports = {
 		qty_assem  : Joi.number().default(0),
 		qty_packed : Joi.number().default(0),
 		notes      : Joi.string().default("").allow(""),
-		pdf_rank   : Joi.number().default(0)
+		pdf_rank   : Joi.number().default(0),
+		ceilingrose : Joi.string().default("").allow(""),
+		flex_length : Joi.string().default("").allow("")
 	}),
 
 	products: Joi.object().keys({

@@ -33,11 +33,26 @@ class SingleJobPage extends Component {
 		requestDataFromServer(this.props.params.id);
 	}
 
+	showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes) {
+		var textField = document.createElement('textarea')
+		textField.innerText = ''
+		textField.innerText = contact_name + ', ' + delivery_address + ', ' + contact_email + ', ' + contact_number + ', ' + delivery_notes
+		document.body.appendChild(textField)
+		textField.select()
+		document.execCommand('copy')
+		textField.remove()
+	}
+
 	render() {
 		let modalTitle, modalChildren;
 		const pending = this.props.pendingAction;
 		const id = this.props.params.id;
 		const client = this.props.details.get("client") || "";
+		const contact_name = this.props.details.get("contact_name") || "";
+		const delivery_address = this.props.details.get("delivery_address") || "";
+		const contact_number = this.props.details.get("contact_number") || "";
+		const contact_email = this.props.details.get("contact_email") || "";
+		const delivery_notes = this.props.details.get("delivery_notes") || "";
 		const title = `RB${id} ${client}`;
 
 		const shouldDisplayAlert = this.props.isLoading ||
@@ -90,6 +105,10 @@ class SingleJobPage extends Component {
 							<button className="add-button rounded"
 									onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>
 								Add Job Item
+							</button>
+							<button className="add-button rounded"
+									onClick={this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}>
+								Clipboard
 							</button>
 						</SingleJobDetails>
 						<div className="table-container">
@@ -146,13 +165,15 @@ export default connectToStores([
 SingleJobPage.defaultProps = {
 	tableScheme: [
 		{ key: "-", 	        display: "", className: "fixed-col hid", type: "button",   onClick: ModalActionCreators.modifyPendingAction.bind(null, "DELETE", SharedActionCreators.deleteItem), inputClassName: "btn-left" },
-		{ key: "pdf_rank",    display: "PDF", line2: "Order",                      className: "qty-xs",                  type: "number",   onChange: SharedActionCreators.changeItem },
+		{ key: "pdf_rank",    display: "PDF", line2: "Order",                      className: "qty-xs",                  type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
 		{ key: "product",     display: "Product",             otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
-		{ key: "description", display: "Description",         otherContent: "pdf", className: "u-flex-grow2",            type: "textarea", onChange: SharedActionCreators.changeItem },
+		{ key: "description", display: "Description",         otherContent: "pdf", className: "u-flex-grow2", maxRows: 3,            type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "glass",       display: "Glass",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "metal",       display: "Metal",               otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "flex",        display: "Flex",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "flex_length", display: "Flex",line2: "Length (m)", otherContent: "pdf", className: "u-flex-grow2",       type: "number",   onChange: SharedActionCreators.changeItem},
 		{ key: "bulb",        display: "Bulb",                otherContent: "pdf", className: "",                        type: "select",   onChange: SharedActionCreators.changeItem },
+		{ key: "ceilingrose", display: "CeilingRose", 		  otherContent: "pdf", className: "u-flex-grow2",			 type: "select",   onChange: SharedActionCreators.changeItem },
 		{ key: "qty_req",     display: "Qty", line2: "Req", 	otherContent: "pdf", className: "qty-sm",
 				type: "number",   onChange: SharedActionCreators.changeItem, isNum: true },
 		{ key: "qty_hot",     display: "Qty", line2: "Hot", 											 className: "qty-sm",
@@ -163,7 +184,7 @@ SingleJobPage.defaultProps = {
 				type: "number",   onChange: SharedActionCreators.changeItem, isNum: true, conditional: true },
 { key: "qty_packed",   display: "Qty", line2: "packed",                      className: "qty-sm",
 		type: "number",   onChange: SharedActionCreators.changeItem, isNum: true, conditional: true },		
-{ key: "notes",       display: "Notes",        className: "u-flex-grow3",            type: "textarea", onChange: SharedActionCreators.changeItem },
+{ key: "notes",       display: "Notes",        className: "u-flex-grow3", maxRows: 3,           type: "textarea", onChange: SharedActionCreators.changeItem },
 		{ key: "+", 	        display: "",             className: "fixed-col hid",           type: "button",   onClick: SharedActionCreators.createItem, inputClassName: "btn-right" }
 	],
 	detailsScheme: [
@@ -179,7 +200,12 @@ SingleJobPage.defaultProps = {
 		{ key: "parts_notes",    display: "Parts Notes:",      className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
 		{ key: "payment",        display: "Payment:",          className: "",                   type: "select",   onChange: SharedActionCreators.changeDetails },
 		{ key: "shipping_date",  display: "Shipping Date:",    className: "",                   type: "date",     onChange: SharedActionCreators.changeDetails },
-		{ key: "shipping_notes", display: "Delivery Details:", className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }
+		{ key: "contact_name",  display: "Contact Name:",      className: "", type: "text", onChange: SharedActionCreators.changeDetails },
+		{ key: "delivery_address",  display: "Delivery Address:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails },
+		{ key: "contact_number",  display: "Contact No:",    className: "", type: "text", onChange: SharedActionCreators.changeDetails },
+		{ key: "contact_email",  display: "Contact Email:",    className: "", type: "text", onChange: SharedActionCreators.changeDetails },
+		{ key: "delivery_notes",  display: "Delivery Notes:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }//,
+		//{ key: "shipping_notes",  display: "Shipping Notes:",    className: "u-flex-grow2 notes", type: "textarea", onChange: SharedActionCreators.changeDetails }
 	],
 	routeScheme: [
 		{ display: "Jobs", "to": "jobs" },

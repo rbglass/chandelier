@@ -30,6 +30,7 @@ module.exports = function(config) {
 
 	function createOrUpdate(cb, command, data, before) {
 		connect(function(err, cl, done) {
+			console.log(err);
 			if(err) return cb(err);
 
 			cl.query(command, data, function(errC, info) {
@@ -37,6 +38,7 @@ module.exports = function(config) {
 
 				done();
 				if (errC) {
+					console.log(errC);
 					cb(errC);
 				} else {
 					combined = assign(before, info.rows[0]);
@@ -82,6 +84,7 @@ module.exports = function(config) {
 
 		update: function(id, data, cb) {
 			var before = data;
+			console.log(before);			
 			var result = validate(data);
 
 			if (result === false) return cb("Validation failure");
