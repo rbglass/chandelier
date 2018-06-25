@@ -160,6 +160,14 @@ JobsPage.defaultProps = {
 			onSelect: clearPreset
 		},
 		{
+			description: "Live Jobs",
+			onSelect: [
+				SharedActionCreators.externalSortBy.bind(null, "jobs", "shipping_date", false),
+				JobsActionCreators.clearJobsFilters,
+				JobsActionCreators.restrictTo.bind(null, "job_status", ["Confirmed", "Packaged", "Dispatched"])
+			]
+		},
+		{
 			description: "Within 3 weeks & confirmed",
 			onSelect: [
 				SharedActionCreators.externalSortBy.bind(null, "jobs", "shipping_date", false),

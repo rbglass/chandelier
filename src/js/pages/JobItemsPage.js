@@ -184,11 +184,11 @@ JobItemsPage.defaultProps = {
 		{ key: "flex",          display: "Flex", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem                },
 		{ key: "flex_length",   display: "Flex", line2: "Length (m)", otherContent: "pdf", className: "qty-sm",
-					type: "number",   onChange: SharedActionCreators.changeItem},
+					type: "text",   onChange: SharedActionCreators.changeItem},
 
 		{ key: "bulb",          display: "Bulb", otherContent: "pdf", className: "u-flex-grow2",
 					type: "select",   onChange: SharedActionCreators.changeItem                },
-		{ key: "ceilingrose",  display: "CeilingRose", otherContent: "pdf", className: "u-flex-grow2",
+		{ key: "ceilingrose",  display: "CeilingRose", otherContent: "pdf", className: "ceilingroseMaxLength",
 					type: "select",   onChange: SharedActionCreators.changeItem},
 
 		{ key: "notes",         display: "Notes", className: "u-flex-grow2", maxRows: 3,
