@@ -290,6 +290,15 @@ function writeDoc(job, cb) {
 	job.items.forEach(function(item, i) {
 		var lineCount, currentY;
 		var itWont = !isSufficientSpace(item, doc.y);
+		var flexDesc = ''
+
+		if (item.flex_length === '') {
+			flexDesc = item.flex;
+		} else if (item.flex_length === 'tbc' || item.flex_length === 'TBC') {
+			flexDesc = item.flex_length + ' ' + item.flex
+		} else {
+			flexDesc = item.flex_length + 'm ' + item.flex
+		}
 
 		if (itWont) {
 			doc.addPage();
@@ -304,7 +313,6 @@ function writeDoc(job, cb) {
 				.stroke("grey");
 
 		currentY = doc.y;
-
 		doc.fontSize(INPUT_FONT_SIZE)
 				.font(FONT)
 				.text(item.qty_req, MARGIN + 2, currentY)
@@ -315,9 +323,9 @@ function writeDoc(job, cb) {
 					) || "")
 				.text(propChecker("- Glass", item.glass))
 				.text(propChecker("- Metal", item.metal))
-				.text(propChecker("- Flex", item.flex_length + 'm ' + item.flex ))
+				// .text(propChecker("- Flex", item.flex_length + 'm ' + item.flex ))
+				.text(propChecker("- Flex", flexDesc ))
 				.text(propChecker("- Bulb", item.bulb ))
-				//.text(propChecker("- Flex Length", item.flex_length ))
 				.text(propChecker("- Ceiling Rose", item.ceilingrose ))
 				.moveDown(1.5);
 

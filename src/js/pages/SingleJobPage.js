@@ -35,8 +35,13 @@ class SingleJobPage extends Component {
 
 	showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes) {
 		var textField = document.createElement('textarea')
-		textField.innerText = ''
-		textField.innerText = contact_name + ', ' + delivery_address + ', ' + contact_email + ', ' + contact_number + ', ' + delivery_notes
+		textField.remove()
+		textField.innerHTML += ""
+		textField.innerHTML += contact_name + "\r\n"
+		textField.innerHTML += delivery_address + "\r\n"
+		textField.innerHTML += contact_email + "\r\n"
+		textField.innerHTML += contact_number + "\r\n"
+		textField.innerHTML += delivery_notes
 		document.body.appendChild(textField)
 		textField.select()
 		document.execCommand('copy')
@@ -103,7 +108,7 @@ class SingleJobPage extends Component {
 						<SingleJobDetails details={this.props.details} selections={this.props.selections} detailsConfig={this.props.detailsScheme} onBlur={SharedActionCreators.saveDetails}></SingleJobDetails>
 						<div className="buttonRow">
 							<button className="add-button rounded" onClick={SharedActionCreators.createItem.bind(this, this.props.details.get("job_id"), {})}>Add Job Item</button>
-							<button className="add-button rounded" onClick={this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}>Clipboard</button>
+							<button className="add-button rounded" onClick={() => {this.showMessage(contact_name, delivery_address, contact_email, contact_number, delivery_notes)}}>Clipboard</button>
 						</div>
 						<div className="table-container">
 							<Table selections={this.props.selections}
