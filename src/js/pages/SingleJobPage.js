@@ -40,8 +40,7 @@ class SingleJobPage extends Component {
 		textField.innerHTML += contact_name + "\r\n"
 		textField.innerHTML += delivery_address + "\r\n"
 		textField.innerHTML += contact_email + "\r\n"
-		textField.innerHTML += contact_number + "\r\n"
-		textField.innerHTML += delivery_notes
+		textField.innerHTML += contact_number
 		document.body.appendChild(textField)
 		textField.select()
 		document.execCommand('copy')
