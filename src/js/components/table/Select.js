@@ -27,7 +27,7 @@ export default class Select extends Component {
 
 		return (
 			<select value={this.props.value} className={this.props.className}
-					style={{"color": selectColor}} disabled={this.props.disabled}>
+					style={{"color": selectColor}} disabled={this.props.disabled} title={this.props.value}>
 				{ currentValueIfExists === undefined ?
 						<option disabled={true}>{this.props.value}</option> :
 						null
