@@ -22,7 +22,7 @@ server.register([bell, cookie], function(err) {
     password       : config.bell.password,
     clientId       : config.bell.clientID,
     clientSecret   : config.bell.clientSecret,
-    isSecure       : false,
+    isSecure       : true,
     providerParams : {
       redirect_uri : server.info.uri + "/login"
     }
